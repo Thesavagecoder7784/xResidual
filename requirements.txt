@@ -1,0 +1,5 @@
+# Analysis package (xresidual/). The logger has its own logger/requirements.txt.
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+requests>=2.31
