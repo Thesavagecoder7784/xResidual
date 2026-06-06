@@ -6,7 +6,7 @@
 The one market card whose data used to be pasted in by hand (and so went stale every
 day). This regenerates it from the logged snapshots: for each calendar day it takes the
 latest winner price per team on each venue, de-vigs each venue's field (multiplicative,
-so we compare beliefs not margins), and reports the median across venues: the de-vigged
+so we compare beliefs not margins), and reports the average across the two venues: the de-vigged
 implied championship probability per day. Run daily (it's in build_all); the series
 auto-extends through the tournament.
 """
@@ -56,7 +56,7 @@ def main() -> int:
                     cell[t] = (ts, float(mid))
 
     days = sorted(latest)
-    # per day, per venue: de-vig the whole field, then median across venues per team
+    # per day, per venue: de-vig the whole field, then average across venues per team
     series = {t: [] for t in TEAMS}
     for day in days:
         devigged = {}  # venue -> {team: fair prob}
@@ -67,7 +67,7 @@ def main() -> int:
                 devigged[v] = {t: p / s for t, p in raw.items()}
         for t in TEAMS:
             vals = [devigged[v][t] for v in VENUES if t in devigged.get(v, {})]
-            series[t].append(round(statistics.median(vals) * 100, 2) if vals else None)
+            series[t].append(round(statistics.mean(vals) * 100, 2) if vals else None)
 
     payload = {"dates": days, "series": series}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
