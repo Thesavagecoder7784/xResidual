@@ -3,7 +3,7 @@
 Goals are modelled as independent Poissons; the goal differential
 d = goals_home - goals_away therefore follows a Skellam distribution. This single
 generative object yields both the goal-difference distribution and, by summing its
-PMF over the sign of d, the W/D/L probabilities — keeping the two views mutually
+PMF over the sign of d, the W/D/L probabilities, keeping the two views mutually
 consistent.
 
 Note the property the rest of the project leans on: Var[d] = lambda_home +

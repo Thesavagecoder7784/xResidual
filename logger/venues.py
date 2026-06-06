@@ -3,7 +3,7 @@
 Each adapter reads its own section of the config plus the loaded env, and returns
 Quote objects for the current instant. Adapters MUST NOT raise on network/parse/auth
 errors: a single bad fetch must never kill the logging loop. Catch, record the
-failure as an `__error__` quote, and move on — a gap in one venue's series is
+failure as an `__error__` quote, and move on. A gap in one venue's series is
 recoverable; a crashed logger losing every venue is not.
 
 Venues:
@@ -12,7 +12,7 @@ Venues:
   - oddsapi    : The Odds API, multi-bookmaker h2h odds (ODDSAPI_KEY).
 
 Prices are stored in PROBABILITY UNITS (0..1). Each adapter converts:
-  - Polymarket Gamma price ≈ probability already.
+  - Polymarket Gamma price is already ~probability.
   - Kalshi cents (0..100) -> /100.
   - Odds API decimal odds -> 1/odds, renormalized per book to strip the overround.
 """
@@ -70,12 +70,12 @@ def _error_quote(venue: str, market_id: str, label: str, err: Exception) -> Quot
 
 
 # --------------------------------------------------------------------------- #
-# Polymarket — public Gamma API, no auth.
+# Polymarket: public Gamma API, no auth.
 # config["polymarket"] entries are either:
-#   {"id": "<gamma market id>", "label": "..."}          — a single market, or
-#   {"event_slug": "world-cup-winner", "label": "..."}   — a whole event (the winner
+#   {"id": "<gamma market id>", "label": "..."}          a single market, or
+#   {"event_slug": "world-cup-winner", "label": "..."}   a whole event (the winner
 #       field): ONE call returns every child market, tagged market_type="winner".
-# Verify the response shape before June 11 — Gamma's schema has drifted.
+# Verify the response shape before June 11; Gamma's schema has drifted.
 # --------------------------------------------------------------------------- #
 def fetch_polymarket(config: dict, env: dict) -> list[Quote]:
     specs = config.get("polymarket") or []
@@ -133,7 +133,7 @@ def _poly_event(spec: dict) -> list[Quote]:
 
 
 # --------------------------------------------------------------------------- #
-# Kalshi — RSA-PSS signed requests.
+# Kalshi: RSA-PSS signed requests.
 # Auth per https://trading-api.readme.io/reference/api-keys :
 #   message = timestamp_ms + METHOD + path  (path has no query string)
 #   signature = base64( RSA-PSS-SHA256(message), salt_length = digest length )
@@ -212,8 +212,8 @@ def _kalshi_quote_from_market(m: dict, label: str, outcome: str,
 
 def fetch_kalshi(config: dict, env: dict) -> list[Quote]:
     """config["kalshi"] entries are either:
-      {"ticker": "<market ticker>", "label": "..."}            — a single market, or
-      {"series_ticker": "KXMENWORLDCUP", "label": "..."}       — a whole series: ONE
+      {"ticker": "<market ticker>", "label": "..."}            a single market, or
+      {"series_ticker": "KXMENWORLDCUP", "label": "..."}       a whole series: ONE
           list call returns every market (the winner field), tagged market_type="winner";
           outcome = each market's team subtitle.
     """
@@ -245,11 +245,11 @@ def fetch_kalshi(config: dict, env: dict) -> list[Quote]:
 
 
 # --------------------------------------------------------------------------- #
-# The Odds API — multi-bookmaker odds across regions.
+# The Odds API: multi-bookmaker odds across regions.
 # Docs: https://the-odds-api.com/liveapi/guides/v4/
 # config["oddsapi"]: {"sport": "soccer_fifa_world_cup", "regions": "uk", "markets": "h2h"}
 # One /odds call returns ALL events for the sport. Cost = (#markets x #regions)
-# credits PER CALL, against a monthly quota — see logger/README.md. Poll this venue
+# credits PER CALL, against a monthly quota (see logger/README.md). Poll this venue
 # far less often than the free Polymarket/Kalshi feeds.
 # --------------------------------------------------------------------------- #
 def fetch_oddsapi(config: dict, env: dict) -> list[Quote]:
@@ -316,7 +316,7 @@ def _fetch_oddsapi_feed(cfg: dict, key: str) -> list[Quote]:
 
 
 # --------------------------------------------------------------------------- #
-# Order books — depth & spread snapshots for the microstructure layer.
+# Order books: depth and spread snapshots for the microstructure layer.
 # config["orderbooks"]: {"kalshi_series": "KXMENWORLDCUP",
 #                        "polymarket_event": "world-cup-winner",
 #                        "top_levels": 5}

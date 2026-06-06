@@ -1,4 +1,4 @@
-"""Tournament probability trajectory — Layer 4 (METHODOLOGY.md §7).
+"""Tournament probability trajectory, Layer 4 (METHODOLOGY.md §7).
 
 Reads the logger's outright (tournament-winner) snapshots and builds, per team, the
 implied-championship-probability time series and a belief-update velocity: how fast
@@ -36,7 +36,8 @@ def load_snapshots(data_dir: str) -> pd.DataFrame:
         return pd.DataFrame()
     df = pd.json_normalize(rows)  # extra.market_type, extra.bookmaker, extra.point, ...
     df.columns = [c.replace("extra.", "") for c in df.columns]
-    df["ts_utc"] = pd.to_datetime(df["ts_utc"], utc=True, errors="coerce")
+    # ISO8601 handles mixed precision (live has microseconds, backfill doesn't)
+    df["ts_utc"] = pd.to_datetime(df["ts_utc"], utc=True, format="ISO8601", errors="coerce")
     return df
 
 
@@ -49,7 +50,7 @@ def outright_probabilities(df: pd.DataFrame, venue: str = "oddsapi",
 
     The pre-tournament outright market lists non-qualified teams (often quoted by a
     single book at residual prices), so:
-      - `teams` restricts to a whitelist (e.g. the 48 qualified sides) — recommended
+      - `teams` restricts to a whitelist (e.g. the 48 qualified sides), recommended
         for publication; source it from a fixtures feed (openfootball/worldcup.json).
       - `min_books` drops names quoted by fewer than this many bookmakers at a
         timestamp (a cheap filter for stale single-book longshots).
@@ -80,7 +81,7 @@ def belief_velocity(long: pd.DataFrame) -> pd.DataFrame:
 
     Columns: n_obs, first_prob, latest_prob, net_drift, total_variation,
     velocity_per_day (total variation / span in days), max_jump.
-    Sorted by velocity_per_day descending — the teams the market is learning about.
+    Sorted by velocity_per_day descending, the teams the market is learning about.
     """
     out = []
     for team, g in long.sort_values("ts").groupby("team"):

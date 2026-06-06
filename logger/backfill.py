@@ -2,12 +2,12 @@
 """One-time backfill of outright-winner price history.
 
 Live logging only started 2026-06-05, so the buildup (e.g. Portugal's climb) is
-missing from the trajectory. Both venues expose history — Kalshi candlesticks and
-Polymarket prices-history — so this pulls daily points for all 48 teams and writes
+missing from the trajectory. Both venues expose history (Kalshi candlesticks,
+Polymarket prices-history), so this pulls daily points for all 48 teams and writes
 them in the snapshot format the trajectory loader already reads.
 
-Output: data/snapshots-backfill.jsonl (overwritten each run — idempotent), tagged
-extra.backfill=true so it's distinguishable from live capture.
+Output: data/snapshots-backfill.jsonl (overwritten each run, so it's idempotent),
+tagged extra.backfill=true to distinguish it from live capture.
 
     python backfill.py --days 21
 """

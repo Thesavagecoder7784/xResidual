@@ -1,9 +1,9 @@
-"""Figures for the findings — reliability diagrams, trajectories, devig comparison.
+"""Figures for the findings: reliability diagrams, trajectories, devig comparison.
 
 The analysis layers produce numbers; this renders them. Uses a headless backend so
 it runs under launchd / on a server. Every function saves a PNG and returns its path.
 
-The reliability diagram is the headline: it overlays the CORP isotonic calibration
+The reliability diagram is the main one: it overlays the CORP isotonic calibration
 curve (with bootstrap consistency band) on the classic binned points (with Wilson
 CIs), against the 45-degree line. A claim of mis/well-calibration is only visible
 where the band departs from the diagonal.
@@ -113,6 +113,93 @@ def divergence_chart(div_df, path: str, top_n: int = 12,
     _style(ax)
     ax.barh(by_team.index, by_team.values * 100, color=_ACCENT, alpha=0.85)
     ax.set_xlabel("mean |Kalshi - Polymarket| implied prob (percentage points)", color=_INK)
+    ax.set_title(title, color=_INK, fontsize=11)
+    return _save(fig, path)
+
+
+_PALETTE = ["#2f6fed", "#e8635a", "#1ea896", "#e0a32e", "#7d5ba6",
+            "#3a8d5b", "#c2553f", "#5a6b7b"]
+
+
+def buildup_trajectory(long, path: str, top_n: int = 7,
+                       title: str = "The title race during the buildup",
+                       subtitle: str = "Implied championship probability · Kalshi + Polymarket, de-vigged",
+                       footnote: str = "xResidual · @PrabhatM27") -> str:
+    """Polished trajectory: top-N teams' implied championship probability over time,
+    with direct end-of-line labels (de-collided) instead of a legend. `long` is a
+    [ts, team, prob] frame (one row per day per team)."""
+    latest = long["ts"].max()
+    order = (long[long["ts"] == latest].sort_values("prob", ascending=False)
+             ["team"].head(top_n).tolist())
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_facecolor("white")
+    fig.patch.set_facecolor("white")
+    for s in ("top", "right", "left"):
+        ax.spines[s].set_visible(False)
+    ax.grid(True, axis="y", color=_GRID, linewidth=0.9)
+    ax.tick_params(colors=_INK, labelsize=9, length=0)
+
+    ends = []
+    for i, team in enumerate(order):
+        g = long[long["team"] == team].sort_values("ts")
+        color = _PALETTE[i % len(_PALETTE)]
+        ax.plot(g["ts"], g["prob"] * 100, lw=2.6, color=color,
+                solid_capstyle="round", solid_joinstyle="round", alpha=0.95)
+        ax.scatter(g["ts"].iloc[-1], g["prob"].iloc[-1] * 100, s=22, color=color, zorder=3)
+        ends.append([g["prob"].iloc[-1] * 100, team, color])
+
+    # de-collide end labels: enforce a minimum vertical gap
+    ends.sort(reverse=True)
+    gap = (max(e[0] for e in ends) - min(e[0] for e in ends)) * 0.06 + 0.6
+    for j in range(1, len(ends)):
+        if ends[j - 1][0] - ends[j][0] < gap:
+            ends[j][0] = ends[j - 1][0] - gap
+    xmax = long["ts"].max()
+    xpad = (xmax - long["ts"].min()) * 0.02
+    for y, team, color in ends:
+        ax.annotate(f"{team}", (xmax + xpad, y), color=color, fontsize=10.5,
+                    fontweight="bold", va="center", annotation_clip=False)
+
+    ax.set_ylabel("P(win tournament)  %", color=_INK, fontsize=10)
+    ax.set_ylim(bottom=0)
+    ax.margins(x=0.02)
+    import matplotlib.dates as mdates
+    ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %-d"))
+    fig.suptitle(title, x=0.06, y=0.97, ha="left", fontsize=15,
+                 fontweight="bold", color=_INK)
+    ax.set_title(subtitle, loc="left", fontsize=10, color="#6b7280", pad=10)
+    fig.text(0.06, 0.01, footnote, fontsize=8, color="#9aa0aa")
+    fig.subplots_adjust(right=0.86, top=0.88, bottom=0.1, left=0.08)
+    return _save(fig, path)
+
+
+def obi_chart(obi_snapshot_df, path: str, venue: str = "polymarket", top_n: int = 12,
+              title: str = "Order-book imbalance — top teams") -> str:
+    """Bid-share per team (OBI). A reference line at 0.5; bars left of it are
+    sell-heavy. Reveals e.g. that favorites are systematically offered, not bid."""
+    d = obi_snapshot_df[obi_snapshot_df["venue"] == venue].head(top_n).iloc[::-1]
+    fig, ax = plt.subplots(figsize=(7, 5))
+    _style(ax)
+    colors = [_ACCENT if v >= 0.5 else "#e06c4f" for v in d["obi"]]
+    ax.barh(d["team"], d["obi"], color=colors, alpha=0.85)
+    ax.axvline(0.5, color="#9aa0aa", ls="--", lw=1.2)
+    ax.set_xlim(0, 1)
+    ax.set_xlabel("bid share  (OBI; <0.5 = sell-heavy)", color=_INK)
+    ax.set_title(f"{title} — {venue}", color=_INK, fontsize=11)
+    return _save(fig, path)
+
+
+def contested_chart(dispersion_df, path: str, top_n: int = 10,
+                    title: str = "Most contested matches (bookmaker disagreement)") -> str:
+    """Horizontal bars of cross-bookmaker implied-prob spread per match outcome."""
+    d = dispersion_df.head(top_n).iloc[::-1]
+    labels = [f"{r.market_label} — {r.outcome}" for r in d.itertuples()]
+    fig, ax = plt.subplots(figsize=(8, 5))
+    _style(ax)
+    ax.barh(labels, d["dispersion"] * 100, color=_ACCENT, alpha=0.85)
+    ax.set_xlabel("cross-bookmaker spread in implied prob (percentage points)", color=_INK)
     ax.set_title(title, color=_INK, fontsize=11)
     return _save(fig, path)
 
