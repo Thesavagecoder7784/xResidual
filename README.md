@@ -120,8 +120,8 @@ that can't be wrong isn't a finding.
   & cut-line, decisive games, R32 routes, model-vs-market, **value-blend diagnosis**,
   strength lenses, travel draw) and `market/` (group board, outlook, must-watch,
   longshot tick, buildup trajectory, lead–lag tape, **money map**, **FLB wedge**,
-  **survival/paper-tigers**, **on-chain whales**), with shared `flags/`, `render.sh`,
-  and a `README`.
+  **survival/paper-tigers**, **on-chain whales**). The analysis (`scripts/build_*.py`)
+  and the rendered PNGs are public; the card HTML/CSS templates are kept private.
 - `tests/` — 63 unit tests across the math core, calibration, microstructure,
   pipeline, plots, and lead–lag.
 
@@ -130,8 +130,12 @@ that can't be wrong isn't a finding.
 ```bash
 pip install -r requirements.txt
 python scripts/run_analysis.py        # live findings to date
-python scripts/build_all.py           # regenerate every card's data + render the PNGs
+python scripts/build_all.py           # regenerate every card's underlying data (_*.js)
 ```
+
+> The analysis that produces each card (`scripts/build_*.py`) and the rendered **PNGs**
+> are published; the editorial card **templates** (the HTML/CSS look) are kept private,
+> so `build_all` regenerates the data here while the committed PNGs are the visuals.
 
 Two layers, two reproducibility stories:
 
