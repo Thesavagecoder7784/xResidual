@@ -1,0 +1,28 @@
+{
+  "_comment": "Copy to config.json (gitignored) and fill with real ids before June 11, 2026. Polymarket and Kalshi are lists of specific markets; oddsapi is one bulk call that returns ALL events for the sport. Verify each with a single `python run.py` pass (expect 'ok', not 'err'). Credentials live in the repo-root .env, NOT here.",
+
+  "polymarket": [
+    { "id": "REPLACE_WITH_GAMMA_MARKET_ID", "label": "WC2026 Winner — Brazil" },
+    { "id": "REPLACE_WITH_GAMMA_MARKET_ID", "label": "Group A Match 1 — Home win" }
+  ],
+
+  "kalshi": [
+    { "ticker": "REPLACE_WITH_KALSHI_TICKER", "label": "WC2026 Winner — Brazil" }
+  ],
+
+  "oddsapi": [
+    {
+      "sport": "soccer_fifa_world_cup",
+      "regions": "uk",
+      "markets": "h2h",
+      "_note": "Per-match home/draw/away odds (Layer 3 calibration)."
+    },
+    {
+      "sport": "soccer_fifa_world_cup_winner",
+      "regions": "uk",
+      "markets": "outrights",
+      "_note": "Outright tournament-winner odds (Layer 4 trajectory). Outright markets use markets=outrights; outcomes are team names."
+    }
+  ],
+  "_oddsapi_note": "oddsapi may be one feed object or a list of them. Each call costs (#markets x #regions) credits against the monthly quota (500 on free tier) — keep regions minimal and poll on a slow cron. Verify sport keys via https://api.the-odds-api.com/v4/sports?apiKey=..."
+}
