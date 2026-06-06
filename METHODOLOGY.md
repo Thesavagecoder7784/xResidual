@@ -245,14 +245,21 @@ The 2026 tournament breaks two assumptions a generic baseline would make:
 
 - **Not fully neutral.** The hosts (Mexico, USA, Canada) play group matches at home
   venues — the Elo home-advantage term must be *on* for host fixtures, not forced to
-  neutral. All other matches are neutral.
-- **Altitude and heat shift scoring.** Mexico City (~2,200 m, the highest-ever WC
-  venue) and Guadalajara (~1,566 m) have thinner air (faster ball, less air
-  resistance); June–July heat plus mandatory hydration breaks affect tempo. Both
-  plausibly move expected *total* goals (the Skellam `tot`) for matches at those
-  venues. The baseline exposes `tot` as a per-match quantity precisely so a venue
-  adjustment can be applied; absent a fitted effect we flag altitude/heat venues
-  rather than silently assuming league-average totals.
+  neutral. The magnitude is *calibrated to history*: regressing goal difference on a
+  home dummy over ~50k matches puts a home side at ~0.47 goals, so `HOME_ADVANTAGE`
+  is set to ≈ 85 Elo (down from 100, which implied ~0.54 goals — ~15% too high and
+  inflating the 2026 hosts). All other matches are neutral.
+- **Altitude: we tested it, and it didn't hold up.** Mexico City (~2,200 m, the
+  highest-ever WC venue) and Guadalajara (~1,566 m) have thinner air, and the folk
+  prior is "thin air → more goals." Regressing *total* goals on home-venue altitude
+  across ~50k matches (controlling for team strength) gives a **negative, significant**
+  coefficient (~−0.15 goals/1000 m) — the opposite sign of the old +3%/1000 m prior.
+  Altitude also touches only 7 of 72 group matches (all Mexico City / Guadalajara),
+  and toggling it moved the hosts' advancement by <1pt. So the totals adjustment is
+  **disabled** (factor set to 0). For honesty: a real altitude effect *does* show up on
+  goal *difference* (home supremacy when adapted, ~+0.14 goals/1000 m, statistically
+  significant) — but it applies only to Mexico at home and is deliberately left out,
+  since folding it in would only widen the host edge we are trying not to overstate.
 
 Format (fixes n): 48 teams, 12 groups of 4, top two + eight best third-placed teams
 → Round of 32 → 104 matches over 39 days. Calibration n is bounded by 104 (further
@@ -300,3 +307,32 @@ Stated up front, because falsifiability is the point:
   null rather than hunting for a slice that shows it.
 
 A claim that cannot be wrong is not a finding.
+
+## 12. Independent tournament simulation
+
+Alongside the per-match baseline, the project runs a full **group-stage + knockout
+Monte Carlo** (`xresidual/group_sim.py`, `xresidual/knockout.py`), 40,000 sims,
+fully format-aware for 2026: the top two of each group plus the **8 best third-placed
+teams** advance to the Round of 32, with the third-place bracket assignment following
+**FIFA's Annex C constraints**, then simulated through to the Final. Match goals use the
+same Elo-driven Skellam rates as §2, with a **Dixon–Coles low-score correction**
+(`rho = −0.11`) that lifts the simulated draw rate from ~20% to ~22%, closer to the
+empirical ~22–24%. The format invariants are **exact by construction** — across sims
+the advancement probabilities sum to 32 and the third-place-qualifier probabilities
+sum to 8 — so any drift there is a code bug, not a modelling choice.
+
+Validated against the Opta supercomputer, the simulation agrees strongly on most
+advancement probabilities (Group C nearly identical; France / Norway / USA / Brazil /
+Morocco within ~2pp). It is, however, **more top-heavy on favourites**
+— e.g. it gives Spain ~28% to win the title vs ~16% from the market / Opta (Argentina
+~19% vs ~10%). We traced the cause: not host, altitude, or home-advantage, but **Elo's
+blindness to squad quality** — it rewards results, not the squad behind them, so it
+over-rates teams whose record outruns their talent and under-rates squad-strong sides.
+Blending in Transfermarkt squad value (Peeters 2018, which out-predicts Elo for
+internationals) via `scripts/blend.py` — `0.4·z(Elo) + 0.6·z(log value)` through the
+same sim — cuts the mean title-odds error vs Opta from ~4.7pp to ~0.7pp and converges
+on the market too. So the overconfidence is largely a **fixable value-blindness**, not
+an irreducible artifact. (We lack historical squad values, so this is a consistency
+check against two independent sharp forecasters, not a backtest.) The pro-market reading
+stands: the market already embeds squad value, form and news; the residual gap is the
+rest, plus its natural caution. The simulated opener Mexico–South Africa sits at ~0.86.
