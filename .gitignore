@@ -233,4 +233,7 @@ logger/data/
 
 /skills
 
+# Backstage strategy notes — not for the public repo
 KICKSTART.md
+CONTENT.md
+viz/flags/*.svg
