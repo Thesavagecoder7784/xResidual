@@ -1,7 +1,7 @@
 """Minimal .env loader (no external dependency).
 
 Reads KEY=VALUE lines from the repo-root .env into a dict, layered over the real
-process environment. Values are never logged — callers must not print them.
+process environment. Values are never logged, and callers must not print them.
 """
 
 from __future__ import annotations

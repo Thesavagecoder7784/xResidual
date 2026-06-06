@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Real-time websocket capture for cross-venue lead-lag (the microstructure flagship).
+"""Real-time websocket capture for cross-venue lead-lag.
 
-Opens persistent websockets to Kalshi and Polymarket and stamps EVERY event with a
-local millisecond clock. The local clock is the whole point: lead-lag is measured
-against one reference, so it can't be faked by server-clock skew between venues.
-Events append to data/ws-events-YYYY-MM-DD.jsonl.
+Opens persistent websockets to Kalshi and Polymarket and stamps every event with a
+local millisecond clock. The local clock matters: lead-lag is measured against one
+reference, so server-clock skew between the venues can't fake a lead. Events append
+to data/ws-events-YYYY-MM-DD.jsonl.
 
 Run around a marquee match (markets exist at match time):
 
@@ -67,7 +67,7 @@ def _log(msg: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Kalshi (authenticated) — orderbook_delta + ticker + trade
+# Kalshi (authenticated): orderbook_delta + ticker + trade
 # --------------------------------------------------------------------------- #
 def _kalshi_ws_headers(env: dict) -> dict:
     pk = venues._load_kalshi_private_key(env)
@@ -100,7 +100,7 @@ async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: floa
 
 
 # --------------------------------------------------------------------------- #
-# Polymarket (public) — book + price_change + last_trade_price
+# Polymarket (public): book + price_change + last_trade_price
 # --------------------------------------------------------------------------- #
 async def _poly_pinger(ws, deadline: float) -> None:
     while time.time() < deadline:
@@ -160,7 +160,7 @@ def discover_match_markets(env: dict, team_a: str, team_b: str):
 
     Kalshi: the KXWCGAME series; a match's 3 outcome markets share a ticker prefix
     (e.g. KXWCGAME-26JUN24CZEMEX). Polymarket: per-match markets appear close to
-    kickoff — returns [] (with a note) until then."""
+    kickoff, so this returns [] (with a note) until then."""
     a, b = _norm(team_a), _norm(team_b)
     # --- Kalshi ---
     mk = venues._kalshi_get(env, "/trade-api/v2/markets",
@@ -231,7 +231,7 @@ def discover_outright_markets(env: dict, teams=("Spain", "France", "England")):
 
 def _write_pairs(pairs: list[dict]) -> None:
     """Record the captured cross-venue pairs so the analyzer (scripts/build_leadlag.py)
-    self-configures — no hand-typed tickers, no hand-typed goal time."""
+    self-configures: no hand-typed tickers, no hand-typed goal time."""
     if not pairs:
         return
     path = os.path.join(DATA_DIR, f"ws-pairs-{_now_day()}.jsonl")

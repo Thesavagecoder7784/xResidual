@@ -1,11 +1,11 @@
 """2026 World Cup venues and host context (METHODOLOGY.md §9).
 
 Two 2026-specific facts the baseline must respect:
-  - Hosts (Mexico, USA, Canada) play group matches at home -> not neutral.
-  - Mexico City and Guadalajara are high-altitude; thinner air plausibly lifts
-    expected total goals. We model this as a *tunable prior*, not a fitted effect —
-    set ALT_GOAL_FACTOR_PER_1000M to 0 to disable, and validate against altitude-
-    venue results once the tournament provides data.
+  - Hosts (Mexico, USA, Canada) play group matches at home -> not neutral. This is
+    the real, significant lever (home advantage ~+0.47 goals in our history).
+  - Mexico City and Guadalajara are high-altitude. The original prior assumed thin
+    air lifts total goals, but an empirical check rejected it (see the note on
+    ALT_GOAL_FACTOR_PER_1000M below), so the altitude total-goals factor is disabled.
 
 Stadium elevations are approximate (metres). Team names match the
 martj42/eloratings convention used by the Elo engine.
@@ -26,9 +26,15 @@ VENUE_ALTITUDE_M = {
 
 HIGH_ALTITUDE_M = 1500  # flag venues at/above this as high-altitude
 
-# Rough prior: +3% expected total goals per 1000 m above a 500 m baseline. NOT a
-# fitted coefficient — a documented assumption, easily zeroed or recalibrated.
-ALT_GOAL_FACTOR_PER_1000M = 0.03
+# Altitude -> total-goals factor. DISABLED (0.0) after an empirical check on our own
+# ~50k-match history: regressing total goals on home-venue altitude (controlling for
+# team strength) gives a *negative*, significant coefficient (~-0.15 goals/1000m),
+# the opposite sign of the original +3%/1000m prior. Altitude also touches only 7 of
+# 72 group matches in 2026 (all Mexico City / Guadalajara), so the honest, simpler
+# choice is no adjustment. (A real altitude effect does exist on goal *difference*,
+# home-team supremacy when adapted, but that only applies to Mexico at home and is
+# deliberately left out; it would only widen the host edge.)
+ALT_GOAL_FACTOR_PER_1000M = 0.0
 _ALT_BASELINE_M = 500.0
 
 

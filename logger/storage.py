@@ -1,9 +1,9 @@
 """Append-only snapshot storage.
 
-A logger's one job is to never lose data. So writes are append-only JSONL,
-one file per UTC day, flushed and fsync'd on every record. We never rewrite or
-truncate an existing file — intraday cross-venue price history cannot be
-reconstructed after the fact, so a corrupted rewrite would be unrecoverable.
+The logger's one job is to not lose data, so writes are append-only JSONL, one
+file per UTC day, flushed and fsync'd on every record. Nothing rewrites or
+truncates an existing file: you can't reconstruct intraday cross-venue history
+after the fact, so a bad rewrite would be unrecoverable.
 """
 
 from __future__ import annotations

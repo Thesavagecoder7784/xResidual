@@ -1,6 +1,6 @@
 """Per-match residuals (METHODOLOGY.md §3).
 
-Two proper, per-match quantities — NOT Brier, which is an aggregate score
+Two proper, per-match quantities, NOT Brier, which is an aggregate score
 (see calibration, Layer 3) and is uninformative on a single match:
 
   - log score (surprisal): -log p(realized outcome). Higher = more surprising.

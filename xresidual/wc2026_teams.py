@@ -43,7 +43,7 @@ _VENUE_ALIASES = {
     "Congo DR": "DR Congo",                              # Kalshi, Polymarket
     "Curacao": "Curaçao",                                # Kalshi
     "Czechia": "Czech Republic",                          # Kalshi, Polymarket
-    "Turkiye": "Turkey",                                  # Polymarket
+    "Turkiye": "Turkey", "Türkiye": "Turkey",            # Polymarket (with/without diacritic)
 }
 
 
