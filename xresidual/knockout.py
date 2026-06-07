@@ -70,7 +70,7 @@ def _assign(qual: set, slots: list) -> dict:
 
 
 def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
-             return_matchups: bool = False) -> dict:
+             return_matchups: bool = False, return_slots: bool = False) -> dict:
     """Run the knockout bracket on the group-stage simulation `detail`/`out`.
 
     Returns {reach: {team -> {r16,qf,sf,final,win}}, r32: [{id, winner_slot,
@@ -110,12 +110,18 @@ def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
         for i, g in _assign(qual, slots).items():
             r32[s, i, 1] = third_of[g][s]
 
+    eps = detail.get("eps")   # per-sim team-strength offsets, consistent with the group stage
+    rr = np.arange(n)[:, None]
+
     def play(pairs):
-        r1 = rating_arr[pairs[:, :, 0]]
-        r2 = rating_arr[pairs[:, :, 1]]
+        a, b = pairs[:, :, 0], pairs[:, :, 1]
+        r1, r2 = rating_arr[a], rating_arr[b]
+        if eps is not None:
+            r1 = r1 + eps[rr, a]
+            r2 = r2 + eps[rr, b]
         p1 = 1.0 / (1.0 + 10 ** ((r2 - r1) / 400.0))
         w1 = rng.random(p1.shape) < p1
-        return np.where(w1, pairs[:, :, 0], pairs[:, :, 1])
+        return np.where(w1, a, b)
 
     def build(level, prevwin, prev_ids):
         pid = {mid: k for k, mid in enumerate(prev_ids)}
@@ -168,4 +174,9 @@ def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
     if return_matchups:
         # per-round (n, matches, 2) arrays of global team indices, for "do A and B meet?"
         result["matchups"] = {"R32": r32, "R16": r16p, "QF": qfp, "SF": sfp, "Final": fnp}
+    if return_slots:
+        # the R32 fills + ratings, for path-difficulty-by-finishing-position analysis
+        result["r32"] = r32
+        result["rating_arr"] = rating_arr
+        result["teams_arr"] = list(teams)
     return result

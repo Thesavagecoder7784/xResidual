@@ -30,6 +30,14 @@ from .baseline import LAMBDA_FLOOR, BaselineParams
 # 0-0 and 1-1 draws; rho<0 restores that mass at the expense of 1-0/0-1. A documented
 # literature prior (≈ original fit), tunable; set to 0.0 to recover plain Poisson.
 DC_RHO = -0.11
+
+# Calibrated team-strength uncertainty (Elo SD), for published probability forecasts.
+# Chosen by out-of-sample RPS on 13k competitive international matches since 2006
+# (importance × recency weighted), cross-checked against the market (~50) and Glicko-RD
+# (tens of Elo) — see scripts/calibrate_sigma.py. The bare engine default is sigma=0;
+# rating-isolation diagnostics (the value-blend check, the draw-luck counterfactual) keep
+# it at 0 on purpose so they isolate ratings / the draw rather than dispersion.
+MODEL_SIGMA = 60.0
 _GMAX = 9  # goal grid cap for the Dixon-Coles joint sampler (P(>9) is negligible)
 _GRID = np.arange(_GMAX + 1)
 
@@ -72,9 +80,10 @@ def _elo_name(team: str) -> str:
     return wc2026_teams.elo_name(wc2026_teams.canonical(team))
 
 
-def _match_lambdas(t1: str, t2: str, ground: str, ratings: dict[str, float],
-                   params: BaselineParams) -> tuple[float, float]:
-    """Poisson rates for one group fixture, with host advantage + altitude."""
+def _match_components(t1: str, t2: str, ground: str, ratings: dict[str, float],
+                      params: BaselineParams) -> tuple[float, float, float, float]:
+    """(rating1, rating2, host-adv, total-goals) for one fixture. Shared by the scalar
+    and the per-sim (team-strength-uncertainty) goal paths."""
     r1 = ratings.get(_elo_name(t1), elo.INIT_RATING)
     r2 = ratings.get(_elo_name(t2), elo.INIT_RATING)
     city = _city(ground)
@@ -84,8 +93,15 @@ def _match_lambdas(t1: str, t2: str, ground: str, ratings: dict[str, float],
         adv = elo.HOME_ADVANTAGE
     elif _elo_name(t2) == host:
         adv = -elo.HOME_ADVANTAGE
-    sup = params.beta * ((r1 - r2 + adv) / 100.0)
     tot = params.total_goals * venues_wc2026.total_goals_factor(venues_wc2026.altitude_of(city))
+    return r1, r2, adv, tot
+
+
+def _match_lambdas(t1: str, t2: str, ground: str, ratings: dict[str, float],
+                   params: BaselineParams) -> tuple[float, float]:
+    """Poisson rates for one group fixture, with host advantage + altitude."""
+    r1, r2, adv, tot = _match_components(t1, t2, ground, ratings, params)
+    sup = params.beta * ((r1 - r2 + adv) / 100.0)
     return max((tot + sup) / 2.0, LAMBDA_FLOOR), max((tot - sup) / 2.0, LAMBDA_FLOOR)
 
 
@@ -96,7 +112,8 @@ def _rank_key(pts, gd, gf, rng):
 
 
 def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: BaselineParams,
-             n: int = 40000, seed: int = 7, return_detail: bool = False, rho: float = DC_RHO):
+             n: int = 40000, seed: int = 7, return_detail: bool = False, rho: float = DC_RHO,
+             sigma: float = 0.0):
     """Run `n` group-stage simulations. Returns a dict keyed by canonical team name:
     {p1, p2, p3, p4, top2, padv, p3adv} as probabilities, plus the group letter.
 
@@ -121,6 +138,10 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
     all_canon = [wc2026_teams.canonical(t) for L in letters for t in group_teams[L]]
     gidx = {t: i for i, t in enumerate(all_canon)}
     nT = len(all_canon)
+    # Team-strength uncertainty: each sim draws a per-team rating offset, held constant
+    # across that team's whole tournament (group + knockouts). This widens the predictive
+    # distribution to the right amount instead of treating each rating as known exactly.
+    eps = rng.normal(0.0, sigma, size=(n, nT)) if sigma > 0 else None
     adv_mat = np.zeros((n, nT), dtype=bool)
     pos = np.full((n, nT), 9, dtype=np.int8)
     matches = []
@@ -136,8 +157,16 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
         pts = np.zeros((n, k)); gd = np.zeros((n, k)); gf = np.zeros((n, k))
         for row in sub.itertuples(index=False):
             i, j = idx[row.team1], idx[row.team2]
-            l1, l2 = _match_lambdas(row.team1, row.team2, row.ground, ratings, params)
-            g1, g2 = _dc_sample(l1, l2, rho, n, rng)
+            if eps is not None:
+                r1, r2, adv, tot = _match_components(row.team1, row.team2, row.ground, ratings, params)
+                gi, gj = gidx[canon[i]], gidx[canon[j]]
+                sup = params.beta * ((r1 + eps[:, gi] - r2 - eps[:, gj] + adv) / 100.0)
+                l1a = np.clip((tot + sup) / 2.0, LAMBDA_FLOOR, None)
+                l2a = np.clip((tot - sup) / 2.0, LAMBDA_FLOOR, None)
+                g1, g2 = rng.poisson(l1a), rng.poisson(l2a)   # per-sim lambdas (DC omitted here)
+            else:
+                l1, l2 = _match_lambdas(row.team1, row.team2, row.ground, ratings, params)
+                g1, g2 = _dc_sample(l1, l2, rho, n, rng)
             w1, w2, dr = g1 > g2, g2 > g1, g1 == g2
             pts[:, i] += w1 * 3 + dr; pts[:, j] += w2 * 3 + dr
             gd[:, i] += g1 - g2;      gd[:, j] += g2 - g1
@@ -192,5 +221,5 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
     if not return_detail:
         return out
     detail = {"teams": all_canon, "gidx": gidx, "adv_mat": adv_mat, "pos": pos,
-              "matches": matches, "cutline": cutline, "missed": missed}
+              "matches": matches, "cutline": cutline, "missed": missed, "eps": eps}
     return out, detail

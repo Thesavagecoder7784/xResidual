@@ -20,8 +20,9 @@ _CACHE_PATH = os.path.join(_CACHE_DIR, "wc2026_fixtures.csv")
 
 
 def load_fixtures(refresh: bool = True) -> pd.DataFrame:
-    """All 104 fixtures. Columns: round, group, date, ground, team1, team2,
-    score1, score2 (NaN until played), played (bool).
+    """All 104 fixtures. Columns: round, group, date, time, ground, team1, team2,
+    score1, score2 (NaN until played), played (bool). `time` is local kickoff with a
+    UTC offset, e.g. "13:00 UTC-6".
 
     Default refresh=True because results change during the tournament; caching is
     only a fallback when offline.
@@ -35,7 +36,7 @@ def load_fixtures(refresh: bool = True) -> pd.DataFrame:
             s1, s2 = (ft[0], ft[1]) if ft and len(ft) == 2 else (None, None)
             rows.append({
                 "round": m.get("round"), "group": m.get("group"),
-                "date": m.get("date"), "ground": m.get("ground"),
+                "date": m.get("date"), "time": m.get("time"), "ground": m.get("ground"),
                 "team1": m.get("team1"), "team2": m.get("team2"),
                 "score1": s1, "score2": s2,
             })
