@@ -168,6 +168,32 @@ signal a venue-aware maker would skew around, and the Betfair anchor says the gl
 crowd is, if anything, the marginally sharper of the two. (Single-snapshot read; the
 logged series is what confirms the tilt persists.)
 
+## 13. The heat draw is lopsided, but it's exposure, not an edge
+
+FIFPRO names six host cities "extremely high risk" of heat-stress injury for afternoon kickoffs (Atlanta, Dallas, Houston, Kansas City, Miami, Monterrey). Scoring each team's group games by venue and local kickoff time, the draw is uneven: **Netherlands and Portugal drew the worst** (two extreme-risk games each), while four teams (Paraguay, Turkey, New Zealand, Panama) drew none.
+
+**The trader's read.** Heat is a real competitive factor people are talking about, and the schedule draw is a clean, sourced piece of context. But I checked whether it's actually *priced* and it doesn't survive scrutiny. Raw market implied totals are *higher* at hot matches (~3.13 vs ~2.59 goals), but only because the schedule happened to put blowouts (Germany–Curaçao, Spain vs minnows) in hot afternoon slots, which is team mismatch, not heat. Isolating a heat effect would need to control for strength, and with only ~9 extreme-heat matches pre-tournament it's underpowered. So heat stays exposure/context, never a model input or a claimed edge, the same call I made on altitude. The honest version is a map of who drew the brutal schedule, not a goals prediction.
+
+## 14. The heat draw is a TV artifact, and the watch-list isn't in on it
+
+Following #13: the kickoff times explain *why* the heat draw is lopsided. A US afternoon kickoff is a European evening, so European sides get scheduled into US afternoons for home prime-time TV, and that's the heat window. **European-involved group games sit in the afternoon slot 50% of the time vs 18% for everyone else, and 23% are extreme-heat vs 0% without** — all 23 UK prime-time matches are US-afternoon. So Netherlands and Portugal didn't get unlucky; Europe pays a heat tax for its own audience.
+
+I also tested the obvious next question, are the most-watchable games stuck in the heat, and the answer is no. Mean drama (bookmaker closeness + implied goals) is flat across slots (~0.34 afternoon vs ~0.36 evening), and the top-15 must-watch games skew to evening US prime-time. Reporting the null.
+
+**The trader's read.** The schedule is fixed and known in advance, so whatever heat does to play (slower tempo, late-game fatigue) is concentrated on European teams in identifiable slots — that's priceable context, not a surprise to fade in-running. And the watch-list null is the useful discipline: the intuitive "best games are buried in the heat" connection sounds right and just isn't there, so I checked instead of assuming.
+
+## 15. Winning your group mostly pays, but not in Group C (or A)
+
+For each group I measured the expected opponent Elo over the first two knockout rounds (R32 + projected R16) for the **group winner vs the runner-up**, over 60k sims on the fixed bracket. In 10 of 12 groups winning pays, often by a lot: the winner draws materially weaker early opponents (Portugal **+124**, Argentina **+121**, England **+116** Elo easier). But in **Groups C and A the runner-up's path is the easier one**: Brazil's group winner faces a **~48-Elo-tougher** opening than finishing second, Mexico's about 28. (Group B is a coin-flip.)
+
+**The trader's read.** This is incentive incompatibility (Csató et al.) made concrete: a fixed bracket can reward losing. The magnitudes are modest (a few percent of win-probability over two rounds, not a reason to tank), and it's a first-two-rounds measure, so deeper paths can move it. But it's a real structural quirk: in a couple of groups the "always win your group" cliché is wrong, and a side already safely through could rationally rest players or treat the last group game as the lighter priority. Pro-market framing: the schedule, not any team, creates the edge, and it's identifiable in advance, so it's priceable rather than a scandal.
+
+## 16. The best-third safety net cushions the group of death — the draw really bites the bubble
+
+I measure draw luck on what matters — odds of **reaching the Round of 32** (top two *or* one of the eight best thirds) — by re-running the actual draw 1,500 times under FIFA's real constraints (pots, confederation rules, hosts fixed) and comparing each team's real group to a fair re-draw (Csató 2025 method; a full neutral group-stage sim each re-draw, so the best thirds are picked jointly). The headline is counterintuitive: **the safety net protects the strong**. Senegal, drawn into Group I (France's group of death), saw its odds of *winning* the group fall ~22pp from the draw — but its odds of *advancing* fall just **~7pp (still ~81%)**, because a quality side that finishes third usually grabs a best-third spot. The draw's real victims are the **bubble teams** whose only realistic route is a third place and whose group kills it: **Tunisia −17, Australia −12**. The biggest gift draws went to minnows who landed soft groups: **Bosnia +21, Egypt +17, Czechia +15**.
+
+**The trader's read.** The eight-best-thirds rule is a shock absorber: it makes a brutal draw nearly costless for a strong side (stumble to third, still go through) and concentrates the draw's real impact on the Pot 3–4 bubble, where a third place is the only door. So "group of death" panic is *overpriced* for the favourites and *underpriced* for the minnows — exactly the kind of mispricing an advancement market can carry. As with heat and the group-finish incentive, the edge is structural (the draw plus the format), identifiable in advance.
+
 ---
 
 ## Thread drafts (the public voice)
