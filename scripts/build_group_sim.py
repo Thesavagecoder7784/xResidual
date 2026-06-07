@@ -35,7 +35,7 @@ def main() -> int:
 
     print("simulating the group stage ...")
     fixtures = pd.read_csv(FIXTURES)
-    sim, det = group_sim.simulate(fixtures, res.ratings, params, return_detail=True)
+    sim, det = group_sim.simulate(fixtures, res.ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
 
     # Market reference: Polymarket's P(advance) per team, for a model-vs-market overlay.
     try:

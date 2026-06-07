@@ -38,7 +38,7 @@ def main() -> int:
     ratings = blended_ratings(res.ratings)
 
     print(f"simulating N={N:,} ...")
-    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True)
+    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True, sigma=group_sim.MODEL_SIGMA)
     ko = knockout.simulate(det, out, ratings, return_matchups=True)
     gidx, M, reach = det["gidx"], ko["matchups"], ko["reach"]
 

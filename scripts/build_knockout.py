@@ -30,7 +30,7 @@ def main() -> int:
     print("loading results + Elo + simulating group stage ...")
     res = elo.build_ratings(data.load_results())
     params = baseline.calibrate(res.calib)
-    out, det = group_sim.simulate(pd.read_csv(FIXTURES), res.ratings, params, return_detail=True)
+    out, det = group_sim.simulate(pd.read_csv(FIXTURES), res.ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
 
     print("simulating the knockouts ...")
     ko = knockout.simulate(det, out, res.ratings)

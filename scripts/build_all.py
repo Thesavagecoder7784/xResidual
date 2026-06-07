@@ -37,6 +37,9 @@ MODEL_BUILDERS = [
     ("build_storylines.py", False),
     ("build_lenses.py", False),
     ("build_travel.py", False),
+    ("build_heat.py", False),
+    ("build_incentive.py", False),
+    ("build_drawluck.py", False),
 ]
 MARKET_BUILDERS = [
     ("pull_forecast_data.py", True),    # Polymarket Gamma (live)
