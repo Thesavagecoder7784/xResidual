@@ -231,6 +231,31 @@ actively learning about (high velocity) from those already priced in (flat). Win
 markets are liquid, so this layer is well-supported even where per-match markets are
 not.
 
+### Format-aware tournament simulation, and team-strength uncertainty
+
+The `model/` cards (advancement, third-place lottery and cut-line, decisive games,
+knockout reach, title odds, dream-matchups, the group-finish incentive) come from a
+vectorised Monte Carlo on the §2 baseline: sample every group fixture (Dixon–Coles
+Poisson), rank each group (points → GD → GF), advance the top two plus the eight best
+third-placed teams *jointly*, then play the fixed Round-of-32 → Final bracket (FIFA Annex
+C resolves the third-place slots). Outputs are coherent by construction
+(ΣP(advance) = 32, ΣP(qualify as a third) = 8).
+
+A point-estimate rating treats a team's strength as known exactly, which leaves the
+predictive distribution over-confident at the tails. So each simulation draws a per-team
+strength offset `N(0, σ)`, **held constant across that team's whole tournament** (group
+and knockouts), with **σ = 60 Elo**. σ is fit, not guessed: chosen by out-of-sample
+Ranked Probability Score on ~13k competitive international matches since 2006 (weighted by
+match importance × recency; `scripts/calibrate_sigma.py`), cross-checked against the
+market's favourite concentration (~50) and the Glicko rating-deviation literature (tens of
+Elo for national teams). The match-level RPS surface is flat over σ ≈ 60–80, so the lower,
+market-consistent end is taken — σ's real effect is at the *tournament* level, where it
+correlates a team's matches and widens the tails to a calibrated width.
+
+Two analyses deliberately keep **σ = 0** because they isolate a single effect rather than
+publish a probability forecast: the **value-blend check** (isolating what the *ratings*
+do) and the **draw-luck counterfactual** (isolating what the *draw* does).
+
 ## 8. Team-level color (demoted, descriptive only)
 
 Per-team residual summaries (e.g. "overperformed expectation in 3 of 4 matches,
