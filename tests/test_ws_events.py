@@ -103,14 +103,15 @@ def _ramp_series(jump_ms, base=0.60, post=0.78, lo=-9000, hi=20000, step=200):
 
 
 def test_detect_shocks_finds_the_jump():
-    shocks = we.detect_shocks(_ramp_series(0), min_jump=0.04)
+    # 4s lookback: this synthetic ramp is tick-scale (the production default is 60s).
+    shocks = we.detect_shocks(_ramp_series(0), min_jump=0.04, lookback_ms=4000)
     assert len(shocks) == 1                         # one move, one shock (refractory holds)
     assert shocks[0]["dir"] == "up" and shocks[0]["jump"] > 0.04
 
 
 def test_detect_shocks_ignores_flat():
     flat = [(ms, 0.5) for ms in range(-9000, 20001, 200)]
-    assert we.detect_shocks(flat, min_jump=0.04) == []
+    assert we.detect_shocks(flat, min_jump=0.04, lookback_ms=4000) == []
 
 
 def _venue_events(kal, poly, kt="KX", pa="PA"):
