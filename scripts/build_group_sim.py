@@ -22,6 +22,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim  # noqa: E402
 from pull_forecast_data import ISO, KIT, INK, team_probs  # noqa: E402
+from blend import blended_ratings  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_groupsim.js")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
@@ -35,7 +36,11 @@ def main() -> int:
 
     print("simulating the group stage ...")
     fixtures = pd.read_csv(FIXTURES)
-    sim, det = group_sim.simulate(fixtures, res.ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    # blended (Elo + squad value) ratings: raw Elo is value-blind and mis-rates squad-strong
+    # teams (Finding #10). On advancement it diverged from the market ~8.9pp; the blend halves
+    # that to ~4.4pp and converges on the liquid advance market, so the sim runs on the blend.
+    ratings = blended_ratings(res.ratings)
+    sim, det = group_sim.simulate(fixtures, ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
 
     # Market reference: Polymarket's P(advance) per team, for a model-vs-market overlay.
     try:
@@ -67,30 +72,11 @@ def main() -> int:
                        "grp": r["group"], "p3adv": pc(r["p3adv"]), "p3": pc(r["p3"]),
                        "cum": round(cum, 3)})
 
-    # #1 third-place cut line: points the 8th (last-qualifying) third finishes on.
-    import numpy as np
-    cl = det["cutline"]
-    cutline = [{"pts": int(p), "freq": round(float((cl == p).mean()) * 100, 1)}
-               for p in range(0, 8) if (cl == p).mean() >= 0.001]
-    cut_median = int(np.median(cl))
-
-    # #2 most decisive group games (Schilling leverage): swing in each team's
-    # advancement probability between winning and losing the match.
-    gi, A = det["gidx"], det["adv_mat"]
-    lev = []
-    for (L, t1, t2, sign) in det["matches"]:
-        hw, aw = sign > 0, sign < 0
-        if hw.sum() < 50 or aw.sum() < 50:
-            continue
-        a1, a2 = A[:, gi[t1]], A[:, gi[t2]]
-        sw1 = a1[hw].mean() - a1[aw].mean()
-        sw2 = a2[aw].mean() - a2[hw].mean()
-        lev.append({"grp": L, "t1": t1, "t2": t2,
-                    "iso1": ISO.get(t1, ""), "iso2": ISO.get(t2, ""),
-                    "c1": KIT.get(t1, INK), "c2": KIT.get(t2, INK),
-                    "lev": round((abs(sw1) + abs(sw2)) / 2 * 100, 1)})
-    lev.sort(key=lambda r: -r["lev"])
-    leverage = lev[:12]
+    # card metrics computed in the tested library; the build script only adds presentation
+    cutline, cut_median = group_sim.third_place_cutline(det)   # #1 third-place cut line
+    leverage = [{**g, "iso1": ISO.get(g["t1"], ""), "iso2": ISO.get(g["t2"], ""),  # #2 leverage
+                 "c1": KIT.get(g["t1"], INK), "c2": KIT.get(g["t2"], INK)}
+                for g in group_sim.decisive_games(det, top=12)]
 
     # coherence report (sums are exact by construction of the selection rule)
     print(f"  sum P(advance) = {sum(r['padv'] for r in sim.values()):.2f} (target 32)")
