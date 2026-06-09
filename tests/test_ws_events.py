@@ -132,8 +132,11 @@ def _venue_events(kal, poly, kt="KX", pa="PA"):
 
 def test_auto_lead_lag_recovers_known_lead():
     # Polymarket jumps at t=0, Kalshi follows 1.4s later -> Polymarket should lead.
+    # Sharp synthetic ramp, so use the 4s detection regime (the production default is 60s,
+    # tuned for real goals that reprice gradually).
     ev = _venue_events(_ramp_series(1400), _ramp_series(0))
-    res = we.auto_lead_lag(ev, [{"label": "A vs B", "kalshi": "KX", "poly": "PA"}])
+    res = we.auto_lead_lag(ev, [{"label": "A vs B", "kalshi": "KX", "poly": "PA"}],
+                           lookback_ms=4000)
     assert res[0]["n_events"] == 1
     e = res[0]["events"][0]
     assert e["lead"]["leader"] == "polymarket" and e["lead"]["best_lag_ms"] > 0
