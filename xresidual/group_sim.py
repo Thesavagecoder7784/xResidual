@@ -56,6 +56,42 @@ def _dc_sample(l1: float, l2: float, rho: float, n: int, rng) -> tuple:
     idx = rng.choice(flat.size, size=n, p=flat)
     return idx // (_GMAX + 1), idx % (_GMAX + 1)
 
+
+def _dc_sample_vec(l1, l2, rho: float, rng):
+    """Per-sim Dixon-Coles scorelines where l1, l2 are PER-SIM rate arrays (the
+    team-strength-uncertainty path can't share one joint pmf grid). Plain Poisson
+    proposal, then accept/reject so the four low-score cells carry the DC tau weight
+    (rho<0 lifts 0-0, trims 0-1 and 1-0). This is the same correction the scalar
+    `_dc_sample` applies, so the published (sigma>0) forecast and the sigma=0 diagnostics
+    share one goal model instead of silently diverging on draw rates."""
+    l1 = np.asarray(l1, dtype=float); l2 = np.asarray(l2, dtype=float)
+    g1, g2 = rng.poisson(l1), rng.poisson(l2)
+    if rho == 0.0:
+        return g1, g2
+
+    def _tau(a, b, idx):
+        t = np.ones(len(idx))
+        m = (a == 0) & (b == 0); t[m] = 1.0 - l1[idx[m]] * l2[idx[m]] * rho
+        m = (a == 0) & (b == 1); t[m] = 1.0 + l1[idx[m]] * rho
+        m = (a == 1) & (b == 0); t[m] = 1.0 + l2[idx[m]] * rho
+        m = (a == 1) & (b == 1); t[m] = 1.0 - rho
+        return np.clip(t, 0.0, None)
+
+    # tau_max bounds the DC weight per sim: the 0-0 cell (1-rho*l1*l2) and the 1-1 cell
+    # (1-rho) are the only ones >1 when rho<0. Accept with prob tau/tau_max, resample rest.
+    tau_max = np.maximum(1.0 - rho, 1.0 - rho * l1 * l2)
+    todo = np.ones(len(l1), dtype=bool)
+    for _ in range(64):                      # acceptance ~0.9/iter; cap guards termination
+        idx = np.where(todo)[0]
+        if idx.size == 0:
+            break
+        acc = rng.random(idx.size) < _tau(g1[idx], g2[idx], idx) / tau_max[idx]
+        todo[idx[acc]] = False
+        rej = idx[~acc]
+        if rej.size:
+            g1[rej], g2[rej] = rng.poisson(l1[rej]), rng.poisson(l2[rej])
+    return g1, g2
+
 # Host city -> host nation (Elo-convention name). Cities not listed are in the USA.
 _MX_CITIES = {"Mexico City", "Guadalajara", "Monterrey"}
 _CA_CITIES = {"Toronto", "Vancouver"}
@@ -163,7 +199,7 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
                 sup = params.beta * ((r1 + eps[:, gi] - r2 - eps[:, gj] + adv) / 100.0)
                 l1a = np.clip((tot + sup) / 2.0, LAMBDA_FLOOR, None)
                 l2a = np.clip((tot - sup) / 2.0, LAMBDA_FLOOR, None)
-                g1, g2 = rng.poisson(l1a), rng.poisson(l2a)   # per-sim lambdas (DC omitted here)
+                g1, g2 = _dc_sample_vec(l1a, l2a, rho, rng)   # DC on per-sim lambdas
             else:
                 l1, l2 = _match_lambdas(row.team1, row.team2, row.ground, ratings, params)
                 g1, g2 = _dc_sample(l1, l2, rho, n, rng)
