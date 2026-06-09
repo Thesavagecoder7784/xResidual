@@ -147,6 +147,39 @@ def _rank_key(pts, gd, gf, rng):
     return pts * 1e7 + (gd + 100.0) * 1e3 + gf + rng.random(pts.shape) * 1e-3
 
 
+def decisive_games(detail: dict, top: int = 12, min_count: int = 50) -> list[dict]:
+    """Schilling leverage per group game: the average swing in the two teams'
+    advancement probability between that match being won vs lost. The games whose result
+    moves the qualification picture most (the midtable six-pointers, not glamour ties).
+
+    Operates on the `return_detail=True` output (matches, gidx, adv_mat). Returns
+    [{grp, t1, t2, lev}] sorted descending, `lev` in percentage points. Matches with
+    fewer than `min_count` win or loss sims are skipped (conditional mean too noisy)."""
+    gi, A = detail["gidx"], detail["adv_mat"]
+    out = []
+    for (L, t1, t2, sign) in detail["matches"]:
+        hw, aw = sign > 0, sign < 0
+        if hw.sum() < min_count or aw.sum() < min_count:
+            continue
+        a1, a2 = A[:, gi[t1]], A[:, gi[t2]]
+        sw1 = a1[hw].mean() - a1[aw].mean()      # team1's advance-prob swing, win vs loss
+        sw2 = a2[aw].mean() - a2[hw].mean()      # team2's, the other way
+        out.append({"grp": L, "t1": t1, "t2": t2,
+                    "lev": round((abs(sw1) + abs(sw2)) / 2 * 100, 1)})
+    out.sort(key=lambda r: -r["lev"])
+    return out[:top]
+
+
+def third_place_cutline(detail: dict) -> tuple[list[dict], int]:
+    """The points total the last-qualifying (8th) third finishes on, across sims.
+    Returns (freq, median): freq = [{pts, freq}] (percent, for points with >=0.1% mass),
+    median = the typical cut-line in points."""
+    cl = detail["cutline"]
+    freq = [{"pts": int(p), "freq": round(float((cl == p).mean()) * 100, 1)}
+            for p in range(0, 8) if (cl == p).mean() >= 0.001]
+    return freq, int(np.median(cl))
+
+
 def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: BaselineParams,
              n: int = 40000, seed: int = 7, return_detail: bool = False, rho: float = DC_RHO,
              sigma: float = 0.0):
