@@ -20,3 +20,44 @@ SQUAD_VALUE = {
     "Panama": 30.12, "Iran": 28.24, "Curaçao": 22.51, "Iraq": 18.21, "Qatar": 17.24,
     "Jordan": 16.89,
 }
+
+
+# --- Availability adjustment (Tier-1 model upgrade) ------------------------------
+# Static SQUAD_VALUE assumes the full-strength nation. A confirmed injury, suspension,
+# or selection omission of a top-11-quality player lowers a team's *effective* strength
+# in a way the static value misses — it is what faded Brazil on the Neymar fitness doubt,
+# and what moves a price on squad-announcement day. ABSENCES is a curated, sourced table
+# of such players who are NOT available for the World Cup, in the SAME units as
+# SQUAD_VALUE (£m, Transfermarkt). It doubles as the "missing would-be top-11" covariate
+# (count + value) that a 2026 forecasting model uses to stop overrating depleted squads.
+#
+# DELIBERATELY EMPTY by default: add a row only with a real source + Transfermarkt value,
+# never a guessed one. `status` scales the deduction — "out" counts in full, "doubt"
+# counts DOUBT_WEIGHT (a probable-but-unconfirmed absence). Example row (verify before use):
+#   "Brazil": [{"player": "Neymar", "value": <TM £m>, "status": "doubt",
+#               "source": "<url> YYYY-MM-DD"}],
+DOUBT_WEIGHT = 0.5
+
+ABSENCES: dict[str, list[dict]] = {}
+
+
+def adjusted_squad_value(team: str) -> float:
+    """SQUAD_VALUE minus the (status-weighted) value of absent top-11 players, floored so
+    an over-entered table can never cut a team's value by more than half."""
+    base = SQUAD_VALUE[team]
+    miss = sum(a["value"] * (DOUBT_WEIGHT if a.get("status") == "doubt" else 1.0)
+               for a in ABSENCES.get(team, []))
+    return max(base - miss, base * 0.5)
+
+
+def adjusted_squad_values() -> dict:
+    """The full {team -> value} map with availability applied (identity where no absences
+    are logged, so it is safe to use everywhere SQUAD_VALUE is used)."""
+    return {t: adjusted_squad_value(t) for t in SQUAD_VALUE}
+
+
+def missing_top11(team: str) -> dict:
+    """The 'would-be top-11 missing' covariate: how many such players are out and their
+    combined value. count=0 / value_out=0 when the team is at full strength."""
+    a = ABSENCES.get(team, [])
+    return {"count": len(a), "value_out": round(sum(x["value"] for x in a), 2)}
