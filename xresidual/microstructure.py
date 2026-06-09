@@ -57,7 +57,15 @@ def cross_venue_divergence(panel: pd.DataFrame) -> pd.DataFrame:
 
     `panel` is already aligned by pass (venue_outright_panel floors timestamps).
     Returns long [ts, team, <venue cols...>, divergence] where divergence = max - min
-    across venues that both quoted the team in that pass."""
+    across venues that both quoted the team in that pass.
+
+    Critically, each venue is renormalized over the COMMON set of teams it shares with
+    the other venue in that pass *before* differencing. The panel normalizes each venue
+    over its own field, but the venues list different numbers of teams (Kalshi ~30,
+    Polymarket ~48), so the same team gets a systematically different implied prob purely
+    from the denominator — a phantom divergence. Renormalizing over the shared field makes
+    it apples-to-apples; otherwise the gap (and the forward-test convergence signal built
+    on it) is biased by coverage, not real disagreement."""
     if panel.empty:
         return pd.DataFrame()
     wide = panel.pivot_table(index=["ts", "team"], columns="venue", values="prob")
@@ -67,6 +75,8 @@ def cross_venue_divergence(panel: pd.DataFrame) -> pd.DataFrame:
     wide = wide.dropna(subset=present)  # both venues quoted this team in this pass
     if wide.empty:
         return pd.DataFrame()
+    # renormalize each venue over the common teams in each pass (apples-to-apples)
+    wide[present] = wide.groupby(level="ts")[present].transform(lambda c: c / c.sum())
     wide["divergence"] = wide[present].max(axis=1) - wide[present].min(axis=1)
     return wide.reset_index()
 
@@ -241,14 +251,20 @@ def information_share(price_a, price_b, label_a: str = "a", label_b: str = "b",
         is_b_first = is_first([1, 0])               # b first -> a's lower share = 1 - that
         if is_a_first is not None and is_b_first is not None:
             has_lo, has_hi = sorted([is_a_first, 1.0 - is_b_first])
-    leader = label_a if gg_a >= gg_b else label_b
+    # The VECM information shares are only interpretable if a - b is stationary (the
+    # (1,-1) spread is a genuine error-correction term). On a non-cointegrated pair the
+    # shares are a spurious-regression artifact, so suppress the leader/shares and let the
+    # diagnostic alphas + adf_p stand — a consumer reading gg_a gets None, not a fake lead.
+    spurious = not cointegrated
+    leader = None if spurious else (label_a if gg_a >= gg_b else label_b)
+    rnd = lambda x: None if (spurious or x is None) else round(x, 4)
     return {
         "leader": leader, "label_a": label_a, "label_b": label_b,
-        "gg_a": round(gg_a, 4), "gg_b": round(gg_b, 4),
+        "gg_a": rnd(gg_a), "gg_b": rnd(gg_b),
         "alpha_a": round(alpha_a, 5), "alpha_b": round(alpha_b, 5),
-        "hasbrouck_a_lo": None if has_lo is None else round(has_lo, 4),
-        "hasbrouck_a_hi": None if has_hi is None else round(has_hi, 4),
-        "hasbrouck_a_mid": None if has_lo is None else round((has_lo + has_hi) / 2, 4),
+        "hasbrouck_a_lo": rnd(has_lo),
+        "hasbrouck_a_hi": rnd(has_hi),
+        "hasbrouck_a_mid": None if (spurious or has_lo is None) else round((has_lo + has_hi) / 2, 4),
         "cointegrated": cointegrated,
         "adf_p": None if adf_p is None else round(adf_p, 4),
         "n": int(len(Z)),

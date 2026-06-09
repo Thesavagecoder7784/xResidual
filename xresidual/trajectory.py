@@ -25,13 +25,19 @@ def load_snapshots(data_dir: str) -> pd.DataFrame:
 
     `extra.*` keys are hoisted to top-level columns (market_type, bookmaker, point, …).
     """
-    rows = []
+    rows, bad = [], 0
     for path in sorted(glob.glob(os.path.join(data_dir, "snapshots-*.jsonl"))):
         with open(path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
-                if line:
-                    rows.append(json.loads(line))
+                if not line:
+                    continue
+                try:                          # a torn line (interrupted append) must not
+                    rows.append(json.loads(line))   # abort the whole history load
+                except ValueError:
+                    bad += 1
+    if bad:
+        print(f"  warn: skipped {bad} malformed snapshot line(s)")
     if not rows:
         return pd.DataFrame()
     df = pd.json_normalize(rows)  # extra.market_type, extra.bookmaker, extra.point, ...

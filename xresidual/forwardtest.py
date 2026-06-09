@@ -85,13 +85,17 @@ def run_convergence(div: pd.DataFrame, entry: float = ENTRY, exit: float = EXIT,
                     "reason": "converged" if converged else "expired" if expired else "eod",
                 })
                 del open_pos[team]
-        # open new positions (only if flat and re-armed by a reset below entry)
+        # open new positions (only if flat and re-armed by a reset below entry).
+        # armed defaults to False: a team must be observed below `entry` at least once
+        # before it can open, so we only trade divergences the rule actually saw CROSS the
+        # threshold — never one that was already wide when capture happened to begin (whose
+        # entry gap is an artifact of start time, not a detected divergence).
         for team, gap in cur.items():
             if team in open_pos:
                 continue
             if abs(gap) < entry:
                 armed[team] = True                       # reset: ready to trade again
-            elif armed.get(team, True):
+            elif armed.get(team, False):
                 open_pos[team] = {"entry_ts": ts, "entry_gap": float(gap), "entry_idx": i}
                 armed[team] = False
     return {"trades": trades, "summary": _summary(trades), "equity": _equity(trades)}
