@@ -39,6 +39,33 @@ to 98%. That is the price signature of a real Peru chance or a disallowed goal r
 toward Spain. A 30-minutes-per-snapshot logger would never see it; the millisecond tape
 caught the whole whipsaw.
 
+## What the data showed (goal price-impact)
+
+Beyond *catching* the goals, the tape gives a measured price-impact profile for this market.
+
+| event | Spain win% path | net | what it was |
+|---|---|---|---|
+| Goal 1 (~11') | 84 -> 76 (dip) -> 94 | +9 pp | a goal, after a pre-goal attack dip |
+| Goal 2 (~40') | 94 -> 65 (dip) -> 99 | +6 pp | the chance/VAR moment, then the goal |
+| Goal 3 (~81') | 98 -> 92 -> 99 | +1 pp | late, market already near-certain |
+
+Three things stand out:
+
+- **A favourite's goal is worth roughly +6 to +9 pp of win probability, priced in over
+  ~30 to 60 seconds.** Not instant. This is the direct reason a 4-second shock window
+  missed the goals and a 60-second window catches them.
+- **The chance/VAR moment is quantifiable.** At ~40 minutes Spain round-tripped
+  **94 -> 65 -> 99%** in a couple of minutes: a ~29 pp overshoot-and-unwind as the market
+  reacted to a Peru chance and then corrected. That single event is the most interesting
+  microstructure of the match.
+- **The repricing was permanent.** Spain climbed 84% to 100% and never gave the goals
+  back; the overreaction fade lost on every leg precisely because there was nothing to
+  revert. The market incorporated real information efficiently.
+
+This is N=1 and Polymarket-only, so it is a descriptive case study, not a statistical
+result. The point is the shape: goals reprice gradually, by single-digit-to-low-double-digit
+points for a favourite, and they stick.
+
 ## Two bugs caught before the opener
 
 **1. The goal-detection window was 10x too short.** `detect_shocks` defaulted to a 4-second
@@ -61,9 +88,10 @@ results on June 11.
 ## The overreaction result: correctly, no edge
 
 P10 fades goal overreaction (enter ~2 min after a shock, exit ~6 min later, betting the
-market overshot and reverts). On this match it made small losses across every leg (Spain
--1.5 pp over 7 trades, Draw -4.7 pp, Peru -0.9 pp). **That is the right answer, and it
-validates the surprise-conditioning rather than the edge.**
+market overshot and reverts). On this match it logged 5 fades, all small losses: Spain
+-0.5 pp over 3 trades, Draw -4.0 pp over 2 trades (-4.5 pp total, net of cost). The Peru
+leg never threw a qualifying shock-to-fade, so it logged no trades. **That is the right
+answer, and it validates the surprise-conditioning rather than the edge.**
 
 The reason is in the surprise scores. Spain's goals carried surprise of only **0.05 to
 0.13**: an 84% favourite scoring is exactly what the market expected, so there was nothing
