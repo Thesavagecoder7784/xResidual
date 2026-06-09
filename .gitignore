@@ -248,3 +248,7 @@ viz/render.sh
 writeups/lead-lag.md
 
 /paper/
+# Downloaded source cache + transient availability review (regenerate via fetch_squad_data.py)
+data/cache/
+data/availability_review.md
+data/availability_review.json
