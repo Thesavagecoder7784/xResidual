@@ -47,17 +47,38 @@ def _now_day() -> str:
     return time.strftime("%Y-%m-%d", time.gmtime())
 
 
+def _slug(s: str) -> str:
+    """'Mexico vs South Africa' -> 'mexico-vs-south-africa' (filesystem-safe, short)."""
+    out = "".join(c.lower() if c.isalnum() else "-" for c in s)
+    while "--" in out:
+        out = out.replace("--", "-")
+    return out.strip("-")[:48] or "capture"
+
+
+def _capture_name(label: str | None) -> str:
+    """A per-capture id: UTC start instant + a label slug. The start stamp makes it
+    unique and sortable (lexically latest = latest-started capture), and binding the
+    file to the START instant means a match that runs past UTC midnight stays in ONE
+    file (no day-rollover split) and two simultaneous matches never share a file (no
+    interleaved writes). Sorts after the legacy 'ws-events-YYYY-MM-DD' files."""
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    return f"{stamp}-{_slug(label)}" if label else stamp
+
+
 class Writer:
     """Append-only JSONL with a local-ms timestamp on every event.
 
-    Holds the file open (cheaper than reopening per event during a goal burst) and
-    flushes every line; fsync on control events and at close. Connection control
-    events are logged too, so the analyzer can see venue gaps instead of mistaking a
-    disconnect for a quiet market."""
+    One file PER CAPTURE (named by match + start instant), so concurrent captures of
+    simultaneous matches never append to the same file (no torn interleaved lines) and
+    a single capture never splits across a UTC-day boundary. Holds the file open
+    (cheaper than reopening per event during a goal burst) and flushes every line;
+    fsync on control events and at close. Connection control events are logged too, so
+    the analyzer can see venue gaps instead of mistaking a disconnect for a quiet
+    market."""
 
-    def __init__(self, data_dir: str):
+    def __init__(self, data_dir: str, name: str | None = None):
         os.makedirs(data_dir, exist_ok=True)
-        self.path = os.path.join(data_dir, f"ws-events-{_now_day()}.jsonl")
+        self.path = os.path.join(data_dir, f"ws-events-{name or _now_day()}.jsonl")
         self._f = open(self.path, "a", encoding="utf-8")
         self.n = 0
 
@@ -285,12 +306,13 @@ def discover_outright_markets(env: dict, teams=("Spain", "France", "England")):
     return list(k_by_name.values()), list(p_by_name.values()), pairs
 
 
-def _write_pairs(pairs: list[dict]) -> None:
+def _write_pairs(pairs: list[dict], name: str) -> None:
     """Record the captured cross-venue pairs so the analyzer (scripts/build_leadlag.py)
-    self-configures: no hand-typed tickers, no hand-typed goal time."""
+    self-configures: no hand-typed tickers, no hand-typed goal time. The sidecar shares
+    the capture id with its ws-events file, so loaders pair them unambiguously."""
     if not pairs:
         return
-    path = os.path.join(DATA_DIR, f"ws-pairs-{_now_day()}.jsonl")
+    path = os.path.join(DATA_DIR, f"ws-pairs-{name}.jsonl")
     with open(path, "a", encoding="utf-8") as f:
         for p in pairs:
             f.write(json.dumps({"t": _ms(), **p}, separators=(",", ":")) + "\n")
@@ -300,23 +322,28 @@ def _write_pairs(pairs: list[dict]) -> None:
 async def main_async(args) -> int:
     env = envtools.load_env()
     pairs = []
+    label = None
     if args.match:
         parts = [p.strip() for p in args.match.replace(" vs ", ",").split(",") if p.strip()]
         if len(parts) != 2:
             _log("--match expects 'Team A vs Team B'")
             return 1
+        label = f"{parts[0]} vs {parts[1]}"
         kalshi, poly, pairs = discover_match_markets(env, parts[0], parts[1])
         _log(f"match '{parts[0]} vs {parts[1]}' — kalshi tickers: {kalshi or 'NONE'}")
         _log(f"  polymarket tokens: {len(poly)}" + ("" if poly else " (per-match market not listed yet — Kalshi-only for now)"))
         _log(f"  cross-venue pairs: {len(pairs)}")
     elif args.outright_test:
         kalshi, poly, pairs = discover_outright_markets(env)
+        label = "outright"
         _log(f"outright test — kalshi={kalshi} polymarket={len(poly)} tokens · {len(pairs)} pairs")
     else:
         kalshi = [t for t in (args.kalshi or "").split(",") if t]
         poly = [t for t in (args.polymarket or "").split(",") if t]
-    _write_pairs(pairs)
-    w = Writer(DATA_DIR)
+        label = "manual"
+    name = _capture_name(label)
+    _write_pairs(pairs, name)
+    w = Writer(DATA_DIR, name)
     deadline = time.time() + args.seconds
     tasks = []
     if kalshi and "KALSHI_ACCESS_KEY" in env:
