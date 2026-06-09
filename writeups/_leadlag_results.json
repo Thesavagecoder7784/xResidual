@@ -1,0 +1,30 @@
+{
+  "pairs": [
+    {
+      "label": "Spain",
+      "kalshi": "KXMENWORLDCUP-26-ES",
+      "poly": "4394372887385518214471608448209527405727552777602031099972143344338178308080",
+      "n_events": 0,
+      "events": [],
+      "tape": null
+    },
+    {
+      "label": "England",
+      "kalshi": "KXMENWORLDCUP-26-GB",
+      "poly": "115556263888245616435851357148058235707004733438163639091106356867234218207169",
+      "n_events": 0,
+      "events": [],
+      "tape": null
+    },
+    {
+      "label": "France",
+      "kalshi": "KXMENWORLDCUP-26-FR",
+      "poly": "108233603819467706476318984012158651931658302669301887462181073562758483842092",
+      "n_events": 0,
+      "events": [],
+      "tape": null
+    }
+  ],
+  "pooled": null,
+  "min_jump": 0.04
+}
