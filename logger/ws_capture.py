@@ -21,6 +21,7 @@ import argparse
 import asyncio
 import json
 import os
+import random
 import ssl
 import time
 
@@ -47,19 +48,38 @@ def _now_day() -> str:
 
 
 class Writer:
-    """Append-only JSONL with a local-ms timestamp on every event."""
+    """Append-only JSONL with a local-ms timestamp on every event.
+
+    Holds the file open (cheaper than reopening per event during a goal burst) and
+    flushes every line; fsync on control events and at close. Connection control
+    events are logged too, so the analyzer can see venue gaps instead of mistaking a
+    disconnect for a quiet market."""
 
     def __init__(self, data_dir: str):
         os.makedirs(data_dir, exist_ok=True)
         self.path = os.path.join(data_dir, f"ws-events-{_now_day()}.jsonl")
+        self._f = open(self.path, "a", encoding="utf-8")
         self.n = 0
 
     def write(self, venue: str, etype: str, market: str, data) -> None:
         rec = {"t": _ms(), "venue": venue, "type": etype, "market": market, "data": data}
-        with open(self.path, "a", encoding="utf-8") as f:
-            f.write(json.dumps(rec, separators=(",", ":")) + "\n")
-            f.flush()
+        self._f.write(json.dumps(rec, separators=(",", ":")) + "\n")
+        self._f.flush()
         self.n += 1
+
+    def meta(self, venue: str, event: str, info: str = "") -> None:
+        """Log a capture-control event (connected | disconnected | stale) and fsync, so
+        a venue gap is visible in the tape rather than looking like a silent market."""
+        self.write(venue, f"_capture_{event}", "_meta", {"info": info})
+        os.fsync(self._f.fileno())
+
+    def close(self) -> None:
+        try:
+            self._f.flush()
+            os.fsync(self._f.fileno())
+            self._f.close()
+        except Exception:
+            pass
 
 
 def _log(msg: str) -> None:
@@ -77,26 +97,48 @@ def _kalshi_ws_headers(env: dict) -> dict:
             "KALSHI-ACCESS-SIGNATURE": sig, "KALSHI-ACCESS-TIMESTAMP": ts}
 
 
-async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: float) -> None:
+async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: float,
+                        stale_s: float = 45.0) -> None:
     sub = {"id": 1, "cmd": "subscribe",
            "params": {"channels": ["ticker", "trade", "orderbook_delta"],
                       "market_tickers": tickers}}
     async with websockets.connect(KALSHI_WS, extra_headers=_kalshi_ws_headers(env),
                                   ssl=SSL_CTX, ping_interval=10, ping_timeout=20, max_size=None) as ws:
         await ws.send(json.dumps(sub))
+        w.meta("kalshi", "connected", f"{len(tickers)} tickers")
         _log(f"kalshi subscribed: {len(tickers)} tickers")
-        while time.time() < deadline:
-            try:
-                raw = await asyncio.wait_for(ws.recv(), timeout=1.0)
-            except asyncio.TimeoutError:
-                continue
-            try:
-                m = json.loads(raw)
-            except ValueError:
-                continue
-            msg = m.get("msg", {})
-            market = msg.get("market_ticker") or msg.get("ticker") or "?"
-            w.write("kalshi", m.get("type", "?"), market, msg)
+        last = time.time()
+        last_seq: dict[str, int] = {}          # per-market orderbook sequence
+        try:
+            while time.time() < deadline:
+                try:
+                    raw = await asyncio.wait_for(ws.recv(), timeout=1.0)
+                except asyncio.TimeoutError:
+                    if time.time() - last > stale_s:
+                        raise RuntimeError(f"no data for {stale_s:.0f}s (stale)")
+                    continue
+                last = time.time()
+                try:
+                    m = json.loads(raw)
+                except ValueError:
+                    continue
+                msg = m.get("msg", {})
+                typ = m.get("type", "?")
+                market = msg.get("market_ticker") or msg.get("ticker") or "?"
+                # sequence-gap detection on the order book: a missed delta corrupts the
+                # reconstructed book, so flag it (analyzer can then mask that window).
+                seq = m.get("seq")
+                if seq is not None and market != "?":
+                    if typ == "orderbook_snapshot":
+                        last_seq[market] = seq               # (re)baseline, no gap
+                    elif typ == "orderbook_delta":
+                        prev = last_seq.get(market)
+                        if prev is not None and seq != prev + 1:
+                            w.meta("kalshi", "gap", f"{market} seq {prev}->{seq}")
+                        last_seq[market] = seq
+                w.write("kalshi", typ, market, msg)
+        finally:
+            w.meta("kalshi", "disconnected")
 
 
 # --------------------------------------------------------------------------- #
@@ -111,17 +153,23 @@ async def _poly_pinger(ws, deadline: float) -> None:
         await asyncio.sleep(10)
 
 
-async def polymarket_stream(token_ids: list[str], w: Writer, deadline: float) -> None:
+async def polymarket_stream(token_ids: list[str], w: Writer, deadline: float,
+                            stale_s: float = 45.0) -> None:
     async with websockets.connect(POLY_WS, ssl=SSL_CTX, ping_interval=None, max_size=None) as ws:
         await ws.send(json.dumps({"assets_ids": token_ids, "type": "market"}))
+        w.meta("polymarket", "connected", f"{len(token_ids)} tokens")
         _log(f"polymarket subscribed: {len(token_ids)} tokens")
         pinger = asyncio.ensure_future(_poly_pinger(ws, deadline))
+        last = time.time()
         try:
             while time.time() < deadline:
                 try:
                     raw = await asyncio.wait_for(ws.recv(), timeout=1.0)
                 except asyncio.TimeoutError:
+                    if time.time() - last > stale_s:
+                        raise RuntimeError(f"no data for {stale_s:.0f}s (stale)")
                     continue
+                last = time.time()
                 if raw == "PONG":
                     continue
                 try:
@@ -133,6 +181,7 @@ async def polymarket_stream(token_ids: list[str], w: Writer, deadline: float) ->
                     w.write("polymarket", ev.get("event_type", "?"), market, ev)
         finally:
             pinger.cancel()
+            w.meta("polymarket", "disconnected")
 
 
 # --------------------------------------------------------------------------- #
@@ -141,12 +190,19 @@ async def polymarket_stream(token_ids: list[str], w: Writer, deadline: float) ->
 async def supervise(name: str, factory, deadline: float) -> None:
     backoff = 1.0
     while time.time() < deadline:
+        started = time.time()
         try:
             await factory()
             backoff = 1.0
         except Exception as e:
-            _log(f"{name} dropped ({type(e).__name__}: {str(e)[:80]}) — reconnecting")
-            await asyncio.sleep(min(backoff, 30.0))
+            ran = time.time() - started
+            if ran > 60:                       # a stable run dropped; don't penalise it
+                backoff = 1.0
+            base = min(backoff, 30.0)
+            wait = base / 2 + random.uniform(0, base / 2)   # equal jitter: no reconnect storms
+            _log(f"{name} dropped after {ran:.0f}s ({type(e).__name__}: {str(e)[:80]}) "
+                 f"— reconnecting in {wait:.1f}s")
+            await asyncio.sleep(wait)
             backoff *= 2
 
 
@@ -270,14 +326,19 @@ async def main_async(args) -> int:
     if not tasks:
         _log("nothing to stream — pass --kalshi/--polymarket or --outright-test")
         return 1
-    await asyncio.gather(*tasks)
+    try:
+        await asyncio.gather(*tasks)
+    finally:
+        w.close()
     _log(f"done — {w.n} events written to {os.path.relpath(w.path)}")
     if args.analyze:
-        _log("running lead-lag shock detection on the capture ...")
         import subprocess
         import sys as _sys
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        _log("running lead-lag shock detection on the capture ...")
         subprocess.run([_sys.executable, os.path.join("scripts", "build_leadlag.py")], cwd=root)
+        _log("running goal-overreaction backtest on the capture ...")
+        subprocess.run([_sys.executable, os.path.join("scripts", "overreaction_run.py")], cwd=root)
     return 0
 
 
