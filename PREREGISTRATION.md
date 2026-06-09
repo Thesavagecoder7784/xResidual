@@ -178,9 +178,12 @@ semifinalists vs 4**, ~1.4 champions vs 1). As it matures and results resolve un
 it should converge toward coherence.
 **Metric.** From the daily captured series (`build_elimination.py` -> `_elimination.js`):
 (a) mean per-team overround; (b) the worst slot-sum deviation, e.g. |Σ reach-SF − 4|.
-**Baseline (locked today, 2026-06-08):** overround 27.1%, Σ reach-SF = 6.5, Σ champion = 1.42.
-**PASS** if both (a) and (b) shrink materially from baseline to the market's close. **FAIL**
-if the incoherence persists or widens.
+**Baseline (locked at first commit, 2026-06):** overround 27.1%, Σ reach-SF = 6.5 (so the
+worst slot-sum deviation |Σ reach-SF − 4| = 2.5), Σ champion = 1.42.
+**PASS** if, at the market's close, both (a) the mean per-team overround and (b) the worst
+slot-sum deviation have each fallen **by at least one-third** from baseline (overround
+27.1% → ≤ 18.1%; deviation 2.5 → ≤ 1.67). **PARTIAL** if exactly one clears the one-third
+bar; **FAIL** if neither improves or either widens.
 **Pro-market note.** This predicts the market *becoming* efficient, not that it is "wrong"
 now: a new, thin market learning coherence in real time, time-stamped before it tightened.
 
