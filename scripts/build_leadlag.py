@@ -32,9 +32,11 @@ MIN_JUMP = 0.04  # probability-units move that counts as a shock (~a goal's wort
 
 
 def load_pairs() -> list[dict]:
-    """Cross-venue pairs recorded by ws_capture, de-duplicated by (kalshi, poly)."""
+    """Cross-venue pairs recorded by ws_capture, de-duplicated by (kalshi, poly). Scoped
+    to the LATEST pairs file (current capture day) so stale cross-day tokens can't collide
+    with this match's legs."""
     seen, pairs = set(), []
-    for path in sorted(glob.glob(os.path.join(DATA_DIR, "ws-pairs-*.jsonl"))):
+    for path in sorted(glob.glob(os.path.join(DATA_DIR, "ws-pairs-*.jsonl")))[-1:]:
         with open(path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
