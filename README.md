@@ -24,7 +24,9 @@ It is not a betting model, and it is not an attempt to out-predict the markets. 
 
 ## Findings
 
-Running notes, each framed by the decision it implies, live in [FINDINGS.md](FINDINGS.md). A few are already in before kickoff: Polymarket quotes about 27× Kalshi's depth at the same spread, every title favorite is sell-heavy, the favorite–longshot bias hides in the 1¢ tick, and the "altitude means more goals" idea doesn't survive a look at the data.
+Running notes, each framed by the decision it implies, live in [FINDINGS.md](FINDINGS.md). A few are already in before kickoff: Polymarket quotes about 27× Kalshi's depth at the same spread, every title favorite is sell-heavy, the favorite–longshot bias hides in the 1¢ tick, and the "altitude means more goals" idea doesn't survive a look at the data. The newest: heat's effect is in-play, not in the pre-match goal line, so it becomes a pre-registered second-half test rather than a goals claim (and the "heat moves cards" angle is shelved because the feed carries no cards market).
+
+Before kickoff I locked a set of falsifiable predictions about how these markets will behave — calibration, law of one price, cross-venue lead-lag, sigma-sanity, and the in-play heat test — each with its exact grading rule, in [PREREGISTRATION.md](PREREGISTRATION.md). They get graded in public on July 19, hits and misses both.
 
 Tournament notes (updated weekly):
 
