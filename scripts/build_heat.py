@@ -48,15 +48,38 @@ def tv_mechanism(fixtures) -> dict:
             "euro_extreme_pct": pct(eu_ex, eu), "non_extreme_pct": pct(no_ex, no)}
 
 
+def team_group(fixtures) -> dict:
+    """team -> group letter (A..L), from the group-stage rows."""
+    g = fixtures[fixtures["round"].astype(str).str.contains("Matchday", na=False)]
+    tg = {}
+    for _, m in g.iterrows():
+        letter = str(m.get("group", "")).replace("Group ", "").strip()
+        for t in (m.get("team1"), m.get("team2")):
+            if isinstance(t, str):
+                tg[t] = letter
+    return tg
+
+
 def main() -> int:
     fx = data_fixtures.load_fixtures()
     exp = heat.team_exposure(fx)
+    tg = team_group(fx)
 
     teams = []
     for r in exp:
+        cum, letter = None, tg.get(r["team"])
+        if letter:
+            l1 = heat.path_load(fx, f"1{letter}")   # win the group -> this venue path
+            l2 = heat.path_load(fx, f"2{letter}")   # runner-up path
+            cum = {"group_score": r["score"],
+                   "ko_1st_score": l1["ko_score"], "ko_1st_extreme": l1["ko_extreme"],
+                   "ko_2nd_score": l2["ko_score"], "ko_2nd_extreme": l2["ko_extreme"],
+                   "total_1st": r["score"] + l1["ko_score"],
+                   "total_2nd": r["score"] + l2["ko_score"]}
         teams.append({
             "team": r["team"], "iso": ISO.get(r["team"], ""), "color": KIT.get(r["team"], INK),
             "score": r["score"], "extreme": r["extreme"], "afternoon": r["afternoon"],
+            "group": letter, "cumulative": cum,
             "games": [{"vs": gm["vs"], "iso": ISO.get(gm["vs"], ""), "ground": gm["ground"],
                        "hour": gm["hour"], "risk": gm["risk"]} for gm in r["games"]],
         })
@@ -71,6 +94,7 @@ def main() -> int:
         "fifpro_cities": list(heat.FIFPRO_EXTREME_CITIES),
         "n_zero": sum(1 for t in teams if t["score"] == 0),
         "tv": tv_mechanism(fx),
+        "ko_intensity": heat.stage_intensity(fx),
     }
     for t in teams:
         ensure_flag(t["iso"])
