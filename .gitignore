@@ -246,3 +246,5 @@ viz/render.sh
 
 # Unfinished writeup — un-ignore once the tournament fills in the numbers
 writeups/lead-lag.md
+
+/paper/
