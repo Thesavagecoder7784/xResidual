@@ -52,21 +52,33 @@ FN = [(104, 101, 102)]
 
 
 def _assign(qual: set, slots: list) -> dict:
-    """Match the qualifying third-place groups to the eight third slots, picking the
-    most-constrained slot first (deterministic tie-break). slots: list of
-    (r32_index, allowed_groups). Returns {r32_index -> group letter}."""
-    remaining = set(qual)
-    pending = list(slots)
-    res = {}
-    while pending:
-        pending.sort(key=lambda s: len(remaining & s[1]))
-        idx, allowed = pending.pop(0)
-        opts = remaining & allowed
-        g = min(opts) if opts else (min(remaining) if remaining else None)
-        if g is not None:
-            res[idx] = g
-            remaining.discard(g)
-    return res
+    """Match the eight qualifying third-place groups to the eight third slots, respecting
+    each slot's FIFA Annex-C allowed-groups set as a HARD constraint. slots: list of
+    (r32_index, allowed_groups). Returns {r32_index -> group letter}.
+
+    This is a bipartite perfect matching (slots <-> qualifying groups), solved by
+    augmenting paths (Kuhn's algorithm). A greedy most-constrained-first heuristic is
+    NOT correct: it can paint a later slot into a corner and then assign a group outside
+    the allowed set, which produces an illegal slot and a group-stage rematch (a group
+    winner drawn against the third from its own group). A constraint-respecting matching
+    provably exists for every qualifying set, so there is no legitimate fallback; Kuhn
+    finds it. Most-constrained ordering is kept only to seed the search deterministically."""
+    adj = {idx: sorted(g for g in qual if g in allowed) for idx, allowed in slots}
+    match: dict[str, int] = {}              # group letter -> slot index
+
+    def augment(idx: int, seen: set) -> bool:
+        for g in adj[idx]:
+            if g in seen:
+                continue
+            seen.add(g)
+            if g not in match or augment(match[g], seen):
+                match[g] = idx
+                return True
+        return False
+
+    for idx in sorted(adj, key=lambda i: len(adj[i])):   # fewest options first, deterministic
+        augment(idx, set())
+    return {idx: g for g, idx in match.items()}
 
 
 def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
