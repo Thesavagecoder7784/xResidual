@@ -57,7 +57,7 @@ A single tournament is ~104 matches, so probability claims at the extremes carry
 - `logger/` — append-only price logger across Kalshi / Polymarket / Odds API, plus `ws_capture.py` (real-time websocket capture for the lead–lag work). The live, time-gated capture; runs via `launchd`.
 - `scripts/` — `run_analysis.py` (full report), `make_figures.py`, `build_all.py` (rebuild every card), and the per-card `build_*.py` (which write the simulation and market cards).
 - `viz/` — editorial cards: `model/` (the simulation) and `market/` (market data). The analysis (`scripts/build_*.py`) and the rendered PNGs are public; the card HTML/CSS templates are kept private.
-- `tests/` — 63 unit tests across the math core, calibration, microstructure, pipeline, plots, and lead–lag.
+- `tests/` — 90 unit tests across the math core, calibration, microstructure, pipeline, plots, lead–lag, and the data-integrity guards.
 
 ### Reproduce
 
