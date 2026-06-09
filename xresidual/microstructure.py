@@ -172,6 +172,89 @@ def lead_lag(ob_panel: pd.DataFrame, team: str, max_lag: int = 6) -> dict | None
             "leader": leader, "n_passes": int(len(wide))}
 
 
+def information_share(price_a, price_b, label_a: str = "a", label_b: str = "b",
+                      n_lags: int = 2) -> dict | None:
+    """Price-discovery shares for two venues quoting the same contract (the P6 metric).
+
+    The two de-vigged mid series are cointegrated with the natural vector (1, -1) (same
+    outcome, so a - b is stationary). Fit a bivariate VECM by OLS,
+
+        d a_t = alpha_a (a_{t-1} - b_{t-1}) + lags + e_a
+        d b_t = alpha_b (a_{t-1} - b_{t-1}) + lags + e_b
+
+    and report:
+      - Gonzalo-Granger permanent-component shares (unique, ordering-free):
+            gg_a = alpha_b / (alpha_b - alpha_a),  gg_b = -alpha_a / (alpha_b - alpha_a).
+        The venue that adjusts *less* to the spread (smaller |alpha|) leads discovery.
+      - Hasbrouck information-share bounds for `a` (low/high over the two Cholesky
+        orderings of the residual covariance), plus the midpoint.
+    Returns None if the series are too short or degenerate. Computed on mid-price moves,
+    so it is robust to the ~59% WS trade-direction problem."""
+    a = np.asarray(price_a, dtype=float)
+    b = np.asarray(price_b, dtype=float)
+    n = min(len(a), len(b))
+    if n < n_lags + 12:
+        return None
+    a, b = a[:n], b[:n]
+    # Cointegration guard: the (1,-1) spread must be stationary for the VECM/shares to
+    # mean anything. Test it (ADF) rather than just asserting it; flag if it fails.
+    try:
+        from statsmodels.tsa.stattools import adfuller
+        adf_p = float(adfuller(a - b, autolag="AIC")[1])
+    except Exception:
+        adf_p = None
+    cointegrated = bool(adf_p is not None and adf_p < 0.10)
+    da, db, z = np.diff(a), np.diff(b), a - b      # da[i] is the move into time i+1
+    rows = range(n_lags, len(da))
+    Z, X, Ya, Yb = [], [], [], []
+    for i in rows:
+        Z.append(z[i])                              # error-correction term z_{t-1}
+        feats = []
+        for k in range(1, n_lags + 1):
+            feats += [da[i - k], db[i - k]]
+        X.append(feats)
+        Ya.append(da[i]); Yb.append(db[i])
+    if len(Z) < n_lags + 6:
+        return None
+    D = np.column_stack([np.array(Z), np.array(X), np.ones(len(Z))])
+    ca, *_ = np.linalg.lstsq(D, np.array(Ya), rcond=None)
+    cb, *_ = np.linalg.lstsq(D, np.array(Yb), rcond=None)
+    alpha_a, alpha_b = float(ca[0]), float(cb[0])
+    ea, eb = np.array(Ya) - D @ ca, np.array(Yb) - D @ cb
+    omega = np.cov(np.vstack([ea, eb]))
+    denom = alpha_b - alpha_a
+    if abs(denom) < 1e-12:
+        return None
+    gg_a = alpha_b / denom
+    gg_b = -alpha_a / denom
+    gamma = np.array([gg_a, gg_b])
+    var_cf = float(gamma @ omega @ gamma)
+    has_lo = has_hi = None
+    if var_cf > 0:
+        def is_first(perm):
+            try:
+                m = np.linalg.cholesky(omega[np.ix_(perm, perm)])
+            except np.linalg.LinAlgError:
+                return None
+            return float((gamma[perm] @ m)[0] ** 2 / var_cf)
+        is_a_first = is_first([0, 1])               # a ordered first -> a's upper share
+        is_b_first = is_first([1, 0])               # b first -> a's lower share = 1 - that
+        if is_a_first is not None and is_b_first is not None:
+            has_lo, has_hi = sorted([is_a_first, 1.0 - is_b_first])
+    leader = label_a if gg_a >= gg_b else label_b
+    return {
+        "leader": leader, "label_a": label_a, "label_b": label_b,
+        "gg_a": round(gg_a, 4), "gg_b": round(gg_b, 4),
+        "alpha_a": round(alpha_a, 5), "alpha_b": round(alpha_b, 5),
+        "hasbrouck_a_lo": None if has_lo is None else round(has_lo, 4),
+        "hasbrouck_a_hi": None if has_hi is None else round(has_hi, 4),
+        "hasbrouck_a_mid": None if has_lo is None else round((has_lo + has_hi) / 2, 4),
+        "cointegrated": cointegrated,
+        "adf_p": None if adf_p is None else round(adf_p, 4),
+        "n": int(len(Z)),
+    }
+
+
 def order_book_imbalance(ob_panel: pd.DataFrame) -> pd.DataFrame:
     """Add `obi` = bid_depth / (bid_depth + ask_depth) to an order-book panel.
 

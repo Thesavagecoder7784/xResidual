@@ -22,9 +22,15 @@ import os
 import numpy as np
 
 
-def load_ws_events(data_dir: str) -> list[dict]:
+def load_ws_events(data_dir: str, latest_only: bool = True) -> list[dict]:
+    """Load captured ws-events. By default reads only the most recent ws-events file (the
+    current capture day), so stale events from earlier captures don't inflate aggregate
+    stats or mix into per-match analysis. Pass latest_only=False for the full history."""
     rows = []
-    for path in sorted(glob.glob(os.path.join(data_dir, "ws-events-*.jsonl"))):
+    paths = sorted(glob.glob(os.path.join(data_dir, "ws-events-*.jsonl")))
+    if latest_only:
+        paths = paths[-1:]
+    for path in paths:
         with open(path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
@@ -193,27 +199,130 @@ def detect_shocks(series: list[tuple[int, float]], min_jump: float = 0.04,
     return shocks
 
 
+def max_move_sigma(series: list[tuple[int, float]], bin_ms: int = 1000,
+                   window_bins: int = 1800, min_prior: int = 30) -> dict | None:
+    """The biggest single-bin mid move in z-units vs trailing realized vol (the P8 metric).
+
+    Grids the series at `bin_ms`, takes one-bin returns, and for each bin computes
+    z = |return| / (std of returns over the prior `window_bins`, excluding the move
+    itself). Returns {max_sigma, bin, ret_at_max, n_bins} for the largest z, or None if
+    there isn't enough history. This is the number that debunks "12-sigma" claims: the
+    biggest real in-play shock is usually ~2-3 sigma."""
+    if len(series) < 3:
+        return None
+    t0, t1 = series[0][0], series[-1][0]
+    g = _grid(series, t0, t1, bin_ms)
+    g = g[~np.isnan(g)]
+    if len(g) < min_prior + 2:
+        return None
+    rets = np.diff(g)
+    z = np.full(len(rets), np.nan)
+    for i in range(len(rets)):
+        prior = rets[max(0, i - window_bins):i]
+        if len(prior) >= min_prior:
+            s = float(prior.std())
+            if s > 0:
+                z[i] = abs(rets[i]) / s
+    if np.all(np.isnan(z)):
+        return None
+    j = int(np.nanargmax(z))
+    return {"max_sigma": round(float(z[j]), 2), "bin": j,
+            "ret_at_max": round(float(rets[j]), 4), "n_bins": int(len(g))}
+
+
+# --- Goal-overreaction mean reversion (the candidate trading edge) ---------------- #
+# The literature (Choi & Hui; "Role of Surprise") finds in-play markets OVERREACT to
+# surprising goals: the scoring side is overbet, the price overshoots, then reverts
+# within ~6 min, with a documented ~2-3% edge to betting AGAINST the move ~2 min after.
+# Not a speed game (minutes, not ms). This backtests that fade on our captured mids.
+
+def _value_at(series: list[tuple[int, float]], t_ms: int) -> float | None:
+    """Last mid at or before t_ms (forward-fill). None if t_ms precedes the series."""
+    v = None
+    for t, m in series:
+        if t <= t_ms:
+            v = m
+        else:
+            break
+    return v
+
+
+def overreaction_trade(series, shock: dict, entry_s: int = 120, exit_s: int = 360,
+                       cost: float = 0.005) -> dict | None:
+    """Fade one goal shock: enter `entry_s` after it (betting it reverts), exit `exit_s`
+    after. Fade direction is opposite the shock (short an up-spike, long a down-spike).
+    PnL is in probability units, net of a modeled round-trip `cost`. None if the window
+    runs past the captured series."""
+    t0, jump = shock["t_ms"], shock["jump"]
+    if not series or jump == 0 or t0 + exit_s * 1000 > series[-1][0]:
+        return None                                    # exit runs past the capture
+    p_entry = _value_at(series, t0 + entry_s * 1000)
+    p_exit = _value_at(series, t0 + exit_s * 1000)
+    if p_entry is None or p_exit is None:
+        return None
+    side = -1 if jump > 0 else 1                       # fade the spike
+    reverted = side * (p_exit - p_entry)               # gross reversion captured
+    return {"t_ms": t0, "jump": round(jump, 4), "pre": shock.get("pre"),
+            "p_entry": round(p_entry, 4), "p_exit": round(p_exit, 4),
+            "reverted_pp": round(reverted * 100, 3),
+            "pnl_pp": round((reverted - cost) * 100, 3),
+            "surprise": round(abs(jump) / max(shock.get("pre") or 0.01, 0.01), 2)}
+
+
+def overreaction_backtest(series, min_jump: float = 0.04, entry_s: int = 120,
+                          exit_s: int = 360, cost: float = 0.005,
+                          refractory_ms: int = 30000, min_surprise: float = 0.0,
+                          lookback_ms: int = 60000) -> dict:
+    """Detect goal shocks in one contract's mid series and fade each. `min_surprise`
+    filters to the more-surprising goals (|jump|/pre), where the overreaction is strongest.
+    `lookback_ms` defaults to 60s, not the 4s tick default: prediction markets reprice a
+    goal GRADUALLY over tens of seconds (learned live on Peru-Spain), so a 4s window misses
+    the goal entirely. Returns {trades, summary}."""
+    shocks = detect_shocks(series, min_jump=min_jump, lookback_ms=lookback_ms,
+                           refractory_ms=refractory_ms)
+    trades = []
+    for s in shocks:
+        tr = overreaction_trade(series, s, entry_s, exit_s, cost)
+        if tr and tr["surprise"] >= min_surprise:
+            trades.append(tr)
+    return {"trades": trades, "summary": _ovr_summary(trades)}
+
+
+def _ovr_summary(trades: list[dict]) -> dict:
+    if not trades:
+        return {"n": 0, "total_pnl_pp": 0.0, "hit_rate": None,
+                "mean_reverted_pp": None, "mean_pnl_pp": None, "per_trade_sharpe": None}
+    pnl = np.array([t["pnl_pp"] for t in trades], dtype=float)
+    rev = np.array([t["reverted_pp"] for t in trades], dtype=float)
+    return {"n": len(trades), "total_pnl_pp": round(float(pnl.sum()), 3),
+            "hit_rate": round(float((pnl > 0).mean()), 3),
+            "mean_reverted_pp": round(float(rev.mean()), 3),
+            "mean_pnl_pp": round(float(pnl.mean()), 3),
+            "per_trade_sharpe": round(float(pnl.mean() / pnl.std()), 3) if pnl.std() > 0 else None}
+
+
 def _slice(series, lo, hi):
     return [x for x in series if lo <= x[0] <= hi]
 
 
 def auto_lead_lag(events: list[dict], pairs: list[dict], min_jump: float = 0.04,
                   before_s: int = 10, after_s: int = 20, bin_ms: int = 200,
-                  refractory_ms: int = 30000) -> list[dict]:
+                  refractory_ms: int = 30000, lookback_ms: int = 60000) -> list[dict]:
     """End-to-end: for each {label, kalshi, poly} pair, reconstruct both venues' mids,
     auto-detect shocks (on either venue), and measure the cross-venue lead at each.
 
-    Returns one dict per pair: {label, kalshi, poly, n_events, events:[{t_ms, jump,
-    lead, kalshi_reaction, poly_reaction}], tape}. `tape` is the leadlag_tape.html
-    payload for the cleanest (largest-jump) event. No manual goal time anywhere."""
+    `lookback_ms` defaults to 60s (goals reprice gradually; a 4s window misses them,
+    learned live on Peru-Spain). Returns one dict per pair: {label, kalshi, poly,
+    n_events, events:[{t_ms, jump, lead, kalshi_reaction, poly_reaction}], tape}. `tape`
+    is the leadlag_tape.html payload for the cleanest (largest-jump) event."""
     out = []
     for pr in pairs:
         kt, pa = pr.get("kalshi"), pr.get("poly")
         k = kalshi_mid_series(events, kt) if kt else []
         p = polymarket_mid_series(events, pa) if pa else []
         # detect on both venues, then cluster nearby detections into single events
-        cand = sorted(detect_shocks(k, min_jump, refractory_ms=refractory_ms) +
-                      detect_shocks(p, min_jump, refractory_ms=refractory_ms),
+        cand = sorted(detect_shocks(k, min_jump, lookback_ms=lookback_ms, refractory_ms=refractory_ms) +
+                      detect_shocks(p, min_jump, lookback_ms=lookback_ms, refractory_ms=refractory_ms),
                       key=lambda s: s["t_ms"])
         times = []
         for s in cand:

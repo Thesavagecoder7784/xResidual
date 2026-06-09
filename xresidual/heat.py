@@ -84,3 +84,63 @@ def team_exposure(fixtures) -> list[dict]:
             a["games"].append({"vs": m.get("team2") if t == m.get("team1") else m.get("team1"),
                                "ground": h["ground"], "hour": h["hour"], "risk": h["risk"]})
     return sorted(acc.values(), key=lambda r: (-r["score"], -r["extreme"]))
+
+
+# --- Knockout-stage heat: the schedule doesn't ease off, it intensifies ----------- #
+# The bracket is a fixed tree: R32 slots are coded 1A/2B/3X..., later rounds chain via
+# W<match#>. Venues are slot-assigned, so a team's whole knockout VENUE path is
+# deterministic the moment it finishes 1st/2nd in its group (opponents don't change it).
+
+def knockout_matches(fixtures) -> list[dict]:
+    """Parse knockout fixtures into bracket matches: a 1-based number (W<num> refers to
+    it), the two slot codes (e.g. '1A', '2B', '3C/D/F', 'W74'), and the heat read."""
+    df = fixtures.reset_index(drop=True)
+    out = []
+    for i, m in df.iterrows():
+        if "Matchday" in str(m.get("round", "")):
+            continue
+        h = match_heat(m.get("ground"), m.get("time"))
+        out.append({"num": i + 1, "round": str(m.get("round")),
+                    "slot1": str(m.get("team1")), "slot2": str(m.get("team2")),
+                    "ground": h["ground"], "hour": h["hour"],
+                    "risk": h["risk"], "score": h["score"]})
+    return out
+
+
+def knockout_path(fixtures, start_slot: str) -> list[dict]:
+    """The fixed venue path from `start_slot` (e.g. '1A' or '2A') through the bracket to
+    the final. Deterministic in venue regardless of opponents. Returns matches on path."""
+    kms = knockout_matches(fixtures)
+    cur = next((m for m in kms if start_slot in (m["slot1"], m["slot2"])), None)
+    path, seen = [], set()
+    while cur and cur["num"] not in seen:
+        seen.add(cur["num"]); path.append(cur)
+        win = f"W{cur['num']}"
+        cur = next((m for m in kms if win in (m["slot1"], m["slot2"])), None)
+    return path
+
+
+def path_load(fixtures, start_slot: str) -> dict:
+    """Cumulative knockout heat along a team's win-out bracket path from `start_slot`."""
+    path = knockout_path(fixtures, start_slot)
+    return {"start": start_slot, "rounds": len(path),
+            "ko_score": sum(m["score"] for m in path),
+            "ko_extreme": sum(1 for m in path if m["risk"] == "extreme"),
+            "path": [{"round": m["round"], "ground": m["ground"], "risk": m["risk"]} for m in path]}
+
+
+def stage_intensity(fixtures) -> dict:
+    """Afternoon / extreme-city / both shares, group stage vs knockouts. The structural
+    finding: the dangerous afternoon-in-an-extreme-city share roughly doubles in the KOs."""
+    def stats(sub):
+        n = len(sub)
+        if not n:
+            return {"n": 0}
+        aft = sum(is_afternoon(m.get("time")) for _, m in sub.iterrows())
+        ext = sum(is_extreme_city(m.get("ground")) for _, m in sub.iterrows())
+        both = sum(is_afternoon(m.get("time")) and is_extreme_city(m.get("ground"))
+                   for _, m in sub.iterrows())
+        return {"n": n, "afternoon_pct": round(100 * aft / n),
+                "extreme_pct": round(100 * ext / n), "both_pct": round(100 * both / n)}
+    is_g = fixtures["round"].astype(str).str.contains("Matchday", na=False)
+    return {"group": stats(fixtures[is_g]), "knockout": stats(fixtures[~is_g])}
