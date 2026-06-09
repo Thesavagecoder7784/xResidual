@@ -4,6 +4,8 @@ A living log. Each entry states what the data shows, then *what it would mean to
 
 Pre-tournament snapshot (data accumulating since June 5, 2026). Claims sharpen as the sample grows; small-sample reads are flagged.
 
+**On multiplicity.** These are the survivors of a wider exploratory sweep, and the angles that didn't hold are logged as nulls rather than buried — altitude as a goals edge (#7), heat on the pre-match goal line and on cards (#13, #17), the group-winner watch-list "drama" (#14), and the cross-venue convergence paper-trade (#20). Read the numbered list as the reported set, nulls included, not a cherry-picked highlight reel. The binding, pre-committed tests (with significance and power thresholds set before outcomes) live in [PREREGISTRATION.md](PREREGISTRATION.md); the entries here are descriptive reads on pre-tournament data.
+
 ---
 
 ## 1. Polymarket quotes ~27× the depth of Kalshi, at the same spread
@@ -150,16 +152,16 @@ hook; stated as "most open ever," it's the kind of line that invites a correctio
 Following up on #3: stripping each venue's overround, the de-vigged title prices on
 Polymarket and Kalshi agree to **~0.15pp on average** across the field. The "5–8¢ gap"
 the press quotes is mostly the house margin, not disagreement. Kalshi's overround
-runs ~5.0% vs Polymarket's ~2.6% (~2×), so the durable venue difference is *cost,
+runs ~5.4% vs Polymarket's ~3.0% (~1.8×), so the durable venue difference is *cost,
 not price*. The small belief-gap that does survive is structured by audience: the
 American book (Kalshi) is richer on USA, Mexico, Netherlands; the global book
 (Polymarket) is richer on England, Portugal, Japan, Brazil. Anchored against the
 Betfair Exchange (the sharpest soccer market I log), Polymarket sits marginally
-closer to the sharp line (mean abs error ~0.13pp vs ~0.16pp).
+closer to the sharp line (mean abs error ~0.12pp vs ~0.16pp).
 
 **The trader's read.** Decompose a cross-venue quote into *belief + margin* and almost
 all of the visible gap is margin, so the relative-value trade isn't "buy here, sell
-there" on price, it's recognising that the same exposure costs ~2× the vig on one venue.
+there" on price, it's recognising that the same exposure costs ~1.8× the vig on one venue.
 The residual belief gap is the interesting microstructure: it lines up with who's in the
 room. A primarily-American book pays up for its home region (USA, Mexico) while a global,
 soccer-literate book pays up for traditional powers (England, Portugal) and football-mad
@@ -220,6 +222,12 @@ Comparing the blended model's P(finish 1st) against Polymarket's 12 group-winner
 
 **The trader's read.** This is the favourite-longshot bias again, one layer down. The crowd backs the obvious name to win its group the way it overpays for longshots elsewhere, even when the group is genuinely contested. Group C is the tell: Morocco (a 2022 semifinalist) makes Brazil's first place far from a lock, which is the *same* reason the bracket hands Brazil's runner-up an easier path (#15). So the favourite-to-win-group leg is rich and the strong challenger's leg is cheap. Together with the new elimination market's deep-run overpricing, these are the two places the World Cup markets are visibly soft, and both are the same favourite-overbet instinct showing up in the less-liquid market layers, never in the deep ones (the winner and continent markets are coherent and efficient).
 
+## 20. The cross-venue convergence trade doesn't pay (a null)
+
+The other side of #12. The de-vigged gap being mostly margin (#3, #12) predicts there is *no* arbitrage to harvest from it — so I paper-traded it to check, out-of-sample: when the Polymarket–Kalshi belief gap on a title widens past 1.0pp, go long the cheap venue and short the rich one, exit on convergence below 0.3pp or after 8 passes, net of a 0.5pp modeled round-trip cost. Result over the buildup: **6 trades, −2.6pp total, 0% hit rate, per-trade Sharpe −1.95** (`viz/*/_forwardtest.js`). The gap is real but it doesn't converge enough to clear costs.
+
+**The trader's read.** This is the honest confirmation of #12: the visible gap is the vig, and once you pay the vig to trade it there's nothing left. A negative result, reported as one — the convergence "edge" is a cost illusion, which is exactly what the law-of-one-price finding implied.
+
 ---
 
 ## Thread drafts (the public voice)
@@ -242,7 +250,7 @@ Comparing the blended model's P(finish 1st) against Polymarket's 12 group-winner
 **Thread D, the gap is vig, not disagreement:**
 > The "Kalshi vs Polymarket World Cup gap" is real, but strip each venue's margin and
 > the two crowds agree on every title price to ~0.15pp. The durable difference is *cost*
-> (Kalshi's vig ~2× Polymarket's). What little belief-gap is left? A home-crowd tilt:
+> (Kalshi's vig ~1.8× Polymarket's). What little belief-gap is left? A home-crowd tilt:
 > the US book pays up for USA & Mexico, the global book for England, Portugal, Japan. 🧵
 
 *(Tone: curious, pro-market, specific, humble on sample size. Lead with the number,
