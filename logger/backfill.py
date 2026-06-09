@@ -46,7 +46,7 @@ def _f(x):
         return None
 
 
-def kalshi_rows(env, start, end):
+def kalshi_rows(env, start, end, period_interval=1440):
     mk = venues._kalshi_get(env, "/trade-api/v2/markets",
                             params={"series_ticker": "KXMENWORLDCUP", "limit": 1000}).get("markets", [])
     rows = []
@@ -55,7 +55,7 @@ def kalshi_rows(env, start, end):
         try:
             cs = venues._kalshi_get(
                 env, f"/trade-api/v2/series/KXMENWORLDCUP/markets/{ticker}/candlesticks",
-                params={"start_ts": start, "end_ts": end, "period_interval": 1440},
+                params={"start_ts": start, "end_ts": end, "period_interval": period_interval},
             ).get("candlesticks", [])
         except Exception:
             continue
@@ -67,7 +67,7 @@ def kalshi_rows(env, start, end):
     return rows
 
 
-def polymarket_rows(start, end):
+def polymarket_rows(start, end, fidelity=1440, interval="max"):
     ev = requests.get("https://gamma-api.polymarket.com/events",
                       params={"slug": "world-cup-winner"}, timeout=20).json()
     ev = ev[0] if isinstance(ev, list) and ev else ev
@@ -78,11 +78,11 @@ def polymarket_rows(start, end):
         if not toks:
             continue
         try:
-            # the startTs/endTs+fidelity combo is rejected; use interval=max (daily)
-            # and filter to the window client-side.
+            # startTs/endTs+fidelity is rejected by the API; use a bounded interval
+            # string + fidelity, then filter to the window client-side.
             hist = requests.get("https://clob.polymarket.com/prices-history",
-                                params={"market": toks[0], "interval": "max",
-                                        "fidelity": 1440}, timeout=20).json().get("history", [])
+                                params={"market": toks[0], "interval": interval,
+                                        "fidelity": fidelity}, timeout=20).json().get("history", [])
         except Exception:
             continue
         for pt in hist:
@@ -92,25 +92,36 @@ def polymarket_rows(start, end):
     return rows
 
 
+def _interval_str(days: int) -> str:
+    """Smallest Polymarket interval window that covers `days` (for hourly fidelity)."""
+    return "1d" if days <= 1 else "1w" if days <= 7 else "1m" if days <= 31 else "max"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=21)
+    ap.add_argument("--interval", choices=["daily", "hourly"], default="daily",
+                    help="daily (long trajectory) or hourly (fill recent intraday gaps)")
     args = ap.parse_args()
     env = envtools.load_env()
     now = int(time.time())
     start = now - args.days * 86400
-    print(f"backfilling {args.days}d of outright history ...")
-    rows = polymarket_rows(start, now)
+    period = 60 if args.interval == "hourly" else 1440
+    pm_interval = _interval_str(args.days) if args.interval == "hourly" else "max"
+    out = OUT.replace(".jsonl", "-hourly.jsonl") if args.interval == "hourly" else OUT
+
+    print(f"backfilling {args.days}d of outright history ({args.interval}) ...")
+    rows = polymarket_rows(start, now, fidelity=period, interval=pm_interval)
     print(f"  polymarket: {len(rows)} points")
     if "KALSHI_ACCESS_KEY" in env:
-        kr = kalshi_rows(env, start, now)
+        kr = kalshi_rows(env, start, now, period_interval=period)
         print(f"  kalshi: {len(kr)} points")
         rows += kr
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, separators=(",", ":")) + "\n")
-    print(f"wrote {len(rows)} rows -> {os.path.relpath(OUT)}")
+    print(f"wrote {len(rows)} rows -> {os.path.relpath(out)}")
     return 0
 
 
