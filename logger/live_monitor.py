@@ -28,16 +28,7 @@ SPARK = "▁▂▃▄▅▆▇█"
 
 
 def pairs_by_label() -> dict:
-    m = {}
-    for p in sorted(glob.glob(os.path.join(DATA, "ws-pairs-*.jsonl")))[-1:]:  # latest only
-        with open(p, encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    d = json.loads(line)
-                    if d.get("poly"):
-                        m[d.get("label")] = d["poly"]
-    return m
+    return {p["label"]: p["poly"] for p in we.load_pairs(DATA) if p.get("poly")}
 
 
 def spark(vals, n=46) -> str:
@@ -50,7 +41,7 @@ def spark(vals, n=46) -> str:
 
 
 def frame(labels, pmap) -> str:
-    events = we.load_ws_events(DATA)
+    events = we.load_ws_events(DATA, capture=we.latest_capture(DATA))
     out = ["\033[2J\033[H", f"  PERU vs SPAIN — live capture · {time.strftime('%H:%M:%S')} "
            f"· {len(events):,} events", "  " + "─" * 70]
     for lab in labels:
