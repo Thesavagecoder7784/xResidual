@@ -121,6 +121,35 @@ def main() -> int:
             print(f"  {mark}  {card:<34} {dt:5.1f}s  {('' if ok else '· ' + note)}")
             results.append(("render", card, ok, dt, note))
 
+    # provenance + staleness: stamp the batch, and flag any card data older than a static
+    # input it was built from (the "changed the model, forgot to regenerate a card" check).
+    try:
+        sys.path.insert(0, ROOT)
+        from xresidual import provenance, group_sim, data as _data
+        try:
+            from blend import DEFAULT_W as _W
+        except Exception:
+            _W = None
+        inputs = {
+            "results": getattr(_data, "_CACHE_PATH",
+                               os.path.join(ROOT, "data", "cache", "international_results.csv")),
+            "fixtures": os.path.join(ROOT, "data", "wc2026_fixtures.csv"),
+            "squad_values": os.path.join(ROOT, "scripts", "squad_values.py"),
+        }
+        viz = os.path.join(ROOT, "viz")
+        changed = provenance.inputs_changed_since(viz, inputs)   # vs the PRIOR build's record
+        prov = provenance.stamp(ROOT, inputs=inputs, params={
+            "blend_w": _W, "sigma": group_sim.MODEL_SIGMA, "dc_rho": group_sim.DC_RHO})
+        provenance.write_provenance(viz, prov)                   # then record this build
+        if changed and not args.render_only:
+            note = ", ".join(c["input"] for c in changed)
+            print(f"provenance: viz/_provenance.js · git {prov['git']} · inputs changed since "
+                  f"last build ({note}) — now rebuilt")
+        else:
+            print(f"provenance: viz/_provenance.js · git {prov['git']} · inputs unchanged")
+    except Exception as e:
+        print(f"provenance step skipped: {type(e).__name__}: {e}")
+
     n_ok = sum(1 for *_, ok, _, _ in results if ok)
     n_fail = len(results) - n_ok
     total = sum(dt for *_, dt, _ in results)
