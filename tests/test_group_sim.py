@@ -10,6 +10,7 @@ Run:  python -m pytest tests/test_group_sim.py
 import os
 import sys
 
+import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -56,8 +57,38 @@ def test_equal_strength_group_is_symmetric():
         assert abs(r["p1"] - 0.25) < 0.04           # sampling tolerance
 
 
+def test_decisive_games_leverage_known_answer():
+    # team1's result fully decides A & B's fate (leverage 100pp); C & D advance no matter
+    # what (leverage 0). This pins the Schilling-leverage extraction.
+    n = 200
+    sign = np.array([1] * 100 + [-1] * 100)          # A wins first 100 sims, loses the rest
+    A = np.zeros((n, 4), dtype=bool)
+    A[:, 0] = sign > 0                               # A advances iff it wins
+    A[:, 1] = sign < 0                               # B advances iff it wins
+    A[:, 2] = True                                   # C always advances
+    A[:, 3] = True                                   # D always advances
+    detail = {"gidx": {"A": 0, "B": 1, "C": 2, "D": 3}, "adv_mat": A,
+              "matches": [("X", "A", "B", sign), ("Y", "C", "D", sign)]}
+    lev = group_sim.decisive_games(detail, top=12)
+    by = {(d["t1"], d["t2"]): d["lev"] for d in lev}
+    assert abs(by[("A", "B")] - 100.0) < 1e-6        # outcome fully determines both -> 100pp
+    assert abs(by[("C", "D")] - 0.0) < 1e-6          # both through regardless -> 0pp
+    assert lev[0]["lev"] >= lev[-1]["lev"]           # sorted descending
+
+
+def test_third_place_cutline_known_answer():
+    cl = np.array([3] * 90 + [4] * 8 + [2] * 2)      # cut-line is almost always 3 points
+    freq, median = group_sim.third_place_cutline({"cutline": cl})
+    assert median == 3
+    d = {x["pts"]: x["freq"] for x in freq}
+    assert abs(d[3] - 90.0) < 1e-6 and abs(d[4] - 8.0) < 1e-6
+    assert abs(sum(x["freq"] for x in freq) - 100.0) < 0.2
+
+
 if __name__ == "__main__":
     test_advancement_sums_are_exact()
     test_finish_places_are_a_distribution()
     test_equal_strength_group_is_symmetric()
+    test_decisive_games_leverage_known_answer()
+    test_third_place_cutline_known_answer()
     print("ok")
