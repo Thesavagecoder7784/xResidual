@@ -194,6 +194,32 @@ I measure draw luck on what matters — odds of **reaching the Round of 32** (to
 
 **The trader's read.** The eight-best-thirds rule is a shock absorber: it makes a brutal draw nearly costless for a strong side (stumble to third, still go through) and concentrates the draw's real impact on the Pot 3–4 bubble, where a third place is the only door. So "group of death" panic is *overpriced* for the favourites and *underpriced* for the minnows — exactly the kind of mispricing an advancement market can carry. As with heat and the group-finish incentive, the edge is structural (the draw plus the format), identifiable in advance.
 
+## 17. Heat's real effect is in-play, not in the pre-match goal line
+
+Following #13/#14. The sports-science literature is consistent that heat's robust effect on football is physical and in-play: players cover less ground and reduce their second-half workload in the heat (documented back to the 2014 Brazil World Cup), while the effect on shots and goals is weak and contested (some studies even find attacking efficiency *rises* in warmth). That matches what the pre-match data showed here: no clean heat signal in implied total goals. So the sharp version of the heat question isn't "does the market underprice goals in hot games" (a null), it's in-play: do extreme-heat afternoon games slow in the second half — fewer goals after the 75th minute, and does the live total drift toward the under faster than in cool games?
+
+I pre-registered this as **P9** (graded Jul 19): late-goal rate plus second-half in-play total drift, extreme-heat afternoon games vs the rest. It is underpowered by construction (~9 extreme-heat afternoon games), so it will most likely resolve inconclusive. It is a falsifiable *test* of the in-play channel, not a claim.
+
+I also checked the adjacent "heat moves cards, not goals" angle (cards-per-foul rises with temperature in the literature). **Not pursuable here:** the Odds API feed I log carries only h2h, totals, spreads, and outrights — no cards/bookings market — so there is no data to test it without a new source.
+
+**The trader's read.** This is the disciplined progression of a null. Pre-match, heat is exposure, not an edge (#13). The one place it could still bite is in-running, the second-half slowdown, and that is exactly where the in-play capture can test it, live, on a pre-committed rule. Reporting the mechanism honestly — and the data gap that kills the cards angle — beats forcing a goals story the evidence does not support.
+
+## 18. The heat schedule doesn't ease off in the knockouts, it intensifies
+
+A natural worry: do the heat-drawn teams carry that load into the knockouts? Two separate things, and only one is clean. **The schedule is the clean one.** Every knockout slot's venue and kickoff time is already fixed, so this is deterministic, not a forecast: the dangerous afternoon-in-an-extreme-city share **roughly doubles** from the group stage to the knockouts (**14% → 28%**), with afternoon kickoffs rising 38% → 56% and extreme-heat cities 36% → 47%. Even the semi-finals (Dallas 14:00, Atlanta 15:00) and the final (New York 15:00) are afternoon slots. Same mechanism as the group stage (US afternoon = global/European prime-time TV), plus it is early-mid July by then, hotter than mid-June.
+
+Because the bracket is a fixed tree of venue-assigned slots, a team's entire knockout venue path is set the moment it finishes 1st or 2nd in its group. Summing group plus win-out-path heat, the heaviest total loads fall on **Netherlands and Argentina** (each with two extreme-heat knockout games on the path).
+
+The cumulative-*fatigue* claim (heat-laden teams underperform later) is the weaker story: it is confounded with team strength (the heat-exposed sides are mostly strong Europeans who advance anyway), the literature supports per-match slowdown rather than cross-match carryover, and the sample is tiny. So cumulative load is reported as exposure, never as a claimed edge.
+
+**The trader's read.** The heat story has an arc: the group stage is who drew the hard schedule, and the knockouts are where the tax intensifies and compounds on the deep-running (mostly European) sides. It stays exposure, identifiable in advance, never a model input. The honest output maps who carries the most heat into each round; it does not claim heat decides the knockouts.
+
+## 19. The market overbets favourites to win their group
+
+Comparing the blended model's P(finish 1st) against Polymarket's 12 group-winner markets, the clear favourite is systematically overpriced to top its group and the second-tier team underpriced. **Germany to win Group E is ~68% in the market vs ~50% in the model; Brazil to win Group C is ~72% vs ~57%** — while the strong challengers are cheap: Morocco (Group C) **20% vs 32%**, Ecuador (Group E) **22% vs 32%**. (The host cases, Canada and Switzerland in Group B, are left out: that gap is a home-advantage modelling disagreement, not a clean bias.)
+
+**The trader's read.** This is the favourite-longshot bias again, one layer down. The crowd backs the obvious name to win its group the way it overpays for longshots elsewhere, even when the group is genuinely contested. Group C is the tell: Morocco (a 2022 semifinalist) makes Brazil's first place far from a lock, which is the *same* reason the bracket hands Brazil's runner-up an easier path (#15). So the favourite-to-win-group leg is rich and the strong challenger's leg is cheap. Together with the new elimination market's deep-run overpricing, these are the two places the World Cup markets are visibly soft, and both are the same favourite-overbet instinct showing up in the less-liquid market layers, never in the deep ones (the winner and continent markets are coherent and efficient).
+
 ---
 
 ## Thread drafts (the public voice)
