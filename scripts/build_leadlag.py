@@ -31,26 +31,6 @@ RESULTS_OUT = os.path.join(ROOT, "writeups", "_leadlag_results.json")
 MIN_JUMP = 0.04  # probability-units move that counts as a shock (~a goal's worth)
 
 
-def load_pairs() -> list[dict]:
-    """Cross-venue pairs recorded by ws_capture, de-duplicated by (kalshi, poly). Scoped
-    to the LATEST pairs file (current capture day) so stale cross-day tokens can't collide
-    with this match's legs."""
-    seen, pairs = set(), []
-    for path in sorted(glob.glob(os.path.join(DATA_DIR, "ws-pairs-*.jsonl")))[-1:]:
-        with open(path, encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                p = json.loads(line)
-                key = (p.get("kalshi"), p.get("poly"))
-                if key != (None, None) and key not in seen:
-                    seen.add(key)
-                    pairs.append({"label": p.get("label", ""), "kalshi": p.get("kalshi"),
-                                  "poly": p.get("poly")})
-    return pairs
-
-
 def tape_config(pair_result: dict) -> dict | None:
     """Turn the largest event of one pair into the leadlag_tape.html CONFIG."""
     evs = pair_result["events"]
@@ -69,8 +49,9 @@ def tape_config(pair_result: dict) -> dict | None:
 
 
 def main() -> int:
-    events = we.load_ws_events(DATA_DIR)
-    pairs = load_pairs()
+    cap = we.latest_capture(DATA_DIR)        # events + pairs from the SAME capture
+    events = we.load_ws_events(DATA_DIR, capture=cap)
+    pairs = we.load_pairs(DATA_DIR, capture=cap)
     if not events:
         print("no ws-events yet — capture a match first:\n"
               "  python logger/ws_capture.py --match 'Team A vs Team B' --seconds 9000 --analyze")

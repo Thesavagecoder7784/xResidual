@@ -14,15 +14,22 @@ from __future__ import annotations
 import numpy as np
 
 from xresidual import elo, wc2026_teams
-from squad_values import SQUAD_VALUE
+from squad_values import SQUAD_VALUE, adjusted_squad_values
 
 DEFAULT_W = 0.4
 
 
-def blended_ratings(elo_ratings: dict, w: float = DEFAULT_W, teams=None) -> dict:
+def blended_ratings(elo_ratings: dict, w: float = DEFAULT_W, teams=None,
+                    availability: bool = False) -> dict:
+    """Blend Elo with squad value. `availability=True` uses availability-adjusted squad
+    values (SQUAD_VALUE minus injured/absent top-11 players, see squad_values.ABSENCES)
+    instead of the static full-strength value. Default False keeps the published model on
+    the static value until the ABSENCES table carries real, sourced squad-announcement
+    data — an empty table makes the two identical, so turning it on is harmless."""
     teams = sorted(teams or wc2026_teams.WC2026_TEAMS)
+    values = adjusted_squad_values() if availability else SQUAD_VALUE
     et = np.array([elo_ratings.get(wc2026_teams.elo_name(t), elo.INIT_RATING) for t in teams])
-    vt = np.log10(np.array([SQUAD_VALUE[t] for t in teams], dtype=float))
+    vt = np.log10(np.array([values[t] for t in teams], dtype=float))
     ez = (et - et.mean()) / et.std()
     vz = (vt - vt.mean()) / vt.std()
     br = et.mean() + (w * ez + (1 - w) * vz) * et.std()
