@@ -22,21 +22,79 @@ import os
 import numpy as np
 
 
-def load_ws_events(data_dir: str, latest_only: bool = True) -> list[dict]:
-    """Load captured ws-events. By default reads only the most recent ws-events file (the
-    current capture day), so stale events from earlier captures don't inflate aggregate
-    stats or mix into per-match analysis. Pass latest_only=False for the full history."""
-    rows = []
+def _capture_suffix(path: str, prefix: str) -> str:
+    """'…/ws-events-20260611T1900Z-mex-rsa.jsonl' -> '20260611T1900Z-mex-rsa'."""
+    base = os.path.basename(path)
+    return base[len(prefix):-len(".jsonl")] if base.startswith(prefix) else base
+
+
+def latest_capture(data_dir: str) -> str | None:
+    """Suffix (capture id) of the most recent ws-events file, or None. Each capture
+    writes its OWN file keyed by match+start instant, so the lexically-last file is the
+    latest-started capture and its events never mix with another match's. Both the
+    events file and its ws-pairs sidecar share this suffix, so callers load a matched
+    pair with load_ws_events(..., capture=cap) + load_pairs(..., capture=cap)."""
+    paths = sorted(glob.glob(os.path.join(data_dir, "ws-events-*.jsonl")))
+    return _capture_suffix(paths[-1], "ws-events-") if paths else None
+
+
+def _read_jsonl(path: str) -> list[dict]:
+    """Parse a JSONL file, skipping any torn/partial line rather than letting one bad
+    record abort the whole load. (Concurrent appends from simultaneous captures used to
+    write to one shared file and could interleave mid-line; files are now per-capture,
+    but the guard stays so a single corrupt byte never kills the analysis.)"""
+    rows, bad = [], 0
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except ValueError:
+                bad += 1
+    if bad:
+        print(f"  warn: skipped {bad} malformed line(s) in {os.path.basename(path)}")
+    return rows
+
+
+def load_ws_events(data_dir: str, capture: str | None = None,
+                   latest_only: bool = True) -> list[dict]:
+    """Load captured ws-events. With `capture` set, reads exactly that capture's file
+    (the safe path — pair it with load_pairs(capture=...)). Otherwise reads only the most
+    recent capture (latest_only=True) so stale events from earlier matches can't mix in,
+    or the full history with latest_only=False. Torn lines are skipped, not fatal."""
+    if capture is not None:
+        path = os.path.join(data_dir, f"ws-events-{capture}.jsonl")
+        return _read_jsonl(path) if os.path.exists(path) else []
     paths = sorted(glob.glob(os.path.join(data_dir, "ws-events-*.jsonl")))
     if latest_only:
         paths = paths[-1:]
+    rows = []
     for path in paths:
-        with open(path, encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    rows.append(json.loads(line))
+        rows.extend(_read_jsonl(path))
     return rows
+
+
+def load_pairs(data_dir: str, capture: str | None = None) -> list[dict]:
+    """Cross-venue pairs recorded by ws_capture, de-duplicated by (kalshi, poly).
+    Scoped to one capture (the matching ws-pairs sidecar), so a match's legs can never
+    collide with another capture's tokens. `capture` defaults to the latest capture."""
+    if capture is None:
+        capture = latest_capture(data_dir)
+    if capture is None:
+        return []
+    path = os.path.join(data_dir, f"ws-pairs-{capture}.jsonl")
+    if not os.path.exists(path):
+        return []
+    seen, pairs = set(), []
+    for p in _read_jsonl(path):
+        key = (p.get("kalshi"), p.get("poly"))
+        if key != (None, None) and key not in seen:
+            seen.add(key)
+            pairs.append({"label": p.get("label", ""), "kalshi": p.get("kalshi"),
+                          "poly": p.get("poly")})
+    return pairs
 
 
 def _f(x):
@@ -102,20 +160,30 @@ def polymarket_mid_series(events: list[dict], asset_id: str) -> list[tuple[int, 
     return out
 
 
-def _grid(series: list[tuple[int, float]], t0: int, t1: int, bin_ms: int) -> np.ndarray:
-    """Last value per bin, forward-filled across the [t0, t1] grid."""
+def _grid(series: list[tuple[int, float]], t0: int, t1: int, bin_ms: int,
+          max_gap_ms: int | None = None) -> np.ndarray:
+    """Last value per bin, forward-filled across the [t0, t1] grid.
+
+    `max_gap_ms` caps the forward-fill: bins more than that long after the last real
+    observation stay NaN. This matters because a venue disconnect (logged as a
+    _capture_disconnected meta event, with no price ticks until reconnect) would
+    otherwise be filled with a flat pre-disconnect price — fabricating a steady mid that
+    fakes lead-lag and a fake reconnect jump. Beyond the cap we'd rather have a hole the
+    correlation/vol step masks out than invented data. None = unlimited (legacy)."""
     n = max(1, (t1 - t0) // bin_ms + 1)
     g = np.full(n, np.nan)
     for t, v in series:
         i = min(n - 1, (t - t0) // bin_ms)
         g[i] = v
-    # forward fill
-    last = np.nan
+    max_bins = None if max_gap_ms is None else max(1, max_gap_ms // bin_ms)
+    last, gap = np.nan, 0
     for i in range(n):
         if np.isnan(g[i]):
-            g[i] = last
+            gap += 1
+            if not np.isnan(last) and (max_bins is None or gap <= max_bins):
+                g[i] = last
         else:
-            last = g[i]
+            last, gap = g[i], 0
     return g
 
 
@@ -139,16 +207,18 @@ def event_window(events: list[dict], kalshi_ticker: str, poly_asset: str,
 
 
 def lead_lag_ms(series_kalshi, series_poly, bin_ms: int = 1000,
-                max_lag_ms: int = 10000) -> dict | None:
+                max_lag_ms: int = 10000, max_gap_ms: int = 5000) -> dict | None:
     """Cross-correlate binned mid-changes; report which venue leads, in ms.
 
-    Positive lag => Polymarket leads Kalshi. Needs both series to actually move."""
+    Positive lag => Polymarket leads Kalshi. Needs both series to actually move.
+    `max_gap_ms` caps the forward-fill so a venue disconnect is masked out (NaN), not
+    forward-filled into a flat line that would fake a lead."""
     if len(series_kalshi) < 3 or len(series_poly) < 3:
         return None
     t0 = min(series_kalshi[0][0], series_poly[0][0])
     t1 = max(series_kalshi[-1][0], series_poly[-1][0])
-    gk = np.diff(_grid(series_kalshi, t0, t1, bin_ms))
-    gp = np.diff(_grid(series_poly, t0, t1, bin_ms))
+    gk = np.diff(_grid(series_kalshi, t0, t1, bin_ms, max_gap_ms))
+    gp = np.diff(_grid(series_poly, t0, t1, bin_ms, max_gap_ms))
     mask = ~(np.isnan(gk) | np.isnan(gp))
     gk, gp = gk[mask], gp[mask]
     max_lag = max_lag_ms // bin_ms
@@ -177,9 +247,13 @@ def lead_lag_ms(series_kalshi, series_poly, bin_ms: int = 1000,
 # analysis finds the shocks itself instead of relying on a hand-typed goal time.
 
 def detect_shocks(series: list[tuple[int, float]], min_jump: float = 0.04,
-                  lookback_ms: int = 4000, refractory_ms: int = 30000) -> list[dict]:
+                  lookback_ms: int = 60000, refractory_ms: int = 30000) -> list[dict]:
     """Times where the mid moved >= `min_jump` (probability units) within `lookback_ms`.
 
+    `lookback_ms` defaults to 60s, matching the callers (overreaction_backtest,
+    auto_lead_lag): prediction markets reprice a goal GRADUALLY over tens of seconds
+    (learned live on Peru-Spain), so a 4s window misses the goal. Pass a small lookback
+    only for tick-scale synthetic tests.
     `refractory_ms` suppresses re-triggering on the same move (one goal = one shock).
     Returns [{t_ms, pre, post, jump, dir}], earliest first."""
     if len(series) < 2:
@@ -211,7 +285,9 @@ def max_move_sigma(series: list[tuple[int, float]], bin_ms: int = 1000,
     if len(series) < 3:
         return None
     t0, t1 = series[0][0], series[-1][0]
-    g = _grid(series, t0, t1, bin_ms)
+    # cap the ffill so a disconnect gap is dropped, not turned into a fake 0-then-jump
+    # return that would inflate the max-sigma figure this metric exists to debunk.
+    g = _grid(series, t0, t1, bin_ms, max_gap_ms=5 * bin_ms)
     g = g[~np.isnan(g)]
     if len(g) < min_prior + 2:
         return None
