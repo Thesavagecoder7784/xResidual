@@ -228,6 +228,22 @@ The other side of #12. The de-vigged gap being mostly margin (#3, #12) predicts 
 
 **The trader's read.** This is the honest confirmation of #12: the visible gap is the vig, and once you pay the vig to trade it there's nothing left. A negative result, reported as one — the convergence "edge" is a cost illusion, which is exactly what the law-of-one-price finding implied.
 
+## 21. The market is sharp where it's liquid — and where we disagree, it's usually us
+
+The favourite-longshot threads (#6, #11, #19) and the reach-round check are really one question, so I scanned it systematically: our model's probability against the de-vigged market for **238 contracts across five layers**, from the deepest liquid market to the thinnest structural one. The mean |model − market| gap, by layer:
+
+| layer | depth | mean abs gap | verdict |
+|---|---|---|---|
+| Winner | deepest / most liquid | **0.4pp** | efficient — model agrees with the sharp market |
+| Advance (R32) | liquid | 4.3pp | **our model, not the market** (see below) |
+| Reach QF | thinner | 3.3pp | thin-market softness (partly model tilt) |
+| Reach SF | thin | 1.9pp | thin-market softness (partly model tilt) |
+| Champion (elimination mkt) | thinnest / newest | 1.0pp | favourite overpricing (#11), partly model tilt |
+
+Two things make this more than a chart. First, the **winner market is efficient** — our model and the market agree to under half a point — which is the control that says the divergences elsewhere aren't just the model being biased everywhere. Second, I refused to take the biggest gap at face value: the **advance-layer** divergence (our model says minnows like Tunisia and South Africa advance ~26% vs the market's ~37%) was adjudicated against an **independent third source, the bookmakers' de-vigged match odds**. Bookmakers rate those teams *higher* than our model too (Tunisia expected group points 2.45 vs our 1.92; South Africa 2.57 vs 1.89), siding with the market. So that gap is **our model under-rating minnow advancement in the generous 48-team format — not market softness.** The same event drives it home: "champion" prices efficiently in the liquid winner market but is overpriced in the thin elimination market.
+
+**The trader's read.** This is the synthesis of half the findings into one term structure, and the headline is pro-market: the World Cup market is **hard to beat wherever there's liquidity**, and the only genuinely soft corners are thin, new, or structural — the favourite deep-run overpricing (the held Morocco/Türkiye-back, Brazil-deep-run-fade legs), sized small and caveated. The contribution isn't a basket of edges; it's the **scanner** (`xresidual/mispricing.py`, auditable, tested) plus the discipline it enforces — we scanned every layer for an edge, checked our own signals against an independent source, and reported honestly that the market mostly won.
+
 ---
 
 ## Thread drafts (the public voice)

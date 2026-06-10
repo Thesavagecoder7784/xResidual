@@ -1,17 +1,19 @@
-# Paper book — 2026-06-09 17:58Z
+# Paper book — 2026-06-09 23:19Z
 
-**Money in:** $400  ·  **Open:** 4  ·  **Closed:** 0
+**Money in:** $600  ·  **Open:** 6  ·  **Closed:** 0
 
 ## Open positions
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
 | 1 | YES | france elim / Champion | 100 | 0.150 | 0.160 | 106.7 | +6.7 |
-| 2 | NO | germany elim / Champion | 100 | 0.895 | 0.900 | 100.6 | +0.6 |
+| 2 | NO | germany elim / Champion | 100 | 0.895 | 0.905 | 101.1 | +1.1 |
 | 3 | YES | team-to-advance-to-knockout-stages / Senegal | 100 | 0.720 | 0.705 | 97.9 | -2.1 |
 | 4 | NO | group-c-winner / Brazil | 100 | 0.280 | 0.285 | 101.8 | +1.8 |
+| 5 | YES | nation-to-reach-quarterfinals / Morocco | 100 | 0.220 | 0.220 | 100.0 | +0.0 |
+| 6 | YES | nation-to-reach-quarterfinals / Turkiye | 100 | 0.230 | 0.230 | 100.0 | -0.0 |
 
-**Unrealized P&L:** +6.9  (on $400 open)
+**Unrealized P&L:** +7.5  (on $600 open)
 
 ## Closed positions
 
@@ -21,4 +23,4 @@ _none yet_
 
 ## Total
 
-money in **$400**  ·  unrealized **+6.9**  ·  realized **+0.0**  ·  **combined +6.9**
+money in **$600**  ·  unrealized **+7.5**  ·  realized **+0.0**  ·  **combined +7.5**

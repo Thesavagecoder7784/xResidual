@@ -1,6 +1,6 @@
 # Why each position — the theses
 
-Four paper positions, each expressing a *different* documented finding. All are either
+Six paper positions, each expressing a documented finding. All are either
 model-light (anchored to a liquid market) or structurally grounded, and all sit on the two
 market layers where we actually found inefficiency: the **new, thin elimination/group
 markets** and the **structural format quirks** the crowd underweights. The deep, liquid
@@ -53,7 +53,40 @@ result can swing it), so a correct edge still has noisy realization.
 
 ---
 
-**Book construction.** Four trades, four findings, deliberately not correlated punts —
-note #1 (France long) and #2 (Germany short) are opposite sides of "who wins the Cup," which
-mildly offsets. None of this is real money (F-1); it's a timestamped record of theses and how
-they resolve.
+## #5 — Morocco to reach the quarter-finals (YES @ 0.22) · #6 — Türkiye to reach the QF (YES @ 0.23)
+
+**Why.** The favourite-longshot bias doesn't stop at the group-winner market — it runs through
+*every* deep-run layer. Cross-referencing our format-aware sim's reach-round probabilities
+against Polymarket's reach markets, the marquee favourites are **overpriced** to go deep
+(Brazil reach-SF: market 31.5% vs model 21%) while the strong challengers are **underpriced**:
+Morocco reach-QF model **26%** vs market **22%**, Türkiye **26%** vs **23%**. Same bias, flipped
+side. The mechanism is the easy-path logic: a challenger who advances (often as runner-up, e.g.
+Morocco behind Brazil in Group C) draws a softer route than the overbet favourite, and the
+market doesn't fully price that. **Important:** the bet is on reaching the QF *regardless of
+group finish* — it does NOT require Morocco to finish 2nd. The runner-up route is one path
+that contributes, not a precondition, so this is not a conditional wager on a specific Group C
+outcome. The load-bearing reason is simply that Morocco is **underrated for a deep run**, which
+holds whether it finishes 1st or 2nd. *Verified by decomposition:* model P(reach QF) is
+**29.6% as group winner** (hard path) vs **32.3% as runner-up** (easy path) — the easy-2nd
+route is worth only ~3pp, so the +4pp edge over the market is team-quality-driven and robust
+to however Group C resolves (it does not depend on the Brazil/#4 outcome).
+**Edge:** challenger deep-run underpriced — the same favourite-overbet instinct confirmed
+independently across **three** market layers: group-winner (#19), reach-round (this), and the
+elimination market (#11). That cross-layer consistency is what makes it a real soft spot, not
+model noise.
+**Risk:** model-vs-market gaps assume our model is right; the gross edge is thin (~3–4pp, ~2–3pp
+net of cost), and the reach markets are less liquid than the winner market (which is *why* the
+bias survives there). Hosts (Mexico, Canada) deliberately excluded — their gaps are confounded
+by home advantage. reach-QF chosen over reach-SF: bigger measured gap, lower variance.
+
+---
+
+**Book construction.** Six trades, several findings, deliberately not correlated punts. #1
+(France long) and #2 (Germany short) are opposite sides of "who wins the Cup," which mildly
+offsets. #4 (Brazil-wins-group NO) and #5/#6 (challengers reach-QF) exploit the *same*
+favourite-longshot bias in *two different markets* — but they are NOT the same bet: they're
+mildly **negatively** correlated in the Group C dimension (Morocco topping the group wins #4
+yet hands Morocco the harder route, trimming #5), which **reduces** book variance rather than
+cancelling edge. Expected value is linear, so two individually +EV bets stay +EV held together
+regardless of that correlation. None of this is real money (F-1); it's a timestamped record of
+theses and how they resolve.
