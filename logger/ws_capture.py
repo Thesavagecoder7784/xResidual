@@ -39,6 +39,19 @@ POLY_WS = "wss://ws-subscriptions-clob.polymarket.com/ws/market"
 SSL_CTX = ssl.create_default_context(cafile=certifi.where())
 
 
+def _ws_connect(url, headers, **kw):
+    """websockets.connect that works across the v14 header-kwarg rename.
+
+    The per-request header kwarg was `extra_headers` through websockets 13 and was
+    renamed `additional_headers` in 14+. An unknown kwarg raises TypeError at the
+    (synchronous) connect-object construction, so we try the new name first and fall
+    back to the old one — keeping the logger runnable on either pinned version."""
+    try:
+        return websockets.connect(url, additional_headers=headers, **kw)
+    except TypeError:
+        return websockets.connect(url, extra_headers=headers, **kw)
+
+
 def _ms() -> int:
     return int(time.time() * 1000)
 
@@ -123,8 +136,8 @@ async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: floa
     sub = {"id": 1, "cmd": "subscribe",
            "params": {"channels": ["ticker", "trade", "orderbook_delta"],
                       "market_tickers": tickers}}
-    async with websockets.connect(KALSHI_WS, extra_headers=_kalshi_ws_headers(env),
-                                  ssl=SSL_CTX, ping_interval=10, ping_timeout=20, max_size=None) as ws:
+    async with _ws_connect(KALSHI_WS, _kalshi_ws_headers(env),
+                           ssl=SSL_CTX, ping_interval=10, ping_timeout=20, max_size=None) as ws:
         await ws.send(json.dumps(sub))
         w.meta("kalshi", "connected", f"{len(tickers)} tickers")
         _log(f"kalshi subscribed: {len(tickers)} tickers")
@@ -255,8 +268,11 @@ def discover_match_markets(env: dict, team_a: str, team_b: str):
     # --- Polymarket (best-effort; may not exist yet) ---
     poly, p_by_name = [], {}
     try:
+        # search by team names only (no "World Cup" suffix) so warm-up FRIENDLIES are
+        # found too; the title filter below keeps the right event. The suffix used to make
+        # discovery miss friendlies like Argentina v Iceland that aren't titled "World Cup".
         s = requests.get("https://gamma-api.polymarket.com/public-search",
-                         params={"q": f"{team_a} {team_b} World Cup"}, timeout=15).json()
+                         params={"q": f"{team_a} {team_b}"}, timeout=15).json()
         for e in s.get("events", []):
             title = _norm(e.get("title", ""))
             if a in title and b in title:

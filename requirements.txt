@@ -3,3 +3,7 @@ numpy>=1.24
 scipy>=1.10
 pandas>=2.0
 requests>=2.31
+matplotlib>=3.7        # plots.py (Agg backend; reliability/trajectory cards)
+scikit-learn>=1.2      # calibration.py (isotonic / PAV for CORP)
+statsmodels>=0.14      # microstructure.py (ADF cointegration gate; lazy import)
+penaltyblog>=1.0       # devig.py (multiplicative / power / Shin de-vig) + Dixon-Coles

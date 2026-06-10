@@ -131,8 +131,14 @@ The **primary** reliability diagram is **CORP** (Consistent, Optimally binned,
 Reproducible; Dimitriadis, Gneiting & Jordan, *PNAS* 2021): recalibrate forecasts by
 isotonic regression (pool-adjacent-violators) instead of ad-hoc bins. This removes
 the well-known instability of binning-and-counting under arbitrary bin choices and
-yields resampling-based **consistency bands**: the calibration claim is "significant"
-only where the 45° line leaves the band.
+yields **consistency bands** computed *under the null of calibration*: holding the
+forecasts fixed, outcomes are resampled from them (the match is the resampling unit,
+so a match's three mutually-exclusive W/D/L events stay coherent and dependent), PAV
+is refit, and the pointwise 2.5/97.5 percentiles form the band. The band therefore
+brackets the 45° identity line under the null, and the calibration claim is
+"significant" only where the estimated CORP curve leaves that band. (This is the DGJ
+consistency band — not a pair-bootstrap confidence band for the fitted curve, which
+is miscentered for the test and would treat the 3N events as independent.)
 
 The classic **binned** reliability table (mean prediction vs. observed frequency,
 with Wilson CIs and **stated bin counts**) is retained for intuition. With n ≈ 104
@@ -342,9 +348,13 @@ teams** advance to the Round of 32, with the third-place bracket assignment foll
 **FIFA's Annex C constraints**, then simulated through to the Final. Match goals use the
 same Elo-driven Skellam rates as §2, with a **Dixon–Coles low-score correction**
 (`rho = −0.11`) that lifts the simulated draw rate from ~20% to ~22%, closer to the
-empirical ~22–24%. The format invariants are **exact by construction**: across sims
-the advancement probabilities sum to 32 and the third-place-qualifier probabilities
-sum to 8, so any drift there is a code bug, not a modelling choice.
+empirical ~22–24%. The third-place teams are matched to the Round-of-32 winner slots
+by a true **bipartite matching** (Kuhn's augmenting-path algorithm) that respects Annex C's
+allowed-groups sets as hard constraints, so a group winner can never draw the third-placed
+team from its own group — **no group-stage rematch in the R32** (verified 0 across 64k sims;
+a greedy assignment silently produced ~3% rematches). The format invariants are **exact by
+construction**: across sims the advancement probabilities sum to 32 and the third-place-
+qualifier probabilities sum to 8, so any drift there is a code bug, not a modelling choice.
 
 Validated against the Opta supercomputer, the simulation agrees strongly on most
 advancement probabilities (Group C nearly identical; France / Norway / USA / Brazil /
@@ -361,3 +371,72 @@ an irreducible artifact. (I lack historical squad values, so this is a consisten
 check against two independent sharp forecasters, not a backtest.) The pro-market reading
 stands: the market already embeds squad value, form and news; the residual gap is the
 rest, plus its natural caution. The simulated opener Mexico–South Africa sits at ~0.86.
+
+## 13. Confederation-bias correction (empirical-Bayes shrinkage)
+
+Elo is zero-sum: a result only transfers points between the two opponents, so the total
+rating *inside* a confederation is conserved regardless of its true global level.
+Confederations are near-disconnected clusters of the match graph, joined by sparse
+inter-confederation "bridge" games, so the scale *between* clusters is weakly anchored and
+drifts — weaker confederations accumulate inflated ratings against weak regional opponents,
+and pure Elo cannot re-level them. Measured directly on the ~49k results, the recent
+(since-2010) per-confederation Elo surprise in cross-confederation matches runs from UEFA
+**+35** / CONMEBOL +24 (under-rated) to CONCACAF **−40**, AFC −22, OFC ~−160 (over-rated).
+
+The fix (`xresidual/confed_bias.py`) is the standard remedy for a clustered comparison
+graph: a per-confederation fixed-effect offset, applied as an **empirical-Bayes shrinkage**.
+A base offset `δ[conf]` is estimated from cross-confederation results only (the games that
+carry cross-cluster signal; UEFA = reference 0, recency-weighted 8y half-life). Each team
+then gets `offset(team) = δ[conf] · K/(n_cross + K)`, where `n_cross` is its recency-weighted
+count of cross-confederation games — the EB weight `τ²/(τ²+σ²)` with `σ² ∝ 1/n_cross`. A
+globally-connected side (Mexico, Brazil; many intercontinental friendlies) is well-anchored
+and lightly corrected; a regionally-isolated side falls back to its confederation prior. It
+is applied to the raw Elo **before** the squad-value blend, so the globally-comparable squad
+value corroborates the strong outliers rather than the blunt offset over-penalizing them.
+
+Validation (`scripts/calibrate_confed_offsets.py`): a time-split, cross- vs within-
+confederation stratified backtest. The shrinkage improves out-of-sample cross-confederation
+RPS by **~+4.6%** (vs ~+3.9% for a flat per-confederation offset) and leaves the within-
+confederation slice essentially unchanged (the placebo). The gain over the flat offset is
+**significant after accounting for match dependence** (Diebold–Mariano with HAC SE, p ≈ 0.009;
+team-cluster bootstrap 95% CI excludes 0) — and method b adds exactly one fitted parameter
+(`K`) over method a, chosen on a held-out validation slice. Adjudicated against the
+independent bookmaker, the corrected model agrees with the de-vigged outright consensus at
+**0.95 rank correlation and a median 0.2pp** title-probability gap; the residual disagreements
+are team-specific (Spain/Argentina a touch high, Brazil low — the Elo-vs-talent tension),
+deliberately *not* curve-fit to the market. The literature endorses the approach: the bias is a
+connectivity artifact (football-rankings.info 2022; Szczeciński & Roatis 2022, arXiv:2201.00691),
+and connectivity-/uncertainty-weighted shrinkage is textbook empirical Bayes (James–Stein;
+Efron–Morris; arXiv:1807.09236), with Glicko's rating deviation as the deployed analogue.
+
+## 14. In-play capture and goal-overreaction detection (Layer 4, live)
+
+The microstructure layer extends to live matches via `logger/ws_capture.py`: a single-clock,
+**millisecond-stamped** websocket capture of the Kalshi and Polymarket order books for a named
+fixture, written to per-capture files so each match is self-contained. From the reconstructed
+mids, `xresidual/ws_events.py` auto-detects price shocks (goals, red cards) without a
+hand-typed goal time, and `overreaction_backtest` fades them — the documented ~2–3%/trade
+reversion after a *surprising* goal (Choi & Hui; "Role of Surprise"), entered ~2 min after and
+held ~6 min, net of modeled cost. This is the P10 edge test, paper-only and disclosed.
+
+Shock detection is tuned to reject thin-market noise (learned on the Argentina–Iceland friendly,
+where the naive detector turned 3 goals into 11 "shocks"): a candidate fires only if the mid
+moves **≥5pp within 60s AND the move persists** — still retaining ≥50% of the jump 20s later, so
+a quote that flickers and snaps back is dropped while a goal that sticks is kept — with a 5-min
+refractory (≈ the overreaction window) so one goal counts once. The friendly was a clean
+pipeline dry-run but a *weak* edge test by construction: a 0.84 favourite scoring is not
+surprising, so there is no overreaction to fade — exactly as the theory predicts. The live test
+runs through the tournament on genuinely surprising goals.
+
+## 15. Reproducibility and provenance
+
+Every `scripts/build_all.py` run stamps a provenance record to `viz/_provenance.js`
+(`xresidual/provenance.py`): the git SHA, the model parameters (blend weight, sigma, DC rho),
+and **content-hash fingerprints** of every static input (results, fixtures, squad values). It
+then compares each card's data against the inputs it was built from and **flags any card that is
+stale** relative to an input that changed — a content-hash check, so it is touch-proof (editing
+and re-saving a file with no real change does not trip it). The point is auditability: every
+published card is traceable to the exact code and data that produced it, and the model can't be
+changed without the build surfacing which cards now need regenerating. The simulation's own
+format invariants (§12) are checked the same way — exact-by-construction, so a violation is a
+code bug, not a silent modelling drift.

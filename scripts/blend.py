@@ -20,14 +20,22 @@ DEFAULT_W = 0.4
 
 
 def blended_ratings(elo_ratings: dict, w: float = DEFAULT_W, teams=None,
-                    availability: bool = False) -> dict:
+                    availability: bool = False, confed_correct: bool = True) -> dict:
     """Blend Elo with squad value. `availability=True` uses availability-adjusted squad
     values (SQUAD_VALUE minus injured/absent top-11 players, see squad_values.ABSENCES)
     instead of the static full-strength value. Default False keeps the published model on
     the static value until the ABSENCES table carries real, sourced squad-announcement
-    data — an empty table makes the two identical, so turning it on is harmless."""
+    data — an empty table makes the two identical, so turning it on is harmless.
+
+    `confed_correct=True` (default) first applies the empirical-Bayes confederation offset
+    (xresidual.confed_bias) to de-bias the near-disconnected confederation clusters before
+    blending — a validated +4.6% out-of-sample gain on cross-confederation matches. Pass
+    False for rating-isolation diagnostics that deliberately study raw Elo / the draw alone."""
+    from xresidual import confed_bias
     teams = sorted(teams or wc2026_teams.WC2026_TEAMS)
     values = adjusted_squad_values() if availability else SQUAD_VALUE
+    if confed_correct:
+        elo_ratings = confed_bias.apply_offsets(elo_ratings)
     et = np.array([elo_ratings.get(wc2026_teams.elo_name(t), elo.INIT_RATING) for t in teams])
     vt = np.log10(np.array([values[t] for t in teams], dtype=float))
     ez = (et - et.mean()) / et.std()

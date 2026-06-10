@@ -173,13 +173,13 @@ def expected_calibration_error(p, y, n_bins: int = 10) -> float:
 # Dimitriadis, Gneiting & Jordan (2021), PNAS 118(8). Consistent, Optimally
 # binned, Reproducible: recalibrate forecasts by isotonic regression (PAV), which
 # removes the ad-hoc binning of the count-based diagram and yields an EXACT score
-# decomposition plus resampling-based consistency bands.
+# decomposition plus consistency bands computed under the null of calibration.
 # --------------------------------------------------------------------------- #
 @dataclass
 class CorpResult:
     grid: np.ndarray      # forecast-probability axis for plotting
     recal: np.ndarray     # PAV-recalibrated frequency at each grid point (the curve)
-    band_lo: np.ndarray   # consistency-band lower (resampling)
+    band_lo: np.ndarray   # consistency-band lower (null-of-calibration; brackets 45-deg)
     band_hi: np.ndarray   # consistency-band upper
     mcb: float            # MisCaliBration (lower better); the calibration penalty
     dsc: float            # DiSCrimination (higher better)
@@ -194,12 +194,32 @@ def _pav_fit(p, y) -> IsotonicRegression:
     return IsotonicRegression(y_min=0.0, y_max=1.0, out_of_bounds="clip").fit(p, y)
 
 
-def corp(p, y, n_boot: int = 500, grid_size: int = 101, seed: int = 0) -> CorpResult:
-    """CORP reliability diagram + exact Brier (MCB/DSC/UNC) decomposition.
+def corp(p, y, n_boot: int = 500, grid_size: int = 101, seed: int = 0,
+         wdl_n: int | None = None) -> CorpResult:
+    """CORP reliability diagram + exact Brier (MCB/DSC/UNC) decomposition, with
+    consistency bands computed under the null hypothesis of calibration.
 
-    Unlike the binned Murphy decomposition, the identity Brier = MCB - DSC + UNC
-    holds EXACTLY for the raw score, because miscalibration is measured against the
-    PAV-recalibrated forecast rather than coarse bins.
+    Point estimates are exact: the identity Brier = MCB - DSC + UNC holds for the
+    raw score because miscalibration is measured against the PAV-recalibrated
+    forecast rather than coarse bins.
+
+    Consistency bands (Dimitriadis, Gneiting & Jordan 2021, §"consistency bands"):
+    the band is the sampling distribution of the PAV recalibration curve *when the
+    forecasts are calibrated*. We hold the forecasts `p` fixed, resample outcomes
+    FROM them under H0 (true event probability == forecast probability), refit PAV,
+    and take pointwise 2.5/97.5 percentiles. Under H0 the recal curve estimates the
+    identity line, so the band brackets the 45-degree line; the calibration claim is
+    "significant" where the estimated (CORP) curve leaves the band. This is the DGJ
+    consistency band, NOT a pair-bootstrap confidence band for the fitted curve (the
+    latter is miscentered for this test and ignores outcome dependence).
+
+    `wdl_n`: when (p, y) came from `flatten_wdl` (layout [home(N), draw(N), away(N)]),
+    pass the number of matches N. The null then draws ONE coherent categorical
+    outcome per match (exactly one of home/draw/away occurs) rather than three
+    independent Bernoullis, so the resampling unit is the match. This respects the
+    mutual exclusivity and dependence among a match's three events; without it the
+    band would treat 3N dependent events as independent and come out too narrow
+    (~sqrt(3)). Omit it for a single binary forecaster (independent Bernoulli null).
     """
     p = np.asarray(p, float)
     y = np.asarray(y, float)
@@ -218,12 +238,24 @@ def corp(p, y, n_boot: int = 500, grid_size: int = 101, seed: int = 0) -> CorpRe
     grid = np.linspace(0.0, 1.0, grid_size)
     recal_grid = iso.predict(grid)
 
-    # consistency bands: resample matches, refit PAV, take pointwise percentiles
+    # consistency bands under H0 of calibration: forecasts fixed, outcomes resampled
+    # from them, PAV refit. The match is the resampling unit when wdl_n is given.
     rng = np.random.default_rng(seed)
     curves = np.empty((n_boot, grid_size))
-    for b in range(n_boot):
-        idx = rng.integers(0, n, n)
-        curves[b] = _pav_fit(p[idx], y[idx]).predict(grid)
+    if wdl_n is not None:
+        N = int(wdl_n)
+        # per-match (home, draw, away) probabilities from the flatten_wdl layout
+        P = np.column_stack([p[:N], p[N:2 * N], p[2 * N:3 * N]])
+        P = P / P.sum(axis=1, keepdims=True)
+        cum = np.cumsum(P, axis=1)
+        for b in range(n_boot):
+            cat = (rng.random((N, 1)) < cum).argmax(axis=1)   # 0=home,1=draw,2=away
+            ystar = np.concatenate([cat == 0, cat == 1, cat == 2]).astype(float)
+            curves[b] = _pav_fit(p, ystar).predict(grid)
+    else:
+        for b in range(n_boot):
+            ystar = (rng.random(n) < p).astype(float)
+            curves[b] = _pav_fit(p, ystar).predict(grid)
     band_lo = np.percentile(curves, 2.5, axis=0)
     band_hi = np.percentile(curves, 97.5, axis=0)
 
