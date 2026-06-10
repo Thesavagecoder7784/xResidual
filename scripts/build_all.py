@@ -40,6 +40,7 @@ MODEL_BUILDERS = [
     ("build_heat.py", False),
     ("build_incentive.py", False),
     ("build_drawluck.py", False),
+    ("build_mispricing.py", False),     # last: reads _groupsim/_knockout/_elimination
 ]
 MARKET_BUILDERS = [
     ("pull_forecast_data.py", True),    # Polymarket Gamma (live)
