@@ -30,6 +30,7 @@ ENTRY = 0.010      # open when the de-vigged gap is >= 1.0pp
 EXIT = 0.003       # call it converged at <= 0.3pp
 COST = 0.005       # 0.5pp modeled round-trip cost (fee + half-spread, both legs)
 MAX_HOLD = 8       # max hold in passes (~4h at the 30-min logging cadence)
+MIN_SHARPE_N = 20  # below this a per-trade Sharpe is noise (METHODOLOGY §8); report None
 
 
 def divergence_series(snapshots: pd.DataFrame, top_n: int = 12) -> pd.DataFrame:
@@ -111,7 +112,8 @@ def _summary(trades: list[dict]) -> dict:
         "total_pnl_pp": round(float(pnl.sum()), 3),
         "hit_rate": round(float((pnl > 0).mean()), 3),
         "mean_pnl_pp": round(float(pnl.mean()), 4),
-        "per_trade_sharpe": round(float(pnl.mean() / pnl.std()), 3) if pnl.std() > 0 else None,
+        "per_trade_sharpe": (round(float(pnl.mean() / pnl.std()), 3)
+                             if len(pnl) >= MIN_SHARPE_N and pnl.std() > 0 else None),
         "avg_hold": round(float(np.mean([t["held_passes"] for t in trades])), 2),
     }
 

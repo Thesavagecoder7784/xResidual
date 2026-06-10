@@ -82,11 +82,17 @@ def _assign(qual: set, slots: list) -> dict:
 
 
 def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
-             return_matchups: bool = False, return_slots: bool = False) -> dict:
+             return_matchups: bool = False, return_slots: bool = False,
+             return_paths: bool = False) -> dict:
     """Run the knockout bracket on the group-stage simulation `detail`/`out`.
 
     Returns {reach: {team -> {r16,qf,sf,final,win}}, r32: [{id, winner_slot,
     matchups:[{a,b,p}]}]} where reach probabilities are over the same simulations.
+
+    With return_paths=True also returns result["paths"] = the per-sim round-winner
+    arrays of global team indices (w32 (n,16) reached R16, w16 (n,8) reached QF,
+    wqf (n,4) reached SF, wsf (n,2) reached final, champ (n,1)), from which a per-team
+    per-sim tournament depth and the champion's group are reconstructed jointly.
     """
     teams, gidx, pos, adv = detail["teams"], detail["gidx"], detail["pos"], detail["adv_mat"]
     n, nT = pos.shape[0], len(teams)
@@ -191,4 +197,9 @@ def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
         result["r32"] = r32
         result["rating_arr"] = rating_arr
         result["teams_arr"] = list(teams)
+    if return_paths:
+        # per-sim round winners (global team indices): the joint outcome needed to price
+        # confederation furthest/worst-advancing and group-of-champion markets, which the
+        # marginal reach probabilities alone cannot express.
+        result["paths"] = {"w32": w32, "w16": w16, "wqf": wqf, "wsf": wsf, "champ": champ}
     return result

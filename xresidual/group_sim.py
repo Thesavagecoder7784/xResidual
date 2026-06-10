@@ -213,6 +213,13 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
     eps = rng.normal(0.0, sigma, size=(n, nT)) if sigma > 0 else None
     adv_mat = np.zeros((n, nT), dtype=bool)
     pos = np.full((n, nT), 9, dtype=np.int8)
+    group_goals = np.zeros(n, dtype=np.int32)   # total goals across all 72 group matches, per sim
+    # per-team group-stage wins / goals-for / goals-against (for the market's furthest/worst
+    # tie-break: latest stage -> most total wins -> most goals -> fewest conceded). Knockout
+    # wins/goals are added downstream; group goals carry the goals tie-break almost always.
+    g_wins = np.zeros((n, nT), dtype=np.int16) if return_detail else None
+    g_gf = np.zeros((n, nT), dtype=np.int16) if return_detail else None
+    g_ga = np.zeros((n, nT), dtype=np.int16) if return_detail else None
     matches = []
 
     out = {}
@@ -224,6 +231,7 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
         idx = {t: i for i, t in enumerate(teams)}
         k = len(teams)
         pts = np.zeros((n, k)); gd = np.zeros((n, k)); gf = np.zeros((n, k))
+        wins = np.zeros((n, k)); ga = np.zeros((n, k))
         for row in sub.itertuples(index=False):
             i, j = idx[row.team1], idx[row.team2]
             if eps is not None:
@@ -240,6 +248,9 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
             pts[:, i] += w1 * 3 + dr; pts[:, j] += w2 * 3 + dr
             gd[:, i] += g1 - g2;      gd[:, j] += g2 - g1
             gf[:, i] += g1;           gf[:, j] += g2
+            ga[:, i] += g2;           ga[:, j] += g1
+            wins[:, i] += w1;         wins[:, j] += w2
+            group_goals += g1 + g2
             if return_detail:
                 matches.append((L, wc2026_teams.canonical(row.team1),
                                 wc2026_teams.canonical(row.team2),
@@ -258,6 +269,9 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
             rec["padv"] += int(np.sum(pl <= 1))            # top two: automatic
             pos[:, gidx[t]] = pl
             adv_mat[pl <= 1, gidx[t]] = True
+            if return_detail:
+                gc = gidx[t]
+                g_wins[:, gc] = wins[:, li]; g_gf[:, gc] = gf[:, li]; g_ga[:, gc] = ga[:, li]
 
         third_local = order[:, 2]
         thirds_team_cols.append(np.array(canon)[third_local])
@@ -290,5 +304,6 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
     if not return_detail:
         return out
     detail = {"teams": all_canon, "gidx": gidx, "adv_mat": adv_mat, "pos": pos,
-              "matches": matches, "cutline": cutline, "missed": missed, "eps": eps}
+              "matches": matches, "cutline": cutline, "missed": missed, "eps": eps,
+              "group_goals": group_goals, "wins": g_wins, "gf": g_gf, "ga": g_ga}
     return out, detail

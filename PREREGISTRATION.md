@@ -45,7 +45,8 @@ These remove the researcher degrees of freedom. They apply to every prediction b
   Draws count as their own W/D/L outcome.
 - **Scoring.** Proper rules only: `calibration.brier_score` and `residual.log_score`.
   Calibration via `calibration.calibration_regression` (returns intercept a, slope b) and
-  `calibration.corp` (isotonic MCB / DSC / UNC with 500-sample bootstrap bands).
+  `calibration.corp` (isotonic MCB / DSC / UNC with 500-sample consistency bands
+  resampled under the null of calibration, the match as the resampling unit).
 - **Decision states.** Each prediction resolves to PASS, FAIL, or INCONCLUSIVE. Capture
   -dependent predictions have a stated minimum n; below it the verdict is INCONCLUSIVE and
   reported as such, never quietly dropped.
@@ -76,8 +77,8 @@ motivates the direction without proving it.
 **Claim.** De-vigged match (1X2) prices are calibrated: teams priced near p% win about p%.
 **Metric.** `pipeline.calibration_report(which="mkt")` → CORP (`calibration.corp`) plus
 the calibration regression slope b.
-**PASS** if the CORP reliability band contains the identity line across the bulk of the
-support (no systematic miscalibration) AND slope b ∈ **[0.70, 1.30]** AND market Brier <
+**PASS** if the estimated CORP reliability curve stays within the consistency band across
+the bulk of the support (no systematic miscalibration) AND slope b ∈ **[0.70, 1.30]** AND market Brier <
 the raw model's Brier on the same matches. The wide slope band is deliberate: ~104 matches
 is a modest sample, so I report the slope with its bootstrap CI rather than pretend to
 tight precision.

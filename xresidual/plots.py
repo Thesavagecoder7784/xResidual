@@ -43,11 +43,15 @@ def _style(ax):
 
 
 def reliability_diagram(p, y, path: str, n_bins: int = 10,
-                        title: str = "Market calibration") -> str:
-    """CORP isotonic curve + consistency band + binned points vs the 45-degree line."""
+                        title: str = "Market calibration", wdl_n: int | None = None) -> str:
+    """CORP isotonic curve + consistency band + binned points vs the 45-degree line.
+
+    `wdl_n` (number of matches) is forwarded to `cal.corp` so the consistency band is
+    resampled per-match when (p, y) is a flattened W/D/L set; see `calibration.corp`.
+    """
     p = np.asarray(p, float)
     y = np.asarray(y, float)
-    corp = cal.corp(p, y)
+    corp = cal.corp(p, y, wdl_n=wdl_n)
     tab = cal.reliability_table(p, y, n_bins)
     a, b = cal.calibration_regression(p, y)
 

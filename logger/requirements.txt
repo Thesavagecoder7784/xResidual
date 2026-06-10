@@ -1,2 +1,4 @@
 requests>=2.31
 cryptography>=42.0
+certifi>=2023.7        # ws_capture.py SSL CA bundle (stdlib ssl lacks one on some builds)
+websockets>=10.0       # ws_capture.py; header kwarg rename in 14 handled by _ws_connect

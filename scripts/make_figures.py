@@ -33,7 +33,7 @@ def main() -> int:
     p, y = cal.flatten_wdl(df["p_home"], df["p_draw"], df["p_away"], df["outcome"])
     made.append(plots.reliability_diagram(
         p, y, os.path.join(FIG, "reliability_538_backtest.png"),
-        title="Calibration backtest — 538 international forecasts"))
+        title="Calibration backtest — 538 international forecasts", wdl_n=len(df)))
 
     # 2 & 3) Trajectory + velocity, from logged outright snapshots.
     snaps = trajectory.load_snapshots(LOGGER_DATA)

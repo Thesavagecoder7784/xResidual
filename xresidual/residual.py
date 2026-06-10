@@ -14,12 +14,18 @@ model, not a miracle.
 from __future__ import annotations
 
 import math
+import warnings
 
 from .skellam import MatchExpectation
 
 OUTCOME_HOME = "home"
 OUTCOME_DRAW = "draw"
 OUTCOME_AWAY = "away"
+
+# Above this, the sigma-discipline table (METHODOLOGY.md §3) says the variance model
+# is misspecified, not that a miracle occurred. We surface it rather than silently
+# emit a headline-grabbing z.
+SIGMA_BROKEN = 4.0
 
 
 def log_score(exp: MatchExpectation, outcome: str) -> float:
@@ -31,8 +37,18 @@ def log_score(exp: MatchExpectation, outcome: str) -> float:
 
 
 def goal_diff_z(exp: MatchExpectation, actual_goal_diff: int) -> float:
-    """Standardized goal-difference residual: (actual - E[d]) / sd[d]."""
-    return (actual_goal_diff - exp.exp_goal_diff) / exp.sd_goal_diff
+    """Standardized goal-difference residual: (actual - E[d]) / sd[d].
+
+    Warns (does not raise) when |z| > SIGMA_BROKEN, so a too-large residual reads as a
+    model-misspecification flag rather than a quietly-reported '12-sigma' upset."""
+    z = (actual_goal_diff - exp.exp_goal_diff) / exp.sd_goal_diff
+    if abs(z) > SIGMA_BROKEN:
+        warnings.warn(
+            f"goal_diff_z={z:.1f} (|z|>{SIGMA_BROKEN}) for {exp.home} vs {exp.away}: "
+            "treat as a misspecified variance model, not a miracle (METHODOLOGY §3).",
+            stacklevel=2,
+        )
+    return z
 
 
 def outcome_from_goal_diff(goal_diff: int) -> str:

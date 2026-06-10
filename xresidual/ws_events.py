@@ -246,16 +246,25 @@ def lead_lag_ms(series_kalshi, series_poly, bin_ms: int = 1000,
 # inside a short trailing window, and treat each as a candidate price shock. So the
 # analysis finds the shocks itself instead of relying on a hand-typed goal time.
 
-def detect_shocks(series: list[tuple[int, float]], min_jump: float = 0.04,
-                  lookback_ms: int = 60000, refractory_ms: int = 30000) -> list[dict]:
-    """Times where the mid moved >= `min_jump` (probability units) within `lookback_ms`.
+def detect_shocks(series: list[tuple[int, float]], min_jump: float = 0.05,
+                  lookback_ms: int = 60000, refractory_ms: int = 300000,
+                  confirm_ms: int = 20000, confirm_frac: float = 0.5) -> list[dict]:
+    """Times where the mid moved >= `min_jump` (probability units) within `lookback_ms`
+    AND the move PERSISTED (a real repricing, not a transient blip).
 
     `lookback_ms` defaults to 60s, matching the callers (overreaction_backtest,
     auto_lead_lag): prediction markets reprice a goal GRADUALLY over tens of seconds
     (learned live on Peru-Spain), so a 4s window misses the goal. Pass a small lookback
     only for tick-scale synthetic tests.
-    `refractory_ms` suppresses re-triggering on the same move (one goal = one shock).
-    Returns [{t_ms, pre, post, jump, dir}], earliest first."""
+
+    Two filters keep one goal = one shock and reject thin-market noise (tuned on the
+    Argentina-Iceland friendly, where the un-filtered detector turned 3 real goals into 11
+    "shocks"): (1) `refractory_ms` (default 5 min, ~the overreaction window) collapses one
+    goal's gradual reprice into a single event — distinct goals are minutes apart, so they
+    stay separate; (2) the candidate fires only if `confirm_ms` later the mid still retains
+    >= `confirm_frac` of the jump in the SAME direction, so a quote that flickers and snaps
+    back (a liquidity blip) is dropped while a goal that sticks is kept. Set confirm_ms=0 to
+    disable the persistence filter. Returns [{t_ms, pre, post, jump, dir}], earliest first."""
     if len(series) < 2:
         return []
     shocks, last_fire, j = [], -10 ** 18, 0
@@ -266,10 +275,16 @@ def detect_shocks(series: list[tuple[int, float]], min_jump: float = 0.04,
         if base_t > t - lookback_ms + 1:  # not enough trailing history yet
             continue
         jump = v - base_v
-        if abs(jump) >= min_jump and t - last_fire >= refractory_ms:
-            shocks.append({"t_ms": t, "pre": round(base_v, 4), "post": round(v, 4),
-                           "jump": round(jump, 4), "dir": "up" if jump > 0 else "down"})
-            last_fire = t
+        if abs(jump) < min_jump or t - last_fire < refractory_ms:
+            continue
+        if confirm_ms > 0:                               # persistence filter
+            vc = _value_at(series, t + confirm_ms)
+            held = vc - base_v
+            if vc is None or held * jump <= 0 or abs(held) < confirm_frac * abs(jump):
+                continue                                 # reverted -> transient blip, drop
+        shocks.append({"t_ms": t, "pre": round(base_v, 4), "post": round(v, 4),
+                       "jump": round(jump, 4), "dir": "up" if jump > 0 else "down"})
+        last_fire = t
     return shocks
 
 
@@ -302,8 +317,11 @@ def max_move_sigma(series: list[tuple[int, float]], bin_ms: int = 1000,
     if np.all(np.isnan(z)):
         return None
     j = int(np.nanargmax(z))
+    # |z|>4 here means the trailing-vol model is misspecified (a disconnect spike, a
+    # one-tick book, a thin prior), not a record shock — flag it per METHODOLOGY §3.
     return {"max_sigma": round(float(z[j]), 2), "bin": j,
-            "ret_at_max": round(float(rets[j]), 4), "n_bins": int(len(g))}
+            "ret_at_max": round(float(rets[j]), 4), "n_bins": int(len(g)),
+            "broken_model": bool(z[j] > 4.0)}
 
 
 # --- Goal-overreaction mean reversion (the candidate trading edge) ---------------- #
@@ -345,9 +363,9 @@ def overreaction_trade(series, shock: dict, entry_s: int = 120, exit_s: int = 36
             "surprise": round(abs(jump) / max(shock.get("pre") or 0.01, 0.01), 2)}
 
 
-def overreaction_backtest(series, min_jump: float = 0.04, entry_s: int = 120,
+def overreaction_backtest(series, min_jump: float = 0.05, entry_s: int = 120,
                           exit_s: int = 360, cost: float = 0.005,
-                          refractory_ms: int = 30000, min_surprise: float = 0.0,
+                          refractory_ms: int = 300000, min_surprise: float = 0.0,
                           lookback_ms: int = 60000) -> dict:
     """Detect goal shocks in one contract's mid series and fade each. `min_surprise`
     filters to the more-surprising goals (|jump|/pre), where the overreaction is strongest.
@@ -370,11 +388,14 @@ def _ovr_summary(trades: list[dict]) -> dict:
                 "mean_reverted_pp": None, "mean_pnl_pp": None, "per_trade_sharpe": None}
     pnl = np.array([t["pnl_pp"] for t in trades], dtype=float)
     rev = np.array([t["reverted_pp"] for t in trades], dtype=float)
+    # below ~20 trades a per-trade Sharpe is noise (METHODOLOGY §8); report None
+    sharpe = (round(float(pnl.mean() / pnl.std()), 3)
+              if len(pnl) >= 20 and pnl.std() > 0 else None)
     return {"n": len(trades), "total_pnl_pp": round(float(pnl.sum()), 3),
             "hit_rate": round(float((pnl > 0).mean()), 3),
             "mean_reverted_pp": round(float(rev.mean()), 3),
             "mean_pnl_pp": round(float(pnl.mean()), 3),
-            "per_trade_sharpe": round(float(pnl.mean() / pnl.std()), 3) if pnl.std() > 0 else None}
+            "per_trade_sharpe": sharpe}
 
 
 def _slice(series, lo, hi):
