@@ -7,6 +7,12 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PY="${PYTHON:-/usr/local/bin/python3}"
 cd "$ROOT"
 echo "===== refresh $(date -u +%FT%TZ) ====="
+# Pull the latest international results FIRST so everything downstream (Elo, the tournament
+# sim, per-match residuals, and the calibration grade) sees matches played since the last run.
+# The martj42 source is daily-updated and includes World Cup matches ~1-2 days after kickoff,
+# so the residual/calibration deliverables update on a one-day lag instead of freezing.
+echo "-- refresh international results (residuals + calibration depend on this)"
+"$PY" -c "from xresidual import data; df=data.load_results(refresh=True); print('  results ->', df['date'].max(), len(df), 'rows')" || echo "  results refresh failed (continuing on cache)"
 echo "-- forward-test (paper track record)"
 "$PY" scripts/forwardtest_run.py || echo "  forwardtest failed (continuing)"
 echo "-- goal-overreaction backtest (in-play edge test)"
