@@ -9,12 +9,12 @@
     "entry_price": 0.15,
     "stake_usd": 100.0,
     "shares": 666.67,
-    "status": "open",
+    "status": "closed",
     "note": "cross-mkt value: elim 15.0% vs winner-mkt 16.2%",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.165,
+    "ts_close": "2026-06-10T20:24:54.523702+00:00",
+    "realized_pnl": 10.0,
+    "realized_pnl_net": 9.0
   },
   {
     "id": 2,
@@ -60,12 +60,12 @@
     "entry_price": 0.28,
     "stake_usd": 100.0,
     "shares": 357.14,
-    "status": "open",
+    "status": "closed",
     "note": "favourite overbet to win group + Group C competitive (Morocco strong, ties #15): market 72% vs model 57%",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.285,
+    "ts_close": "2026-06-10T20:45:28.434342+00:00",
+    "realized_pnl": 1.78,
+    "realized_pnl_net": 0.78
   },
   {
     "id": 5,
@@ -77,12 +77,12 @@
     "entry_price": 0.22,
     "stake_usd": 100.0,
     "shares": 454.55,
-    "status": "open",
+    "status": "closed",
     "note": "FLB at the reach-round layer: model P(reach QF) ~26% vs market 22%. Strong challenger underpriced on deep run (same favourite-overbet bias seen in group-winner #19 + elimination #11). Mechanism: easy runner-up route in Brazil's Group C.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.225,
+    "ts_close": "2026-06-10T20:24:55.058918+00:00",
+    "realized_pnl": 2.27,
+    "realized_pnl_net": 1.27
   },
   {
     "id": 6,
@@ -96,6 +96,23 @@
     "shares": 434.78,
     "status": "open",
     "note": "FLB at the reach-round layer: model P(reach QF) ~26% vs market 23%. Challenger deep-run underpriced; cross-confirmed across group-winner/reach/elimination layers.",
+    "exit_price": null,
+    "ts_close": null,
+    "realized_pnl": null,
+    "realized_pnl_net": null
+  },
+  {
+    "id": 7,
+    "ts_open": "2026-06-10T21:06:22.086393+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-nation-to-reach-final",
+    "outcome": "France",
+    "side": "no",
+    "entry_price": 0.72,
+    "stake_usd": 50.0,
+    "shares": 69.44,
+    "status": "open",
+    "note": "France-fade (quarter-Kelly): hardest route in the bracket (death group I + France-Germany R16 + Netherlands QF + Spain in SF), most fractured camp, lost 06+22 finals on pens. Model P(reach final) 23.3% vs market 28.5%; NO model 76.7% vs 72.0% fill = +4.7pp. ~half is systematic deep-run overpricing, so quarter-Kelly. Low corr to book.",
     "exit_price": null,
     "ts_close": null,
     "realized_pnl": null,

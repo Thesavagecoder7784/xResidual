@@ -20,7 +20,7 @@ A running scratchpad of decisions, dead ends, and things I still want to do. Les
 
 ## TODO
 
-- Capture a marquee match end-to-end and fill in `writeups/lead-lag.md` (it's a scaffold until then). *Partial:* captured Argentina–Iceland end-to-end (172k ms events), but Kalshi didn't list the friendly so there's no cross-venue pair yet — lead-lag still needs a match both books quote.
+- Capture a marquee match end-to-end and fill in `writeups/lead-lag.md` (it's a scaffold until then). *Partial:* captured Argentina–Iceland end-to-end (172k ms events), but Kalshi didn't list the *friendly* so there's no cross-venue pair yet. Confirmed Kalshi lists every WC group match (KXWCGAME series, 216 open winner/tie/winner markets) — so the cross-venue data WILL exist for real matches; lead-lag just needs a match with live goals on both books.
 - The real goal-overreaction (P10) test still pending a *surprising* goal — the friendly favourite-win was a weak test by design. Detector is tightened and ready.
 - First calibration check-in after the group stage (~Jun 27): CORP reliability + Brier decomposition.
 - Grade the pre-registration predictions publicly after the final.
@@ -31,5 +31,10 @@ A running scratchpad of decisions, dead ends, and things I still want to do. Les
 - Logger writes append-only JSONL, one file a day. The one rule is never lose data, so every write is flushed and fsync'd. (Started on laptop `launchd`; moved to the always-on VM below once captures couldn't depend on the laptop being awake.)
 - ws capture stamps every event with one local ms clock on purpose — that's what makes a cross-venue lead real instead of clock skew.
 - Captures are per-match files (`ws-events-<ts>-<slug>.jsonl`), and the live card archives per-match too (`live_match-<slug>.png` via `--render`) so a new fixture never overwrites the last one's tape. The shared `_livematch.js` stays for the 5s auto-refresh during a live match.
+
+## Matchday readiness (wired before the Jun 11 opener)
+
+- **Results now ingest daily.** `refresh_daily.sh` refetches the int'l results (`load_results(refresh=True)`) *before* rebuilding, so as the tournament plays out, the model sees each result and the per-match residuals + the live calibration grade actually update. Without this the whole thing would have silently frozen at the pre-tournament cache (the source — martj42 — runs ~1–2 days behind, so the residual lands the next morning, which is fine for a daily cadence). The market layer was always live via the loggers; this closes the *outcomes* half.
+- **Injuries flow automatically now.** `blended_ratings` defaults to `availability=True`, so the moment a *sourced* absence goes in `squad_values.ABSENCES` (`{"France":[{"player":"…","value":<TM £m>,"status":"out"|"doubt"}]}`) the next build reflects it on every card — verified a synthetic "Mbappé out" drops France ~12 Elo. No free live injury API, so population is **manual from news / confirmed lineups (~1h pre-match)** — accuracy over automation, and only ever a *sourced* absence, never a guess. Empty table = identical to static, so it's a no-op until I log something.
 - Capture collection lives on an always-on Azure VM (systemd timers), not the laptop — `make pull` rsyncs the data down. Resolved the old laptop-sleep-misses-kickoff risk.
 - `python scripts/build_all.py` rebuilds everything. Heavy AI assistance throughout; the design calls and the stats decisions are mine.

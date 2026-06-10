@@ -107,9 +107,11 @@ def _poly_single(spec: dict) -> list[Quote]:
 
 
 def _poly_event(spec: dict) -> list[Quote]:
-    """A whole event: one /events?slug= call -> one Quote per team (the 'Yes' price
-    is that team's implied championship probability). Tagged market_type='winner'."""
+    """A whole event: one /events?slug= call -> one Quote per team (the 'Yes' price is
+    that team's implied probability for the event). market_type defaults to 'winner' for
+    back-compat; pass it in the spec to tag other markets (advance, reach_round, ...)."""
     slug, label = spec["event_slug"], spec.get("label", spec["event_slug"])
+    mtype = spec.get("market_type", "winner")
     r = requests.get("https://gamma-api.polymarket.com/events",
                      params={"slug": slug}, timeout=HTTP_TIMEOUT)
     r.raise_for_status()
@@ -127,7 +129,7 @@ def _poly_event(spec: dict) -> list[Quote]:
             outcome=str(team), mid=yes, last=_as_float(m.get("lastTradePrice")),
             bid=_as_float(m.get("bestBid")), ask=_as_float(m.get("bestAsk")),
             volume=_as_float(m.get("volume")), liquidity=_as_float(m.get("liquidity")),
-            extra={"market_type": "winner", "slug": m.get("slug")},
+            extra={"market_type": mtype, "slug": m.get("slug")},
         ))
     return out
 

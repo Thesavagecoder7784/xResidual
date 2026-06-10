@@ -260,6 +260,39 @@ Captured the Argentina–Iceland friendly end-to-end — **172,892 millisecond-s
 
 That makes it a clean dry-run but a deliberately *weak* test of the goal-overreaction edge (P10): the documented reversion fades **surprising** goals, and a heavy favourite scoring is the opposite of surprising, so there was nothing to fade — exactly as theory predicts. It did expose one methodology fix: the naive shock detector turned 3 goals into 11 "shocks" on a thin friendly, so it's now hardened (a ≥5pp move that *persists* 20s later, 5-min refractory) — 11 → 3. **The real test waits for a genuine surprise**: an underdog scoring, or a favourite conceding, once the tournament starts.
 
+## 24. Two World Cups, dry-run: the model is well-calibrated, real shocks are 2–3σ, and 2022 was the chaotic one
+
+Before trusting the framework live on 2026, I ran it end-to-end on **two** completed tournaments — every 2018 and 2022 World Cup match (128 in all). **No lookahead, audited:** each game is scored with the point-in-time pre-match Elo (the rating is causal by construction — verified identical to ~0.01 Elo whether or not post-tournament data exists), and each tournament's goal-model params are calibrated *strictly* on matches before it. Two tournaments, not one, on purpose: 2022 was upset-heavy, so a single sample can't tell a real model property from that year's noise. Running 2018 separates them — and it overturned a lesson I'd drawn from 2022 alone.
+
+| | 2018 | 2022 |
+|---|---|---|
+| median \|z\| · max \|z\| | 0.60σ · **2.6σ** | 0.70σ · **3.4σ** |
+| Brier skill vs climatology | **+13.6%** | +4.9% |
+| beats base rate on log-loss | **yes** | no |
+| confident calls (P≥.65): predicted → actual | **72% → 71%** | 74% → 60% |
+
+Three reads:
+
+1. **The model is well-calibrated — 2022 was the outlier, not a flaw.** This is the correction. In 2018 the model's confident calls were essentially perfect — it said 72%, they came in at 71% — and it beat a base-rate constant on every metric. The 2022 "overconfidence" (74% → 60%) and its lone log-loss miss were an **upset-heavy tournament**, not a property of the model. Looking at 2022 alone, I'd wrongly concluded the model fails where it's most confident; 2018 shows it doesn't. The yardstick is sound.
+
+2. **The biggest residual is *always* a favourite getting stunned.** Both years' top misses are exactly that — Germany losing to Korea & Mexico in 2018; Saudi/Argentina, Cameroon/Brazil, Tunisia/France in 2022. The *mechanism* varies (2018's Germany–Korea was a must-win collapse; 2022's Cameroon–Brazil was a rotated dead rubber), but the **pattern is the law** — and it's the empirical backbone of the favourite-fade thesis (#19, #21).
+
+3. **The sigma discipline holds across both — now on 128 matches.** The biggest residual in either tournament is **2.6–3.4σ**, medians ~0.65σ. No "12σ" anywhere, two World Cups running — the anti-hyperbole stance (#21) is now backed by more than a single sample.
+
+**The trader's read.** This is the empirical twin of the pre-registration, and a small lesson in why you run the second test: *the same framework, on 2018 and 2022, did this* — confirmed the sigma claim, showed the model is genuinely calibrated (2018), and identified the one universal residual (favourites stunned), while correcting the overconfidence read that one chaotic tournament had suggested. The honest caveat: both were **32-team** events, so this validates the **per-match expectation / residual / calibration** layer (format-agnostic), **not** the 48-team bracket simulation — that can't be backtested on a different format. The yardstick is sound and self-aware; the bracket rests on its construction and its agreement with the 2026 market. (`scripts/backtest_wc.py`, no-lookahead, both years, reusable.)
+
+## 25. The first 4-timezone World Cup: the jet-lag everyone's worried about mostly washes out
+
+2026 is the first World Cup played across multiple time zones (Pacific −7 to Eastern −4, a **3-hour span**), and the obvious story is jet lag deciding games. The travel **burden** is real and brutally unequal — Bosnia fly **5,061 km** in the group stage, Egypt **372** (Seattle–Vancouver–Seattle, one time zone, never leaves the Pacific). But the performance **effect** is a different question, and three things kill it:
+
+1. **The recovery math zeroes it out.** Model the residual penalty the way the science does — `max(0, |zones| − resync_rate·rest_days)`, with re-sync ~1.0 zone/day westward and ~0.67/day eastward (east is the hard direction, because the body clock's free-running period is >24h). With 4–6 day group-stage gaps and a max 3-zone spread, **the residual is 0 across all 96 group-stage travel legs.** Even a worst-case knockout hop — 3 zones east on 3 days' rest — leaves ~1 residual zone ≈ 4 Elo ≈ **0.6% win probability**, and it's rare.
+
+2. **Football's cleanest study finds nothing.** A randomization-inference paper built precisely to handle the confounding ("Jet Lag Does Not Impact Football Performance," 2023) concludes the effect is **not reliably detectable** in football. The cross-sport evidence is thin too: the best-quantified result (NBA, *Frontiers* 2022) is home-teams-traveling-east only, p≈0.05 — one marginal cell. Folklore wildly overstates it.
+
+3. **It can't be fit from our data anyway.** A few-% effect against international football's variance, confounded with home/away, opponent quality, and competition tier — so it would have to be an imported literature prior, not a fitted edge.
+
+**The trader's read.** This joins **altitude (#7)** and the **"12σ" shocks (#21)** as a folk-wisdom prior that doesn't survive rigor: the headline-friendly thing isn't where the signal is. So I **did not** add a jet-lag term to the model — modelled honestly with recovery it's ~0 for 2026, and manufacturing an effect football's own cleanest study denies would be the opposite of the discipline. The deliverable is the *descriptive* burden (a clean, novel, validatable fact — the schedule is the schedule) plus the myth-bust: **the travel is real, the jet-lag edge isn't.** (`scripts/build_travel.py`, timezone + residual-zone analysis.)
+
 ---
 
 ## Thread drafts (the public voice)
