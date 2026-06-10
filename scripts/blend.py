@@ -20,12 +20,14 @@ DEFAULT_W = 0.4
 
 
 def blended_ratings(elo_ratings: dict, w: float = DEFAULT_W, teams=None,
-                    availability: bool = False, confed_correct: bool = True) -> dict:
-    """Blend Elo with squad value. `availability=True` uses availability-adjusted squad
-    values (SQUAD_VALUE minus injured/absent top-11 players, see squad_values.ABSENCES)
-    instead of the static full-strength value. Default False keeps the published model on
-    the static value until the ABSENCES table carries real, sourced squad-announcement
-    data — an empty table makes the two identical, so turning it on is harmless.
+                    availability: bool = True, confed_correct: bool = True) -> dict:
+    """Blend Elo with squad value. `availability=True` (the production default) uses
+    availability-adjusted squad values (SQUAD_VALUE minus injured/absent/suspended top-11
+    players, see squad_values.ABSENCES) instead of the static full-strength value. While
+    ABSENCES is empty the two are identical, so this is a no-op today; once a *sourced*
+    absence is logged (a star ruled out, a confirmed lineup) every card reflects it on the
+    next build with no code change. Pass `availability=False` for a static full-strength
+    baseline (build_availability_check uses both to show the delta).
 
     `confed_correct=True` (default) first applies the empirical-Bayes confederation offset
     (xresidual.confed_bias) to de-bias the near-disconnected confederation clusters before

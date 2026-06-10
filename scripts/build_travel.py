@@ -3,10 +3,11 @@
 
     python scripts/build_travel.py
 
-NAIVE, hard-capped version: great-circle distance between each team's three
-group-match cities + minimum rest gap, overlaid with the market's advance odds.
-NOT advancement-weighted, no time-zone or climate weighting (left out deliberately,
-those are a much bigger project). Group stage only; deep knockout runs add far more.
+Great-circle distance between each team's three group-match cities + minimum rest gap,
+overlaid with the market's advance odds — plus the time-zone / jet-lag dimension for the
+first multi-timezone World Cup. Headline: the travel burden is real and unequal, but the
+residual circadian penalty after recovery is ~0 (4-6 day gaps clear the <=3-zone shifts),
+so jet-lag is a media narrative, not an edge (see FINDINGS #25). Group stage only.
 """
 from __future__ import annotations
 
@@ -37,6 +38,22 @@ COORDS = {
 }
 _ALIAS = {"New York/New Jersey": "New York New Jersey"}
 
+# UTC offsets during the tournament (Jun-Jul 2026): US DST on; Mexico has had no DST since
+# 2023. Pacific -7 to Eastern -4 = a 3-hour span, the first multi-timezone World Cup.
+TZ = {"Los Angeles": -7, "Seattle": -7, "San Francisco Bay Area": -7, "Vancouver": -7,
+      "Mexico City": -6, "Guadalajara": -6, "Monterrey": -6,
+      "Dallas": -5, "Houston": -5, "Kansas City": -5,
+      "Atlanta": -4, "Toronto": -4, "Boston": -4, "Philadelphia": -4,
+      "New York New Jersey": -4, "Miami": -4}
+
+
+def _residual_zones(shift: int, rest_days: int) -> float:
+    """Time zones still un-adjusted at kickoff after recovery. The circadian clock re-syncs
+    ~1.0 zone/day westward (phase delay, easier) and ~0.67/day eastward (phase advance, the
+    hard direction). `shift` is signed: + eastward. Literature-standard linear-residual form."""
+    rate = 0.67 if shift > 0 else 1.0
+    return max(0.0, abs(shift) - rate * rest_days)
+
 
 def _city(ground: str) -> str:
     base = str(ground).split(" (")[0].strip()
@@ -58,14 +75,24 @@ def main() -> int:
     win = team_probs("world-cup-winner")
 
     recs = {}
+    all_residuals = []
     for team in pd.unique(pd.concat([g.team1, g.team2])):
         m = g[(g.team1 == team) | (g.team2 == team)].sort_values("date")
         seq = [_city(x) for x in m.ground]
         km = sum(_haversine(COORDS[seq[i]], COORDS[seq[i + 1]]) for i in range(len(seq) - 1))
         rest = min((m.date.iloc[i + 1] - m.date.iloc[i]).days for i in range(len(m) - 1))
+        # signed time-zone shifts between consecutive cities (+ eastward = the hard direction),
+        # and the residual zones still un-adjusted at each kickoff after recovery.
+        east = west = 0; resid = 0.0
+        for i in range(len(seq) - 1):
+            shift = TZ[seq[i + 1]] - TZ[seq[i]]
+            gap = (m.date.iloc[i + 1] - m.date.iloc[i]).days
+            east += max(shift, 0); west += max(-shift, 0)
+            r = _residual_zones(shift, gap); resid = max(resid, r); all_residuals.append(r)
         t = wc2026_teams.canonical(team)
         recs[t] = {"team": t, "iso": ISO.get(t, ""), "color": KIT.get(t, INK),
                    "km": round(km), "rest": int(rest), "cities": seq,
+                   "east_hrs": east, "west_hrs": west, "resid_zones": round(resid, 2),
                    "adv": round(adv.get(t, 0) * 100)}
 
     # one consistent ranking by km (1 = most travel), over all 48 teams
@@ -83,11 +110,21 @@ def main() -> int:
     favs = [r for r in sorted((r for r in ordered if r["fav"]), key=lambda r: -r["km"])
             if r not in worst]
 
+    # jet-lag summary: the myth-bust. residual circadian penalty after recovery, across every
+    # group-stage travel leg. ~0 because the 4-6 day gaps clear the <=3-zone shifts.
+    legs = len(all_residuals); zero = sum(1 for r in all_residuals if r < 1e-9)
+    max_resid = round(max(all_residuals), 2) if all_residuals else 0.0
+    jetlag = {"legs": legs, "zero_legs": zero, "zero_pct": round(100 * zero / max(legs, 1)),
+              "max_resid_zones": max_resid, "span_hours": max(TZ.values()) - min(TZ.values()),
+              "worst_case_winprob_pct": round(max_resid * 4 * 0.14, 1)}  # ~4 Elo/zone, ~0.14%/Elo
+
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.TRAVEL = " + json.dumps({"worst": worst, "favs": favs, "n": n,
-                "max_km": ordered[0]["km"]}) + ";\n")
-    print(f"wrote {OUT}: worst {ordered[0]['team']} {ordered[0]['km']}km (rank 1/{n}) ; "
-          f"favourites: " + ", ".join(f"{r['team']} {r['km']}km #{r['rank']}" for r in favs))
+                "max_km": ordered[0]["km"], "jetlag": jetlag}) + ";\n")
+    print(f"wrote {OUT}: worst {ordered[0]['team']} {ordered[0]['km']}km (rank 1/{n})")
+    print(f"  jet-lag: residual=0 for {zero}/{legs} legs ({jetlag['zero_pct']}%), max "
+          f"{max_resid} zones (~{jetlag['worst_case_winprob_pct']}% win prob) over a "
+          f"{jetlag['span_hours']}h span — the burden is real, the effect washes out")
     return 0
 
 
