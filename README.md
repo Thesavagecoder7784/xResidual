@@ -24,7 +24,7 @@ It is not a betting model, and it is not an attempt to out-predict the markets. 
 
 ## Findings
 
-Running notes, each framed by the decision it implies, live in [FINDINGS.md](FINDINGS.md). A few are already in before kickoff: Polymarket quotes about 27× Kalshi's depth at the same spread, every title favorite is sell-heavy, the favorite–longshot bias hides in the 1¢ tick, and the "altitude means more goals" idea doesn't survive a look at the data. The newest: heat's effect is in-play, not in the pre-match goal line, so it becomes a pre-registered second-half test rather than a goals claim (and the "heat moves cards" angle is shelved because the feed carries no cards market).
+Running notes, each framed by the decision it implies, live in [FINDINGS.md](FINDINGS.md). A few are already in before kickoff: Polymarket quotes about 27× Kalshi's depth at the same spread, every title favorite is sell-heavy, the favorite–longshot bias hides in the 1¢ tick, and the "altitude means more goals" idea doesn't survive a look at the data. The newest run pro-market: a systematic scan of 238 contracts across five layers finds the market is hard to beat wherever there's liquidity (and where we disagreed, an independent bookmaker sided with the market — it was usually us); and chasing that down surfaced a real *model* bug, not a market one — Elo inflates weak, regionally-isolated confederations, now corrected with a validated empirical-Bayes shrinkage.
 
 Before kickoff I locked a set of falsifiable predictions about how these markets will behave — calibration, law of one price, cross-venue lead-lag, sigma-sanity, and the in-play heat test — each with its exact grading rule, in [PREREGISTRATION.md](PREREGISTRATION.md). They get graded in public on July 19, hits and misses both.
 
@@ -39,10 +39,11 @@ Tournament notes (updated weekly):
 Full spec is in [METHODOLOGY.md](METHODOLOGY.md). The short version:
 
 - **Expectation baseline.** World Football Elo (computed from 49k open results) feeding a Skellam goal model, with home advantage calibrated to history (~0.47 goals, so `HOME_ADVANTAGE` ≈ 85). I tested the "altitude means more goals" prior on ~50k matches and dropped it, because the totals coefficient came back negative. This is a yardstick for measuring surprise, not a market-beater.
-- **Independent tournament simulation.** A format-aware group→Final Monte Carlo (40k sims, 8 best thirds via FIFA Annex C, Dixon–Coles low-score correction), compared against the market. Pure Elo runs hotter on favourites than the market does; I traced that to Elo's blindness to squad value, and blending in Transfermarkt values (Peeters 2018) cut the gap vs Opta from ~4.7pp to ~0.7pp.
+- **Independent tournament simulation.** A format-aware group→Final Monte Carlo (40k sims, 8 best thirds via FIFA Annex C, Dixon–Coles low-score correction), compared against the market. Pure Elo runs hotter on favourites than the market does; I traced that to Elo's blindness to squad value, and blending in Transfermarkt values (Peeters 2018) cut the gap vs Opta from ~4.7pp to ~0.7pp. A second, deeper bias — Elo over-rating weak, regionally-isolated confederations because the match graph barely connects them — is corrected with an out-of-sample-validated **empirical-Bayes confederation shrinkage** (CONCACAF/OFC pulled down, UEFA/CONMEBOL up; +4.6% cross-confederation RPS, Diebold–Mariano p≈0.009). After both, the model agrees with the de-vigged bookmaker consensus at **0.95 rank correlation**.
 - **Residuals.** Per-match surprise as a log-score and a standardized z, with honest sigma discipline: real upsets are 1–3σ, and anything above 4σ means a broken model, not a miracle.
 - **Sharpness and calibration.** CORP isotonic reliability diagrams with bootstrap consistency bands, an exact Brier decomposition, and three devig methods (multiplicative / power / Shin) so a finding doesn't hinge on the margin-removal choice.
 - **Microstructure.** Order-book depth and spread, order-book imbalance (do the favorites sit bid or offered?), cross-venue convergence, lead–lag price discovery (does Kalshi or Polymarket move first?), and bookmaker dispersion. Early reads: Polymarket quotes ~27× Kalshi's depth at the same ~0.1¢ spread, and every title favorite is sell-heavy with OBI ≈ 0.2.
+- **In-play, at the millisecond.** A single-clock websocket capture of both order books for a named match (`logger/ws_capture.py`), with auto goal-shock detection and the goal-overreaction fade test (the documented "surprise" reversion edge) — paper-only, noise-hardened on a live dry-run, and pre-registered as P10. The capture/analysis pipeline is validated end-to-end on live in-play data.
 - **Trajectory.** Implied championship probability, and how fast belief moves, over the tournament.
 
 Validated before kickoff: the calibration stack reproduces a clean reliability diagram on 3,850 historical international forecasts, and the live pipeline already prints the title race and market-vs-baseline gaps for upcoming fixtures.
@@ -54,10 +55,11 @@ A single tournament is ~104 matches, so probability claims at the extremes carry
 ## Repo layout
 
 - `xresidual/` — the engine: Elo/Skellam baseline and residuals, `group_sim.py` / `knockout.py` (the format-aware tournament Monte Carlo), calibration (CORP), cross-venue microstructure, order-book imbalance, `ws_events` (ms lead–lag), trajectory, plots.
-- `logger/` — append-only price logger across Kalshi / Polymarket / Odds API, plus `ws_capture.py` (real-time websocket capture for the lead–lag work). The live, time-gated capture; runs via `launchd`.
+- `logger/` — append-only price logger across Kalshi / Polymarket / Odds API, plus `ws_capture.py` (real-time, millisecond websocket capture for the in-play / lead–lag work).
+- `deploy/` — the collection runs 24/7 on an **always-on Azure VM** (systemd timers; setup + runbook here), so no match is ever lost to a sleeping laptop. The laptop keeps analysis / rendering / posting and pulls the collected data down with `make pull`.
 - `scripts/` — `run_analysis.py` (full report), `make_figures.py`, `build_all.py` (rebuild every card), and the per-card `build_*.py` (which write the simulation and market cards).
 - `viz/` — editorial cards: `model/` (the simulation) and `market/` (market data). The analysis (`scripts/build_*.py`) and the rendered PNGs are public; the card HTML/CSS templates are kept private.
-- `tests/` — 105 unit tests across the math core, calibration, microstructure, pipeline, plots, lead–lag, the simulation invariants, and the data-integrity guards.
+- `tests/` — 112 unit tests across the math core, calibration, microstructure, pipeline, plots, lead–lag, the simulation invariants, the confederation-bias correction, and the data-integrity guards.
 
 ### Reproduce
 
@@ -70,7 +72,9 @@ python scripts/build_all.py           # regenerate every card's underlying data 
 Two layers, two reproducibility stories:
 
 - **The model engine is fully reproducible from public sources.** `xresidual/data*.py` fetch results, fixtures, and historical forecasts (martj42, openfootball, 538) and cache them under `data/` on first run, so the simulation, calibration, and `viz/model/` cards regenerate from a clean clone with no inputs to supply.
-- **The market layer streams from a live logger you run.** `logger/` records Kalshi / Polymarket / Odds API prices to `logger/data/` (git-ignored, since those feeds aren't mine to redistribute). The generated `viz/market/` data and PNGs are committed so the cards render as-is; regenerating them yourself means running the logger with your own API keys (`cp logger/config.example.json logger/config.json`).
+- **The market layer streams from a live logger you run.** `logger/` records Kalshi / Polymarket / Odds API prices to `logger/data/` (git-ignored, since those feeds aren't mine to redistribute). I run it 24/7 on an always-on Azure VM (`deploy/`) and pull the data down with `make pull`, so collection never depends on my laptop being awake. The generated `viz/market/` data and PNGs are committed so the cards render as-is; regenerating them yourself means running the logger with your own API keys (`cp logger/config.example.json logger/config.json`).
+
+Every build stamps a **content-hash provenance record** to `viz/_provenance.js` (git SHA, model params, and fingerprints of every static input) and flags any card whose data has gone stale relative to an input that changed — so a published card can't silently drift from the model behind it, and you can tell exactly which code and data produced each one.
 
 ## Follow along
 

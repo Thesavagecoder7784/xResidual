@@ -50,7 +50,8 @@ def main() -> int:
     payload = {
         "summary": we._ovr_summary(all_trades),
         "per_contract": per_contract,
-        "params": {"entry_s": 120, "exit_s": 360, "min_jump": 0.04, "cost_pp": 0.5},
+        "params": {"entry_s": 120, "exit_s": 360, "min_jump": 0.05, "cost_pp": 0.5,
+                   "refractory_min": 5, "confirm_s": 20},
         "note": "fade goal overreaction; paper, net of modeled cost; live test of a "
                 "documented ~2-3%/trade edge",
     }

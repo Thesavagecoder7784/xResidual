@@ -21,9 +21,15 @@ def _div(rows):
     return pd.DataFrame(recs)
 
 
+# Each fixture opens with a below-entry "arming" pass: the rule only trades a gap it
+# actually saw cross the entry threshold, so a team must be observed under `entry`
+# once before it can open (forwardtest.run_convergence, `armed` gate). Without the
+# arming pass a series that starts already-wide is ignored by design.
+
+
 def test_converged_trade_is_profitable():
-    # gap opens at 1.5pp, drifts, converges to 0.2pp at the last pass
-    div = _div([(0, "X", 0.015), (1, "X", 0.012), (2, "X", 0.002)])
+    # armed below entry, then opens at 1.5pp, drifts, converges to 0.2pp at the last pass
+    div = _div([(0, "X", 0.004), (1, "X", 0.015), (2, "X", 0.012), (3, "X", 0.002)])
     res = ft.run_convergence(div, entry=0.010, exit=0.003, cost=0.005, max_hold=8)
     assert len(res["trades"]) == 1
     tr = res["trades"][0]
@@ -35,13 +41,14 @@ def test_converged_trade_is_profitable():
 
 
 def test_expired_trade_can_lose():
-    # gap opens then widens; forced out at max_hold
-    div = _div([(0, "Y", 0.012), (1, "Y", 0.020), (2, "Y", 0.025), (3, "Y", 0.030)])
+    # armed, opens, then widens; forced out at max_hold
+    div = _div([(0, "Y", 0.004), (1, "Y", 0.012), (2, "Y", 0.020), (3, "Y", 0.025)])
     res = ft.run_convergence(div, entry=0.010, exit=0.003, cost=0.005, max_hold=2)
     assert len(res["trades"]) == 1
     tr = res["trades"][0]
     assert tr["reason"] == "expired"
-    # closes at pass 2 (held==2==max_hold), gap 0.025: (0.012-0.025)-0.005 = -0.018 -> -1.8pp
+    # opens at pass 1 (0.012), closes at pass 3 (held==2==max_hold), gap 0.025:
+    # (0.012-0.025)-0.005 = -0.018 -> -1.8pp
     assert abs(tr["pnl_pp"] - (-1.8)) < 1e-6
     assert res["summary"]["hit_rate"] == 0.0
 
@@ -54,16 +61,17 @@ def test_no_trade_below_entry():
 
 
 def test_one_position_per_team_at_a_time():
-    # stays open across several wide passes, then converges -> exactly one trade
-    div = _div([(0, "X", 0.02), (1, "X", 0.02), (2, "X", 0.015), (3, "X", 0.001)])
+    # armed, then stays open across several wide passes, then converges -> one trade
+    div = _div([(0, "X", 0.004), (1, "X", 0.02), (2, "X", 0.02), (3, "X", 0.015), (4, "X", 0.001)])
     res = ft.run_convergence(div, entry=0.010, exit=0.003, cost=0.005, max_hold=8)
     assert len(res["trades"]) == 1
     assert res["trades"][0]["reason"] == "converged"
 
 
 def test_equity_is_cumulative():
-    div = _div([(0, "A", 0.015), (1, "A", 0.001),      # +profit, converged
-                (2, "B", 0.015), (3, "B", 0.001)])     # +profit, converged
+    div = _div([(0, "A", 0.004), (0, "B", 0.004),       # arm both teams
+                (1, "A", 0.015), (2, "A", 0.001),       # +profit, converged
+                (3, "B", 0.015), (4, "B", 0.001)])      # +profit, converged
     res = ft.run_convergence(div, entry=0.010, exit=0.003, cost=0.005, max_hold=8)
     eq = res["equity"]
     assert len(eq) == 2

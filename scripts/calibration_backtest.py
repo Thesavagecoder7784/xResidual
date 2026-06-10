@@ -47,7 +47,7 @@ def main() -> int:
     brier = cal.brier_score(p, y)
     ece = cal.expected_calibration_error(p, y, n_bins=args.bins)
     a, b = cal.calibration_regression(p, y)
-    corp = cal.corp(p, y)
+    corp = cal.corp(p, y, wdl_n=len(df))
 
     print(f"\nBrier score (raw): {brier:.4f}")
     print(f"Murphy decomposition (binned): reliability={md.reliability:.4f}  "

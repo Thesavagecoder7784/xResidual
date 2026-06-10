@@ -242,7 +242,23 @@ The favourite-longshot threads (#6, #11, #19) and the reach-round check are real
 
 Two things make this more than a chart. First, the **winner market is efficient** — our model and the market agree to under half a point — which is the control that says the divergences elsewhere aren't just the model being biased everywhere. Second, I refused to take the biggest gap at face value: the **advance-layer** divergence (our model says minnows like Tunisia and South Africa advance ~26% vs the market's ~37%) was adjudicated against an **independent third source, the bookmakers' de-vigged match odds**. Bookmakers rate those teams *higher* than our model too (Tunisia expected group points 2.45 vs our 1.92; South Africa 2.57 vs 1.89), siding with the market. So that gap is **our model under-rating minnow advancement in the generous 48-team format — not market softness.** The same event drives it home: "champion" prices efficiently in the liquid winner market but is overpriced in the thin elimination market.
 
-**The trader's read.** This is the synthesis of half the findings into one term structure, and the headline is pro-market: the World Cup market is **hard to beat wherever there's liquidity**, and the only genuinely soft corners are thin, new, or structural — the favourite deep-run overpricing (the held Morocco/Türkiye-back, Brazil-deep-run-fade legs), sized small and caveated. The contribution isn't a basket of edges; it's the **scanner** (`xresidual/mispricing.py`, auditable, tested) plus the discipline it enforces — we scanned every layer for an edge, checked our own signals against an independent source, and reported honestly that the market mostly won.
+**The trader's read.** This is the synthesis of half the findings into one term structure, and the headline is pro-market: the World Cup market is **hard to beat wherever there's liquidity**, and the only genuinely soft corners are thin, new, or structural — the favourite deep-run overpricing, sized small and caveated. The point isn't a basket of edges; it's the discipline — scan every layer, check your own signals against an independent source before believing them, and report honestly when the market wins, which here it mostly does.
+
+---
+
+## 22. Elo inflates weak confederations — the market wasn't fooled, the edge was ours to fix
+
+Chasing the thin-market "edges" from #21 to ground — Mexico, Canada, Japan all *looked* underpriced to advance — hit the same wall every time: an independent bookmaker sided with the market, not us. The common cause was structural. Elo is zero-sum, and the six confederations are near-disconnected islands in the match graph: they mostly play themselves, with only sparse inter-confederation "bridge" games to anchor the global scale, so weak confederations quietly inflate against weak regional opponents. Measured on 49k results, in cross-confederation games CONCACAF runs ~40 Elo and OFC ~160 Elo *below* what their ratings imply, while UEFA/CONMEBOL run above. New Zealand was advancing in ~39% of our sims; corrected, it's ~20%.
+
+The fix is an empirical-Bayes confederation shrinkage (`xresidual/confed_bias.py`): a per-confederation offset estimated from the bridge games only, scaled per team by how globally-connected it is (Mexico plays everyone → barely corrected; an isolated minnow → fully corrected). Validated out-of-sample — **+4.6% cross-confederation RPS, Diebold–Mariano p≈0.009, within-confederation untouched as a placebo** — and the literature backs it (a known connectivity artifact; the fix is textbook James–Stein / Glicko-RD shrinkage).
+
+**The trader's read.** This is the inverse of an edge story, and the more honest one: the apparent mispricings in the thin advance/reach markets weren't the market being soft, they were *us* over-rating teams from weak confederations. The market had already priced what our Elo couldn't see. After the correction the model agrees with the de-vigged bookmaker consensus at **0.95 rank correlation** (median 0.2pp), and the only gaps left are defensible team-specific calls — we like Spain/Argentina a touch more than the market, Brazil a touch less — that I won't curve-fit away. The contribution is a sharper model and a clean template: check a "market mispricing" against an independent third source before believing it.
+
+## 23. First live in-play tape: the pipeline works, and the overreaction edge needs a real surprise
+
+Captured the Argentina–Iceland friendly end-to-end — **172,892 millisecond-stamped order-book events**, the full chain (VM capture → pull → reconstruct mids → fade backtest) proven on live in-play data for the first time. Argentina opened a 0.84 favourite and won 3–0; the market jumped only on Barco's 8' opener and shrugged off the 72'/86' goals — a 0.91 favourite extending a lead isn't news.
+
+That makes it a clean dry-run but a deliberately *weak* test of the goal-overreaction edge (P10): the documented reversion fades **surprising** goals, and a heavy favourite scoring is the opposite of surprising, so there was nothing to fade — exactly as theory predicts. It did expose one methodology fix: the naive shock detector turned 3 goals into 11 "shocks" on a thin friendly, so it's now hardened (a ≥5pp move that *persists* 20s later, 5-min refractory) — 11 → 3. **The real test waits for a genuine surprise**: an underdog scoring, or a favourite conceding, once the tournament starts.
 
 ---
 
@@ -268,6 +284,12 @@ Two things make this more than a chart. First, the **winner market is efficient*
 > the two crowds agree on every title price to ~0.15pp. The durable difference is *cost*
 > (Kalshi's vig ~1.8× Polymarket's). What little belief-gap is left? A home-crowd tilt:
 > the US book pays up for USA & Mexico, the global book for England, Portugal, Japan. 🧵
+
+**Thread E, the bug was ours, not the market's:**
+> I thought I'd found World Cup market mispricings: Canada, Mexico, Japan all looked
+> cheap to advance. Then I checked against an independent bookmaker — and it sided with
+> the market every time. The culprit wasn't the market. It was my Elo. A thread on why
+> ratings quietly *inflate* weak confederations, and the empirical-Bayes fix. 🧵
 
 *(Tone: curious, pro-market, specific, humble on sample size. Lead with the number,
 explain the mechanism, link the repo. No "markets are wrong" framing; these are

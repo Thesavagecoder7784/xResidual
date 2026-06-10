@@ -118,7 +118,7 @@ def calibration_report(match_table: pd.DataFrame, which: str = "mkt") -> dict:
     p, y = cal.flatten_wdl(match_table[f"{which}_home"], match_table[f"{which}_draw"],
                            match_table[f"{which}_away"], match_table["outcome"])
     a, b = cal.calibration_regression(p, y)
-    corp = cal.corp(p, y, n_boot=500)
+    corp = cal.corp(p, y, n_boot=500, wdl_n=len(match_table))
     return {
         "n_matches": len(match_table), "n_events": len(y),
         "brier": cal.brier_score(p, y), "ece": cal.expected_calibration_error(p, y),
