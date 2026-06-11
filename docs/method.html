@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · how it works</title>
+<meta name="description" content="How the xResidual model forecasts the 2026 World Cup, pre-commits its calls, learns from results, and grades itself against the market." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Forecast board</a>
+    <a href="games.html">Group stage</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="method.html" class="on">How it works</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Method</div>
+    <h1>How it <em>works.</em></h1>
+    <div class="lede">A forecasting model, pre-committed against the prediction markets and graded the way a trading desk grades itself — on whether the price moves toward it, and on whether its probabilities are calibrated. Not a tip sheet. A track record built in the open.</div>
+  </header>
+
+  <section class="prose">
+    <div class="h2">The model</div>
+    <p>Each team carries a strength rating from a <b>World Football Elo</b> built on ~49,000 international matches, blended with squad market value and corrected for confederation-level bias (weaker regions inflate against weak regional opposition; an empirical-Bayes shrinkage re-levels them). That rating difference feeds a <b>goal model</b> — Poisson scoring rates with a Dixon-Coles low-score correction — which yields a full scoreline distribution for every fixture, and from it the win / draw / loss probabilities.</p>
+    <p>The tournament itself is a <b>joint Monte-Carlo simulation</b>: tens of thousands of simulated tournaments, coherent by construction (the advance probabilities sum to the right number of teams, the bracket reconciles). That's where the advance, group-winner, reach-round and champion numbers come from.</p>
+  </section>
+
+  <section class="prose">
+    <div class="h2">Predictions are pre-committed</div>
+    <p>Every forecast is timestamped to an <b>append-only ledger</b> before the match is played — nothing is fit in hindsight. That's the difference between a forecast and a backtest: when the grade comes, it's honest, because the call can't be edited after the fact.</p>
+  </section>
+
+  <section class="prose">
+    <div class="h2">It learns from the tournament</div>
+    <p>The model is an <b>updating</b> one. As each group game resolves, the simulation <b>conditions on the actual result</b> — that game is fixed, only the rest is simulated, on ratings that have absorbed what happened. Once the group stage is done, the knockout simulation runs on the <b>real bracket and updated ratings</b>. It's Bayesian-style evidence updating, not a one-shot prediction.</p>
+  </section>
+
+  <section class="prose">
+    <div class="h2">How it's graded</div>
+    <p><b>Closing-Line Value (CLV).</b> The cleanest test of skill that doesn't wait for the result: did the market price drift <i>toward</i> the model after the forecast was logged? Positive CLV is a skill signal independent of who eventually wins — the same metric sharp bettors and desks live by.</p>
+    <p><b>Calibration.</b> When the model says 30%, does it happen about 30% of the time? Graded with proper scoring rules (Brier, log-loss) against real outcomes as markets resolve. A model can be confident and wrong; calibration is the check that it isn't.</p>
+  </section>
+
+  <section class="prose">
+    <div class="h2">The honesty principle</div>
+    <p>The premise is pro-market: these markets are very hard to beat, so the model is held to the price, not graded against a strawman. Wins and misses are reported the same way. A mediocre result reported straight is worth more than a cherry-picked one — the rigor is the point, and it's the only thing that makes a public track record mean anything.</p>
+    <p style="color:var(--dim);font-size:13px;margin-top:18px">Full methodology, code, and pre-registration: <a href="https://github.com/Thesavagecoder7784/xResidual">github.com/Thesavagecoder7784/xResidual</a>. Paper only — no real-money trading.</p>
+  </section>
+
+  <footer><div>xResidual · a forecasting experiment on the 2026 World Cup</div>
+    <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
+</div>
+</body></html>
