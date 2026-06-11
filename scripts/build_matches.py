@@ -20,7 +20,7 @@ import pandas as pd
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
-from xresidual import baseline, data, elo, wc2026_teams  # noqa: E402
+from xresidual import baseline, data, elo, group_sim, skellam, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
 
 LEDGER = os.path.join(ROOT, "paper", "match_forecasts.jsonl")
@@ -52,11 +52,14 @@ def main() -> int:
         if key in committed:
             continue
         t1, t2 = row.team1, row.team2
-        exp = baseline.make_expectation(t1, t2, {t1: rt(t1), t2: rt(t2)}, params, neutral=True)
+        # Host advantage + altitude, consistent with the group sim (NOT neutral): a host nation
+        # gets the Elo home edge in its own group games. See group_sim._match_components.
+        l1, l2 = group_sim._match_lambdas(t1, t2, row.ground, ratings, params)
+        p1, pdraw, p2 = skellam.wdl_probs(l1, l2)
         rec = {"key": key, "committed": datetime.now(timezone.utc).isoformat(),
                "md": str(row.round), "group": str(row.group).replace("Group ", ""),
                "date": str(row.date), "t1": wc2026_teams.canonical(t1), "t2": wc2026_teams.canonical(t2),
-               "p1": round(exp.p_home, 4), "pd": round(exp.p_draw, 4), "p2": round(exp.p_away, 4)}
+               "p1": round(p1, 4), "pd": round(pdraw, 4), "p2": round(p2, 4)}
         committed[key] = rec
         with open(LEDGER, "a", encoding="utf-8") as f:
             f.write(json.dumps(rec) + "\n")

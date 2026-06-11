@@ -108,18 +108,42 @@ def build_forecasts(sim, reach, pm):
     return rows
 
 
+LOG_EVERY_H = 20.0   # cadence guard: append a new pre-committed batch at most ~once a day. The
+                     # board + CLV still refresh every run; re-logging the same forecast every
+                     # 30 min would just bloat the ledger with near-duplicate pre-commitments.
+
+
+def _last_batch_age_h():
+    """Hours since the most recent logged batch (by ts_ms), or None if the ledger is empty."""
+    last = None
+    if os.path.exists(LEDGER):
+        for line in open(LEDGER, encoding="utf-8"):
+            try:
+                last = json.loads(line).get("ts_ms", last)
+            except Exception:
+                pass
+    return None if not last else (time.time() * 1000 - last) / 3.6e6
+
+
 def forecast_mode():
     sim, reach = model_probs()
     pm = market_prices()
     rows = build_forecasts(sim, reach, pm)
     batch = datetime.now(timezone.utc).isoformat()
-    with open(LEDGER, "a", encoding="utf-8") as f:
-        for r in rows:
-            f.write(json.dumps({"batch": batch, "ts_ms": int(time.time() * 1000), **r}) + "\n")
+    age = _last_batch_age_h()
+    logged = "--force" in sys.argv or age is None or age >= LOG_EVERY_H
+    if logged:
+        with open(LEDGER, "a", encoding="utf-8") as f:
+            for r in rows:
+                f.write(json.dumps({"batch": batch, "ts_ms": int(time.time() * 1000), **r}) + "\n")
+    else:
+        print(f"(no new batch — last one {age:.1f}h ago, under the {LOG_EVERY_H:.0f}h cadence; "
+              f"board + CLV still refresh. --force to log anyway.)")
 
     title = sorted([r for r in rows if r["market"] == "champion"], key=lambda r: -r["model"])[:10]
     calls = sorted(rows, key=lambda r: -abs(r["edge_pp"]))[:16]
-    print(f"=== xResidual prediction board · {batch[:19]}Z · {len(rows)} forecasts logged ===\n")
+    print(f"=== xResidual prediction board · {batch[:19]}Z · {len(rows)} forecasts "
+          f"{'logged' if logged else '(not re-logged)'} ===\n")
     print("TITLE RACE (model champion % vs market):")
     for r in title:
         print(f"   {r['team']:<14} model {r['model']*100:5.1f}%   market {r['mkt_at_forecast']*100:5.1f}%   {r['edge_pp']:+5.1f}pp")
@@ -138,7 +162,8 @@ def forecast_mode():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.PREDBOARD = " + json.dumps(payload) + ";\n")
-    print(f"\nlogged batch to {os.path.relpath(LEDGER, ROOT)} · wrote {os.path.relpath(OUT, ROOT)}")
+    print(f"\n{'logged batch to' if logged else 'board refreshed (no new batch);'} "
+          f"{os.path.relpath(LEDGER, ROOT)} · wrote {os.path.relpath(OUT, ROOT)}")
     print("PAPER / pre-committed. Run --score any time to see CLV vs the live price.")
     return 0
 
