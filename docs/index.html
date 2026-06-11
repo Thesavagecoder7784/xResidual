@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · live prediction board</title>
+<meta name="description" content="A model that forecasts the 2026 World Cup markets, pre-committed and scored against the price — Closing-Line Value and calibration, live." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#ded6c6;--card:#fffdf8;
+    --accent:#b3122a;--mkt:#16776f;--good:#1f7a3d;--bad:#b3122a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:radial-gradient(120% 60% at 50% -8%,rgba(179,18,42,.05),transparent 55%),var(--paper);
+    color:var(--ink);font-family:var(--fb);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  /* header */
+  header{padding:46px 0 26px;border-bottom:1.5px solid var(--rule)}
+  .kicker{font-family:var(--fm);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .kicker .live{display:inline-flex;align-items:center;gap:6px;color:var(--mkt)}
+  .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--mkt);box-shadow:0 0 0 0 rgba(22,119,111,.5);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,119,111,.5)}70%{box-shadow:0 0 0 7px rgba(22,119,111,0)}100%{box-shadow:0 0 0 0 rgba(22,119,111,0)}}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(34px,6vw,58px);line-height:1.0;letter-spacing:-.02em;margin-top:16px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .lede{margin-top:14px;font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:760px}
+  .lede b{color:var(--ink)}
+  /* stat chips */
+  .stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  .stat{background:var(--card);border:1.5px solid var(--rule);border-radius:11px;padding:13px 18px;min-width:128px}
+  .stat .v{font-family:var(--fd);font-weight:600;font-size:27px;line-height:1}
+  .stat .v.a{color:var(--accent)} .stat .v.t{color:var(--mkt)}
+  .stat .k{font-family:var(--fm);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-top:7px}
+  section{padding:34px 0;border-bottom:1px solid var(--rule)}
+  .h2{font-family:var(--fd);font-weight:600;font-size:25px;letter-spacing:-.01em;margin-bottom:4px}
+  .sub{font-size:13.5px;color:var(--dim);margin-bottom:20px}
+  /* title race dumbbells */
+  .race{display:flex;flex-direction:column;gap:11px}
+  .rrow{display:grid;grid-template-columns:118px 1fr 96px;align-items:center;gap:14px}
+  .rteam{font-weight:600;font-size:15.5px;text-align:right}
+  .rtrack{position:relative;height:22px}
+  .rline{position:absolute;top:50%;height:2.5px;background:var(--rule);transform:translateY(-50%)}
+  .rdot{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--paper)}
+  .rdot.m{background:var(--accent);z-index:2}.rdot.k{background:var(--mkt)}
+  .rval{font-family:var(--fm);font-size:12.5px;text-align:right}
+  .rval .m{color:var(--accent);font-weight:600}.rval .k{color:var(--mkt)}
+  .legend{font-family:var(--fm);font-size:11.5px;color:var(--dim);margin-top:14px}
+  .legend .a{color:var(--accent)}.legend .t{color:var(--mkt)}
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .tabs{display:flex;flex-wrap:wrap;gap:7px}
+  .tab{font-family:var(--fm);font-size:12px;letter-spacing:.03em;padding:7px 13px;border:1.5px solid var(--rule);border-radius:20px;background:transparent;color:var(--muted);cursor:pointer;transition:.15s}
+  .tab:hover{border-color:var(--dim)}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .search{font-family:var(--fb);font-size:13.5px;padding:8px 13px;border:1.5px solid var(--rule);border-radius:9px;background:var(--card);color:var(--ink);width:180px}
+  .search:focus{outline:none;border-color:var(--accent)}
+  /* table */
+  .tablewrap{overflow-x:auto;border:1.5px solid var(--rule);border-radius:12px;background:var(--card)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:620px}
+  th,td{padding:11px 15px;text-align:left;white-space:nowrap}
+  th{font-family:var(--fm);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);cursor:pointer;user-select:none;border-bottom:1.5px solid var(--rule);position:sticky;top:0;background:var(--card)}
+  th:hover{color:var(--ink)} th .ar{opacity:.5;font-size:9px}
+  td{border-bottom:1px solid var(--rule)} tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(179,18,42,.03)}
+  td.num{font-family:var(--fm);text-align:right}
+  .team{font-weight:600} .mtag{font-family:var(--fm);font-size:11px;color:var(--dim)}
+  .pos{color:var(--good);font-weight:600}.neg{color:var(--bad);font-weight:600}
+  .hi{color:var(--accent);font-weight:600}.lo{color:var(--mkt);font-weight:600}
+  .oc{font-weight:600}.oc.y{color:var(--good)}.oc.n{color:var(--dim)}
+  /* two-col */
+  .grid2{display:grid;grid-template-columns:1.6fr 1fr;gap:34px;align-items:start}
+  @media(max-width:780px){.grid2{grid-template-columns:1fr}.rrow{grid-template-columns:92px 1fr 84px}}
+  .panel{background:var(--card);border:1.5px solid var(--rule);border-radius:12px;padding:20px 22px}
+  .panel .big{font-family:var(--fd);font-weight:600;font-size:40px;line-height:1}
+  .panel .big.t{color:var(--mkt)} .panel p{font-size:13.5px;color:var(--muted);margin-top:10px}
+  .relrow{display:flex;justify-content:space-between;font-family:var(--fm);font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--rule)}
+  footer{padding:30px 0 50px;font-family:var(--fm);font-size:12px;color:var(--dim);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+  footer b{color:var(--ink)}
+  .loading{padding:60px 0;text-align:center;color:var(--dim);font-family:var(--fm)}
+</style></head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">xResidual · 2026 World Cup
+      <span class="live"><span class="dot"></span>live</span></div>
+    <h1>The model's board, <em>scored against the price.</em></h1>
+    <div class="lede">A statistical model forecasts every 2026 World Cup market, <b>pre-committed and timestamped</b> against the live prediction markets. Then it's graded the way the desks do — <b>Closing-Line Value</b> (did the price drift toward the model?) and calibration, as games resolve. Not a tip sheet. A track record.</div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <div class="h2">Title race</div>
+    <div class="sub">Model champion probability vs the market, top of the field.</div>
+    <div class="race" id="race"></div>
+    <div class="legend"><span class="a">● model</span> &nbsp;&nbsp; <span class="t">● market</span> &nbsp;·&nbsp; the gap is the disagreement</div>
+  </section>
+
+  <section>
+    <div class="h2">Every forecast</div>
+    <div class="sub">Model vs market across all markets. Sort by any column; filter by market; search a team. Edge = model − market. CLV = how far the price has since moved toward the model.</div>
+    <div class="grid2">
+      <div>
+        <div class="controls">
+          <div class="tabs" id="tabs"></div>
+          <input class="search" id="search" placeholder="search team…" />
+        </div>
+        <div class="tablewrap"><table id="tbl"><thead></thead><tbody><tr><td class="loading">loading…</td></tr></tbody></table></div>
+      </div>
+      <div>
+        <div class="panel" style="margin-bottom:20px">
+          <div class="big t" id="clvbig">—</div>
+          <p><b>Closing-Line Value.</b> Share of forecasts the market has since drifted toward — a skill signal that's independent of who eventually wins. <span id="clvsub"></span></p>
+        </div>
+        <div class="panel">
+          <div class="h2" style="font-size:18px;margin-bottom:8px">Calibration</div>
+          <div id="calib"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div id="foot"></div>
+    <div><b>@PrabhatM27</b> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div>
+  </footer>
+</div>
+
+<script>
+const MKT={champion:"Champion",advance:"Advance",group_win:"Win group",reach_qf:"Reach QF",reach_sf:"Reach SF",reach_final:"Reach Final"};
+let DATA=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
+
+function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);
+  return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+
+function renderStats(){
+  const c=DATA.clv, cal=DATA.calibration;
+  document.getElementById('stats').innerHTML=[
+    [`${DATA.n_forecasts}`,'forecasts logged','' ],
+    [`${c.positive_pct==null?'—':c.positive_pct+'%'}`,'positive CLV','t'],
+    [`${cal.status==='live'?'+'+(cal.brier_skill*100).toFixed(0)+'%':'pending'}`,cal.status==='live'?'Brier skill':'calibration','a'],
+    [`${DATA.n_batches}`,'forecast batches','']
+  ].map(([v,k,cl])=>`<div class="stat"><div class="v ${cl}">${v}</div><div class="k">${k}</div></div>`).join('');
+}
+function renderRace(){
+  const tr=DATA.title_race.slice(0,10), xmax=Math.max(...tr.flatMap(r=>[r.model,r.price]))*1.15;
+  document.getElementById('race').innerHTML=tr.map(r=>{
+    const xm=r.model/xmax*100, xk=r.price/xmax*100, lo=Math.min(xm,xk), w=Math.abs(xm-xk);
+    return `<div class="rrow"><div class="rteam">${r.team}</div>
+      <div class="rtrack"><div class="rline" style="left:${lo}%;width:${w}%"></div>
+        <div class="rdot k" style="left:${xk}%"></div><div class="rdot m" style="left:${xm}%"></div></div>
+      <div class="rval"><span class="m">${r.model.toFixed(1)}</span> <span class="k">${r.price.toFixed(1)}</span></div></div>`;}).join('');
+}
+function renderTabs(){
+  const tabs=[["all","All"],...DATA.markets];
+  document.getElementById('tabs').innerHTML=tabs.map(([k,l])=>
+    `<button class="tab ${k===tab?'on':''}" data-k="${k}">${l}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.k;renderTabs();renderTable();});
+}
+const COLS=[["team","Team",0],["market_label","Market",0],["model","Model",1],["price","Market",1],["edge","Edge",1],["clv","CLV",1],["outcome","Res",1]];
+function renderHead(){
+  document.querySelector('#tbl thead').innerHTML="<tr>"+COLS.map(([k,l,n])=>{
+    const key=k==="edge"?"edgeabs":k, ar=(sortKey===key||sortKey===k)?(sortDir<0?"▼":"▲"):"";
+    return `<th data-k="${k}" class="${n?'num':''}">${l} <span class="ar">${ar}</span></th>`;}).join('')+"</tr>";
+  document.querySelectorAll('#tbl th').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k, key=k==="edge"?"edgeabs":k;
+    if(sortKey===key){sortDir*=-1}else{sortKey=key;sortDir=(k==="team"||k==="market_label")?1:-1}
+    renderHead();renderTable();});
+}
+function renderTable(){
+  let rows=DATA.forecasts.filter(f=>(tab==="all"||f.market===tab)&&(!query||f.team.toLowerCase().includes(query)));
+  rows.sort((a,b)=>{
+    let A,B;
+    if(sortKey==="edgeabs"){A=Math.abs(a.edge);B=Math.abs(b.edge)}
+    else{A=a[sortKey];B=b[sortKey]}
+    if(A==null)A=-1e9; if(B==null)B=-1e9;
+    return (A<B?-1:A>B?1:0)*sortDir;});
+  const body=rows.map(f=>{
+    const ec=f.edge>0?'hi':'lo', cl=f.clv==null?'':(f.clv>0?'pos':f.clv<0?'neg':'');
+    const oc=f.outcome==null?'<span class="oc">—</span>':(f.outcome?'<span class="oc y">✓</span>':'<span class="oc n">✗</span>');
+    return `<tr><td class="team">${f.team}</td><td class="mtag">${f.market_label}</td>
+      <td class="num">${f.model.toFixed(1)}</td><td class="num">${f.price.toFixed(1)}</td>
+      <td class="num ${ec}">${f.edge>0?'+':''}${f.edge.toFixed(1)}</td>
+      <td class="num ${cl}">${f.clv==null?'—':(f.clv>0?'+':'')+f.clv.toFixed(2)}</td>
+      <td class="num">${oc}</td></tr>`;}).join('');
+  document.querySelector('#tbl tbody').innerHTML=body||'<tr><td class="loading">no forecasts match</td></tr>';
+}
+function renderSide(){
+  const c=DATA.clv;
+  document.getElementById('clvbig').textContent=c.positive_pct==null?"—":c.positive_pct+"%";
+  document.getElementById('clvsub').textContent=c.mean==null?"":`Mean CLV ${c.mean>0?'+':''}${c.mean}pp across ${c.n} forecasts.`;
+  const cal=DATA.calibration, el=document.getElementById('calib');
+  if(cal.status!=='live'){
+    el.innerHTML=`<p style="font-size:13.5px;color:var(--muted)">Pending — calibration grades the model's probabilities against real outcomes as markets resolve (group stage ~Jun 27, knockout rounds after). The forecasts are already locked, so the grade will be honest when it lands.</p>`;
+  }else{
+    el.innerHTML=`<div style="font-family:var(--fm);font-size:13px;margin-bottom:10px">Brier <b>${cal.brier}</b> · log-loss <b>${cal.logloss}</b> · skill <b style="color:var(--accent)">+${(cal.brier_skill*100).toFixed(0)}%</b> · n=${cal.n}</div>`
+      +`<div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">predicted → actual</div>`
+      +cal.reliability.map(r=>`<div class="relrow"><span>${r.bucket}%</span><span>${r.pred}% → <b>${r.actual}%</b> <span style="color:var(--dim)">(${r.n})</span></span></div>`).join('');
+  }
+}
+fetch('data/dashboard.json?'+Date.now()).then(r=>r.json()).then(d=>{
+  DATA=d;
+  document.getElementById('foot').innerHTML=`${fmtAge(d.asof)} · point-in-time joint sim vs live Polymarket · pre-committed to an append-only ledger · graded on CLV + calibration`;
+  renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();
+  document.getElementById('search').oninput=e=>{query=e.target.value.toLowerCase().trim();renderTable();};
+}).catch(e=>{document.querySelector('#tbl tbody').innerHTML=`<tr><td class="loading">could not load data (${e})</td></tr>`;});
+</script>
+</body></html>
