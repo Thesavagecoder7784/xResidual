@@ -46,12 +46,35 @@ def mid(q):
     return (b + a) / 2 if b is not None and a is not None else None
 
 
+def wc_played_results(df, fx):
+    """{(canon t1, canon t2): (g1, g2)} for GROUP-stage games already played, both
+    orientations — so group_sim can fix them to reality and simulate only the rest. This is
+    how the model 'learns' from the tournament: as games resolve, the forecast conditions on
+    them (and once the group stage is done, the knockout runs on the real bracket)."""
+    grp = fx[fx["group"].astype(str).str.startswith("Group")]
+    pairs = {frozenset((wc2026_teams.canonical(r.team1), wc2026_teams.canonical(r.team2))) for r in grp.itertuples(index=False)}
+    d = df[df["tournament"] == "FIFA World Cup"].copy()
+    d = d[pd.to_datetime(d["date"]) >= pd.Timestamp("2026-06-11")]
+    out = {}
+    for r in d.itertuples(index=False):
+        h, a = wc2026_teams.canonical(r.home_team), wc2026_teams.canonical(r.away_team)
+        if frozenset((h, a)) not in pairs:
+            continue                                       # only condition on group games
+        hs, as_ = int(r.home_score), int(r.away_score)
+        out[(h, a)] = (hs, as_)
+        out[(a, h)] = (as_, hs)
+    return out
+
+
 def model_probs():
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)
     fx = pd.read_csv(os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
-    sim, det = group_sim.simulate(fx, ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    results = wc_played_results(df, fx)                    # condition on games already played
+    sim, det = group_sim.simulate(fx, ratings, params, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=results)
     reach = knockout.simulate(det, sim, ratings)["reach"]
     return sim, reach
 
