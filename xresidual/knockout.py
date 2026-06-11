@@ -83,7 +83,7 @@ def _assign(qual: set, slots: list) -> dict:
 
 def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
              return_matchups: bool = False, return_slots: bool = False,
-             return_paths: bool = False) -> dict:
+             return_paths: bool = False, results: dict | None = None) -> dict:
     """Run the knockout bracket on the group-stage simulation `detail`/`out`.
 
     Returns {reach: {team -> {r16,qf,sf,final,win}}, r32: [{id, winner_slot,
@@ -139,7 +139,15 @@ def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
             r2 = r2 + eps[rr, b]
         p1 = 1.0 / (1.0 + 10 ** ((r2 - r1) / 400.0))
         w1 = rng.random(p1.shape) < p1
-        return np.where(w1, a, b)
+        wnr = np.where(w1, a, b)
+        if results:                                   # fix knockout games already played to reality
+            for k in range(a.shape[1]):
+                ca, cb = a[:, k], b[:, k]
+                if (ca == ca[0]).all() and (cb == cb[0]).all():   # deterministic pairing (post-group)
+                    win = results.get(frozenset((int(ca[0]), int(cb[0]))))
+                    if win is not None:
+                        wnr[:, k] = win
+        return wnr
 
     def build(level, prevwin, prev_ids):
         pid = {mid: k for k, mid in enumerate(prev_ids)}

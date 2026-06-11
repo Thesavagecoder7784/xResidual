@@ -232,6 +232,8 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
         k = len(teams)
         pts = np.zeros((n, k)); gd = np.zeros((n, k)); gf = np.zeros((n, k))
         wins = np.zeros((n, k)); ga = np.zeros((n, k))
+        # head-to-head sub-tables (team i's record in the match vs team j), for the 2026 tiebreak
+        h2hp = np.zeros((n, k, k)); h2hd = np.zeros((n, k, k)); h2hf = np.zeros((n, k, k))
         for row in sub.itertuples(index=False):
             i, j = idx[row.team1], idx[row.team2]
             if eps is not None:
@@ -255,13 +257,21 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
             gf[:, i] += g1;           gf[:, j] += g2
             ga[:, i] += g2;           ga[:, j] += g1
             wins[:, i] += w1;         wins[:, j] += w2
+            h2hp[:, i, j] += w1 * 3 + dr; h2hp[:, j, i] += w2 * 3 + dr
+            h2hd[:, i, j] += g1 - g2;     h2hd[:, j, i] += g2 - g1
+            h2hf[:, i, j] += g1;          h2hf[:, j, i] += g2
             group_goals += g1 + g2
             if return_detail:
                 matches.append((L, wc2026_teams.canonical(row.team1),
                                 wc2026_teams.canonical(row.team2),
                                 np.sign(g1 - g2).astype(np.int8)))
 
-        order = np.argsort(-_rank_key(pts, gd, gf, rng), axis=1)  # col0 = 1st place
+        # 2026 tiebreak (FIFA Art. 13): overall POINTS, then the HEAD-TO-HEAD mini-table among
+        # teams level on points (h2h points -> h2h GD -> h2h GF), then overall GD -> GF -> random.
+        # Each team's h2h stat = its record vs the teams it's tied with on overall points.
+        tied = pts[:, :, None] == pts[:, None, :]                 # (n,k,k): same overall points
+        hp = (tied * h2hp).sum(2); hd = (tied * h2hd).sum(2); hf = (tied * h2hf).sum(2)
+        order = np.lexsort((-rng.random((n, k)), -gf, -gd, -hf, -hd, -hp, -pts))  # col0 = 1st place
         place = np.empty((n, k), dtype=int)                       # team-local-idx -> finishing place
         for r in range(k):
             place[rows, order[:, r]] = r

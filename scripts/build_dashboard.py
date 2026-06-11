@@ -23,7 +23,9 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from prediction_board import (model_probs, market_prices, build_forecasts,  # noqa: E402
                               _resolve_outcomes, LEDGER)
 
-OUT = os.path.join(ROOT, "docs", "data", "dashboard.json")
+OUT = os.path.join(ROOT, "docs", "data", "dashboard.js")  # JS global, not JSON: loads via
+# <script src> so the page works opened locally (file://) AND on GitHub Pages — fetch() is
+# blocked on file:// and was the "error fetching data".
 MKT_LABEL = {"champion": "Champion", "advance": "Advance", "group_win": "Win group",
              "reach_qf": "Reach QF", "reach_sf": "Reach SF", "reach_final": "Reach Final"}
 
@@ -92,7 +94,7 @@ def main() -> int:
                "n_batches": len(set(e["batch"] for e in led))}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
-        json.dump(payload, f, separators=(",", ":"))
+        f.write("window.DASH = " + json.dumps(payload, separators=(",", ":")) + ";\n")
     print(f"wrote {os.path.relpath(OUT, ROOT)}: {len(forecasts)} forecasts · "
           f"CLV {clv_summary['positive_pct']}% pos · calibration {calib['status']}")
     return 0

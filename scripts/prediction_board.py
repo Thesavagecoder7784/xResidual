@@ -185,10 +185,11 @@ def _resolve_outcomes(led):
     group_end = grp["date"].max()
     ko = fx[~fx["group"].astype(str).str.startswith("Group")]
 
-    def window(substr):
-        s = ko[ko["round"].astype(str).str.contains(substr, case=False, na=False)]
-        return (s["date"].min(), s["date"].max()) if len(s) else (None, None)
-    win = {"reach_qf": window("quarter"), "reach_sf": window("semi"), "reach_final": window("final")}
+    def window(label):                                 # EXACT round label — "final" as a substring
+        s = ko[ko["round"].astype(str) == label]        # also matches "Quarter-final"/"Semi-final",
+        return (s["date"].min(), s["date"].max()) if len(s) else (None, None)  # which is wrong here
+    win = {"reach_qf": window("Quarter-final"), "reach_sf": window("Semi-final"),
+           "reach_final": window("Final")}
 
     df = data.load_results()
     df = df[df["tournament"] == "FIFA World Cup"].copy()
@@ -201,12 +202,19 @@ def _resolve_outcomes(led):
     now = df["date"].max()
     ko_done = now > group_end                       # group stage complete?
 
-    def in_window(team, w):
+    nfix = {"reach_qf": "Quarter-final", "reach_sf": "Semi-final", "reach_final": "Final"}
+    nfix = {k: int((ko["round"].astype(str) == v).sum()) for k, v in nfix.items()}
+
+    def in_window(team, w, n_fix):
         lo, hi = w
         if lo is None or now < lo:
             return None                              # round not started -> unresolved
-        m = df[((df.h == team) | (df.a == team)) & (df.date >= lo) & (df.date <= hi)]
-        return 1 if len(m) else (0 if now > hi else None)
+        played = df[(df.date >= lo) & (df.date <= hi)]
+        if ((played.h == team) | (played.a == team)).any():
+            return 1                                 # team played in this round -> reached it
+        # didn't play -> resolve 0 only once the round is FULLY played (so non-participants are
+        # known). Using fixture count, not now>hi, so the Final (the last match ever) still grades.
+        return 0 if len(played) >= n_fix else None
 
     def group_standings(letter):
         sub = df[(df.date <= group_end) & (df.h.map(tg).eq(letter) | df.a.map(tg).eq(letter))]
@@ -234,7 +242,7 @@ def _resolve_outcomes(led):
                 st = group_standings(tg.get(t))
                 out[i] = (1 if st and st[0] == t else 0) if st else None
             elif mkt in win:
-                out[i] = in_window(t, win[mkt])
+                out[i] = in_window(t, win[mkt], nfix[mkt])
             elif mkt == "champion":
                 fl = df[(df.date >= (win["reach_final"][0] or now)) & (df.date <= now)]
                 if win["reach_final"][0] and now >= win["reach_final"][0] and len(fl):

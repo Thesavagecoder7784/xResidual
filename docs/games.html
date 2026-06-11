@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · group stage</title>
+<meta name="description" content="Every 2026 World Cup group game, predicted by the model and graded as it's played — and the model learns from each result." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Forecast board</a>
+    <a href="games.html" class="on">Group stage</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="method.html">How it works</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">2026 World Cup · group stage</div>
+    <h1>Every group game, <em>predicted — then learned from.</em></h1>
+    <div class="lede">All 72 group matches, called up front (<span class="m">model win</span> · draw · <span class="k">model win</span>). As each resolves, the model <b>conditions on the result</b> — the forecasts on the board update, and once the group stage is done the knockout simulation runs on the <b>real bracket and updated ratings</b>. The model learning from the tournament, in the open.</div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section style="border-top:none;padding-top:8px">
+    <div class="mfilter" id="mfilter"></div>
+    <div class="mlist" id="mlist"><div class="loading">loading…</div></div>
+  </section>
+
+  <footer><div id="foot"></div>
+    <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
+</div>
+
+<script>
+let M=null, mfil="All";
+function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function renderStats(){document.getElementById('stats').innerHTML=[
+    [`${M.played}/${M.n}`,'games played',''],
+    [`${M.accuracy==null?'—':Math.round(M.accuracy*100)+'%'}`,'favourite correct','a'],
+    [`${M.logloss==null?'—':M.logloss}`,'match log-loss','t']
+  ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');}
+function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="mt",res;
+  if(m.played){if(m.result==="t1")t2c+=" lose";else if(m.result==="t2")t1c+=" lose";
+    res=`<span class="sc">${m.s1}-${m.s2}</span> ${m.correct?'<span class="ok">✓</span>':'<span class="x">✗</span>'}`;}
+  else res=`<span class="pre">${m.date.slice(5)}</span>`;
+  const pn=m.fav==="t1"?m.t1:m.fav==="t2"?m.t2:"Draw",pc=m.fav==="t1"?"h":m.fav==="t2"?"a":"d",pp=Math.round(Math.max(m.p1,m.pd,m.p2)*100);
+  return `<div class="mrow"><div class="gchip">${m.group}</div><div class="${t1c}">${m.t1}</div>
+    <div class="wdl" title="${p1.toFixed(0)} / ${pd.toFixed(0)} / ${p2.toFixed(0)}">
+      <span class="a" style="width:${p1}%"></span><span class="d" style="width:${pd}%"></span><span class="t" style="width:${p2}%"></span></div>
+    <div class="${t2c}">${m.t2}</div>
+    <div class="mpick ${pc}">${pn}<span class="pct">${pp}%</span></div>
+    <div class="mres">${res}</div></div>`;}
+function render(){const groups=[...new Set(M.matches.map(m=>m.group))].sort();
+  document.getElementById('mfilter').innerHTML=["All",...groups].map(g=>`<button class="tab ${g===mfil?'on':''}" data-g="${g}">${g==="All"?"All groups":"Group "+g}</button>`).join('');
+  document.querySelectorAll('#mfilter .tab').forEach(b=>b.onclick=()=>{mfil=b.dataset.g;render();});
+  const head=`<div class="mhead"><span></span><span class="r">home</span><span class="c">model W / D / L</span><span>away</span><span>prediction (win)</span><span class="r">result</span></div>`;
+  document.getElementById('mlist').innerHTML=head+M.matches.filter(m=>mfil==="All"||m.group===mfil).map(mRow).join('');}
+const s=document.createElement('script');s.src='data/matches.js?'+Date.now();
+s.onload=()=>{M=window.GAMES;
+  document.getElementById('foot').innerHTML=`${fmtAge(M.asof)} · model W/D/L pre-committed to an append-only ledger · the sim conditions on each result`;
+  renderStats();render();};
+s.onerror=()=>{document.getElementById('mlist').innerHTML=`<div class="loading">could not load data</div>`;};
+document.body.appendChild(s);
+</script>
+</body></html>
