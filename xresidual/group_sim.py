@@ -182,7 +182,7 @@ def third_place_cutline(detail: dict) -> tuple[list[dict], int]:
 
 def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: BaselineParams,
              n: int = 40000, seed: int = 7, return_detail: bool = False, rho: float = DC_RHO,
-             sigma: float = 0.0):
+             sigma: float = 0.0, results: dict | None = None):
     """Run `n` group-stage simulations. Returns a dict keyed by canonical team name:
     {p1, p2, p3, p4, top2, padv, p3adv} as probabilities, plus the group letter.
 
@@ -244,6 +244,11 @@ def simulate(fixtures: pd.DataFrame, ratings: dict[str, float], params: Baseline
             else:
                 l1, l2 = _match_lambdas(row.team1, row.team2, row.ground, ratings, params)
                 g1, g2 = _dc_sample(l1, l2, rho, n, rng)
+            if results is not None:                       # condition on a played result:
+                actual = results.get((canon[i], canon[j]))  # fix this game to reality, don't sample
+                if actual is not None:
+                    g1 = np.full(n, actual[0], dtype=g1.dtype)
+                    g2 = np.full(n, actual[1], dtype=g2.dtype)
             w1, w2, dr = g1 > g2, g2 > g1, g1 == g2
             pts[:, i] += w1 * 3 + dr; pts[:, j] += w2 * 3 + dr
             gd[:, i] += g1 - g2;      gd[:, j] += g2 - g1

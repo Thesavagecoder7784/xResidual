@@ -55,7 +55,7 @@
   .search{font-family:var(--fb);font-size:13.5px;padding:8px 13px;border:1.5px solid var(--rule);border-radius:9px;background:var(--card);color:var(--ink);width:180px}
   .search:focus{outline:none;border-color:var(--accent)}
   /* table */
-  .tablewrap{overflow-x:auto;border:1.5px solid var(--rule);border-radius:12px;background:var(--card)}
+  .tablewrap{overflow:auto;max-height:560px;border:1.5px solid var(--rule);border-radius:12px;background:var(--card)}
   table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:620px}
   th,td{padding:11px 15px;text-align:left;white-space:nowrap}
   th{font-family:var(--fm);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);cursor:pointer;user-select:none;border-bottom:1.5px solid var(--rule);position:sticky;top:0;background:var(--card)}
@@ -74,6 +74,17 @@
   .panel .big{font-family:var(--fd);font-weight:600;font-size:40px;line-height:1}
   .panel .big.t{color:var(--mkt)} .panel p{font-size:13.5px;color:var(--muted);margin-top:10px}
   .relrow{display:flex;justify-content:space-between;font-family:var(--fm);font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--rule)}
+  /* group-stage match board */
+  .mfilter{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+  .mlist{max-height:560px;overflow-y:auto;border:1.5px solid var(--rule);border-radius:12px;background:var(--card)}
+  .mrow{display:grid;grid-template-columns:34px 1fr 132px 1fr 78px;align-items:center;gap:11px;padding:9px 16px;border-bottom:1px solid var(--rule)}
+  .mrow:last-child{border-bottom:none} .mrow:hover{background:rgba(179,18,42,.03)}
+  .gchip{font-family:var(--fm);font-size:10px;color:var(--dim);border:1px solid var(--rule);border-radius:4px;padding:2px 0;text-align:center}
+  .mt{font-weight:600;font-size:14px} .mt.l{text-align:right} .mt.lose{color:var(--dim);font-weight:500}
+  .wdl{display:flex;height:13px;border-radius:3px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+  .wdl span{display:block;min-width:0}.wdl .a{background:var(--accent)}.wdl .d{background:#cdc3ac}.wdl .t{background:var(--mkt)}
+  .mres{font-family:var(--fm);font-size:13px;text-align:right;white-space:nowrap}
+  .mres .sc{font-weight:600}.mres .ok{color:var(--good)}.mres .x{color:var(--bad)}.mres .pre{color:var(--dim);font-size:11px}
   footer{padding:30px 0 50px;font-family:var(--fm);font-size:12px;color:var(--dim);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
   footer b{color:var(--ink)}
   .loading{padding:60px 0;text-align:center;color:var(--dim);font-family:var(--fm)}
@@ -119,6 +130,14 @@
     </div>
   </section>
 
+  <section>
+    <div class="h2">Group stage · every game</div>
+    <div class="sub">All 72 group matches, predicted up front (<span class="hi">model win</span> · draw · <span class="lo">model win</span>). As each game resolves, the model <b>conditions on the result</b> — the forecasts above update, and once the group stage is done the knockout simulation runs on the <b>real bracket and updated ratings</b>. That's the model learning from the tournament.</div>
+    <div class="stats" id="mstats" style="margin-bottom:18px"></div>
+    <div class="mfilter" id="mfilter"></div>
+    <div class="mlist" id="mlist"></div>
+  </section>
+
   <footer>
     <div id="foot"></div>
     <div><b>@PrabhatM27</b> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div>
@@ -127,7 +146,7 @@
 
 <script>
 const MKT={champion:"Champion",advance:"Advance",group_win:"Win group",reach_qf:"Reach QF",reach_sf:"Reach SF",reach_final:"Reach Final"};
-let DATA=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
+let DATA=null, MATCHES=null, tab="all", sortKey="edgeabs", sortDir=-1, query="", mfil="All";
 
 function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);
   return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
@@ -197,10 +216,40 @@ function renderSide(){
       +cal.reliability.map(r=>`<div class="relrow"><span>${r.bucket}%</span><span>${r.pred}% → <b>${r.actual}%</b> <span style="color:var(--dim)">(${r.n})</span></span></div>`).join('');
   }
 }
-fetch('data/dashboard.json?'+Date.now()).then(r=>r.json()).then(d=>{
-  DATA=d;
-  document.getElementById('foot').innerHTML=`${fmtAge(d.asof)} · point-in-time joint sim vs live Polymarket · pre-committed to an append-only ledger · graded on CLV + calibration`;
-  renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();
+function mRow(m){
+  const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;
+  let t1c="mt l",t2c="mt",res;
+  if(m.played){
+    if(m.result==="t1")t2c+=" lose"; else if(m.result==="t2")t1c+=" lose";
+    res=`<span class="sc">${m.s1}-${m.s2}</span> ${m.correct?'<span class="ok">✓</span>':'<span class="x">✗</span>'}`;
+  } else res=`<span class="pre">${m.date.slice(5)}</span>`;
+  return `<div class="mrow"><div class="gchip">${m.group}</div>
+    <div class="${t1c}">${m.t1}</div>
+    <div class="wdl" title="${p1.toFixed(0)} / ${pd.toFixed(0)} / ${p2.toFixed(0)}">
+      <span class="a" style="width:${p1}%"></span><span class="d" style="width:${pd}%"></span><span class="t" style="width:${p2}%"></span></div>
+    <div class="${t2c}">${m.t2}</div><div class="mres">${res}</div></div>`;
+}
+function renderMatches(){
+  const M=MATCHES;
+  document.getElementById('mstats').innerHTML=[
+    [`${M.played}/${M.n}`,'games played',''],
+    [`${M.accuracy==null?'—':Math.round(M.accuracy*100)+'%'}`,'favourite correct','a'],
+    [`${M.logloss==null?'—':M.logloss}`,'match log-loss','t']
+  ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
+  const groups=[...new Set(M.matches.map(m=>m.group))].sort();
+  document.getElementById('mfilter').innerHTML=["All",...groups].map(g=>
+    `<button class="tab ${g===mfil?'on':''}" data-g="${g}">${g==="All"?"All groups":"Group "+g}</button>`).join('');
+  document.querySelectorAll('#mfilter .tab').forEach(b=>b.onclick=()=>{mfil=b.dataset.g;renderMatches();});
+  const rows=M.matches.filter(m=>mfil==="All"||m.group===mfil);
+  document.getElementById('mlist').innerHTML=rows.map(mRow).join('');
+}
+Promise.all([
+  fetch('data/dashboard.json?'+Date.now()).then(r=>r.json()),
+  fetch('data/matches.json?'+Date.now()).then(r=>r.json())
+]).then(([d,m])=>{
+  DATA=d; MATCHES=m;
+  document.getElementById('foot').innerHTML=`${fmtAge(d.asof)} · point-in-time joint sim vs live Polymarket · the sim conditions on played results · graded on CLV + calibration`;
+  renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();renderMatches();
   document.getElementById('search').oninput=e=>{query=e.target.value.toLowerCase().trim();renderTable();};
 }).catch(e=>{document.querySelector('#tbl tbody').innerHTML=`<tr><td class="loading">could not load data (${e})</td></tr>`;});
 </script>
