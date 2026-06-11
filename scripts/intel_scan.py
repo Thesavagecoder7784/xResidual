@@ -10,6 +10,11 @@ pulls the model probability (from the joint sim) and the live Polymarket mid for
 teams across advance / group-winner / reach-round / champion, prints the gap, and tags the
 direction the intel predicts. Then it re-checks every open position against model + intel.
 
+DISCRETIONARY COMMENTARY: the INTEL overlay is hand-curated, subjective judgement — NOT a
+model output. The published forecasts (advance / group / bracket / champion) stand entirely
+independent of it; this tool only *annotates* where intel might explain a model-vs-market gap.
+Nothing here is committed to a ledger or shown on the site.
+
 PAPER ONLY (F-1). Market prices are live mids, not depth-aware.
 """
 from __future__ import annotations
@@ -31,11 +36,15 @@ FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 
 # intel overlay: team -> (direction the intel pushes the TRUE prob vs a regime-blind model,
 #                         one-line reason). 'high' = model/market likely too high (fade).
-INTEL = {
-    "Morocco": ("high", "new coach Mar-2026, never managed a senior side; model blind to it"),
-    "Uruguay": ("high", "Bielsa player-revolt + lame-duck; milder, partly dated to 2024"),
-    "Spain":   ("low_near", "Yamal hamstring, likely misses 1-2 group games (model full-strength)"),
-    "Brazil":  ("mixed", "Ancelotti 1st WC + Neymar calf for opener; but group-rivals weaker"),
+INTEL = {  # refreshed 2026-06-11 (kickoff day) from the deeper injury/coaching sweep
+    "Brazil":      ("high", "Rodrygo ACL OUT (tournament), Estêvão hamstring doubtful, Neymar out for the opener vs a strong Morocco — model is squad-blind to all of it"),
+    "Egypt":       ("high", "Salah (hamstring) doubtful — model is talisman-blind, so its advance optimism is overstated"),
+    "Japan":       ("high", "Mitoma (hamstring) and Minamino (ACL) both OUT — two key attackers gone; fade the deep runs"),
+    "Netherlands": ("high", "Xavi Simons (ACL) out and Timber out — a midfield/defence hit the model can't see"),
+    "Morocco":     ("high", "new coach Ouahbi (Mar-2026), untested at senior level — but the defensive identity is player-driven, so milder than the headline"),
+    "Spain":       ("neutral", "Yamal and N.Williams fit for the opener (maybe minutes-limited) — earlier injury-fade thesis resolved; model ~ correct"),
+    "Senegal":     ("back", "2025 AFCON champions, in form — model's bullishness over the market is supported; Koulibaly thigh a mild doubt"),
+    "Algeria":     ("back", "strong recent form under Petkovic (beat the Netherlands, drew Uruguay) — supports the model rating it above the market"),
 }
 
 
@@ -60,7 +69,7 @@ def main() -> int:
     win = {t: mid(q) for t, q in poly_quotes(["world-cup-winner"]).items()}
     groups = {sim[t]["group"] for t in sim}
     gw = {}
-    for L in {sim[wc2026_teams.canonical(t)]["group"] for t in ["Brazil", "Morocco", "Spain", "Uruguay"] if wc2026_teams.canonical(t) in sim}:
+    for L in {sim[wc2026_teams.canonical(t)]["group"] for t in INTEL if wc2026_teams.canonical(t) in sim}:
         gw.update({t: mid(q) for t, q in poly_quotes([f"world-cup-group-{L.lower()}-winner"]).items()})
 
     def line(team, mkt_name, model_p, mkt_p):
@@ -70,7 +79,9 @@ def main() -> int:
         return f"    {mkt_name:<16} model {model_p*100:5.1f}%   market {mkt_p*100:5.1f}%   gap {gap:+5.1f}pp"
 
     print("\n================ INTEL-OVERLAID DIVERGENCE (model vs live Polymarket) ================")
-    for team in ["Morocco", "Brazil", "Uruguay", "Spain"]:
+    print("  [DISCRETIONARY COMMENTARY — hand-curated judgement, NOT model output. The published")
+    print("   forecasts stand without it; this only annotates where intel might explain a gap.]")
+    for team in INTEL:
         t = wc2026_teams.canonical(team)
         if t not in sim:
             continue
@@ -84,19 +95,29 @@ def main() -> int:
         print(line(team, "champion", reach[t]["win"] / 100, win.get(t)))
         # interpretation
         if d == "high":
-            print(f"    >> intel says model is too HIGH here. Where market <= model, the market already "
-                  f"discounts {team} (trust market); where market >= model, FADE candidate.")
-        elif d == "low_near":
-            print(f"    >> model is full-strength (Yamal-blind). If market still ~= model, market hasn't "
-                  f"priced the injury -> near-term FADE on early matches; if market < model, already priced.")
+            print(f"    >> intel reads the model too HIGH. Where market >= model it's a FADE candidate; "
+                  f"where market <= model the price already discounts it.")
+        elif d == "back":
+            print(f"    >> intel SUPPORTS the model over the market — a BACK candidate where market < model.")
         else:
-            print(f"    >> mixed: own-team downside (opener) vs weaker group rivals. Group-win may run HIGHER than model.")
+            print(f"    >> no live intel edge; model and market should roughly agree.")
 
     # full Group C picture (the book-relevant group)
     cL = sim[wc2026_teams.canonical("Brazil")]["group"]
     print(f"\n---- Group {cL} winner: model vs market (every team) ----")
     for t in sorted([x for x in sim if sim[x]["group"] == cL], key=lambda x: -sim[x]["p1"]):
         print(line(t, t, sim[t]["p1"], gw.get(t)))
+
+    # systematic advance divergence across the whole field — the favorite-longshot check
+    gaps = sorted(((sim[t]["padv"] * 100 - adv[t] * 100, t) for t in sim if adv.get(t) is not None),
+                  key=lambda x: x[0])
+    print("\n---- SYSTEMATIC advance divergence (model - market) — favorite-longshot check ----")
+    print("  biggest FADES (market overprices a weak team's advance — classic longshot bias):")
+    for g, t in gaps[:6]:
+        print(f"    {g:+5.1f}pp  {t:<16} model {sim[t]['padv']*100:4.1f}  market {adv[t]*100:4.1f}")
+    print("  biggest BACKS (model rates an in-form side above the market):")
+    for g, t in sorted(gaps, reverse=True)[:6]:
+        print(f"    {g:+5.1f}pp  {t:<16} model {sim[t]['padv']*100:4.1f}  market {adv[t]*100:4.1f}")
 
     # ---------------- verify the open paper book ----------------
     import json
@@ -105,7 +126,7 @@ def main() -> int:
     NOTE = {
         2: ("Germany NOT champion", "Germany has a Musiala-rhythm question -> mild SUPPORT for the NO"),
         3: ("Senegal advance", "Senegal are 2025 AFCON champions, in form -> SUPPORT"),
-        4: ("Brazil NOT win Group C", "Morocco (main rival) destabilized -> Brazil more likely to win -> UNDERCUTS"),
+        4: ("Brazil NOT win Group C", "Brazil now missing Rodrygo (ACL) + Estêvão doubtful + Neymar (opener) -> SUPPORTS the NO"),
         6: ("Turkey reach QF", "no specific intel flag -> NEUTRAL, ride the model edge"),
     }
     for p in book:
