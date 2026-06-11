@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import inspect
 import json
 import os
 import random
@@ -43,13 +44,19 @@ def _ws_connect(url, headers, **kw):
     """websockets.connect that works across the v14 header-kwarg rename.
 
     The per-request header kwarg was `extra_headers` through websockets 13 and was
-    renamed `additional_headers` in 14+. An unknown kwarg raises TypeError at the
-    (synchronous) connect-object construction, so we try the new name first and fall
-    back to the old one — keeping the logger runnable on either pinned version."""
-    try:
-        return websockets.connect(url, additional_headers=headers, **kw)
-    except TypeError:
-        return websockets.connect(url, extra_headers=headers, **kw)
+    renamed `additional_headers` in 14+. On older versions (e.g. 10.x) connect() accepts
+    arbitrary kwargs and only fails when create_connection is awaited, so a try/except at
+    construction misses it. Detect the supported name by inspecting the signature instead."""
+    names = set()
+    for obj in (websockets.connect, getattr(websockets.connect, "__init__", None)):
+        if obj is None:
+            continue
+        try:
+            names |= set(inspect.signature(obj).parameters)
+        except (ValueError, TypeError):
+            pass
+    key = "additional_headers" if "additional_headers" in names else "extra_headers"
+    return websockets.connect(url, **{key: headers}, **kw)
 
 
 def _ms() -> int:
