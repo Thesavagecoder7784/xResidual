@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 sys.path.insert(0, os.path.join(ROOT, "logger"))
 from xresidual import baseline, data, elo, group_sim, knockout, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
-from scan_arbitrage_live import poly_quotes  # noqa: E402
+from venue_prices import poly_quotes  # noqa: E402
 
 
 def mid(q):
