@@ -24,7 +24,7 @@ from xresidual import baseline, data, elo, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
 
 LEDGER = os.path.join(ROOT, "paper", "match_forecasts.jsonl")
-OUT = os.path.join(ROOT, "docs", "data", "matches.json")
+OUT = os.path.join(ROOT, "docs", "data", "matches.js")  # JS global (loads via <script src>)
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 
 
@@ -95,7 +95,7 @@ def main() -> int:
                "matches": matches}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
-        json.dump(payload, f, separators=(",", ":"))
+        f.write("window.GAMES = " + json.dumps(payload, separators=(",", ":")) + ";\n")
     print(f"wrote {os.path.relpath(OUT, ROOT)}: {len(matches)} group games "
           f"({new} newly committed) · {n_played} played"
           + (f" · favourite hit {hits}/{n_played} ({hits/n_played*100:.0f}%)" if n_played else ""))

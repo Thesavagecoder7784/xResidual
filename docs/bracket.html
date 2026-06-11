@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · knockout bracket</title>
+<meta name="description" content="The model's projected knockout bracket for the 2026 World Cup — fills in with the real teams after the group stage and updates after every game." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Forecast board</a>
+    <a href="games.html">Group stage</a>
+    <a href="bracket.html" class="on">Bracket</a>
+    <a href="method.html">How it works</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">2026 World Cup · knockouts</div>
+    <h1>The knockout <em>bracket.</em></h1>
+    <div class="lede">The model's projected path through the knockouts — <b>most-likely team in each slot</b>, with the model's pick to advance. Before the group stage it's a projection; it fills in with the <b>real teams</b> once groups resolve, and the sim <b>conditions on every knockout game</b>, so a played tie becomes final and the rest re-forecasts.</div>
+  </header>
+
+  <section style="border-top:none;padding-top:10px">
+    <div class="champ-banner" id="champ"></div>
+    <div class="bwrap"><div class="bcols" id="bracket"><div class="loading">loading…</div></div></div>
+    <div class="legend" style="margin-top:14px"><span class="a">●</span> model's pick to advance · faint % = how likely that team is to reach the slot (projected) · ✓ = result in</div>
+  </section>
+
+  <footer><div id="foot"></div>
+    <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
+</div>
+
+<script>
+let D=null;
+function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function row(name,pp,isPick,isFinal,wp){
+  const cls=isPick?"bteam win":"bteam out";
+  const occ=(pp<99&&!isFinal)?`<span class="pp">${pp}%</span>`:"";
+  const right=isPick?`<span class="wp">${isFinal?'✓':wp+'%'}</span>`:"";
+  return `<div class="${cls}"><span class="bn">${name}${occ}</span>${right}</div>`;}
+function card(m){
+  return `<div class="bmatch ${m.final?'final':''}">
+    ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
+    ${row(m.b,m.pb,m.pick===m.b,m.final,m.wp)}</div>`;}
+function render(){
+  const c=D.champion;
+  document.getElementById('champ').innerHTML=
+    `<span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${c.team}</span><span class="cp">${c.final?'':c.p+'% to lift it'}</span>`;
+  document.getElementById('bracket').innerHTML=D.rounds.map(r=>
+    `<div class="bcol"><h3>${r.round}</h3>${r.matches.map(card).join('')}</div>`).join('');
+}
+const s=document.createElement('script');s.src='data/bracket.js?'+Date.now();
+s.onload=()=>{D=window.BRACKET;
+  document.getElementById('foot').innerHTML=`${fmtAge(D.asof)} · ${D.group_done?'real bracket — conditions on every knockout game':'projected — fills in after the group stage'} · joint Monte-Carlo sim`;
+  render();};
+s.onerror=()=>{document.getElementById('bracket').innerHTML='<div class="loading">could not load data</div>';};
+document.body.appendChild(s);
+</script>
+</body></html>
