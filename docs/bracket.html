@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>xResidual · knockout bracket</title>
-<meta name="description" content="The model's projected knockout bracket for the 2026 World Cup — fills in with the real teams after the group stage and updates after every game." />
+<meta name="description" content="The model's projected knockout bracket for the 2026 World Cup, fills in with the real teams after the group stage and updates after every game." />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -24,7 +24,7 @@
   <header class="hero">
     <div class="kicker">2026 World Cup · knockouts</div>
     <h1>The knockout <em>bracket.</em></h1>
-    <div class="lede">The model's projected path through the knockouts — <b>most-likely team in each slot</b>, with the model's pick to advance. Before the group stage it's a projection; it fills in with the <b>real teams</b> once groups resolve, and the sim <b>conditions on every knockout game</b>, so a played tie becomes final and the rest re-forecasts.</div>
+    <div class="lede">The model's projected path through the knockouts, <b>most-likely team in each slot</b>, with the model's pick to advance. Before the group stage it's a projection; it fills in with the <b>real teams</b> once groups resolve, and the sim <b>conditions on every knockout game</b>, so a played tie becomes final and the rest re-forecasts.</div>
   </header>
 
   <section style="border-top:none;padding-top:10px">
@@ -58,7 +58,7 @@ function render(){
 }
 const s=document.createElement('script');s.src='data/bracket.js?'+Date.now();
 s.onload=()=>{D=window.BRACKET;
-  document.getElementById('foot').innerHTML=`${fmtAge(D.asof)} · ${D.group_done?'real bracket — conditions on every knockout game':'projected — fills in after the group stage'} · joint Monte-Carlo sim`;
+  document.getElementById('foot').innerHTML=`${fmtAge(D.asof)} · ${D.group_done?'real bracket, conditions on every knockout game':'projected, fills in after the group stage'} · joint Monte-Carlo sim`;
   render();};
 s.onerror=()=>{document.getElementById('bracket').innerHTML='<div class="loading">could not load data</div>';};
 document.body.appendChild(s);
