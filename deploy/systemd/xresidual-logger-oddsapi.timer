@@ -1,0 +1,9 @@
+[Unit]
+Description=xResidual bookmaker odds logger every 6h (00/06/12/18 UTC)
+
+[Timer]
+OnCalendar=*-*-* 00/06:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

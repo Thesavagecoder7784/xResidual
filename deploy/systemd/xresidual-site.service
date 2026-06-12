@@ -1,0 +1,12 @@
+[Unit]
+Description=xResidual live-site refresh (regenerate docs/data + publish to GitHub Pages)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=azureuser
+WorkingDirectory=/home/azureuser/xResidual
+ExecStart=/usr/bin/bash /home/azureuser/xResidual/deploy/refresh_site_vm.sh
+StandardOutput=append:/home/azureuser/xResidual/logger/data/site-refresh.log
+StandardError=append:/home/azureuser/xResidual/logger/data/site-refresh.log

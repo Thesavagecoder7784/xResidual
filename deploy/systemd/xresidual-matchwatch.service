@@ -1,0 +1,15 @@
+[Unit]
+Description=xResidual match auto-capture scheduler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# KillMode=process is REQUIRED: the scheduler spawns a detached 3h ws_capture and exits.
+# Default (control-group) would kill that capture when the scheduler exits; process leaves it running.
+KillMode=process
+User=azureuser
+WorkingDirectory=/home/azureuser/xResidual
+ExecStart=/home/azureuser/xResidual/.venv/bin/python scripts/match_scheduler.py
+StandardOutput=append:/home/azureuser/xResidual/logger/data/matchwatch.log
+StandardError=append:/home/azureuser/xResidual/logger/data/matchwatch.log
