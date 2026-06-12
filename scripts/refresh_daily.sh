@@ -21,20 +21,12 @@ echo "-- elimination market: capture + model-vs-market coherence"
 "$PY" scripts/build_elimination.py || echo "  elimination build failed (continuing)"
 echo "-- re-mark paper book to live prices (paper/book.md)"
 "$PY" paper/paper.py report || echo "  paper re-mark failed (continuing)"
-# Prediction board: log a pre-committed forecast batch vs the live market, then grade it.
-# CLV scores from prices alone; calibration grades against outcomes as markets resolve. The
-# sim conditions on played results, so the forecasts learn from the tournament. Append-only
-# ledger -> the track record builds itself.
-echo "-- prediction board: log forecast batch + score CLV + calibration"
-"$PY" scripts/prediction_board.py || echo "  prediction board log failed (continuing)"
-"$PY" scripts/prediction_board.py --score || echo "  CLV scoring failed (continuing)"
-"$PY" scripts/prediction_board.py --calibrate || echo "  calibration failed (continuing)"
-echo "-- group-stage match predictions (conditions on results as they land)"
-"$PY" scripts/build_matches.py || echo "  match predictions failed (continuing)"
-echo "-- knockout bracket (conditions on group + knockout results)"
-"$PY" scripts/build_bracket.py || echo "  bracket build failed (continuing)"
-echo "-- dashboard: regenerate docs/data/{dashboard,matches}.json for the live site"
-"$PY" scripts/build_dashboard.py || echo "  dashboard build failed (continuing)"
-echo "-- build all data + render all cards"
+# NOTE: the live-site data (docs/data/*.js) and the pre-committed ledgers (paper/*.jsonl) are
+# owned and published by the always-on VM. deploy/refresh_site_vm.sh runs prediction_board,
+# build_matches, build_bracket, and build_dashboard there and commits the results every ~30 min.
+# Running those here would regenerate VM-owned TRACKED files, dirty the working tree, and collide
+# on the next pull ("your local changes would be overwritten"). So this laptop refresh deliberately
+# does NOT write docs/data or the ledgers. `git pull` brings the VM's published copies down.
+echo "-- build all viz data + render all cards (the laptop's job: PNGs from viz/_*.js)"
 "$PY" scripts/build_all.py || echo "  build_all reported failures (see above)"
 echo "===== done $(date -u +%FT%TZ) ====="
