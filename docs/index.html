@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>xResidual · forecast board</title>
-<meta name="description" content="A model that forecasts the 2026 World Cup markets, pre-committed and scored against the price — Closing-Line Value and calibration, live." />
+<meta name="description" content="A model that forecasts the 2026 World Cup markets, pre-committed and scored against the price, Closing-Line Value and calibration, live." />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -24,7 +24,7 @@
   <header class="hero">
     <div class="kicker">2026 World Cup · prediction markets</div>
     <h1>The model's board, <em>scored against the price.</em></h1>
-    <div class="lede">A statistical model forecasts every World Cup market, <b>pre-committed and timestamped</b> against the live prediction markets — then graded the way desks do: <b>Closing-Line Value</b> (did the price drift toward the model?) and calibration, as games resolve. <span class="m">Model</span> vs <span class="k">market</span>; the gaps are the calls.</div>
+    <div class="lede">A statistical model forecasts every World Cup market, <b>pre-committed and timestamped</b> against the live prediction markets, then graded the way desks do: <b>Closing-Line Value</b> (did the price drift toward the model?) and calibration, as games resolve. <span class="m">Model</span> vs <span class="k">market</span>; the gaps are the calls.</div>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -45,8 +45,8 @@
       </div>
       <div>
         <div class="panel"><div class="big t" id="clvbig">—</div>
-          <p><b>Closing-Line Value.</b> Share of forecasts the market has since drifted toward — a skill signal independent of who eventually wins. <span id="clvsub"></span></p>
-          <p style="color:var(--dim);font-size:12px;margin-top:8px">Early sample. CLV is conclusive only over a few hundred forecasts, and these are correlated across markets — treat it as a signal forming, not a verdict.</p></div>
+          <p><b>Closing-Line Value.</b> Share of forecasts the market has since drifted toward, a skill signal independent of who eventually wins. <span id="clvsub"></span></p>
+          <p style="color:var(--dim);font-size:12px;margin-top:8px">Early sample. CLV is conclusive only over a few hundred forecasts, and these are correlated across markets, so treat it as a signal forming, not a verdict.</p></div>
         <div class="panel"><div class="h2" style="font-size:18px;margin-bottom:8px">Calibration</div><div id="calib"></div></div>
       </div>
     </div>
@@ -93,7 +93,7 @@ function renderTable(){let rows=DATA.forecasts.filter(f=>(tab==="all"||f.market=
 function renderSide(){const c=DATA.clv;document.getElementById('clvbig').textContent=c.positive_pct==null?"—":c.positive_pct+"%";
   document.getElementById('clvsub').textContent=c.mean==null?"":`Mean CLV ${c.mean>0?'+':''}${c.mean}pp across ${c.n} forecasts.`;
   const cal=DATA.calibration,el=document.getElementById('calib');
-  if(cal.status!=='live')el.innerHTML=`<p>Pending — calibration grades the model's probabilities against real outcomes as markets resolve (group stage ~Jun 27, knockouts after). The forecasts are already locked, so the grade is honest when it lands.</p>`;
+  if(cal.status!=='live')el.innerHTML=`<p>Pending, calibration grades the model's probabilities against real outcomes as markets resolve (group stage ~Jun 27, knockouts after). The forecasts are already locked, so the grade is honest when it lands.</p>`;
   else el.innerHTML=`<div style="font-family:var(--fm);font-size:13px;margin-bottom:10px">Brier <b>${cal.brier}</b> · log-loss <b>${cal.logloss}</b> · skill <b style="color:var(--accent)">+${(cal.brier_skill*100).toFixed(0)}%</b> · n=${cal.n}</div>`
     +`<div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">predicted → actual</div>`
     +cal.reliability.map(r=>`<div class="relrow"><span>${r.bucket}%</span><span>${r.pred}% → <b>${r.actual}%</b> <span style="color:var(--dim)">(${r.n})</span></span></div>`).join('');}
