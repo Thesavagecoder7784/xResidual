@@ -58,6 +58,8 @@
 
 <script>
 const MKT={champion:"Champion",advance:"Advance",group_win:"Win group",reach_qf:"Reach QF",reach_sf:"Reach SF",reach_final:"Reach Final"};
+const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
+const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 let DATA=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
 function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
 function renderStats(){const c=DATA.clv,cal=DATA.calibration;
@@ -69,7 +71,7 @@ function renderStats(){const c=DATA.clv,cal=DATA.calibration;
   ].map(([v,k,cl])=>`<div class="stat"><div class="v ${cl}">${v}</div><div class="k">${k}</div></div>`).join('');}
 function renderRace(){const tr=DATA.title_race.slice(0,10),xmax=Math.max(...tr.flatMap(r=>[r.model,r.price]))*1.15;
   document.getElementById('race').innerHTML=tr.map(r=>{const xm=r.model/xmax*100,xk=r.price/xmax*100,lo=Math.min(xm,xk),w=Math.abs(xm-xk);
-    return `<div class="rrow"><div class="rteam">${r.team}</div><div class="rtrack"><div class="rline" style="left:${lo}%;width:${w}%"></div>
+    return `<div class="rrow"><div class="rteam">${flag(r.team)}${r.team}</div><div class="rtrack"><div class="rline" style="left:${lo}%;width:${w}%"></div>
       <div class="rdot k" style="left:${xk}%"></div><div class="rdot m" style="left:${xm}%"></div></div>
       <div class="rval"><span class="m">${r.model.toFixed(1)}</span> <span class="k">${r.price.toFixed(1)}</span></div></div>`;}).join('');}
 function renderTabs(){const tabs=[["all","All"],...DATA.markets];
@@ -85,7 +87,7 @@ function renderTable(){let rows=DATA.forecasts.filter(f=>(tab==="all"||f.market=
   rows.sort((a,b)=>{let A,B;if(sortKey==="edgeabs"){A=Math.abs(a.edge);B=Math.abs(b.edge)}else{A=a[sortKey];B=b[sortKey]}if(A==null)A=-1e9;if(B==null)B=-1e9;return(A<B?-1:A>B?1:0)*sortDir;});
   document.querySelector('#tbl tbody').innerHTML=rows.map(f=>{const ec=f.edge>0?'hi':'lo',cl=f.clv==null?'':(f.clv>0?'pos':f.clv<0?'neg':'');
     const oc=f.outcome==null?'<span class="oc">—</span>':(f.outcome?'<span class="oc y">✓</span>':'<span class="oc n">✗</span>');
-    return `<tr><td style="font-weight:600">${f.team}</td><td style="font-family:var(--fm);font-size:11px;color:var(--dim)">${f.market_label}</td>
+    return `<tr><td style="font-weight:600">${flag(f.team)}${f.team}</td><td style="font-family:var(--fm);font-size:11px;color:var(--dim)">${f.market_label}</td>
       <td class="num">${f.model.toFixed(1)}</td><td class="num">${f.price.toFixed(1)}</td>
       <td class="num ${ec}">${f.edge>0?'+':''}${f.edge.toFixed(1)}</td>
       <td class="num ${cl}">${f.clv==null?'—':(f.clv>0?'+':'')+f.clv.toFixed(2)}</td><td class="num">${oc}</td></tr>`;}).join('')

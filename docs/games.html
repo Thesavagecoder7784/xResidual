@@ -40,6 +40,8 @@
 
 <script>
 let M=null, mfil="All";
+const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
+const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
 function renderStats(){document.getElementById('stats').innerHTML=[
     [`${M.played}/${M.n}`,'games played',''],
@@ -52,10 +54,10 @@ function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="m
   else res=`<span class="pre">${m.date.slice(5)}</span>`;
   const pn=m.fav==="t1"?m.t1:m.fav==="t2"?m.t2:"Draw",pc=m.fav==="t1"?"h":m.fav==="t2"?"a":"d",pp=Math.round(Math.max(m.p1,m.pd,m.p2)*100);
   const dl=m.pd>=0.23;  // balanced, low-scoring games where a draw is a live outcome (the pick still stands)
-  return `<div class="mrow${dl?' drawlive':''}"><div class="gchip">${m.group}</div><div class="${t1c}">${m.t1}</div>
+  return `<div class="mrow${dl?' drawlive':''}"><div class="gchip">${m.group}</div><div class="${t1c}"><span>${m.t1}</span>${flag(m.t1)}</div>
     <div class="wdl" title="${p1.toFixed(0)} / ${pd.toFixed(0)} / ${p2.toFixed(0)}">
       <span class="a" style="width:${p1}%"></span><span class="d" style="width:${pd}%"></span><span class="t" style="width:${p2}%"></span></div>
-    <div class="${t2c}">${m.t2}</div>
+    <div class="${t2c}">${flag(m.t2)}<span>${m.t2}</span></div>
     <div class="mpick ${pc}">${pn}<span class="pct">${pp}%</span>${dl?`<span class="drawlive">draw live ${Math.round(pd)}%</span>`:''}</div>
     <div class="mres">${res}</div></div>`;}
 function render(){const groups=[...new Set(M.matches.map(m=>m.group))].sort();
