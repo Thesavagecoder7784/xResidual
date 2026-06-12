@@ -1,0 +1,12 @@
+[Unit]
+Description=xResidual price logger (Polymarket + Kalshi)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=azureuser
+WorkingDirectory=/home/azureuser/xResidual/logger
+ExecStart=/home/azureuser/xResidual/.venv/bin/python run.py --venues polymarket,kalshi
+StandardOutput=append:/home/azureuser/xResidual/logger/data/svc.log
+StandardError=append:/home/azureuser/xResidual/logger/data/svc.log
