@@ -39,12 +39,14 @@
 
 <script>
 let D=null;
+const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
+const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
 function row(name,pp,isPick,isFinal,wp){
   const cls=isPick?"bteam win":"bteam out";
   const occ=(pp<99&&!isFinal)?`<span class="pp">${pp}%</span>`:"";
   const right=isPick?`<span class="wp">${isFinal?'✓':wp+'%'}</span>`:"";
-  return `<div class="${cls}"><span class="bn">${name}${occ}</span>${right}</div>`;}
+  return `<div class="${cls}"><span class="bn">${flag(name)}${name}${occ}</span>${right}</div>`;}
 function card(m){
   return `<div class="bmatch ${m.final?'final':''}">
     ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
