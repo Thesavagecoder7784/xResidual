@@ -137,12 +137,16 @@ def main() -> int:
             continue
         ready = markets_ready(f["team1"], f["team2"])  # (kalshi, poly) or None
         both = bool(ready) and ready[0] > 0 and ready[1] > 0
-        force = dt <= FORCE_S                           # near KO: launch regardless
-        if not (both or force):
-            deferred.append((f, dt, ready))            # wait for both venues to list
+        any_mkt = bool(ready) and (ready[0] > 0 or ready[1] > 0)
+        force = dt <= FORCE_S                           # near KO: launch regardless of...
+        # ...the "wait for BOTH venues" preference. But NEVER launch with zero markets on
+        # either venue: ws_capture would subscribe to nothing and write a 0-byte tape (exactly
+        # what happened to South Korea-Czech). Force overrides "wait for both", not "need >=1".
+        if not (both or (force and any_mkt)):
+            deferred.append((f, dt, ready))            # keep waiting for markets to list
             if args.dry_run:
-                print(f"WOULD wait {f['team1']} vs {f['team2']} "
-                      f"(T{dt/60:+.0f}m, k/p={ready}, both venues not yet listed)")
+                why = "no markets on either venue yet" if force else "both venues not yet listed"
+                print(f"WOULD wait {f['team1']} vs {f['team2']} (T{dt/60:+.0f}m, k/p={ready}, {why})")
             continue
         if args.dry_run:
             print(f"WOULD launch {f['team1']} vs {f['team2']} "
