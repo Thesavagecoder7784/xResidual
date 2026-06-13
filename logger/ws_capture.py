@@ -139,17 +139,25 @@ def _kalshi_ws_headers(env: dict) -> dict:
 
 
 async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: float,
-                        stale_s: float = 45.0) -> None:
+                        stale_s: float = 120.0) -> None:
+    # stale_s is a DATA-silence timeout (no market messages), not a liveness check — the WS
+    # ping/pong (ping_interval=10, ping_timeout=20) already catches a truly dead connection in
+    # ~30s. 45s was too twitchy: a legitimately quiet book (pre-KO, a lull, post-match) tripped
+    # it and force-reconnected every minute (21 needless reconnects after the opener ended).
     sub = {"id": 1, "cmd": "subscribe",
            "params": {"channels": ["ticker", "trade", "orderbook_delta"],
                       "market_tickers": tickers}}
     async with _ws_connect(KALSHI_WS, _kalshi_ws_headers(env),
-                           ssl=SSL_CTX, ping_interval=10, ping_timeout=20, max_size=None) as ws:
+                           ssl=SSL_CTX, ping_interval=10, ping_timeout=20,
+                           max_size=None, max_queue=None) as ws:
         await ws.send(json.dumps(sub))
         w.meta("kalshi", "connected", f"{len(tickers)} tickers")
         _log(f"kalshi subscribed: {len(tickers)} tickers")
         last = time.time()
-        last_seq: dict[str, int] = {}          # per-market orderbook sequence
+        last_seq: int | None = None            # Kalshi `seq` is a PER-CONNECTION message
+                                               # counter (drop detection across the whole
+                                               # stream), NOT per market. Track it globally;
+                                               # starts None on each (re)connect.
         try:
             while time.time() < deadline:
                 try:
@@ -166,17 +174,19 @@ async def kalshi_stream(tickers: list[str], env: dict, w: Writer, deadline: floa
                 msg = m.get("msg", {})
                 typ = m.get("type", "?")
                 market = msg.get("market_ticker") or msg.get("ticker") or "?"
-                # sequence-gap detection on the order book: a missed delta corrupts the
-                # reconstructed book, so flag it (analyzer can then mask that window).
+                # Kalshi stamps every message on a connection with a monotonic `seq`; a hole
+                # means the server dropped a message to us. It is PER CONNECTION, not per
+                # market, so check it globally (a per-market check counts normal cross-market
+                # interleaving as fake gaps — that was inflating the "gap rate" to ~2/3 with 3
+                # markets). The raw seq is now preserved in the tape so true loss is measurable
+                # offline regardless of this live flag.
                 seq = m.get("seq")
-                if seq is not None and market != "?":
-                    if typ == "orderbook_snapshot":
-                        last_seq[market] = seq               # (re)baseline, no gap
-                    elif typ == "orderbook_delta":
-                        prev = last_seq.get(market)
-                        if prev is not None and seq != prev + 1:
-                            w.meta("kalshi", "gap", f"{market} seq {prev}->{seq}")
-                        last_seq[market] = seq
+                if seq is not None:
+                    if last_seq is not None and seq != last_seq + 1:
+                        w.meta("kalshi", "gap", f"conn seq {last_seq}->{seq}")
+                    last_seq = seq
+                    if isinstance(msg, dict):
+                        msg = {**msg, "_seq": seq}
                 w.write("kalshi", typ, market, msg)
         finally:
             w.meta("kalshi", "disconnected")
@@ -195,8 +205,9 @@ async def _poly_pinger(ws, deadline: float) -> None:
 
 
 async def polymarket_stream(token_ids: list[str], w: Writer, deadline: float,
-                            stale_s: float = 45.0) -> None:
-    async with websockets.connect(POLY_WS, ssl=SSL_CTX, ping_interval=None, max_size=None) as ws:
+                            stale_s: float = 120.0) -> None:
+    async with websockets.connect(POLY_WS, ssl=SSL_CTX, ping_interval=None,
+                                   max_size=None, max_queue=None) as ws:
         await ws.send(json.dumps({"assets_ids": token_ids, "type": "market"}))
         w.meta("polymarket", "connected", f"{len(token_ids)} tokens")
         _log(f"polymarket subscribed: {len(token_ids)} tokens")
