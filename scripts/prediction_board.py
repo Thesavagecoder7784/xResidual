@@ -52,17 +52,26 @@ def wc_played_results(df, fx):
     how the model 'learns' from the tournament: as games resolve, the forecast conditions on
     them (and once the group stage is done, the knockout runs on the real bracket)."""
     grp = fx[fx["group"].astype(str).str.startswith("Group")]
-    pairs = {frozenset((wc2026_teams.canonical(r.team1), wc2026_teams.canonical(r.team2))) for r in grp.itertuples(index=False)}
+    # Match results to fixtures on a name bridged to the Elo convention (so USA/United States and
+    # the Bosnia variants line up), but key the output by the fixture's CANONICAL names, which is
+    # what group_sim expects to look up.
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
+    canon_by_pair = {}
+    for r in grp.itertuples(index=False):
+        c1, c2 = wc2026_teams.canonical(r.team1), wc2026_teams.canonical(r.team2)
+        canon_by_pair[frozenset((bridge(r.team1), bridge(r.team2)))] = (c1, c2)
     d = df[df["tournament"] == "FIFA World Cup"].copy()
     d = d[pd.to_datetime(d["date"]) >= pd.Timestamp("2026-06-11")]
     out = {}
     for r in d.itertuples(index=False):
-        h, a = wc2026_teams.canonical(r.home_team), wc2026_teams.canonical(r.away_team)
-        if frozenset((h, a)) not in pairs:
+        canon = canon_by_pair.get(frozenset((bridge(r.home_team), bridge(r.away_team))))
+        if canon is None:
             continue                                       # only condition on group games
+        c1, c2 = canon
         hs, as_ = int(r.home_score), int(r.away_score)
-        out[(h, a)] = (hs, as_)
-        out[(a, h)] = (as_, hs)
+        s1, s2 = (hs, as_) if bridge(r.home_team) == bridge(c1) else (as_, hs)
+        out[(c1, c2)] = (s1, s2)
+        out[(c2, c1)] = (s2, s1)
     return out
 
 
@@ -203,10 +212,13 @@ def _resolve_outcomes(led):
     fx = pd.read_csv(os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
     fx["date"] = pd.to_datetime(fx["date"])
     grp = fx[fx["group"].astype(str).str.startswith("Group")]
+    # Resolve everything in the Elo-bridged convention so feed-name differences (USA/United
+    # States, Bosnia variants) match between the ledger team, the group map, and the results.
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
     tg = {}
     for r in grp.itertuples(index=False):
-        tg[wc2026_teams.canonical(r.team1)] = str(r.group)
-        tg[wc2026_teams.canonical(r.team2)] = str(r.group)
+        tg[bridge(r.team1)] = str(r.group)
+        tg[bridge(r.team2)] = str(r.group)
     group_end = grp["date"].max()
     ko = fx[~fx["group"].astype(str).str.startswith("Group")]
 
@@ -222,8 +234,8 @@ def _resolve_outcomes(led):
     df = df[df["date"] >= pd.Timestamp("2026-06-11")]
     if df.empty:
         return {}
-    df["h"] = df["home_team"].map(wc2026_teams.canonical)
-    df["a"] = df["away_team"].map(wc2026_teams.canonical)
+    df["h"] = df["home_team"].map(bridge)
+    df["a"] = df["away_team"].map(bridge)
     now = df["date"].max()
     ko_done = now > group_end                       # group stage complete?
 
@@ -259,7 +271,7 @@ def _resolve_outcomes(led):
 
     out = {}
     for i, r in enumerate(led):
-        t, mkt = r["team"], r["market"]
+        t, mkt = bridge(r["team"]), r["market"]   # bridge ledger team to match tg / df.h / df.a
         try:
             if mkt == "advance":
                 out[i] = (1 if len(df[((df.h == t) | (df.a == t)) & (df.date > group_end)]) else 0) if ko_done else None
