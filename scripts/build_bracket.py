@@ -49,12 +49,16 @@ def main() -> int:
     d = df[df["tournament"] == "FIFA World Cup"].copy()
     d["date"] = pd.to_datetime(d["date"])
     d = d[d["date"] > group_end]
+    # Bridge result names and the gidx keys to the Elo convention so feed-name differences
+    # (USA/United States, Bosnia variants) match regardless of which convention gidx uses.
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
+    gidx_b = {bridge(k): v for k, v in gidx.items()}
     ko_res = {}
     for r in d.itertuples(index=False):
-        h, a = wc2026_teams.canonical(r.home_team), wc2026_teams.canonical(r.away_team)
-        if h in gidx and a in gidx and r.home_score != r.away_score:   # KO ties resolve to a winner
+        h, a = bridge(r.home_team), bridge(r.away_team)
+        if h in gidx_b and a in gidx_b and r.home_score != r.away_score:   # KO ties resolve to a winner
             w = h if r.home_score > r.away_score else a
-            ko_res[frozenset((gidx[h], gidx[a]))] = gidx[w]
+            ko_res[frozenset((gidx_b[h], gidx_b[a]))] = gidx_b[w]
 
     ko = knockout.simulate(det, sim, ratings, return_matchups=True, return_slots=True,
                            return_paths=True, results=ko_res or None)
