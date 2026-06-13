@@ -9,7 +9,8 @@ Designed to run every ~10 min from launchd (com.xresidual.matchwatch). On each t
   1. reads data/wc2026_fixtures.csv and computes each kickoff in UTC,
   2. for any match kicking off inside the lead window (default: 35 min before to 10 min
      after kickoff) that hasn't been launched yet,
-  3. spawns `ws_capture.py --match "A vs B" --seconds N --analyze` as a detached process
+  3. spawns `ws_capture.py --match "A vs B" --seconds N` as a detached process (capture only;
+     analysis runs on the laptop against pulled tapes, not on this small VM)
      (it survives this tick exiting), logging to data/capture-<key>.log,
   4. records the launch in data/captured-matches.json so it never double-launches.
 
@@ -101,9 +102,12 @@ def launch(f: dict, capture_s: int) -> int:
     """Spawn a detached ws_capture for one match. Returns the child PID."""
     log_path = os.path.join(DATA_DIR, f"capture-{f['key']}.log")
     log = open(log_path, "a", encoding="utf-8")
+    # Capture only — NO --analyze. The post-capture overreaction analysis is memory-heavy and
+    # swap-thrashes this ~900 MB VM (it wedged in D-state for 40+ min on the USA tape, near-OOM).
+    # Per the VM/laptop split, the VM owns capture; analysis runs on the laptop against pulled tapes.
     proc = subprocess.Popen(
         [sys.executable, "ws_capture.py", "--match", f"{f['team1']} vs {f['team2']}",
-         "--seconds", str(capture_s), "--analyze"],
+         "--seconds", str(capture_s)],
         cwd=LOGGER_DIR, stdout=log, stderr=log, start_new_session=True)
     return proc.pid
 

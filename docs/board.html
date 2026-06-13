@@ -71,14 +71,18 @@
 const MKT={champion:"Champion",advance:"Advance",group_win:"Win group",reach_qf:"Reach QF",reach_sf:"Reach SF",reach_final:"Reach Final"};
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
-let DATA=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
+let DATA=null, M=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
 function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
-function renderStats(){const c=DATA.clv,cal=DATA.calibration;
+function renderStats(){const c=DATA.clv,cal=DATA.calibration,live=cal.status==='live';
+  const played=M?`${M.played}/${M.n}`:'—', ll=(M&&M.logloss!=null)?(+M.logloss).toFixed(3):'—';
+  // CLV + calibration stay "pending" until the group stage resolves — early CLV here is correlated
+  // across ~2 batches, so a headline % would read as a verdict the sample can't support.
   document.getElementById('stats').innerHTML=[
-    [`${DATA.n_forecasts}`,'forecasts logged',''],
-    [`${c.positive_pct==null?'—':c.positive_pct+'%'}`,'positive CLV','t'],
-    [`${cal.status==='live'?'+'+(cal.brier_skill*100).toFixed(0)+'%':'pending'}`,cal.status==='live'?'Brier skill':'calibration','a'],
-    [`${DATA.n_batches}`,'forecast batches','']
+    [`${DATA.n_forecasts}`,'forecasts logged','a'],
+    [played,'games played','t'],
+    [live?(c.positive_pct==null?'—':c.positive_pct+'%'):'pending', live?'positive CLV':'CLV', live?'t':''],
+    [live?'+'+(cal.brier_skill*100).toFixed(0)+'%':'pending', live?'Brier skill':'calibration', live?'a':''],
+    [ll,'log-loss · 1.10 uniform','']
   ].map(([v,k,cl])=>`<div class="stat"><div class="v ${cl}">${v}</div><div class="k">${k}</div></div>`).join('');}
 function renderRace(){const tr=DATA.title_race.slice(0,10),xmax=Math.max(...tr.flatMap(r=>[r.model,r.price]))*1.15;
   document.getElementById('race').innerHTML=tr.map(r=>{const xm=r.model/xmax*100,xk=r.price/xmax*100,lo=Math.min(xm,xk),w=Math.abs(xm-xk);
@@ -123,5 +127,9 @@ s.onload=()=>{if(!window.DASH)return fail();DATA=window.DASH;
 s.onerror=fail;
 setTimeout(fail,8000);
 document.body.appendChild(s);
+// match aggregates (games played, log-loss) for the stat row — non-fatal if it doesn't load
+const sm=document.createElement('script');sm.src='data/matches.js?'+Date.now();
+sm.onload=()=>{M=window.GAMES||null; if(DATA) renderStats();};
+document.body.appendChild(sm);
 </script>
 </body></html>
