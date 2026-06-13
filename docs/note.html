@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · Cross-Venue Price Discovery (research note)</title>
+<meta name="description" content="Research note: cross-venue price discovery in World Cup prediction markets, across Kalshi, Polymarket, and Betfair, on a millisecond capture pipeline. Pre-registered and graded in the open." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="xResidual">
+<meta property="og:title" content="Cross-Venue Price Discovery in World Cup Prediction Markets">
+<meta property="og:description" content="Research note: which of Kalshi, Polymarket, and Betfair discovers price first, on a millisecond capture pipeline. Pre-registered and graded in the open.">
+<meta property="og:url" content="https://thesavagecoder7784.github.io/xResidual/note.html">
+<meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .note{max-width:820px;margin:0 auto;padding-bottom:64px}
+  .note .kicker{font-family:var(--fm);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .note .title{font-family:var(--fd);font-weight:700;font-size:42px;line-height:1.04;letter-spacing:-.022em;margin-top:10px}
+  .note .meta{font-family:var(--fm);font-size:12.5px;color:var(--dim);margin-top:12px}
+  .note .meta a{color:var(--ink)}
+  .note .status{margin:22px 0;padding:14px 16px;border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--paper-2);border-radius:6px;font-size:14px;color:var(--muted);line-height:1.55}
+  .note h2{font-family:var(--fd);font-weight:600;font-size:25px;margin-top:38px;margin-bottom:4px;letter-spacing:-.012em}
+  .note h3{font-size:16px;font-weight:600;margin-top:22px;margin-bottom:2px;color:var(--ink)}
+  .note p{font-size:15.5px;line-height:1.64;color:var(--muted);margin-top:13px}
+  .note p b,.note li b,.note td b{color:var(--ink);font-weight:600}
+  .note ul{margin:12px 0 0 20px} .note li{font-size:15.5px;line-height:1.6;color:var(--muted);margin-top:8px}
+  .note .abstract{font-size:16px;line-height:1.64;color:var(--ink);border-left:3px solid var(--rule-2);padding-left:18px;margin-top:18px}
+  .note .pending{display:block;margin:13px 0;padding:13px 15px;border:1px dashed var(--rule-2);border-radius:6px;background:rgba(0,0,0,.018);font-size:14.5px;color:var(--dim);line-height:1.58}
+  .note .pending .tag{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:5px}
+  .note table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+  .note th,.note td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--rule);vertical-align:top}
+  .note th{font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--dim)}
+  .note .refs{margin:14px 0 0 0;padding:0;list-style:none}
+  .note .refs li{font-size:13.5px;color:var(--dim);line-height:1.5;margin-top:9px;padding-left:18px;text-indent:-18px}
+  .note .refs i{font-style:italic}
+  .note hr{border:none;border-top:1px solid var(--rule);margin:30px 0}
+</style>
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="board.html">Forecast board</a>
+    <a href="games.html">Group stage</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="note.html" class="on">Research note</a>
+    <a href="method.html">How it works</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap"><article class="note">
+  <div class="kicker">Working draft · 2026</div>
+  <h1 class="title">Cross-Venue Price Discovery in World Cup Prediction Markets</h1>
+  <div class="meta">Prabhat M · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a> · <a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/PREREGISTRATION.md">pre-registration</a></div>
+
+  <div class="status">This is a live, phased note. The pre-match microstructure results (5.1, 6) are final; the in-play price-discovery and event-study results (5.2, 5.3) and the pre-registration grade (7) fill in as the 2026 World Cup is played and are marked <b>PENDING</b>. Every empirical claim is bound to code and to a pre-registration committed before kickoff, so the open results are falsifiable, not flexible.</div>
+
+  <h2>Abstract</h2>
+  <p class="abstract">Two large real-money prediction markets, Kalshi (US, regulated) and Polymarket (global, on-chain), priced every 2026 World Cup outcome continuously alongside the Betfair Exchange and the global bookmaker consensus. Using millisecond-resolution order-book and trade captures across all three venues, plus an on-chain trade-flow layer reconstructed from Polymarket's CTF Exchange, we study <b>where price is discovered</b>: which venue moves first when information arrives, and whether that leadership flips between the quiet pre-match regime and the high-information in-play regime. We decompose each cross-venue quote into belief and margin and find the widely-quoted "5 to 8 cent" inter-venue gap is <b>almost entirely the house margin</b>: de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a relative-value convergence trade returns a documented loss net of costs. The residual belief gap is small but structured by audience (a home-crowd tilt). The central price-discovery result, via Hasbrouck (1995) information share and Gonzalo-Granger (1995) component share on mid-price moves around the goal events, is reported in 5.2.</p>
+  <p><b>Contribution.</b> The cross-venue, pre-match-vs-in-play price-discovery comparison across regulated, on-chain, and exchange venues is, to our knowledge, the named-but-unexplored question in the recent prediction-market microstructure literature; everything else here is a careful replication or a methods contribution (the confederation-shrinkage baseline correction, 4.3, and the on-chain trade-direction layer, 3.2).</p>
+
+  <h2>1. Introduction</h2>
+  <p>Real-money prediction markets aggregate dispersed information into a single live probability. The 2026 World Cup is a natural experiment: a 39-day, 104-match global event priced simultaneously by a US-regulated venue (Kalshi), a global on-chain venue (Polymarket), and a mature betting exchange (Betfair), with a dense, exogenous, precisely-timed information stream (goals). The recent literature names a gap: <b>cross-venue price discovery has not been measured</b>, in particular whether discovery leadership differs between the low-information pre-match window and the high-information in-play window. This note answers that question. We ask three things, in order of novelty:</p>
+  <ul>
+    <li><b>Price discovery (novel).</b> When information arrives, which venue's mid-price moves first, and does the answer flip pre-match vs in-play? (5.2, 5.3)</li>
+    <li><b>Law of one price (replication).</b> How large is the true cross-venue belief gap once each venue's overround is removed, and is there a tradeable convergence edge? (5.1, 6)</li>
+    <li><b>Calibration and the favorite-longshot bias (replication).</b> Are these markets well-calibrated on a 48-team field, and is the bias weaker in prediction markets than in bookmakers? (5.4)</li>
+  </ul>
+  <p>Framing held throughout: the market is the subject, not the opponent. Where our independent model disagrees with a liquid price, the prior is that the model is wrong, and we test that prior against a third source before claiming an edge (4.3).</p>
+
+  <h2>2. Related work</h2>
+  <p>Hasbrouck (1995) information share and Gonzalo-Granger (1995) component share are the standard tools for attributing price discovery across venues trading one asset; we apply them to de-vigged mid-prices to sidestep the order-direction problem (3.2). Croxson and Reade (2014) show betting prices update efficiently and near-instantly to goals, with no systematic drift, the in-play benchmark our event study (5.3) builds on. Snowberg and Wolfers (2010) decompose the favorite-longshot bias into risk-love vs misperception; we measure its strength by probability decile and compare books vs prediction markets (5.4). Recent surveys of prediction-market efficiency and (on-chain) microstructure flag cross-venue discovery as open.</p>
+
+  <h2>3. Data and infrastructure</h2>
+  <h3>3.1 Capture</h3>
+  <p>A 24/7 collector logs Kalshi and Polymarket order books and the bookmaker/exchange lines on a fixed cadence, and, per marquee match, a millisecond WebSocket capture records every book and trade message from both prediction venues to an append-only tape with a local-clock timestamp on each event. A dry-run capture recorded ~172k events at a 6ms median inter-event time, far finer than the tens-of-seconds scale on which a goal reprices, the regime where lead-lag is identified. Connection-control events (connect / disconnect / sequence gap) are logged in-band so the analyzer masks venue outages rather than mistaking them for quiet markets.</p>
+  <h3>3.2 The order-direction problem and the on-chain layer</h3>
+  <p>Inferring trade direction from a public WebSocket feed is unreliable (a documented ~59% classification ceiling), which corrupts any order-flow-imbalance signal. We avoid it two ways: (i) all price-discovery estimation uses <b>mid-price moves</b>, which are direction-agnostic; and (ii) for true signed flow we read Polymarket's CTF Exchange <code>OrderFilled</code> events directly from the chain (Polygon RPC / subgraph), giving exact taker direction.</p>
+
+  <h2>4. Methods</h2>
+  <h3>4.1 De-vigging</h3>
+  <p>Implied probabilities are recovered from quotes by multiplicative de-vigging (removing each venue's overround), so cross-venue comparisons are belief-to-belief, not quote-to-quote. The closing (last pre-kickoff) quote is the calibration forecast.</p>
+  <h3>4.2 Price discovery</h3>
+  <p>On the synchronized de-vigged mid-price series for a contract across venues, we estimate the Hasbrouck (1995) information share (with the standard bounds) and the Gonzalo-Granger component share, computed separately for the pre-match and in-play windows. The event study (5.3) classifies each goal by surprise (pre-goal win-probability of the scoring side) and measures the reaction path: overshoot magnitude and mean-reversion half-life.</p>
+  <h3>4.3 The independent baseline and its correction</h3>
+  <p>An Elo-plus-squad-value goal model serves as an <b>independent reference</b>, not a competitor to the market: it lets us ask "where do model and market disagree, and who is right" against a third source (de-vigged bookmaker match odds). A methods contribution falls out of this: raw Elo inflates near-disconnected confederations (they mostly play themselves), so we apply an empirical-Bayes confederation shrinkage estimated from inter-confederation "bridge" games and scaled per team by global connectivity. It validates out-of-sample (<b>+4.6% cross-confederation ranked-probability score, Diebold-Mariano p ≈ 0.009</b>; within-confederation untouched as a placebo).</p>
+
+  <h2>5. Results</h2>
+  <h3>5.1 Law of one price holds; the visible gap is margin <span style="color:var(--good);font-family:var(--fm);font-size:12px">(final)</span></h3>
+  <p>De-vigged, Polymarket and Kalshi title prices agree to <b>~0.15pp on average</b> across the 48-team field; the largest standing gap is England (~1pp). The "5 to 8 cent" gap the press quotes is <b>mostly the house margin</b>: Kalshi's overround runs ~5.4% vs Polymarket's ~3.0% (~1.8x), so the durable venue difference is <b>cost, not price</b>. Anchored to the Betfair Exchange (the sharpest soccer market we log), Polymarket sits marginally closer to the sharp line (mean abs error ~0.12pp vs ~0.16pp). The small surviving belief gap is <b>structured by audience</b>: the American book is richer on USA, Mexico, Netherlands; the global book on England, Portugal, Japan, Brazil, a home-crowd tilt. A liquidity asymmetry underlies this: Polymarket quotes roughly <b>27x the depth of Kalshi at the same spread</b> on the title market.</p>
+  <h3>5.2 Cross-venue price discovery</h3>
+  <div class="pending"><span class="tag">⟦ Pending in-play sample ⟧</span>Hasbrouck information share and Gonzalo-Granger component share, Kalshi vs Polymarket (and vs Betfair), pre-match vs in-play, over the marquee-match goal events. Pre-registered direction (P6): the <b>deeper-liquidity venue leads</b>, and we expect the in-play window to sharpen the leadership relative to the quiet pre-match window. Fills as the tournament generates clean in-play tapes.</div>
+  <h3>5.3 Goal-shock event study</h3>
+  <div class="pending"><span class="tag">⟦ Pending in-play sample ⟧</span>Per goal (target ~260): surprise classification, overshoot, and mean-reversion half-life, with abnormal-return windows, benchmarked against Croxson-Reade (efficient, near-instant updating, no drift). Framework validated on the first live tape; the sample is the tournament itself.</div>
+  <h3>5.4 Calibration and the favorite-longshot bias</h3>
+  <p>The favorite-longshot bias is visible pre-tournament in the 1-cent tick structure of longshot contracts. The half-spread by probability decile and the books-vs-prediction-markets comparison are a <b>descriptive replication</b> (Snowberg-Wolfers, 2010); the <b>graded</b> calibration verdict (CORP reliability, Brier decomposition, slope) lands after the group stage and at the final, and is pre-registered (P1: the markets are well-calibrated). <span class="pending" style="margin-top:10px"><span class="tag">⟦ Calibration grade pending Jul 19 ⟧</span></span></p>
+
+  <h2>6. A disclosed signal and forward-test: a clean null <span style="color:var(--good);font-family:var(--fm);font-size:12px">(final)</span></h2>
+  <p>The law-of-one-price result (5.1) predicts there is no convergence arbitrage to harvest, and we tested that out-of-sample rather than asserting it. Rule: when the de-vigged Polymarket-Kalshi belief gap on a title widens past 1.0pp, go long the cheap venue and short the rich one, exit on convergence below 0.3pp or after a horizon, net of a 0.5pp modeled round-trip cost. Buildup result: <b>6 trades, -2.6pp total, 0% hit rate, per-trade Sharpe -1.95</b>. The gap is real but does not converge enough to clear costs: the visible "edge" is a cost illusion, exactly what law-of-one-price implies. Reported as a negative result because it is one; the in-play goal-shock signal (5.3) is the forward-test that continues live.</p>
+
+  <h2>7. Pre-registration and grading</h2>
+  <p>Six falsifiable, dated predictions were committed to a tagged git commit before kickoff, with binding methods, named primaries, and PASS/FAIL/INCONCLUSIVE decision states under proper scoring rules. The two primaries are <b>P6</b> (cross-venue lead-lag: the deeper venue leads) and <b>P1</b> (the markets are well-calibrated). <span class="pending" style="margin-top:10px"><span class="tag">⟦ Graded publicly 2026-07-19 ⟧</span></span></p>
+
+  <h2>8. Discussion and limitations</h2>
+  <p>The headline is pro-market. Across a five-layer model-vs-market scan of 238 contracts, the liquid winner market is efficient and the only soft corners are thin, new, or structural:</p>
+  <table>
+    <thead><tr><th>layer</th><th>depth</th><th>mean abs gap</th><th>verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Winner</td><td>deepest / most liquid</td><td><b>0.4pp</b></td><td>efficient — model agrees with the sharp market</td></tr>
+      <tr><td>Advance (R32)</td><td>liquid</td><td>4.3pp</td><td>our model under-rating minnows, not market softness</td></tr>
+      <tr><td>Reach QF</td><td>thinner</td><td>3.3pp</td><td>thin-market softness (partly model tilt)</td></tr>
+      <tr><td>Reach SF</td><td>thin</td><td>1.9pp</td><td>thin-market softness (partly model tilt)</td></tr>
+      <tr><td>Champion (elim.)</td><td>thinnest / newest</td><td>1.0pp</td><td>favorite overpricing, partly model tilt</td></tr>
+    </tbody>
+  </table>
+  <p>Where our model disagreed most (minnow advancement, isolated confederations) an independent bookmaker sided with the market and the error was ours to fix (4.3). Limitations, stated plainly: single-tournament sample; the calibration n (~104 matches) supports a wide slope band, not a tight one, so the calibration claims stay humble; the study is read-only and paper-only (no orders, no capital); and the in-play results depend on clean marquee-match captures, the data-quality risk we actively manage.</p>
+
+  <hr>
+  <h2>References</h2>
+  <ul class="refs">
+    <li>Croxson, K. and Reade, J. J. (2014). Information and Efficiency: Goal Arrival in Soccer Betting. <i>The Economic Journal</i>.</li>
+    <li>Gonzalo, J. and Granger, C. W. J. (1995). Estimation of Common Long-Memory Components in Cointegrated Systems. <i>Journal of Business &amp; Economic Statistics</i>.</li>
+    <li>Hasbrouck, J. (1995). One Security, Many Markets: Determining the Contributions to Price Discovery. <i>The Journal of Finance</i>.</li>
+    <li>Snowberg, E. and Wolfers, J. (2010). Explaining the Favorite-Longshot Bias: Is it Risk-Love or Misperceptions? <i>Journal of Political Economy</i>.</li>
+  </ul>
+
+  <footer style="margin-top:36px"><div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a></div></footer>
+</article></div>
+</body></html>
