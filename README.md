@@ -1,5 +1,7 @@
 # xResidual
 
+[![tests](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml/badge.svg)](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml)
+
 A live look at how prediction markets price the 2026 World Cup, and what they say about the tournament.
 
 Markets like Kalshi and Polymarket turn thousands of opinions and a lot of real money into one number: the live probability of every World Cup outcome. xResidual tracks those numbers across all 104 matches (June 11 – July 19, 2026), next to the global bookmaker consensus, to see what the sharpest real-time forecasts on earth reveal about the tournament. The title race, the shocks, how fast belief moves, and how good these markets actually are.
