@@ -1,0 +1,15 @@
+[Unit]
+Description=xResidual RAM/swap watchdog (samples memory, warns on low-avail during captures)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/azureuser/xResidual/scripts/memwatch.sh
+Restart=always
+RestartSec=5
+Nice=10
+# Cap the watchdog itself so it can never contribute to the pressure it watches for.
+MemoryMax=24M
+
+[Install]
+WantedBy=multi-user.target
