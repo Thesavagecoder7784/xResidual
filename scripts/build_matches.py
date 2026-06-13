@@ -65,13 +65,16 @@ def main() -> int:
             f.write(json.dumps(rec) + "\n")
         new += 1
 
-    # actual results: join WC 2026 group games by canonical team pair (orientation-aware)
+    # actual results: join WC 2026 group games by team pair, bridged to the Elo convention so
+    # feed-name differences (USA/United States, Bosnia variants) still match. Display names
+    # (rec["t1"]) stay canonical; only the join key is bridged.
     d = df[df["tournament"] == "FIFA World Cup"].copy()
     d = d[pd.to_datetime(d["date"]) >= pd.Timestamp("2026-06-11")]
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
     actual = {}
     for r in d.itertuples(index=False):
-        h, a = wc2026_teams.canonical(r.home_team), wc2026_teams.canonical(r.away_team)
-        actual[frozenset((h, a))] = (h, a, int(r.home_score), int(r.away_score))
+        hb, ab = bridge(r.home_team), bridge(r.away_team)
+        actual[frozenset((hb, ab))] = (hb, int(r.home_score), int(r.away_score))
 
     matches, n_played, hits, ll = [], 0, 0, 0.0
     for rec in sorted(committed.values(), key=lambda r: (r["date"], r["group"])):
@@ -79,10 +82,10 @@ def main() -> int:
         fav = max(probs, key=probs.get)
         m = {**{k: rec[k] for k in ("md", "group", "date", "t1", "t2", "p1", "pd", "p2")},
              "fav": fav, "played": False}
-        res_ = actual.get(frozenset((rec["t1"], rec["t2"])))
+        res_ = actual.get(frozenset((bridge(rec["t1"]), bridge(rec["t2"]))))
         if res_:
-            h, a, hs, as_ = res_
-            s1, s2 = (hs, as_) if h == rec["t1"] else (as_, hs)   # orient to committed t1/t2
+            hb, hs, as_ = res_
+            s1, s2 = (hs, as_) if hb == bridge(rec["t1"]) else (as_, hs)   # orient to committed t1/t2
             outcome = "t1" if s1 > s2 else ("t2" if s2 > s1 else "draw")
             p_act = {"t1": rec["p1"], "draw": rec["pd"], "t2": rec["p2"]}[outcome]
             m.update({"played": True, "s1": s1, "s2": s2, "result": outcome,

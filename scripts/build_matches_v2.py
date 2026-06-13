@@ -106,19 +106,20 @@ def main() -> int:
     # results join
     d = df[df["tournament"] == "FIFA World Cup"].copy()
     d = d[pd.to_datetime(d["date"]) >= pd.Timestamp("2026-06-11")]
+    bridge = lambda t: W.elo_name(W.canonical(t))   # USA/United States + Bosnia variants -> one join key
     actual = {}
     for r in d.itertuples(index=False):
-        h, a = W.canonical(r.home_team), W.canonical(r.away_team)
-        actual[frozenset((h, a))] = (h, a, int(r.home_score), int(r.away_score))
+        hb, ab = bridge(r.home_team), bridge(r.away_team)
+        actual[frozenset((hb, ab))] = (hb, ab, int(r.home_score), int(r.away_score))
 
     def grade(ledger):
         played, hits, ll, brier = 0, 0, 0.0, 0.0
         for rec in ledger.values():
-            r = actual.get(frozenset((rec["t1"], rec["t2"])))
+            r = actual.get(frozenset((bridge(rec["t1"]), bridge(rec["t2"]))))
             if not r:
                 continue
             h, a, hs, as_ = r
-            s1, s2 = (hs, as_) if h == rec["t1"] else (as_, hs)
+            s1, s2 = (hs, as_) if h == bridge(rec["t1"]) else (as_, hs)
             outcome = "t1" if s1 > s2 else ("t2" if s2 > s1 else "draw")
             p_act = {"t1": rec["p1"], "draw": rec["pd"], "t2": rec["p2"]}[outcome]
             fav = max({"t1": rec["p1"], "draw": rec["pd"], "t2": rec["p2"]}, key=lambda k: {"t1": rec["p1"], "draw": rec["pd"], "t2": rec["p2"]}[k])
@@ -133,10 +134,10 @@ def main() -> int:
         probs = {"t1": rec["p1"], "draw": rec["pd"], "t2": rec["p2"]}
         m = {**{k: rec[k] for k in ("md", "group", "date", "t1", "t2", "p1", "pd", "p2")},
              "fav": max(probs, key=probs.get), "played": False}
-        r = actual.get(frozenset((rec["t1"], rec["t2"])))
+        r = actual.get(frozenset((bridge(rec["t1"]), bridge(rec["t2"]))))
         if r:
             h, a, hs, as_ = r
-            s1, s2 = (hs, as_) if h == rec["t1"] else (as_, hs)
+            s1, s2 = (hs, as_) if h == bridge(rec["t1"]) else (as_, hs)
             outcome = "t1" if s1 > s2 else ("t2" if s2 > s1 else "draw")
             m.update({"played": True, "s1": s1, "s2": s2, "result": outcome,
                       "correct": (m["fav"] == outcome)})
