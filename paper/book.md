@@ -1,12 +1,12 @@
-# Paper book — 2026-06-14 00:48Z
+# Paper book — 2026-06-14 01:13Z
 
-**Money in:** $970  ·  **Open:** 16  ·  **Closed:** 3
+**Money in:** $1030  ·  **Open:** 19  ·  **Closed:** 3
 
 ## Open positions
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
-| 2 | NO | germany elim / Champion | 100 | 0.895 | 0.940 | 105.0 | +5.0 |
+| 2 | NO | germany elim / Champion | 100 | 0.895 | 0.935 | 104.5 | +4.5 |
 | 3 | YES | team-to-advance-to-knockout-stages / Senegal | 100 | 0.720 | 0.715 | 99.3 | -0.7 |
 | 6 | YES | nation-to-reach-quarterfinals / Turkiye | 100 | 0.230 | 0.215 | 93.5 | -6.5 |
 | 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.750 | 52.1 | +2.1 |
@@ -19,11 +19,14 @@
 | 14 | NO | team-to-advance-to-knockout-stages / Jordan | 30 | 0.790 | 0.790 | 30.0 | -0.0 |
 | 15 | YES | team-to-advance-to-knockout-stages / Egypt | 20 | 0.720 | 0.715 | 19.9 | -0.1 |
 | 16 | NO | group-e-winner / Germany | 30 | 0.335 | 0.335 | 30.0 | -0.0 |
-| 17 | YES | fifwc-egy-irn-2026-06-26-more-markets / Both Teams to Score | 25 | 0.445 | 0.445 | 25.0 | +0.0 |
-| 18 | NO | fifwc-nzl-bel-2026-06-26-more-markets / Both Teams to Score | 15 | 0.560 | 0.565 | 15.1 | +0.1 |
+| 17 | YES | fifwc-egy-irn-2026-06-26-more-markets / Both Teams to Score | 25 | 0.445 | 0.440 | 24.7 | -0.3 |
+| 18 | NO | fifwc-nzl-bel-2026-06-26-more-markets / Both Teams to Score | 15 | 0.560 | 0.570 | 15.3 | +0.3 |
 | 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.395 | 24.7 | -0.3 |
+| 20 | YES | team-to-advance-to-knockout-stages / Ivory Coast | 25 | 0.780 | 0.775 | 24.8 | -0.2 |
+| 21 | NO | team-to-advance-to-knockout-stages / New Zealand | 20 | 0.680 | 0.680 | 20.0 | -0.0 |
+| 22 | NO | team-to-advance-to-knockout-stages / Iraq | 15 | 0.860 | 0.865 | 15.1 | +0.1 |
 
-**Unrealized P&L:** +9.0  (on $670 open)
+**Unrealized P&L:** +8.2  (on $730 open)
 
 ## Closed positions
 
@@ -37,4 +40,4 @@
 
 ## Total
 
-money in **$970**  ·  unrealized **+9.0**  ·  realized **+11.0**  ·  **combined +20.0**
+money in **$1030**  ·  unrealized **+8.2**  ·  realized **+11.0**  ·  **combined +19.2**
