@@ -26,74 +26,134 @@ sys.path.insert(0, ROOT)
 from xresidual import ws_events as we  # noqa: E402
 
 DATA_DIR = os.path.join(ROOT, "logger", "data")
-TAPE_OUT = os.path.join(ROOT, "viz", "market", "_leadlag.js")
-RESULTS_OUT = os.path.join(ROOT, "writeups", "_leadlag_results.json")
+LEADLAG_DIR = os.path.join(ROOT, "viz", "market", "leadlag")  # per-match files, named after the game
+RESULTS_OUT = os.path.join(ROOT, "writeups", "_leadlag_results.json")  # pooled aggregate (cumulative)
 MIN_JUMP = 0.04  # probability-units move that counts as a shock (~a goal's worth)
+# Lead quality gate (post-filter; xresidual/ws_events is v1-frozen). lead_lag_ms picks the lag by
+# |corr|, so it can lock onto a spurious ANTI-correlation — a "-16s lead at r=-0.70" is the two
+# venues moving oppositely (noise / a stale quote), not price discovery. Keep a lead only if the
+# venues genuinely CO-moved (best_corr >= MIN_LEAD_CORR) within a plausible window
+# (|lag| <= MAX_LEAD_MS). Rejected shocks still count as detected, but don't pollute the pooled lead.
+MIN_LEAD_CORR = 0.5
+MAX_LEAD_MS = 8000
 
 
-def tape_config(pair_result: dict) -> dict | None:
-    """Turn the largest event of one pair into the leadlag_tape.html CONFIG."""
-    evs = pair_result["events"]
-    if not evs or not pair_result.get("tape"):
-        return None
-    best = max(evs, key=lambda e: e["jump"])
-    ll = best.get("lead") or {}
-    rx = best.get("poly_reaction") or best.get("kalshi_reaction") or {}
-    leader = (ll.get("leader") or "synchronous").capitalize()
-    return {"match": pair_result["label"], "moment": f"shock · Δ{best['jump']*100:+.0f}¢",
-            "market": pair_result["label"],
+def gate_leads(results: list[dict]) -> int:
+    """Null out (in place) any event lead that fails the co-movement / plausibility gate, so
+    pool_leads ignores it. Annotates the event with lead_rejected. Returns how many were dropped."""
+    dropped = 0
+    for r in results:
+        for e in r.get("events", []):
+            ll = e.get("lead")
+            if not ll:
+                continue
+            if ll["best_corr"] < MIN_LEAD_CORR or abs(ll["best_lag_ms"]) > MAX_LEAD_MS:
+                e["lead_rejected"] = {
+                    "best_lag_ms": ll["best_lag_ms"], "best_corr": round(ll["best_corr"], 2),
+                    "why": "weak/anti-corr" if ll["best_corr"] < MIN_LEAD_CORR else "lag>cap"}
+                e["lead"] = None
+                dropped += 1
+    return dropped
+
+
+def tape_config(label: str, ev: dict) -> dict:
+    """leadlag_tape.html CONFIG for one (gated) event of a pair."""
+    ll = ev.get("lead") or {}
+    rx = ev.get("poly_reaction") or ev.get("kalshi_reaction") or {}
+    return {"match": label, "moment": f"shock · Δ{ev['jump']*100:+.0f}¢",
+            "market": label,
             "leadSec": round(abs(ll.get("best_lag_ms", 0)) / 1000, 2),
-            "leader": leader,
+            "leader": (ll.get("leader") or "synchronous").capitalize(),
             "base": rx.get("pre", 0.5), "post": rx.get("settle", 0.5),
             "corr": round(ll.get("best_corr", 0), 3)}
 
 
+def wc_captures(data_dir: str) -> list[str]:
+    """Capture suffixes with a cross-venue pairs file whose Kalshi side is a WC GAME (a
+    KXWCGAME ticker), oldest first. That filter keeps real World Cup matches and drops
+    warm-up friendlies (e.g. Argentina-Iceland), outright-tests, and unpaired captures."""
+    caps = []
+    for path in sorted(glob.glob(os.path.join(data_dir, "ws-events-*.jsonl"))):
+        suf = os.path.basename(path)[len("ws-events-"):-len(".jsonl")]
+        pairs = we.load_pairs(data_dir, capture=suf)
+        if pairs and any(str(p.get("kalshi", "")).startswith("KXWCGAME") for p in pairs):
+            caps.append(suf)
+    return caps
+
+
+def _match_label(cap: str) -> str:
+    slug = cap.split("-", 1)[1] if "-" in cap else cap          # drop the timestamp prefix
+    return slug.replace("-vs-", " vs ").replace("-", " ").title().replace(" Vs ", " vs ")
+
+
 def main() -> int:
-    cap = we.latest_capture(DATA_DIR)        # events + pairs from the SAME capture
-    events = we.load_ws_events(DATA_DIR, capture=cap)
-    pairs = we.load_pairs(DATA_DIR, capture=cap)
-    if not events:
-        print("no ws-events yet — capture a match first:\n"
-              "  python logger/ws_capture.py --match 'Team A vs Team B' --seconds 9000 --analyze")
+    # Pool lead-lag across EVERY WC capture present (not just the latest) so the sample
+    # accumulates match over match. One tape loaded at a time to bound memory (run on the
+    # laptop — a 600 MB tape parses to several GB, which would OOM the collection VM).
+    caps = wc_captures(DATA_DIR)
+    if not caps:
+        print(f"no WC captures with cross-venue pairs in {DATA_DIR} — pull a paired WC tape first.")
         return 0
-    if not pairs:
-        print(f"{len(events):,} ws-events but no cross-venue pairs recorded "
-              "(ws-pairs-*.jsonl). Capture via --match/--outright-test to record pairs.")
-        return 0
+    BEFORE_S, AFTER_S, BIN_MS = 10, 20, 200   # match auto_lead_lag defaults
+    os.makedirs(LEADLAG_DIR, exist_ok=True)
+    all_results = []
+    print(f"lead-lag across {len(caps)} WC capture(s); per-match files -> {os.path.relpath(LEADLAG_DIR, ROOT)}/")
+    for cap in caps:
+        events = we.load_ws_events(DATA_DIR, capture=cap)
+        pairs = we.load_pairs(DATA_DIR, capture=cap)
+        if not events or not pairs:
+            continue
+        results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
+        dropped = gate_leads(results)
+        match = _match_label(cap)
+        slug = cap.split("-", 1)[1] if "-" in cap else cap     # game slug -> filename
+        for r in results:
+            r["match"] = match
+            r.pop("tape", None)            # rebuilt on demand via event_window; keep JSON lean
 
-    print(f"{len(events):,} events · {len(pairs)} cross-venue pair(s) · detecting shocks ...")
-    results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
-    pooled = we.pool_leads(results)
+        # one file PER GAME, named after the game (never cross-overwritten):
+        # <slug>.js  = the cleanest gated event's tape card (for leadlag_tape.html)
+        # <slug>.json = that match's full lead-lag analysis + its own pooled summary
+        mbest = None
+        for r in results:
+            for e in r["events"]:
+                if e.get("lead") and (mbest is None or e["jump"] > mbest[1]["jump"]):
+                    mbest = (r, e)
+        if mbest:
+            r, e = mbest
+            tape = we.event_window(events, r["kalshi"], r["poly"], e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
+            cfg = tape_config(r["label"], e)
+            cfg["match"] = match           # dek title -> the full matchup, not just the team/market
+            with open(os.path.join(LEADLAG_DIR, slug + ".js"), "w", encoding="utf-8") as f:
+                f.write("window.LEADLAG = " + json.dumps(
+                    {"config": cfg, "match": match,
+                     "data": {"poly": tape["poly"], "kalshi": tape["kalshi"]}}) + ";\n")
+        mpooled = we.pool_leads(results)
+        with open(os.path.join(LEADLAG_DIR, slug + ".json"), "w", encoding="utf-8") as f:
+            json.dump({"match": match, "capture": cap, "pooled": mpooled,
+                       "pairs": results, "min_jump": MIN_JUMP}, f, indent=2)
 
-    for r in results:
-        print(f"  {r['label']:<22} {r['n_events']} shock(s)")
-        for e in r["events"]:
-            ll = e.get("lead")
-            if ll:
-                print(f"     Δ{e['jump']*100:+.0f}¢  {ll['leader']:<11} "
-                      f"lead {ll['best_lag_ms']:+5d}ms  r={ll['best_corr']:.2f}")
+        n_leads = sum(1 for r in results for e in r["events"] if e.get("lead"))
+        n_shocks = sum(r["n_events"] for r in results)
+        tag = (f"{mpooled['leader']} {mpooled['median_lead_ms']:+.0f}ms" if mpooled else "no clean lead")
+        print(f"  {match:<26} {len(events):>10,} ev · {n_shocks:>2} shocks · {n_leads:>2} leads"
+              + (f" · dropped {dropped}" if dropped else "") + f"  -> {slug}.{{js,json}} ({tag})")
+        all_results.extend(results)
+        del events
+
+    pooled = we.pool_leads(all_results)
     if pooled:
         lo, hi = pooled["iqr_ms"]
-        print(f"POOLED · n={pooled['n']} · {pooled['leader']} leads "
+        print(f"POOLED · n={pooled['n']} across {len(caps)} matches · {pooled['leader']} leads "
               f"(median {pooled['median_lead_ms']:+.0f}ms, IQR [{lo:+.0f},{hi:+.0f}]) · "
               f"leader share {pooled['leader_share']:.0%}")
-
+    else:
+        print("POOLED · no clean cross-venue leads yet")
     os.makedirs(os.path.dirname(RESULTS_OUT), exist_ok=True)
     with open(RESULTS_OUT, "w", encoding="utf-8") as f:
-        json.dump({"pairs": results, "pooled": pooled, "min_jump": MIN_JUMP}, f, indent=2)
-    print(f"wrote {os.path.relpath(RESULTS_OUT, ROOT)}")
-
-    # the cleanest event -> the tape card
-    best_pair = max((r for r in results if r["events"]),
-                    key=lambda r: max(e["jump"] for e in r["events"]), default=None)
-    if best_pair:
-        cfg = tape_config(best_pair)
-        with open(TAPE_OUT, "w", encoding="utf-8") as f:
-            f.write("window.LEADLAG = " + json.dumps(
-                {"config": cfg, "data": {"poly": best_pair["tape"]["poly"],
-                                         "kalshi": best_pair["tape"]["kalshi"]}}) + ";\n")
-        print(f"wrote {os.path.relpath(TAPE_OUT, ROOT)}: {cfg['match']} · "
-              f"{cfg['leader']} led {cfg['leadSec']}s")
+        json.dump({"pairs": all_results, "pooled": pooled,
+                   "n_matches": len(caps), "min_jump": MIN_JUMP}, f, indent=2)
+    print(f"wrote {os.path.relpath(RESULTS_OUT, ROOT)} (pooled aggregate)")
     return 0
 
 
