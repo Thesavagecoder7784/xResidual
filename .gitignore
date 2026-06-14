@@ -256,3 +256,8 @@ data/availability_review.md
 data/availability_review.json
 
 CONTENT-PLAYBOOK.md
+
+# Probability Cup bots — the pricing logic is the competitive edge in a live comp (prize is a
+# Jump fellowship), so keep it out of the public repo. Deployed to the VM via scp, not git.
+scripts/probcup_*.py
+deploy/systemd/xresidual-probcup.*
