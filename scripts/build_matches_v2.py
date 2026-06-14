@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, wc2026_teams as W  # noqa: E402
 from blend import blended_ratings  # noqa: E402
 from match_scheduler import kickoff_utc  # noqa: E402
+from v2_calibrate import scale_wdl  # noqa: E402  (v2 = ZISM draws + temperature calibration)
 
 V1_LEDGER = os.path.join(ROOT, "paper", "match_forecasts.jsonl")
 V2_LEDGER = os.path.join(ROOT, "paper", "match_forecasts_v2.jsonl")
@@ -94,6 +95,7 @@ def main() -> int:
             continue
         l1, l2 = group_sim._match_lambdas(row.team1, row.team2, row.ground, ratings, params)
         p1, pdraw, p2 = _wdl_zism(l1, l2, OMEGA)
+        p1, pdraw, p2 = scale_wdl(p1, pdraw, p2)   # v2 temperature calibration (fix overconfidence)
         rec = {"key": key, "version": "v2", "committed": now.isoformat(),
                "md": str(row.round), "group": str(row.group).replace("Group ", ""),
                "date": str(row.date), "t1": W.canonical(row.team1), "t2": W.canonical(row.team2),

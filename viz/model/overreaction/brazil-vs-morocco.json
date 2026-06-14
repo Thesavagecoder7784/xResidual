@@ -1,0 +1,48 @@
+{
+  "match": "Brazil vs Morocco",
+  "capture": "20260613T212808Z-brazil-vs-morocco",
+  "n_goals": 2,
+  "goals_source": "fixtures",
+  "reference": {
+    "label": "Brazil",
+    "venue": "polymarket"
+  },
+  "n_detected": 4,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781390141308,
+      "jump": 0.055,
+      "pre": 0.245,
+      "p_entry": 0.465,
+      "p_exit": 0.45,
+      "reverted_pp": 1.5,
+      "pnl_pp": 1.0,
+      "surprise": 0.22
+    },
+    {
+      "t_ms": 1781394866737,
+      "jump": -0.055,
+      "pre": 0.175,
+      "p_entry": 0.155,
+      "p_exit": 0.105,
+      "reverted_pp": -5.0,
+      "pnl_pp": -5.5,
+      "surprise": 0.31
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": -4.5,
+    "hit_rate": 0.5,
+    "mean_reverted_pp": -1.75,
+    "mean_pnl_pp": -2.25,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5
+  }
+}
