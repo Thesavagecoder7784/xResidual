@@ -24,6 +24,7 @@ import json
 import os
 import random
 import ssl
+import sys
 import time
 
 import certifi
@@ -32,6 +33,10 @@ import websockets
 
 import envtools
 import venues
+
+# Bridge venue spellings to one canonical key for cross-venue outcome pairing (see _norm).
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from xresidual import wc2026_teams as _wt  # noqa: E402
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 KALSHI_WS = "wss://api.elections.kalshi.com/trade-api/ws/v2"
@@ -259,8 +264,11 @@ async def supervise(name: str, factory, deadline: float) -> None:
 
 
 def _norm(name: str) -> str:
-    """Loose team-name match across venue spellings (Turkiye/Turkey, Congo DR, etc.)."""
-    return "".join(c for c in name.lower() if c.isalnum())
+    """Loose team-name match across venue spellings. Bridge through the WC name map
+    (elo_name∘canonical) so USA/United States, Bosnia & Herzegovina/Bosnia and Herzegovina,
+    Czechia/Czech Republic, Curacao/Curaçao, Turkiye/Turkey all collapse to one key before the
+    alnum strip; non-team strings (Tie, full questions) pass through unchanged."""
+    return "".join(c for c in _wt.elo_name(_wt.canonical(name)).lower() if c.isalnum())
 
 
 def discover_match_markets(env: dict, team_a: str, team_b: str):
