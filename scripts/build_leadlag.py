@@ -86,74 +86,105 @@ def _match_label(cap: str) -> str:
     return slug.replace("-vs-", " vs ").replace("-", " ").title().replace(" Vs ", " vs ")
 
 
-def main() -> int:
-    # Pool lead-lag across EVERY WC capture present (not just the latest) so the sample
-    # accumulates match over match. One tape loaded at a time to bound memory (run on the
-    # laptop — a 600 MB tape parses to several GB, which would OOM the collection VM).
-    caps = wc_captures(DATA_DIR)
-    if not caps:
-        print(f"no WC captures with cross-venue pairs in {DATA_DIR} — pull a paired WC tape first.")
-        return 0
-    BEFORE_S, AFTER_S, BIN_MS = 10, 20, 200   # match auto_lead_lag defaults
-    os.makedirs(LEADLAG_DIR, exist_ok=True)
-    all_results = []
-    print(f"lead-lag across {len(caps)} WC capture(s); per-match files -> {os.path.relpath(LEADLAG_DIR, ROOT)}/")
-    for cap in caps:
-        events = we.load_ws_events(DATA_DIR, capture=cap)
-        pairs = we.load_pairs(DATA_DIR, capture=cap)
-        if not events or not pairs:
+def process_capture(cap: str) -> str | None:
+    """Parse ONE capture's tape, gate the leads, and write its per-game <slug>.js + <slug>.json.
+    This is the heavy step (a 1 GB tape parses to several GB of dicts), so it runs ONCE per match,
+    then never again — the pooled aggregate is rebuilt from the JSONs, not the tapes. Run on the
+    laptop, not the 900 MB collection VM. Returns the match label, or None if the tape is unusable."""
+    BEFORE_S, AFTER_S, BIN_MS = 10, 20, 200       # match auto_lead_lag defaults
+    events = we.load_ws_events(DATA_DIR, capture=cap)
+    pairs = we.load_pairs(DATA_DIR, capture=cap)
+    if not events or not pairs:
+        return None
+    results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
+    dropped = gate_leads(results)
+    match = _match_label(cap)
+    slug = cap.split("-", 1)[1] if "-" in cap else cap     # game slug -> filename
+    for r in results:
+        r["match"] = match
+        r.pop("tape", None)               # rebuilt on demand via event_window; keep JSON lean
+    # <slug>.js = the cleanest gated event's tape card; <slug>.json = the match's analysis
+    mbest = None
+    for r in results:
+        for e in r["events"]:
+            if e.get("lead") and (mbest is None or e["jump"] > mbest[1]["jump"]):
+                mbest = (r, e)
+    if mbest:
+        r, e = mbest
+        tape = we.event_window(events, r["kalshi"], r["poly"], e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
+        cfg = tape_config(r["label"], e)
+        cfg["match"] = match              # dek title -> the full matchup, not just the team/market
+        with open(os.path.join(LEADLAG_DIR, slug + ".js"), "w", encoding="utf-8") as f:
+            f.write("window.LEADLAG = " + json.dumps(
+                {"config": cfg, "match": match,
+                 "data": {"poly": tape["poly"], "kalshi": tape["kalshi"]}}) + ";\n")
+    mpooled = we.pool_leads(results)
+    with open(os.path.join(LEADLAG_DIR, slug + ".json"), "w", encoding="utf-8") as f:
+        json.dump({"match": match, "capture": cap, "pooled": mpooled,
+                   "pairs": results, "min_jump": MIN_JUMP}, f, indent=2)
+    n_leads = sum(1 for r in results for e in r["events"] if e.get("lead"))
+    n_shocks = sum(r["n_events"] for r in results)
+    tag = (f"{mpooled['leader']} {mpooled['median_lead_ms']:+.0f}ms" if mpooled else "no clean lead")
+    print(f"  processed {match:<24} {len(events):>10,} ev · {n_shocks:>2} shocks · {n_leads:>2} leads"
+          + (f" · dropped {dropped}" if dropped else "") + f"  -> {slug}.{{js,json}} ({tag})")
+    del events
+    return match
+
+
+def pool_from_archive() -> dict | None:
+    """Rebuild the pooled aggregate from EVERY per-game JSON in the archive. Parses no tapes, so it
+    is instant and scales: each match is processed once into its JSON; pooling just reads the JSONs.
+    The tapes are transient (delete after processing); the per-game JSONs are the source of truth."""
+    all_results, matches = [], []
+    for path in sorted(glob.glob(os.path.join(LEADLAG_DIR, "*.json"))):
+        try:
+            d = json.load(open(path, encoding="utf-8"))
+        except Exception:
             continue
-        results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
-        dropped = gate_leads(results)
-        match = _match_label(cap)
-        slug = cap.split("-", 1)[1] if "-" in cap else cap     # game slug -> filename
-        for r in results:
-            r["match"] = match
-            r.pop("tape", None)            # rebuilt on demand via event_window; keep JSON lean
-
-        # one file PER GAME, named after the game (never cross-overwritten):
-        # <slug>.js  = the cleanest gated event's tape card (for leadlag_tape.html)
-        # <slug>.json = that match's full lead-lag analysis + its own pooled summary
-        mbest = None
-        for r in results:
-            for e in r["events"]:
-                if e.get("lead") and (mbest is None or e["jump"] > mbest[1]["jump"]):
-                    mbest = (r, e)
-        if mbest:
-            r, e = mbest
-            tape = we.event_window(events, r["kalshi"], r["poly"], e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
-            cfg = tape_config(r["label"], e)
-            cfg["match"] = match           # dek title -> the full matchup, not just the team/market
-            with open(os.path.join(LEADLAG_DIR, slug + ".js"), "w", encoding="utf-8") as f:
-                f.write("window.LEADLAG = " + json.dumps(
-                    {"config": cfg, "match": match,
-                     "data": {"poly": tape["poly"], "kalshi": tape["kalshi"]}}) + ";\n")
-        mpooled = we.pool_leads(results)
-        with open(os.path.join(LEADLAG_DIR, slug + ".json"), "w", encoding="utf-8") as f:
-            json.dump({"match": match, "capture": cap, "pooled": mpooled,
-                       "pairs": results, "min_jump": MIN_JUMP}, f, indent=2)
-
-        n_leads = sum(1 for r in results for e in r["events"] if e.get("lead"))
-        n_shocks = sum(r["n_events"] for r in results)
-        tag = (f"{mpooled['leader']} {mpooled['median_lead_ms']:+.0f}ms" if mpooled else "no clean lead")
-        print(f"  {match:<26} {len(events):>10,} ev · {n_shocks:>2} shocks · {n_leads:>2} leads"
-              + (f" · dropped {dropped}" if dropped else "") + f"  -> {slug}.{{js,json}} ({tag})")
-        all_results.extend(results)
-        del events
-
+        if not isinstance(d, dict) or "pairs" not in d:
+            continue
+        matches.append(d.get("match", os.path.basename(path)[:-5]))
+        all_results.extend(d["pairs"])
     pooled = we.pool_leads(all_results)
-    if pooled:
-        lo, hi = pooled["iqr_ms"]
-        print(f"POOLED · n={pooled['n']} across {len(caps)} matches · {pooled['leader']} leads "
-              f"(median {pooled['median_lead_ms']:+.0f}ms, IQR [{lo:+.0f},{hi:+.0f}]) · "
-              f"leader share {pooled['leader_share']:.0%}")
-    else:
-        print("POOLED · no clean cross-venue leads yet")
     os.makedirs(os.path.dirname(RESULTS_OUT), exist_ok=True)
     with open(RESULTS_OUT, "w", encoding="utf-8") as f:
         json.dump({"pairs": all_results, "pooled": pooled,
-                   "n_matches": len(caps), "min_jump": MIN_JUMP}, f, indent=2)
-    print(f"wrote {os.path.relpath(RESULTS_OUT, ROOT)} (pooled aggregate)")
+                   "n_matches": len(matches), "min_jump": MIN_JUMP}, f, indent=2)
+    if pooled:
+        lo, hi = pooled["iqr_ms"]
+        print(f"POOLED · n={pooled['n']} across {len(matches)} matches · {pooled['leader']} leads "
+              f"(median {pooled['median_lead_ms']:+.0f}ms, IQR [{lo:+.0f},{hi:+.0f}]) · "
+              f"leader share {pooled['leader_share']:.0%}")
+    else:
+        print(f"POOLED · no clean cross-venue leads across {len(matches)} match(es) yet")
+    print(f"wrote {os.path.relpath(RESULTS_OUT, ROOT)} (pooled from {len(matches)} per-game JSON(s))")
+    return pooled
+
+
+def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description="incremental cross-venue lead-lag: process NEW tapes, "
+                                             "then pool from the per-game JSON archive")
+    ap.add_argument("--all", action="store_true",
+                    help="re-process every WC tape present, not just the new ones")
+    ap.add_argument("--pool-only", action="store_true",
+                    help="rebuild the pooled aggregate from the per-game JSONs; parse no tapes")
+    args = ap.parse_args()
+    os.makedirs(LEADLAG_DIR, exist_ok=True)
+    if args.pool_only:
+        pool_from_archive()
+        return 0
+    caps = wc_captures(DATA_DIR)
+    done = lambda c: os.path.exists(os.path.join(
+        LEADLAG_DIR, (c.split("-", 1)[1] if "-" in c else c) + ".json"))
+    todo = caps if args.all else [c for c in caps if not done(c)]
+    if todo:
+        print(f"processing {len(todo)} new tape(s) of {len(caps)} present; the rest already archived:")
+        for cap in todo:
+            process_capture(cap)
+    else:
+        print(f"no new tapes to process ({len(caps)} present, all archived); re-pooling.")
+    pool_from_archive()
     return 0
 
 

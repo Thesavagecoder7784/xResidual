@@ -1,0 +1,9 @@
+[Unit]
+Description=Run the xResidual tape cleanup daily (keep disk in check over the tournament)
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target
