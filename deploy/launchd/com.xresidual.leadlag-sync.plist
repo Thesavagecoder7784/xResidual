@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.xresidual.leadlag-sync</string>
+  <!-- Pulls new paired WC tapes from the VM, processes each into its per-game lead-lag JSON,
+       renders the PNG, rebuilds the pool, deletes the local tape. Laptop-side (the heavy parse
+       would OOM the 900 MB VM). Robust to sleep: launchd runs it once on wake if a 2h interval
+       elapsed, and the 48h VM tape window means nothing is missed if the laptop is used daily. -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/prabhatm/Documents/GitHub/xResidual/scripts/leadlag_sync.sh</string>
+  </array>
+  <key>StartInterval</key><integer>7200</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/Users/prabhatm/Documents/GitHub/xResidual/logger/data/leadlag_sync.out</string>
+  <key>StandardErrorPath</key><string>/Users/prabhatm/Documents/GitHub/xResidual/logger/data/leadlag_sync.err</string>
+</dict>
+</plist>

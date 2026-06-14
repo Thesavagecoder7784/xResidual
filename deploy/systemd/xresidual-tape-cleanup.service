@@ -1,0 +1,7 @@
+[Unit]
+Description=xResidual capture-tape cleanup (delete ws-events tapes older than 2 days; keep pairs)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/azureuser/xResidual/scripts/cleanup_tapes.sh
+Nice=15
