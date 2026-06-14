@@ -95,11 +95,14 @@ def _reference_series(events: list[dict], pairs: list[dict]):
     return best
 
 
-def process_capture(cap: str) -> str | None:
+def process_capture(cap: str, events=None, pairs=None) -> str | None:
     """Parse ONE tape, goal-gate the shocks, fade each, write its per-game JSON. Heavy (a 1 GB tape
-    parses to several GB) so it runs once per match on the laptop. Returns the match label or None."""
-    events = we.load_ws_events(DATA_DIR, capture=cap)
-    pairs = we.load_pairs(DATA_DIR, capture=cap)
+    parses to several GB) so it runs once per match on the laptop. Returns the match label or None.
+    `events`/`pairs` can be passed in (already loaded) so one tape parse can feed several pipelines."""
+    if events is None:
+        events = we.load_ws_events(DATA_DIR, capture=cap)
+    if pairs is None:
+        pairs = we.load_pairs(DATA_DIR, capture=cap)
     if not events or not pairs:
         return None
     match = _match_label(cap)

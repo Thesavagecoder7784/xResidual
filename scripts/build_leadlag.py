@@ -86,14 +86,17 @@ def _match_label(cap: str) -> str:
     return slug.replace("-vs-", " vs ").replace("-", " ").title().replace(" Vs ", " vs ")
 
 
-def process_capture(cap: str) -> str | None:
+def process_capture(cap: str, events=None, pairs=None) -> str | None:
     """Parse ONE capture's tape, gate the leads, and write its per-game <slug>.js + <slug>.json.
     This is the heavy step (a 1 GB tape parses to several GB of dicts), so it runs ONCE per match,
     then never again — the pooled aggregate is rebuilt from the JSONs, not the tapes. Run on the
-    laptop, not the 900 MB collection VM. Returns the match label, or None if the tape is unusable."""
+    laptop, not the 900 MB collection VM. Returns the match label, or None if the tape is unusable.
+    `events`/`pairs` can be passed in (already loaded) so one tape parse can feed several pipelines."""
     BEFORE_S, AFTER_S, BIN_MS = 10, 20, 200       # match auto_lead_lag defaults
-    events = we.load_ws_events(DATA_DIR, capture=cap)
-    pairs = we.load_pairs(DATA_DIR, capture=cap)
+    if events is None:
+        events = we.load_ws_events(DATA_DIR, capture=cap)
+    if pairs is None:
+        pairs = we.load_pairs(DATA_DIR, capture=cap)
     if not events or not pairs:
         return None
     results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)

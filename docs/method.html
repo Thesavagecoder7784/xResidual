@@ -54,6 +54,47 @@
   </section>
 
   <section class="prose">
+    <div class="h2">The data engine</div>
+    <p>Alongside the model, a second pillar runs live: a <b>cross-venue microstructure pipeline</b> that records both prediction markets (Kalshi and Polymarket) tick by tick during matches, then studies how price actually forms. An always-on server collects; a laptop does the heavy parsing. Raw recordings are disposable, the small per-match summaries are the source of truth, and every pooled result is rebuilt from those summaries.</p>
+
+    <style>
+    .eng{font-family:var(--fb);margin:22px 0 8px;max-width:720px}
+    .eng-row{display:flex;align-items:stretch;gap:12px;margin:0}
+    .eng-tag{flex:0 0 92px;font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+      display:flex;align-items:center;justify-content:center;text-align:center;border-radius:6px;padding:6px;line-height:1.3}
+    .eng-tag.vm{background:rgba(154,106,20,.1);color:var(--gold)}
+    .eng-tag.lap{background:var(--accent-soft);color:var(--accent)}
+    .eng-box{flex:1;background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:11px 14px}
+    .eng-box.hot{border-color:var(--accent);border-width:1.5px}
+    .eng-box b{font-size:14.5px;color:var(--ink)}
+    .eng-box span{display:block;font-size:12.5px;color:var(--dim);margin-top:3px;line-height:1.5}
+    .eng-arrow{font-family:var(--fm);font-size:11px;color:var(--dim);text-align:center;padding:7px 0}
+    .eng-arrow i{font-style:normal;color:var(--muted)}
+    .eng-fan{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 0 104px}
+    @media(max-width:560px){.eng-fan{grid-template-columns:1fr;margin-left:0}.eng-tag{flex-basis:72px}}
+    .eng-leaf{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:9px 11px;border-top:2px solid var(--accent)}
+    .eng-leaf b{font-size:12.5px;color:var(--ink)}
+    .eng-leaf span{display:block;font-size:11px;color:var(--dim);margin-top:2px;line-height:1.45}
+    </style>
+    <div class="eng">
+      <div class="eng-row"><span class="eng-tag vm">Server · 24/7</span>
+        <div class="eng-box"><b>Schedule &amp; capture</b><span>35 minutes before each kickoff, record a 3-hour tape of both venues' full order books and every trade (about 1.3 GB per match).</span></div></div>
+      <div class="eng-arrow">▼&nbsp;&nbsp;<i>laptop pulls each settled tape, every 2 hours</i></div>
+      <div class="eng-row"><span class="eng-tag lap">Laptop · 2h</span>
+        <div class="eng-box hot"><b>Parse once, three ways</b><span>Load the tape a single time (about 7 GB in memory) and feed all three analyses from the one pass.</span></div></div>
+      <div class="eng-fan">
+        <div class="eng-leaf"><b>Lead-lag</b><span>Which venue's price moves first on a goal.</span></div>
+        <div class="eng-leaf"><b>Overreaction</b><span>Does the price overshoot a goal, then revert?</span></div>
+        <div class="eng-leaf"><b>Order flow</b><span>Does flow on one venue predict the other's next move?</span></div>
+      </div>
+      <div class="eng-arrow">▼&nbsp;&nbsp;<i>one summary per match, pooled across every match</i></div>
+      <div class="eng-row"><span class="eng-tag lap">Laptop</span>
+        <div class="eng-box"><b>Pool, render, discard</b><span>Rebuild the pooled result from the per-match summaries, render the graphic, and delete the raw tape once all three summaries exist.</span></div></div>
+    </div>
+    <p style="margin-top:16px">Each analysis outputs a <b>pooled statistic with its sample size and significance</b>, not a headline. Early findings so far, reported straight: Polymarket's price leads Kalshi's by a median of about half a second on goals, and order-flow imbalance moves price on both venues exactly as the microstructure literature predicts. Whether that price lead is <i>tradeable</i> once you cross the spread is a separate, disclosed forward-test, and the answer there is no. The detail lives in the <a href="note.html">research note</a>.</p>
+  </section>
+
+  <section class="prose">
     <div class="h2">The honesty principle</div>
     <p>The premise is pro-market: these markets are very hard to beat, so the model is held to the price, not graded against a strawman. Wins and misses are reported the same way. A mediocre result reported straight is worth more than a cherry-picked one. The rigor is the point, and it's the only thing that makes a public track record mean anything.</p>
     <p style="color:var(--dim);font-size:13px;margin-top:18px">Full methodology, code, and pre-registration: <a href="https://github.com/Thesavagecoder7784/xResidual">github.com/Thesavagecoder7784/xResidual</a>. Paper only, no real-money trading.</p>
