@@ -2,11 +2,13 @@
 
 **Working draft, 2026.** Prabhat M. ([repo](https://github.com/Thesavagecoder7784/xResidual) · [portfolio](https://thesavagecoder7784.github.io/))
 
-> Status: this is a live, phased note. The pre-match microstructure results (Sections 5.1, 6)
-> are final; the in-play price-discovery and event-study results (Sections 5.2, 5.3) and the
-> pre-registration grade (Section 7) fill in as the 2026 World Cup is played and are marked
-> ⟦PENDING⟧. Every empirical claim here is bound to code and to a pre-registration committed
-> before kickoff (PREREGISTRATION.md), so the open results are falsifiable, not flexible.
+> Status: this is a live, phased note. The pre-match microstructure results (Sections 5.1, 6.1)
+> are final; the in-play price-discovery result (Section 5.2) and its forward-test (Section 6.2)
+> are **forming** on the first marquee captures and reported as such; the event-study and
+> calibration grades (Sections 5.3, 5.4) and the pre-registration grade (Section 7) fill in as
+> the 2026 World Cup is played. Every empirical claim here is bound to code and to a
+> pre-registration committed before kickoff (PREREGISTRATION.md), so the open results are
+> falsifiable, not flexible.
 
 ---
 
@@ -22,10 +24,16 @@ high-information in-play regime. We decompose each cross-venue quote into belief
 find the widely-quoted "5 to 8 cent" inter-venue gap is **almost entirely the house margin**:
 de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a relative-value
 convergence trade returns a documented loss net of costs. The residual belief gap is small but
-structured by audience (a home-crowd tilt). The central price-discovery result, estimated via
-Hasbrouck (1995) information share and Gonzalo-Granger (1995) component share on mid-price
-moves around ⟦N⟧ goal events, is reported in Section 5.2. We pre-register the direction (the
-deeper-liquidity venue leads) and grade it honestly.
+structured by audience (a home-crowd tilt). The central price-discovery result, estimated by
+cross-correlating mid-changes around each goal shock, is forming: over the first clean in-play
+tapes **Polymarket leads Kalshi by a median +600ms**, in the pre-registered direction (the
+deeper-liquidity venue leads). We then ask the question the lead invites, and answer it with two
+disclosed forward-tests: the cross-venue gap is **not a harvestable edge**. The pre-match
+convergence trade is a clean null (a cost illusion), and the in-play lead-lag follow-trade is a
+**latency mirage** (a +14pp-per-trade backtest that evaporates by one second of execution
+latency). The one corner where a mechanical view plausibly beats the human-driven price is the
+favorite-longshot bias at price extremes. The through-line: price discovery here is real and
+measurable, and almost none of it is harvestable, which is the honest pro-market reading.
 
 **Contribution.** The cross-venue, pre-match-vs-in-play price-discovery comparison across
 regulated, on-chain, and exchange venues is, to our knowledge, the named-but-unexplored
@@ -71,9 +79,11 @@ test that prior against a third source before claiming an edge (Section 4.3).
 - **Favorite-longshot bias.** Snowberg and Wolfers (2010) decompose the bias into risk-love vs
   misperception; we measure its strength by probability decile and compare books vs prediction
   markets (5.4).
-- **Prediction-market efficiency / microstructure.** Hawkes et al. (2026) and the SoK (2026)
-  survey efficiency and microstructure of modern (incl. on-chain) prediction markets and flag
-  cross-venue discovery as open. ⟦confirm exact titles/venues for both references⟧
+- **Prediction-market efficiency / microstructure.** Bürgi, Deng and Whelan (2025) document a
+  favorite-longshot bias in 300,000+ Kalshi contracts and tie it to a maker-taker microstructure;
+  the SoK of Rahman, Al-Chami and Clark (2025) maps the microstructure of modern (incl. on-chain)
+  prediction markets. Neither measures cross-venue price discovery, the gap this note fills. The
+  lead-lag arbitrage literature (Poutré, Dionne and Yergeau, 2024) supplies the §6.2 benchmark.
 
 ## 3. Data and infrastructure
 
@@ -136,12 +146,20 @@ A liquidity asymmetry underlies this: Polymarket quotes roughly **27x the depth 
 same spread** on the title market, so the two venues are integrated on price but very different
 on capacity.
 
-### 5.2 Cross-venue price discovery ⟦PENDING in-play sample⟧
-> Hasbrouck information share and Gonzalo-Granger component share, Kalshi vs Polymarket (and vs
-> Betfair), pre-match vs in-play, over ⟦N⟧ goal events from the marquee-match captures.
-> Pre-registered direction (P6): the **deeper-liquidity venue leads**, and we expect the
-> in-play window to sharpen the leadership relative to the quiet pre-match window. Fills as the
-> tournament generates clean in-play tapes; first marquee captures in hand, sample accruing.
+### 5.2 Cross-venue price discovery: Polymarket leads in-play (forming)
+On the first marquee captures (Mexico-South Africa, Qatar-Switzerland), the in-play lead-lag is
+estimated by cross-correlating binned mid-changes in a window around each auto-detected goal
+shock. A quality gate keeps only events with genuine positive co-movement (best cross-correlation
+>= 0.5) and a plausible lag (<= 8s), discarding spurious detections: a "16-second lead at
+r = -0.70" is two books moving oppositely, a stale-tick artifact, not price discovery. Of the
+candidate shocks, the gate removes 14 and retains **5 clean goal shocks**. Over those,
+**Polymarket leads Kalshi by a median +600ms** (interquartile range [+400, +600]ms), leading in
+4 of 5. The direction matches the pre-registered P6: the deeper-liquidity venue leads, and
+Polymarket quotes ~27x the depth (Section 5.1). This is a forming signal, not a verdict: n = 5
+over two matches, with an interquartile range now entirely positive where a single match's was
+not, so pooling is sharpening it match over match. The pre-match quiet-window leadership and the
+formal Hasbrouck/Gonzalo-Granger decomposition both accrue as more clean tapes land; each match's
+events and tape are archived per game so the sample is auditable, not overwritten.
 
 ### 5.3 Goal-shock event study ⟦PENDING in-play sample⟧
 > Per goal (target ~260 over the tournament): surprise classification, overshoot, and
@@ -149,12 +167,25 @@ on capacity.
 > (efficient, near-instant updating, no drift). Framework validated on the first live tape
 > (5.6); the sample is the tournament itself.
 
-### 5.4 Calibration and the favorite-longshot bias ⟦calibration PENDING; FLB descriptive, in⟧
+### 5.4 Calibration and the favorite-longshot bias (FLB in; calibration grade PENDING Jul 19)
 The favorite-longshot bias is visible pre-tournament in the 1-cent tick structure of longshot
 contracts. The half-spread by probability decile and the books-vs-prediction-markets comparison
 are reported here as a **descriptive replication** (Snowberg-Wolfers, 2010); the *graded*
 calibration verdict (CORP reliability, Brier decomposition, slope) lands after the group stage
 and again at the final, and is pre-registered (P1: the markets are well-calibrated).
+
+The favorite-longshot bias is also the one corner where a mechanical view plausibly beats the
+human-driven price, and it is the only market-facing position the project actually takes. The
+independent baseline's advance probabilities are systematically *more extreme* than the market in
+both directions (favorites priced higher, longshots lower), the signature of the bias that
+persists even in deep prediction markets at the contract-price extremes. A model carries no
+psychological longshot premium, so its extremeness is in the exploitable direction. This
+underwrites a small, diversified basket in the paper track record: fade the overpriced longshots,
+back the underpriced favorites, sized as the modest systematic tilt it is rather than single-name
+conviction. Whether it is a real edge or model tail-overconfidence is itself a calibration
+question, graded after the group stage. Notably, it is the *advance* market that carries the
+signal: it runs near-zero margin, whereas the reach-round ladder is 12 to 31% overround, where a
+model's apparent "fades" are the vig, not an edge.
 
 ### 5.5 Order-flow imbalance to short-horizon returns ⟦PENDING in-play sample⟧
 > On-chain signed OFI regressed on next-interval mid return; coefficient, R-squared, and regime
@@ -166,16 +197,35 @@ The in-play pipeline was proven end-to-end before the tournament on a warm-up fr
 ~172k events at 6ms median spacing, with the goal-shock detector hardened from 11 false triggers
 to 3. The capture is live and self-correcting (Section 3.1).
 
-## 6. A disclosed signal and forward-test: a clean null (final)
+## 6. Two disclosed forward-tests, two nulls
 
+The two ways the cross-venue gap might be a harvestable edge, each tested out-of-sample rather
+than asserted, each disclosed with its rule.
+
+### 6.1 Pre-match convergence: a cost illusion (final)
 The law-of-one-price result (5.1) predicts there is no convergence arbitrage to harvest, and we
 tested that out-of-sample rather than asserting it. Rule: when the de-vigged Polymarket-Kalshi
 belief gap on a title widens past 1.0pp, go long the cheap venue and short the rich one, exit on
 convergence below 0.3pp or after a horizon, net of a 0.5pp modeled round-trip cost
 (fee + half-spread). Buildup result: **6 trades, -2.6pp total, 0% hit rate, per-trade Sharpe
 -1.95.** The gap is real but does not converge enough to clear costs: the visible "edge" is a
-cost illusion, exactly what law-of-one-price implies. Reported as a negative result because it
-is one; the in-play goal-shock signal (5.3) is the forward-test that continues live.
+cost illusion, exactly what law-of-one-price implies.
+
+### 6.2 In-play lead-lag: a latency mirage (forming)
+The §5.2 lead means Kalshi reprices a goal slightly behind Polymarket, so the natural follow-up
+is whether that lag is capturable. Rule: when Polymarket's mid jumps >= 4pp inside a 3s window (a
+goal reprice), take Kalshi the same direction and hold 30s, with **fills crossing Kalshi's real
+bid/ask both ways** so the cost is the data, not an assumption. At zero execution latency the
+strategy returns **+14pp per trade** over 7 trades. That number is a trap, and surfacing it is the
+point. Sweeping a realistic entry latency, the edge **collapses to +0.4pp by 1 second, to zero by
+~2 seconds, and turns negative by 5**. The quotes filled were fresh (median 0.7s old) and the book
+was deep (>$5M traded per market), so this is not stale quotes or thin depth; it is pure speed.
+The entire apparent edge lives in the sub-second window only a co-located operator can reach.
+This is consistent with the high-frequency lead-lag literature: the naive mid-signal market-order
+strategy never clears the spread, and the versions that *do* profit (Poutré, Dionne and Yergeau,
+2024) require colocation and limit-order execution a read-only, paper-only study cannot access.
+A real lead, harvestable only by a co-located high-frequency operator, which is to say not an
+edge for anyone else.
 
 ## 7. Pre-registration and grading ⟦PENDING Jul 19⟧
 
@@ -185,6 +235,16 @@ states under proper scoring rules. The two primaries are **P6** (cross-venue lea
 deeper venue leads) and **P1** (the markets are well-calibrated). Graded publicly on 2026-07-19.
 
 ## 8. Discussion and limitations
+
+The unifying finding is a discipline for telling real edges from mirages. The cross-venue gap was
+probed three ways. The pre-match convergence trade is a cost illusion (6.1, a clean null). The
+in-play lead-lag is a real ~0.6s lead (5.2) that is a latency mirage once execution is realistic
+(6.2, a +14pp backtest that evaporates by one second). The favorite-longshot wedge (5.4) is a
+real but modest systematic tilt, the lone position the project takes. Two of the three look like
+alpha in a frictionless backtest and are not; the methods that separate them, de-vigging before
+calling any gap, crossing the real bid/ask, and sweeping execution latency, are the contribution
+as much as any single number. Price discovery here is genuine and measurable, and almost none of
+it is harvestable, which is the honest reading and the pro-market one.
 
 The headline is pro-market. Across a five-layer model-vs-market scan of 238 contracts, the
 liquid winner market is efficient (mean |model - market| ~0.4pp); the only soft corners are
@@ -201,6 +261,7 @@ manage.
 - Croxson, K. and Reade, J. J. (2014). Information and Efficiency: Goal Arrival in Soccer Betting. *The Economic Journal*.
 - Gonzalo, J. and Granger, C. W. J. (1995). Estimation of Common Long-Memory Components in Cointegrated Systems. *Journal of Business & Economic Statistics*.
 - Hasbrouck, J. (1995). One Security, Many Markets: Determining the Contributions to Price Discovery. *The Journal of Finance*.
-- Hawkes, et al. (2026). ⟦prediction-market efficiency/microstructure; confirm exact title and venue⟧.
+- Poutré, C., Dionne, G. and Yergeau, G. (2024). The profitability of lead-lag arbitrage at high frequency. *International Journal of Forecasting*, 40(3), 1002-1021. (The naive mid-signal market-order strategy never clears the spread; the profitable version needs colocation and limit orders, the basis for the §6.2 latency-mirage reading.)
+- Bürgi, C., Deng, W. and Whelan, K. (2025). Makers and Takers: The Economics of the Kalshi Prediction Market. Working paper (SSRN 5502658). (300,000+ contracts: prices are informative and improve toward close but show a clear favorite-longshot bias; the §5.4 basis.)
 - Snowberg, E. and Wolfers, J. (2010). Explaining the Favorite-Longshot Bias: Is it Risk-Love or Misperceptions? *Journal of Political Economy*.
-- ⟦SoK on prediction markets, 2026; confirm exact title and venue⟧.
+- Rahman, N., Al-Chami, J. and Clark, J. (2025). SoK: Market Microstructure for Decentralized Prediction Markets (DePMs). arXiv:2510.15612.
