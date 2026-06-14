@@ -31,6 +31,7 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/build_matches_v2.py || echo "  matches v2 failed"   # parallel ZISM draw-calibrated model, vs v1
 "$PY" scripts/build_bracket.py    || echo "  bracket failed"
 "$PY" scripts/build_dashboard.py  || echo "  dashboard failed"
+"$PY" scripts/build_dashboard_v2.py || echo "  dashboard v2 failed"   # temperature-calibrated board (v2)
 "$PY" scripts/venue_calibration.py || echo "  venue calibration failed"   # pending until ~Jun 27
 
 # Publish: refresh the clone, copy regenerated data + the pre-committed forecast LEDGERS in,
