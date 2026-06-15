@@ -9,7 +9,7 @@ sudo cp "$HERE"/xresidual-*.service "$HERE"/xresidual-*.timer /etc/systemd/syste
 sudo systemctl daemon-reload
 
 echo "==> enabling + starting timers"
-for t in logger-free logger-orderbooks logger-oddsapi matchwatch; do
+for t in logger-free logger-orderbooks logger-oddsapi matchwatch tape-cleanup capture-audit; do
   sudo systemctl enable --now "xresidual-$t.timer"
 done
 
