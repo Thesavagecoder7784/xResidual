@@ -66,6 +66,35 @@ jobs:
           # CHROME left unset -> the macOS default path is absent on Linux, so rendering self-skips (data-only)
         run: bash scripts/leadlag_sync.sh
 
+      - name: Guard — no cross-venue tape aging out unextracted
+        run: |
+          # After processing, any DUAL-venue (Kalshi+Polymarket paired) settled tape on the VM that is
+          # aged and still missing from the lead-lag archive means extraction failed and it will age
+          # out of the 48h window unprocessed. Warn at >=36h, hard-fail at >=44h (last chance to act).
+          # Single-venue tapes are excluded (they can't be cross-venue and are expected to be skipped).
+          atrisk=$(ssh -i ~/.ssh/vm_key -o ConnectTimeout=25 -o StrictHostKeyChecking=accept-new \
+            azureuser@57.154.16.193 'cd /home/azureuser/xResidual/logger/data 2>/dev/null || exit 0
+              for p in ws-pairs-*.jsonl; do
+                [ -e "$p" ] || continue
+                grep -q KXWCGAME "$p" && grep -q "\"poly\":\"[0-9]" "$p" || continue   # dual-venue only
+                t=${p/pairs/events}; [ -e "$t" ] || continue
+                [ -n "$(find "$t" -mmin +5)" ] || continue                              # settled (capture done)
+                age=$(( ( $(date +%s) - $(stat -c %Y "$t") ) / 3600 ))
+                [ "$age" -ge 36 ] && echo "$(echo "$p" | sed -E "s/ws-pairs-[0-9TZ]+-//;s/.jsonl//")|$age"
+              done' 2>/dev/null || true)
+          crit=0; flagged=0
+          while IFS='|' read -r slug age; do
+            [ -z "$slug" ] && continue
+            [ -f "viz/market/leadlag/$slug.json" ] && continue          # already extracted -> safe
+            flagged=1
+            echo "::warning::Cross-venue tape '$slug' is ${age}h old and NOT in the pool — at risk of aging out unextracted."
+            [ "$age" -ge 44 ] && crit=1
+          done <<< "$atrisk"
+          if [ "$crit" -eq 1 ]; then
+            echo "::error::A cross-venue tape is within hours of the 48h cleanup and still unextracted. Investigate why it won't process before it is lost."; exit 1
+          fi
+          [ "$flagged" -eq 0 ] && echo "all cross-venue tapes either extracted or comfortably within the window ✓"
+
       - name: Commit refreshed microstructure data
         run: |
           git config user.name  'xResidual bot'
