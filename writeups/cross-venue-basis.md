@@ -130,7 +130,7 @@ Decompose a cross-venue quote into *belief + margin* and almost the entire visib
 margin. So the naive "buy here, sell there" reading of the 5–8¢ gap is mostly an illusion
 of vig (and, with separate USDC/KYC-walled pools and per-venue fees, not arbitrageable
 anyway). The genuinely informative part is the residual: the price difference that remains
-after margin is a faint fingerprint of *who is trading where* — a home-crowd tilt, with
+after margin is a faint fingerprint of *who is trading where*, a home-crowd tilt, with
 the global book marginally closer to the sharp line. Two efficient venues, one price; the
 interesting structure is in the last fraction of a cent.
 
