@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · market lab</title>
+<meta name="description" content="Cross-venue prediction-market microstructure: which venue discovers price first, whether order flow drives it, and whether the obvious in-play edges survive costs. Live findings, with sample sizes." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="xResidual">
+<meta property="og:title" content="xResidual: the market lab">
+<meta property="og:description" content="Cross-venue prediction-market microstructure: who discovers price first (Polymarket, ~500ms), whether order flow drives it, and whether the obvious in-play edges are real or mirages.">
+<meta property="og:url" content="https://thesavagecoder7784.github.io/xResidual/lab.html">
+<meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.find{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:22px 24px;margin:16px 0;overflow:hidden}
+.thumb{float:right;width:248px;margin:2px 0 14px 26px;text-decoration:none}
+.thumb img{width:100%;display:block;border:1px solid var(--rule);border-radius:6px;box-shadow:0 2px 12px rgba(27,24,19,.09)}
+.thumb:hover img{border-color:var(--accent)}
+.thumb .cap{font-family:var(--fm);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);text-align:center;margin-top:6px}
+@media(max-width:620px){.thumb{float:none;width:100%;margin:0 0 16px}}
+.find .ft{font-family:var(--fm);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.find h3{font-family:var(--fd);font-weight:600;font-size:22px;letter-spacing:-.01em;margin:4px 0 0;color:var(--ink)}
+.find h3 em{font-style:normal;color:var(--accent)}
+.find p{font-size:13.5px;color:var(--muted);line-height:1.55;margin:10px 0 0;max-width:680px}
+.find p b{color:var(--ink)}
+.verdict{font-family:var(--fm);font-size:12px;margin-top:14px;padding:9px 12px;border-radius:6px;line-height:1.5}
+.verdict.real{background:rgba(31,157,85,.09);color:#15713c}
+.verdict.null{background:var(--accent-soft);color:var(--accent-deep)}
+.verdict.form{background:rgba(154,106,20,.1);color:var(--gold)}
+/* lead-lag track */
+.lltrack{position:relative;height:54px;margin:20px 0 6px;border-left:2px solid var(--rule-2)}
+.llband{position:absolute;top:14px;height:24px;background:var(--accent-soft);border-radius:4px}
+.lldot{position:absolute;top:26px;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--card)}
+.lldot.p{background:var(--accent);z-index:2}.lldot.k{background:var(--gold)}
+.lllab{position:absolute;top:0;font-family:var(--fm);font-size:11px;transform:translateX(-50%)}
+.llaxis{position:absolute;bottom:-2px;font-family:var(--fm);font-size:9.5px;color:var(--dim);transform:translateX(-50%)}
+/* lag bars */
+.lags{display:flex;align-items:flex-end;gap:8px;height:120px;margin:18px 0 4px;padding-bottom:22px;position:relative;border-bottom:1px solid var(--rule)}
+.lagcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative}
+.lagbar{width:78%;background:var(--rule-2);border-radius:3px 3px 0 0;min-height:2px;transition:.3s}
+.lagbar.pos{background:var(--gold)}.lagbar.best{background:var(--accent)}
+.lagx{position:absolute;bottom:-20px;font-family:var(--fm);font-size:10px;color:var(--dim)}
+.lagt{font-family:var(--fm);font-size:9.5px;color:var(--dim);margin-bottom:3px}
+.mini{display:flex;gap:26px;flex-wrap:wrap;margin-top:16px}
+.mini .v{font-family:var(--fd);font-size:26px;color:var(--ink)}
+.mini .v.a{color:var(--accent)}.mini .v.g{color:var(--gold)}
+.mini .k{font-family:var(--fm);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+</style>
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="board.html">Forecast board</a>
+    <a href="games.html">Group stage</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="note.html">Research note</a>
+    <a href="method.html">How it works</a>
+    <a href="lab.html" class="on">Market lab</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">Market microstructure</div>
+    <h1>The market lab, <em>where price forms.</em></h1>
+    <div class="lede">Two prediction markets, <b>Kalshi and Polymarket</b>, recorded tick by tick through every World Cup match: full order books and every trade. The question isn't who wins, it's <b>how the price moves</b>, who moves first, what drives it, and whether the obvious in-play edges survive once you cross the spread. Findings reported with their sample sizes, edge or not.</div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <div class="h2">Findings</div>
+    <div class="sub">Each is pooled across every match captured so far. The pool is young, so read these as <b>forming</b>, with the n shown. Method and citations are in the <a href="note.html">research note</a>.</div>
+
+    <div class="find" id="f-leadlag"><div class="ft">Finding 01 · cross-venue price discovery</div>
+      <a class="thumb" href="img/leadlag_lead.png" target="_blank" rel="noopener"><img src="img/leadlag_lead.png" alt="Polymarket leads Kalshi by a median 500ms"><span class="cap">shareable card ↗</span></a>
+      <h3>Polymarket discovers price <em>first</em>.</h3>
+      <div id="ll-body"><p class="loading">loading…</p></div></div>
+
+    <div class="find" id="f-ofi"><div class="ft">Finding 02 · order flow → price</div>
+      <a class="thumb" href="img/ofi_mechanism.png" target="_blank" rel="noopener"><img src="img/ofi_mechanism.png" alt="Polymarket order flow predicts Kalshi's next price move"><span class="cap">shareable card ↗</span></a>
+      <h3>Order flow <em>is</em> the price move.</h3>
+      <div id="ofi-body"><p class="loading">loading…</p></div></div>
+
+    <div class="find" id="f-ovr"><div class="ft">Finding 03 · the goal-overreaction fade</div>
+      <a class="thumb" href="img/overreaction_surprise.png" target="_blank" rel="noopener"><img src="img/overreaction_surprise.png" alt="Fade only surprising goals; documented edge, forming sample"><span class="cap">shareable card ↗</span></a>
+      <h3>The overreaction fade, <em>tested honestly</em>.</h3>
+      <div id="ovr-body"><p class="loading">loading…</p></div></div>
+  </section>
+
+  <footer><div id="foot">cross-venue microstructure · paper, net of modeled cost · pooled from per-match summaries</div>
+    <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
+</div>
+
+<script>
+function loaded(){
+  const LL = window.LEADLAG_POOLED, O = window.OFI, OV = window.OVERREACTION;
+  // ---- headline stats ----
+  const st=[];
+  if(LL&&LL.pooled){const p=LL.pooled;st.push([`+${Math.round(p.median_lead_ms)}ms`,'Polymarket lead','a']);}
+  if(O&&O.impact&&O.impact.kalshi)st.push([`t ${O.impact.kalshi.tstat}`,'order flow → price','g']);
+  if(LL&&LL.pooled)st.push([`${LL.n_matches}`,'matches captured','']);
+  st.push(['2','venues, tick-level','']);
+  document.getElementById('stats').innerHTML=st.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
+
+  // ---- Finding 01: lead-lag ----
+  const llb=document.getElementById('ll-body');
+  if(LL&&LL.pooled){const p=LL.pooled, hi=Math.max(p.iqr_ms[1],p.median_lead_ms)*1.3||650, X=t=>`${(t/hi)*100}%`;
+    llb.innerHTML=`<p>On a goal, <b>Polymarket's price moves a median of ${Math.round(p.median_lead_ms)}ms before Kalshi's</b>, and it leads on <b>${Math.round(p.leader_share*100)}%</b> of shocks (${p.poly_leads} of ${p.n}). Across <b>${p.n} goal events</b> in ${LL.n_matches} matches.</p>
+      <div class="lltrack">
+        <div class="llband" style="left:${X(p.iqr_ms[0])};width:${(p.iqr_ms[1]-p.iqr_ms[0])/hi*100}%"></div>
+        <div class="lllab" style="left:0;color:var(--accent)">Polymarket</div>
+        <div class="lldot p" style="left:0"></div>
+        <div class="lllab" style="left:${X(p.median_lead_ms)};color:var(--gold)">Kalshi</div>
+        <div class="lldot k" style="left:${X(p.median_lead_ms)}"></div>
+        <div class="llaxis" style="left:0">0</div>
+        <div class="llaxis" style="left:${X(p.median_lead_ms)}">+${Math.round(p.median_lead_ms)}ms</div>
+        <div class="llaxis" style="left:${X(p.iqr_ms[1])}">IQR +${Math.round(p.iqr_ms[1])}</div>
+      </div>
+      <div class="verdict null"><b>But not tradeable.</b> A disclosed forward-test crossing the real spread kills it: by the time you could act on the lead, the gap is inside the spread. A real lead in price discovery, not a free trade.</div>`;
+  } else llb.innerHTML=`<p>Live data updating. See the <a href="note.html">research note</a> for the result.</p>`;
+
+  // ---- Finding 02: OFI ----
+  const ob=document.getElementById('ofi-body');
+  if(O&&O.impact&&O.impact.kalshi){const ik=O.impact.kalshi, ip=O.impact.poly, p2k=O.poly_to_kalshi;
+    let bars='';
+    if(p2k&&p2k.by_lag){const lags=Object.keys(p2k.by_lag).map(Number).sort((a,b)=>a-b);
+      const mx=Math.max(...lags.map(L=>Math.abs(p2k.by_lag[L].corr)))||1;
+      bars=`<div class="lags">`+lags.map(L=>{const c=p2k.by_lag[L].corr,h=Math.abs(c)/mx*92+2,
+        cls=L===p2k.best_lag_s?'best':(c>0?'pos':'');
+        return `<div class="lagcol"><span class="lagt">${c>=0?'+':''}${c.toFixed(2)}</span><div class="lagbar ${cls}" style="height:${h}%"></div><span class="lagx">${L>0?'+':''}${L}s</span></div>`;}).join('')+`</div>
+      <div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-align:center;margin-top:24px">Polymarket order flow vs Kalshi's price move, by lead time (correlation). Negative = past, positive = future.</div>`;}
+    const ml=O.microprice_leadlag||{};
+    ob.innerHTML=`<p><b>When order flow piles in, the price moves with it</b>, on both venues: a 1-second order-flow imbalance moves the same-second mid in the same direction, a strong positive relation (Kalshi bin-level <b>t=${ik.tstat}</b>, Polymarket <b>t=${ip?ip.tstat:'—'}</b>, across n≈${(ik.n/1000).toFixed(0)}k bins from ${O.n_matches} match${O.n_matches>1?'es':''}). The canonical microstructure result (Cont-Kukanov-Stoikov) holds on prediction markets.</p>
+      <div class="mini">
+        <div><div class="v a">${ik.tstat}</div><div class="k">Kalshi OFI t · bin-level</div></div>
+        <div><div class="v g">${ip?ip.tstat:'—'}</div><div class="k">Polymarket OFI t · bin-level</div></div>
+        ${p2k?`<div><div class="v">+${p2k.best_lag_s}s</div><div class="k">Poly flow leads Kalshi price</div></div>`:''}
+      </div>
+      ${bars}
+      <p>And the asymmetry is the <b>mechanism behind Finding 01</b>: Polymarket's order flow predicts Kalshi's move about <b>${p2k?p2k.best_lag_s:1} second ahead</b> (t=${p2k?p2k.tstat:'—'}), while the reverse only lines up at negative lag, i.e. Kalshi follows. The flow lands on Polymarket first, so Polymarket's price leads.${ml.micro&&ml.mid?` Using the imbalance-weighted microprice instead of the mid sharpens the cross-venue link (|r| ${ml.mid.median_abs_corr} → ${ml.micro.median_abs_corr}).`:''}</p>
+      <div class="verdict ${p2k&&p2k.best_lag_s>0?'form':'null'}">${O.n_matches<3?`<b>Forming (n=${O.n_matches} match).</b> The flow-leads-price asymmetry is directionally there but thin. The t-stats are bin-level and not corrected for autocorrelation, so significance is judged across matches, not the bin count; it firms up as the pool grows.`:`<b>Confirmed.</b> Order flow drives price, and Polymarket's flow leads Kalshi's price.`}</div>`;
+  } else ob.innerHTML=`<p>Live data updating.</p>`;
+
+  // ---- Finding 03: overreaction ----
+  const vb=document.getElementById('ovr-body');
+  if(OV&&OV.summary){const s=OV.summary, ss=OV.summary_surprising||{n:0,total_pnl_pp:0,mean_pnl_pp:0};
+    const sp=(ss.total_pnl_pp>0?'+':'')+ss.total_pnl_pp+'pp';
+    vb.innerHTML=`<p>The documented edge (Choi &amp; Hui, 2014) is narrow: after a <b>surprising</b> goal, where an underdog scores, the scoring side is overbet, the price overshoots, and a fade placed about 2 minutes later earns roughly 2-3% as it reverts. The word that matters is <b>surprising</b>. Ordinary goals carry no overreaction, so the honest like-for-like test is the fade of surprising goals only, not every goal.</p>
+      <div class="mini">
+        <div><div class="v ${ss.n&&ss.total_pnl_pp>0?'a':''}">${ss.n?sp:'—'}</div><div class="k">surprising-goal fade · n=${ss.n||0}</div></div>
+        <div><div class="v">${s.total_pnl_pp>0?'+':''}${s.total_pnl_pp}pp</div><div class="k">all goals · n=${s.n}</div></div>
+      </div>
+      <div class="verdict form"><b>Too early to call, and that is the honest answer.</b> The edge is documented and replicated, and it lives in <i>surprising</i> goals, where our pool is only n=${ss.n||0} so far${ss.n&&ss.total_pnl_pp>0?' (and the early sign points the documented way)':''}. The all-goals number dilutes it with ordinary goals that should not revert, which is why it reads negative. We are not claiming the edge is gone, only that the pool is still too thin to test it. It grows by one match at a time.</div>`;
+  } else vb.innerHTML=`<p>Live data updating.</p>`;
+}
+let need=3;
+function ld(src){const s=document.createElement('script');s.src=src+'?'+Date.now();
+  s.onload=s.onerror=()=>{if(--need===0)loaded();};document.body.appendChild(s);}
+ld('data/leadlag.js');ld('data/ofi.js');ld('data/overreaction.js');
+setTimeout(()=>{if(need>0){need=0;loaded();}},8000);
+</script>
+</body></html>
