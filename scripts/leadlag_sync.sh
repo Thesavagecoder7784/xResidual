@@ -13,7 +13,7 @@ VM="${LEADLAG_VM:-azureuser@57.154.16.193}"
 RD=/home/azureuser/xResidual/logger/data
 LD="$ROOT/logger/data"; LL="$ROOT/viz/market/leadlag"; OV="$ROOT/viz/model/overreaction"; OFI="$ROOT/viz/market/ofi"
 LOG="$LD/leadlag_sync.log"
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"   # env-overridable (CI sets it / leaves it absent to skip rendering)
 # Use the interpreter that has the xResidual deps (numpy/sklearn etc.). launchd has a minimal
 # PATH, so prefer the known-good full path, then fall back to a discovered python3.
 PY="${LEADLAG_PY:-/usr/local/bin/python3.14}"

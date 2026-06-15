@@ -1,0 +1,62 @@
+{
+  "match": "Germany vs Cura\u00e7ao",
+  "capture": "20260614T163214Z-germany-vs-cura\u00e7ao",
+  "n_goals": 8,
+  "goals_source": "fixtures",
+  "reference": {
+    "label": "Germany",
+    "venue": "polymarket"
+  },
+  "n_detected": 2,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781457751411,
+      "jump": -0.054,
+      "pre": 0.9835,
+      "p_entry": 0.903,
+      "p_exit": 0.913,
+      "reverted_pp": 1.0,
+      "pnl_pp": 0.5,
+      "surprise": 1.08,
+      "gain_prior": 0.0165,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781458756379,
+      "jump": 0.05,
+      "pre": 0.8935,
+      "p_entry": 0.9605,
+      "p_exit": 0.957,
+      "reverted_pp": 0.35,
+      "pnl_pp": -0.15,
+      "surprise": 0.056,
+      "gain_prior": 0.8935,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": 0.35,
+    "hit_rate": 0.5,
+    "mean_reverted_pp": 0.675,
+    "mean_pnl_pp": 0.175,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": 0.5,
+    "hit_rate": 1.0,
+    "mean_reverted_pp": 1.0,
+    "mean_pnl_pp": 0.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

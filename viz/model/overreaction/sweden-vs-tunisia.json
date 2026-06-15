@@ -1,0 +1,62 @@
+{
+  "match": "Sweden vs Tunisia",
+  "capture": "20260615T012609Z-sweden-vs-tunisia",
+  "n_goals": 2,
+  "goals_source": "results",
+  "reference": {
+    "label": "Sweden",
+    "venue": "polymarket"
+  },
+  "n_detected": 4,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781489218474,
+      "jump": 0.055,
+      "pre": 0.515,
+      "p_entry": 0.745,
+      "p_exit": 0.735,
+      "reverted_pp": 1.0,
+      "pnl_pp": 0.5,
+      "surprise": 0.107,
+      "gain_prior": 0.515,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781493575982,
+      "jump": 0.055,
+      "pre": 0.755,
+      "p_entry": 0.945,
+      "p_exit": 0.955,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.073,
+      "gain_prior": 0.755,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": -1.0,
+    "hit_rate": 0.5,
+    "mean_reverted_pp": 0.0,
+    "mean_pnl_pp": -0.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

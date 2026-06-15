@@ -1,0 +1,78 @@
+name: process-tapes
+
+# Unattended replacement for the laptop launchd sync (which macOS TCC blocks from ~/Documents).
+# Every couple of hours: pull any settled, paired (KXWCGAME) WC tape from the VM that isn't yet in
+# the committed per-game archive, parse it once (lead-lag + OFI + overreaction via build_micro_all),
+# refresh the pooled outputs + docs/data, and commit the results back. Card PNGs are NOT rendered
+# here (the viz/*.html templates + render.sh are gitignored, and the lab page is data-driven so it
+# stays fresh from the committed *.js anyway) — render the shareable cards on the laptop on demand.
+#
+# Reuses scripts/leadlag_sync.sh verbatim: on Linux the macOS Chrome path is absent, so its render
+# steps self-skip and it runs data-only. One secret required: VM_SSH_KEY (contents of the
+# Sportslogging_key.pem that reaches azureuser@57.154.16.193).
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'        # every 2h (UTC); GitHub may delay scheduled runs under load — fine for the 48h tape window
+  workflow_dispatch: {}          # manual "Run workflow" button
+
+concurrency:
+  group: process-tapes
+  cancel-in-progress: false       # never interrupt a parse mid-commit
+
+permissions:
+  contents: write                 # push the refreshed data back with the built-in GITHUB_TOKEN
+
+jobs:
+  process:
+    runs-on: ubuntu-latest        # public repo -> larger free runner; ~7GB parse fits
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # full history so the rebase-before-push merges cleanly with the VM's commits
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore VM SSH key
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/vm_key
+          chmod 600 ~/.ssh/vm_key
+
+      - name: Pull settled tapes and process (lead-lag · OFI · overreaction)
+        env:
+          LEADLAG_KEY: /home/runner/.ssh/vm_key
+          LEADLAG_VM: azureuser@57.154.16.193
+          LEADLAG_PY: python        # the runner's python, with requirements.txt installed
+          # CHROME left unset -> the macOS default path is absent on Linux, so rendering self-skips (data-only)
+        run: bash scripts/leadlag_sync.sh
+
+      - name: Commit refreshed microstructure data
+        run: |
+          git config user.name  'xResidual bot'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # -A stages every change respecting .gitignore (tapes + logs under logger/data are ignored,
+          # so only the microstructure outputs + docs/data land); never errors on a not-yet-created file.
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no new microstructure data this run"; exit 0
+          fi
+          git commit -m "microstructure pool refresh $(date -u +%FT%TZ) [skip ci]"
+          # the VM publishes docs/data every 30 min on the same branch; rebase onto it (different files)
+          # then push, retrying a few times for the rare near-simultaneous push race.
+          for i in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "pushed"; break
+            fi
+            git rebase --abort 2>/dev/null || true     # clear any half-finished rebase before retrying
+            echo "push attempt $i failed, retrying"; sleep 5
+          done

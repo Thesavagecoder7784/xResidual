@@ -80,8 +80,8 @@
     <div class="sub">Each is pooled across every match captured so far. The pool is young, so read these as <b>forming</b>, with the n shown. Method and citations are in the <a href="note.html">research note</a>.</div>
 
     <div class="find" id="f-leadlag"><div class="ft">Finding 01 · cross-venue price discovery</div>
-      <a class="thumb" href="img/leadlag_lead.png" target="_blank" rel="noopener"><img src="img/leadlag_lead.png" alt="Polymarket leads Kalshi by a median 500ms"><span class="cap">shareable card ↗</span></a>
-      <h3>Polymarket discovers price <em>first</em>.</h3>
+      <a class="thumb" href="img/leadlag_lead.png" target="_blank" rel="noopener"><img src="img/leadlag_lead.png" alt="Cross-venue lead-lag on goal shocks"><span class="cap">shareable card ↗</span></a>
+      <h3>Who discovers price <em>first</em>?</h3>
       <div id="ll-body"><p class="loading">loading…</p></div></div>
 
     <div class="find" id="f-ofi"><div class="ft">Finding 02 · order flow → price</div>
@@ -108,7 +108,7 @@ function loaded(){
   if(ts) document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(ts)}</b> · ${fmtAge(ts)} · cross-venue microstructure · paper, net of modeled cost · pooled per match`;
   // ---- headline stats ----
   const st=[];
-  if(LL&&LL.pooled){const p=LL.pooled;st.push([`+${Math.round(p.median_lead_ms)}ms`,'Polymarket lead','a']);}
+  if(LL&&LL.pooled){const p=LL.pooled,m=Math.round(p.median_lead_ms);st.push([`${m>=0?'+':''}${m}ms`,`median lead · ${p.n} shocks`,'']);}
   if(O&&O.impact&&O.impact.kalshi)st.push([`t ${O.impact.kalshi.tstat}`,'order flow → price','g']);
   if(LL&&LL.pooled)st.push([`${LL.n_matches}`,'matches captured','']);
   st.push(['2','venues, tick-level','']);
@@ -116,41 +116,39 @@ function loaded(){
 
   // ---- Finding 01: lead-lag ----
   const llb=document.getElementById('ll-body');
-  if(LL&&LL.pooled){const p=LL.pooled, hi=Math.max(p.iqr_ms[1],p.median_lead_ms)*1.3||650, X=t=>`${(t/hi)*100}%`;
-    llb.innerHTML=`<p>On a goal, <b>Polymarket's price moves a median of ${Math.round(p.median_lead_ms)}ms before Kalshi's</b>, and it leads on <b>${Math.round(p.leader_share*100)}%</b> of shocks (${p.poly_leads} of ${p.n}). Across <b>${p.n} goal events</b> in ${LL.n_matches} matches.</p>
-      <div class="lltrack">
-        <div class="llband" style="left:${X(p.iqr_ms[0])};width:${(p.iqr_ms[1]-p.iqr_ms[0])/hi*100}%"></div>
-        <div class="lllab" style="left:0;color:var(--accent)">Polymarket</div>
-        <div class="lldot p" style="left:0"></div>
-        <div class="lllab" style="left:${X(p.median_lead_ms)};color:var(--gold)">Kalshi</div>
-        <div class="lldot k" style="left:${X(p.median_lead_ms)}"></div>
-        <div class="llaxis" style="left:0">0</div>
-        <div class="llaxis" style="left:${X(p.median_lead_ms)}">+${Math.round(p.median_lead_ms)}ms</div>
-        <div class="llaxis" style="left:${X(p.iqr_ms[1])}">IQR +${Math.round(p.iqr_ms[1])}</div>
-      </div>
-      <div class="verdict null"><b>But not tradeable.</b> A disclosed forward-test crossing the real spread kills it: by the time you could act on the lead, the gap is inside the spread. A real lead in price discovery, not a free trade.</div>`;
+  if(LL&&LL.pooled){const p=LL.pooled, med=Math.round(p.median_lead_ms), lo=Math.round(p.iqr_ms[0]), hi=Math.round(p.iqr_ms[1]), sh=Math.round(p.leader_share*100);
+    const clean = p.leader_share>=0.62 && p.iqr_ms[0]>0;   // a real lead needs a clear majority AND an IQR above zero
+    llb.innerHTML=`<p>Which venue's price reacts to a goal first? Across <b>${p.n} goal shocks in ${LL.n_matches} matches</b>, Polymarket leads ${p.poly_leads}, Kalshi leads ${p.kalshi_leads}, a <b>${sh}% / ${100-sh}%</b> split, median lead <b>${med>=0?'+':''}${med}ms</b>, IQR [${lo>=0?'+':''}${lo}, +${hi}]ms.</p>
+      <div class="verdict ${clean?'real':'null'}">${clean
+        ? `<b>A real lead, but not a trade.</b> ${p.leader>='polymarket'?'Polymarket':'Kalshi'} reprices first, yet a forward-test crossing the real spread kills it: by the time you act, the gap is inside the bid/ask. A lead in price discovery, not free money.`
+        : `<b>No clean lead at this sample.</b> An early 4-match read put Polymarket ~500ms ahead, but as the pool grew to ${p.n} shocks it collapsed to ${med}ms with a coin-flip ${sh}/${100-sh} split and an IQR straddling zero. The early lead looks like small-sample noise. We held the claim rather than posting it; it firms up or stays null as more matches land.`}</div>`;
   } else llb.innerHTML=`<p>Live data updating. See the <a href="note.html">research note</a> for the result.</p>`;
 
   // ---- Finding 02: OFI ----
   const ob=document.getElementById('ofi-body');
-  if(O&&O.impact&&O.impact.kalshi){const ik=O.impact.kalshi, ip=O.impact.poly, p2k=O.poly_to_kalshi;
+  if(O&&O.impact&&O.impact.kalshi){const ik=O.impact.kalshi, ip=O.impact.poly, p2k=O.poly_to_kalshi, k2p=O.kalshi_to_poly;
+    const flow_lead = !!(p2k && k2p && p2k.best_lag_s>0 && Math.abs(p2k.corr) > Math.abs(k2p.corr)*1.2);
     let bars='';
     if(p2k&&p2k.by_lag){const lags=Object.keys(p2k.by_lag).map(Number).sort((a,b)=>a-b);
       const mx=Math.max(...lags.map(L=>Math.abs(p2k.by_lag[L].corr)))||1;
       bars=`<div class="lags">`+lags.map(L=>{const c=p2k.by_lag[L].corr,h=Math.abs(c)/mx*92+2,
         cls=L===p2k.best_lag_s?'best':(c>0?'pos':'');
         return `<div class="lagcol"><span class="lagt">${c>=0?'+':''}${c.toFixed(2)}</span><div class="lagbar ${cls}" style="height:${h}%"></div><span class="lagx">${L>0?'+':''}${L}s</span></div>`;}).join('')+`</div>
-      <div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-align:center;margin-top:24px">Polymarket order flow vs Kalshi's price move, by lead time (correlation). Negative = past, positive = future.</div>`;}
+      <div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-align:center;margin-top:24px">Polymarket order flow vs Kalshi's price move, by lead time (correlation). Bars near zero = no clean lead either way.</div>`;}
     const ml=O.microprice_leadlag||{};
     ob.innerHTML=`<p><b>When order flow piles in, the price moves with it</b>, on both venues: a 1-second order-flow imbalance moves the same-second mid in the same direction, a strong positive relation (Kalshi bin-level <b>t=${ik.tstat}</b>, Polymarket <b>t=${ip?ip.tstat:'—'}</b>, across n≈${(ik.n/1000).toFixed(0)}k bins from ${O.n_matches} match${O.n_matches>1?'es':''}). The canonical microstructure result (Cont-Kukanov-Stoikov) holds on prediction markets.</p>
       <div class="mini">
         <div><div class="v a">${ik.tstat}</div><div class="k">Kalshi OFI t · bin-level</div></div>
         <div><div class="v g">${ip?ip.tstat:'—'}</div><div class="k">Polymarket OFI t · bin-level</div></div>
-        ${p2k?`<div><div class="v">+${p2k.best_lag_s}s</div><div class="k">Poly flow leads Kalshi price</div></div>`:''}
+        ${flow_lead?`<div><div class="v">+${p2k.best_lag_s}s</div><div class="k">Poly flow leads Kalshi price</div></div>`:''}
       </div>
       ${bars}
-      <p>And the asymmetry is the <b>mechanism behind Finding 01</b>: Polymarket's order flow predicts Kalshi's move about <b>${p2k?p2k.best_lag_s:1} second ahead</b> (t=${p2k?p2k.tstat:'—'}), while the reverse only lines up at negative lag, i.e. Kalshi follows. The flow lands on Polymarket first, so Polymarket's price leads.${ml.micro&&ml.mid?` Using the imbalance-weighted microprice instead of the mid sharpens the cross-venue link (|r| ${ml.mid.median_abs_corr} → ${ml.micro.median_abs_corr}).`:''}</p>
-      <div class="verdict ${p2k&&p2k.best_lag_s>0?'form':'null'}">${O.n_matches<3?`<b>Forming (n=${O.n_matches} match).</b> The flow-leads-price asymmetry is directionally there but thin. The t-stats are bin-level and not corrected for autocorrelation, so significance is judged across matches, not the bin count; it firms up as the pool grows.`:`<b>Confirmed.</b> Order flow drives price, and Polymarket's flow leads Kalshi's price.`}</div>`;
+      <p>${flow_lead
+        ? `And it points one way across venues: Polymarket's order flow predicts Kalshi's next move about <b>${p2k.best_lag_s}s ahead</b>, the order-flow mechanism behind a price lead.`
+        : `But across venues it does <b>not</b> point one way: Polymarket-flow → Kalshi-price (${p2k?(p2k.corr>=0?'+':'')+p2k.corr.toFixed(2):'—'} @ ${p2k?p2k.best_lag_s:'—'}s) and the reverse (${k2p?(k2p.corr>=0?'+':'')+k2p.corr.toFixed(2):'—'} @ ${k2p?k2p.best_lag_s:'—'}s) are both near zero, with no clean lead either direction. The robust result is the impact, not a cross-venue edge.`}${ml.micro&&ml.mid?` The imbalance-weighted microprice tracks the cross-venue link a touch tighter than the mid (|r| ${ml.mid.median_abs_corr} → ${ml.micro.median_abs_corr}).`:''}</p>
+      <div class="verdict ${flow_lead?'real':'null'}">${flow_lead
+        ? `<b>Mechanism holds.</b> Order flow drives price, and Polymarket's flow leads Kalshi's. Bin-level t-stats, so significance is read across matches.`
+        : `<b>Impact holds; the cross-venue lead does not.</b> Order flow moving the price is robust and textbook (Cont-Kukanov-Stoikov). A cross-venue flow lead is not there at this sample, consistent with Finding 01's null. The t-stats are bin-level (autocorrelated), so significance is judged across matches, not the bin count.`}</div>`;
   } else ob.innerHTML=`<p>Live data updating.</p>`;
 
   // ---- Finding 03: overreaction ----
