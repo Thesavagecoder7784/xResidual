@@ -1,0 +1,9 @@
+[Unit]
+Description=xResidual capture audit (flag any WC match the scheduler silently missed)
+
+[Service]
+Type=oneshot
+# Appends a daily report to capture_audit.log. Exits non-zero (-> unit shows "failed") only when a
+# match was MISSED, so `systemctl --failed` / the log surfaces an unrecoverable gap the next day.
+ExecStart=/bin/bash -c '/home/azureuser/xResidual/.venv/bin/python /home/azureuser/xResidual/scripts/capture_audit.py >> /home/azureuser/xResidual/logger/data/capture_audit.log 2>&1'
+Nice=15
