@@ -1,0 +1,391 @@
+{
+  "match": "Germany vs Cura\u00e7ao",
+  "capture": "20260614T163214Z-germany-vs-cura\u00e7ao",
+  "pooled": {
+    "n": 2,
+    "median_lead_ms": 500.0,
+    "iqr_ms": [
+      350.0,
+      650.0
+    ],
+    "leader": "polymarket",
+    "leader_share": 1.0,
+    "poly_leads": 2,
+    "kalshi_leads": 0
+  },
+  "pairs": [
+    {
+      "label": "Germany",
+      "kalshi": "KXWCGAME-26JUN14GERCUW-GER",
+      "poly": "80258038883060787104700033663206548991173635281684057844048254140005841868705",
+      "n_events": 8,
+      "events": [
+        {
+          "t_ms": 1781456823870,
+          "jump": 0.0435,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.945,
+            "settle": 0.975,
+            "jump": 0.03,
+            "surprise": 0.055,
+            "reversals": {
+              "60": {
+                "level": 0.975,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.985,
+                "reversal_frac": -0.333
+              },
+              "300": {
+                "level": 0.985,
+                "reversal_frac": -0.333
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9385,
+            "settle": 0.976,
+            "jump": 0.0375,
+            "surprise": 0.062,
+            "reversals": {
+              "60": {
+                "level": 0.981,
+                "reversal_frac": -0.133
+              },
+              "180": {
+                "level": 0.985,
+                "reversal_frac": -0.239
+              },
+              "300": {
+                "level": 0.9855,
+                "reversal_frac": -0.253
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -11800,
+            "best_corr": 0.52,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781456860641,
+          "jump": 0.041,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.975,
+            "settle": 0.975,
+            "jump": 0.0,
+            "surprise": 0.025,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.985,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.985,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9743,
+            "settle": 0.9805,
+            "jump": 0.0062,
+            "surprise": 0.026,
+            "reversals": {
+              "60": {
+                "level": 0.9805,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.986,
+                "reversal_frac": -0.889
+              },
+              "300": {
+                "level": 0.9885,
+                "reversal_frac": -1.292
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781457751410,
+          "jump": 0.095,
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8967953296155465,
+            "leader": "polymarket",
+            "n_bins": 145
+          },
+          "kalshi_reaction": {
+            "pre": 0.975,
+            "settle": 0.9225,
+            "jump": -0.0525,
+            "surprise": 0.025,
+            "reversals": {
+              "60": {
+                "level": 0.915,
+                "reversal_frac": -0.143
+              },
+              "180": {
+                "level": 0.905,
+                "reversal_frac": -0.333
+              },
+              "300": {
+                "level": 0.905,
+                "reversal_frac": -0.333
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9798,
+            "settle": 0.9142,
+            "jump": -0.0656,
+            "surprise": 0.02,
+            "reversals": {
+              "60": {
+                "level": 0.919,
+                "reversal_frac": 0.073
+              },
+              "180": {
+                "level": 0.905,
+                "reversal_frac": -0.141
+              },
+              "300": {
+                "level": 0.912,
+                "reversal_frac": -0.034
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781457781418,
+          "jump": 0.095,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.925,
+            "settle": 0.925,
+            "jump": -0.0,
+            "surprise": 0.075,
+            "reversals": {
+              "60": {
+                "level": 0.915,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.905,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.905,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9231,
+            "settle": 0.9238,
+            "jump": 0.0007,
+            "surprise": 0.077,
+            "reversals": {
+              "60": {
+                "level": 0.911,
+                "reversal_frac": 19.212
+              },
+              "180": {
+                "level": 0.9075,
+                "reversal_frac": 24.48
+              },
+              "300": {
+                "level": 0.9105,
+                "reversal_frac": 19.964
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -13400,
+            "best_corr": 0.55,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781457811510,
+          "jump": 0.102,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9188,
+            "settle": 0.915,
+            "jump": -0.0038,
+            "surprise": 0.081,
+            "reversals": {
+              "60": {
+                "level": 0.905,
+                "reversal_frac": -2.6
+              },
+              "180": {
+                "level": 0.905,
+                "reversal_frac": -2.6
+              },
+              "300": {
+                "level": 0.905,
+                "reversal_frac": -2.6
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9218,
+            "settle": 0.9139,
+            "jump": -0.0079,
+            "surprise": 0.078,
+            "reversals": {
+              "60": {
+                "level": 0.903,
+                "reversal_frac": -1.372
+              },
+              "180": {
+                "level": 0.9095,
+                "reversal_frac": -0.552
+              },
+              "300": {
+                "level": 0.912,
+                "reversal_frac": -0.236
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781458755774,
+          "jump": 0.055,
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7841472124277179,
+            "leader": "polymarket",
+            "n_bins": 147
+          },
+          "kalshi_reaction": {
+            "pre": 0.8935,
+            "settle": 0.955,
+            "jump": 0.0615,
+            "surprise": 0.107,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -0.163
+              },
+              "180": {
+                "level": 0.955,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.945,
+                "reversal_frac": 0.163
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.8934,
+            "settle": 0.9591,
+            "jump": 0.0657,
+            "surprise": 0.107,
+            "reversals": {
+              "60": {
+                "level": 0.9625,
+                "reversal_frac": -0.051
+              },
+              "180": {
+                "level": 0.9555,
+                "reversal_frac": 0.055
+              },
+              "300": {
+                "level": 0.9575,
+                "reversal_frac": 0.025
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781458785937,
+          "jump": 0.0635,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.955,
+            "settle": 0.955,
+            "jump": 0.0,
+            "surprise": 0.045,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.955,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.955,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9582,
+            "settle": 0.9569,
+            "jump": -0.0014,
+            "surprise": 0.042,
+            "reversals": {
+              "60": {
+                "level": 0.9605,
+                "reversal_frac": 2.648
+              },
+              "180": {
+                "level": 0.9555,
+                "reversal_frac": -0.987
+              },
+              "300": {
+                "level": 0.9575,
+                "reversal_frac": 0.467
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 14400,
+            "best_corr": -0.41,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781463626319,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Germany vs Cura\u00e7ao"
+    },
+    {
+      "label": "Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN14GERCUW-CUW",
+      "poly": "84520506461080918199836241264297202134105253634264892405638380867421157597093",
+      "n_events": 1,
+      "events": [
+        {
+          "t_ms": 1781463626319,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Germany vs Cura\u00e7ao"
+    }
+  ],
+  "min_jump": 0.04
+}

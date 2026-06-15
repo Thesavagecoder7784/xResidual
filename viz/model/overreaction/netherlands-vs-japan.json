@@ -1,0 +1,74 @@
+{
+  "match": "Netherlands vs Japan",
+  "capture": "20260614T192705Z-netherlands-vs-japan",
+  "n_goals": 3,
+  "goals_source": "results",
+  "reference": {
+    "label": "Netherlands",
+    "venue": "polymarket"
+  },
+  "n_detected": 6,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1781471348763,
+      "jump": 0.055,
+      "pre": 0.405,
+      "p_entry": 0.745,
+      "p_exit": 0.755,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.136,
+      "gain_prior": 0.405,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781471751136,
+      "jump": -0.06,
+      "pre": 0.755,
+      "p_entry": 0.375,
+      "p_exit": 0.345,
+      "reverted_pp": -3.0,
+      "pnl_pp": -3.5,
+      "surprise": 0.245,
+      "gain_prior": 0.245,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781473628462,
+      "jump": -0.055,
+      "pre": 0.815,
+      "p_entry": 0.105,
+      "p_exit": 0.055,
+      "reverted_pp": -5.0,
+      "pnl_pp": -5.5,
+      "surprise": 0.297,
+      "gain_prior": 0.185,
+      "surprising": true
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": -10.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -3.0,
+    "mean_pnl_pp": -3.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 2,
+  "summary_surprising": {
+    "n": 2,
+    "total_pnl_pp": -9.0,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -4.0,
+    "mean_pnl_pp": -4.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
