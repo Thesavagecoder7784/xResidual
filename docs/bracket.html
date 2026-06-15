@@ -46,7 +46,8 @@
 let D=null;
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
-function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function row(name,pp,isPick,isFinal,wp){
   const cls=isPick?"bteam win":"bteam out";
   const occ=(pp<99&&!isFinal)?`<span class="pp">${pp}%</span>`:"";
@@ -65,7 +66,7 @@ function render(){
 }
 const s=document.createElement('script');s.src='data/bracket.js?'+Date.now();
 s.onload=()=>{D=window.BRACKET;
-  document.getElementById('foot').innerHTML=`${fmtAge(D.asof)} · ${D.group_done?'real bracket, conditions on every knockout game':'projected, fills in after the group stage'} · joint Monte-Carlo sim`;
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(D.asof)}</b> · ${fmtAge(D.asof)} · ${D.group_done?'real bracket, conditions on every knockout game':'projected, fills in after the group stage'} · joint Monte-Carlo sim`;
   render();};
 s.onerror=()=>{document.getElementById('bracket').innerHTML='<div class="loading">could not load data</div>';};
 document.body.appendChild(s);
