@@ -1,0 +1,50 @@
+{
+  "match": "Belgium vs Egypt",
+  "capture": "20260615T182907Z-belgium-vs-egypt",
+  "n_goals": 1,
+  "goals_source": "results",
+  "reference": {
+    "label": "Belgium",
+    "venue": "polymarket"
+  },
+  "n_detected": 6,
+  "n_trades": 1,
+  "trades": [
+    {
+      "t_ms": 1781551170556,
+      "jump": -0.065,
+      "pre": 0.645,
+      "p_entry": 0.415,
+      "p_exit": 0.405,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.183,
+      "gain_prior": 0.355,
+      "surprising": true
+    }
+  ],
+  "summary": {
+    "n": 1,
+    "total_pnl_pp": -1.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -1.0,
+    "mean_pnl_pp": -1.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": -1.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -1.0,
+    "mean_pnl_pp": -1.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
