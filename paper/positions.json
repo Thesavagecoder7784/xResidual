@@ -179,12 +179,12 @@
     "entry_price": 0.645,
     "stake_usd": 30.0,
     "shares": 46.51,
-    "status": "open",
+    "status": "closed",
     "note": "FLB fade (basket): model ~27% vs market ~38%; opener vs Mexico tonight",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.845,
+    "ts_close": "2026-06-14T07:40:00.364721+00:00",
+    "realized_pnl": 9.3,
+    "realized_pnl_net": 9.0
   },
   {
     "id": 12,
@@ -213,12 +213,12 @@
     "entry_price": 0.83,
     "stake_usd": 15.0,
     "shares": 18.07,
-    "status": "open",
+    "status": "closed",
     "note": "Top-up of #11 (confirmed intel): Sithole + Zwane both red-carded vs Mexico, BOTH suspended for the must-win Czech game Jun 18. SA bottom of Group A (0pts, -2 GD), advance is near all-or-nothing on that exact game. Suspension-adj model advance ~12-15% vs market 17.5%. Quarter-size: news ~1d old, partly priced.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.845,
+    "ts_close": "2026-06-14T07:40:00.677204+00:00",
+    "realized_pnl": 0.27,
+    "realized_pnl_net": 0.12
   },
   {
     "id": 14,
@@ -332,12 +332,12 @@
     "entry_price": 0.78,
     "stake_usd": 25.0,
     "shares": 32.05,
-    "status": "open",
+    "status": "closed",
     "note": "FLB basket: model 86 vs mkt 78, favorite underpriced",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.775,
+    "ts_close": "2026-06-14T07:02:38.424563+00:00",
+    "realized_pnl": -0.16,
+    "realized_pnl_net": -0.41
   },
   {
     "id": 21,
@@ -349,12 +349,12 @@
     "entry_price": 0.68,
     "stake_usd": 20.0,
     "shares": 29.41,
-    "status": "open",
+    "status": "closed",
     "note": "FLB basket: model 23 vs mkt 32, longshot overpriced",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.68,
+    "ts_close": "2026-06-14T07:02:38.788925+00:00",
+    "realized_pnl": -0.0,
+    "realized_pnl_net": -0.2
   },
   {
     "id": 22,
@@ -366,8 +366,25 @@
     "entry_price": 0.86,
     "stake_usd": 15.0,
     "shares": 17.44,
-    "status": "open",
+    "status": "closed",
     "note": "FLB basket: model 4 vs mkt 14, longshot fade, smallest size (tail risk)",
+    "exit_price": 0.87,
+    "ts_close": "2026-06-14T07:02:39.122399+00:00",
+    "realized_pnl": 0.17,
+    "realized_pnl_net": 0.02
+  },
+  {
+    "id": 23,
+    "ts_open": "2026-06-14T07:40:00.941026+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-team-to-advance-to-knockout-stages",
+    "outcome": "Canada",
+    "side": "yes",
+    "entry_price": 0.825,
+    "stake_usd": 30.0,
+    "shares": 36.36,
+    "status": "open",
+    "note": "v2 raw model 92% advance vs mkt 82.5% (+9pp); co-host, not blend-biased, not a calibration artifact. Group B's clear leader after the 1-1 vs Bosnia.",
     "exit_price": null,
     "ts_close": null,
     "realized_pnl": null,
