@@ -48,6 +48,16 @@ jobs:
           printf '%s\n' "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/vm_key
           chmod 600 ~/.ssh/vm_key
 
+      - name: Preflight — VM reachable over SSH?
+        run: |
+          if ssh -i ~/.ssh/vm_key -o ConnectTimeout=25 -o StrictHostKeyChecking=accept-new \
+                 azureuser@57.154.16.193 'ls /home/azureuser/xResidual/logger/data >/dev/null && echo reachable'; then
+            echo "VM reachable ✓"
+          else
+            echo "::error::Cannot SSH to the VM. Either the VM_SSH_KEY secret is missing/wrong, or the Azure NSG is blocking GitHub runner IPs on port 22. This is why a run can complete green but process nothing."
+            exit 1
+          fi
+
       - name: Pull settled tapes and process (lead-lag · OFI · overreaction)
         env:
           LEADLAG_KEY: /home/runner/.ssh/vm_key
