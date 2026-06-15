@@ -26,7 +26,9 @@ de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a 
 convergence trade returns a documented loss net of costs. The residual belief gap is small but
 structured by audience (a home-crowd tilt). The central price-discovery result, estimated by
 cross-correlating mid-changes around each goal shock, is forming: over the first clean in-play
-tapes **Polymarket leads Kalshi by a median +600ms**, in the pre-registered direction (the
+matches an early read (n=8) put **Polymarket ~500ms ahead of Kalshi**, but it did not hold: across 24
+goal shocks over seven matches the lead fell to ~+100ms with a 50/50 split and an IQR straddling zero,
+so it is so far a null. (Early-read direction matched the pre-registered hypothesis: the
 deeper-liquidity venue leads). We then ask the question the lead invites, and answer it with two
 disclosed forward-tests: the cross-venue gap is **not a harvestable edge**. The pre-match
 convergence trade is a clean null (a cost illusion), and the in-play lead-lag follow-trade is a
@@ -152,12 +154,15 @@ estimated by cross-correlating binned mid-changes in a window around each auto-d
 shock. A quality gate keeps only events with genuine positive co-movement (best cross-correlation
 >= 0.5) and a plausible lag (<= 8s), discarding spurious detections: a "16-second lead at
 r = -0.70" is two books moving oppositely, a stale-tick artifact, not price discovery. Of the
-candidate shocks, the gate removes 14 and retains **5 clean goal shocks**. Over those,
-**Polymarket leads Kalshi by a median +600ms** (interquartile range [+400, +600]ms), leading in
-4 of 5. The direction matches the pre-registered P6: the deeper-liquidity venue leads, and
-Polymarket quotes ~27x the depth (Section 5.1). This is a forming signal, not a verdict: n = 5
-over two matches, with an interquartile range now entirely positive where a single match's was
-not, so pooling is sharpening it match over match. The pre-match quiet-window leadership and the
+candidate shocks, an early read on four matches (**n = 8**) put **Polymarket a median +500ms ahead**,
+leading 6 of 8 with an interquartile range entirely positive, in the pre-registered direction (P6:
+the deeper-liquidity venue leads, and Polymarket quotes ~27x the depth, Section 5.1). **It did not
+hold.** As the pool grew to **24 clean goal shocks over seven matches**, the median lead fell to
+**+100ms** with a **50/50 leader split** (12 Polymarket, 8 Kalshi) and an interquartile range of
+[-200, +600]ms that straddles zero. The strong early signal looks like small-sample noise; there is
+no clean cross-venue lead at this sample. This is the pre-registration working as intended: the
+decision rule (evaluate at n >= 15-20 cross-venue matches) is precisely why a four-match flash was
+never published as a finding. The pre-match quiet-window leadership and the
 formal Hasbrouck/Gonzalo-Granger decomposition both accrue as more clean tapes land; each match's
 events and tape are archived per game so the sample is auditable, not overwritten.
 
