@@ -82,7 +82,7 @@ def main() -> int:
     grp = fx[fx["group"].astype(str).str.startswith("Group")].copy()
     now = datetime.now(timezone.utc)
 
-    # v2 forecasts: Dixon-Coles W/D/L, committed ONLY for games not yet kicked off (forward-only)
+    # v2 forecasts: zero-inflated-Skellam W/D/L, committed ONLY for games not yet kicked off (forward-only)
     committed = _load(V2_LEDGER)
     new, skipped_past = 0, 0
     for row in grp.itertuples(index=False):
@@ -164,7 +164,7 @@ def main() -> int:
     if n:
         print(f"v1 vs v2 head-to-head on {n} resolved games BOTH pre-committed:")
         print(f"  v1 (Skellam):    log-loss {v1g[2]/n:.4f}  Brier {v1g[3]/n:.4f}")
-        print(f"  v2 (Dixon-Coles): log-loss {v2g[2]/n:.4f}  Brier {v2g[3]/n:.4f}")
+        print(f"  v2 (ZISM):       log-loss {v2g[2]/n:.4f}  Brier {v2g[3]/n:.4f}")
     else:
         print("head-to-head: 0 resolved games both pre-committed yet (fills as future games play)")
     return 0

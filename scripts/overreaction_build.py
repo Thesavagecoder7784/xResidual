@@ -47,10 +47,28 @@ FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 MIN_JUMP, ENTRY_S, EXIT_S, COST = 0.05, 120, 360, 0.005
 LOOKBACK_MS, REFRACTORY_MS, CONFIRM_MS = 60000, 300000, 20000
 DEFAULT_GOAL_CAP = 3            # fallback when the match score isn't found (typical goals/match)
+# Choi & Hui (2014) find the tradable overreaction is to SURPRISING goals (the scoring side was an
+# underdog). A goal is "surprising" if the side that GAINED from it was below this win-prob first.
+SURPRISE_UNDERDOG = 0.40
 
 
 def _bridge(t: str) -> str:
     return W.elo_name(W.canonical(t))
+
+
+def annotate_surprise(tr: dict) -> dict:
+    """Tag a goal-trade with its surprise. The win-prob of the side that GAINED from the goal,
+    BEFORE it: a +jump means the reference team scored (its own pre-prob is the gain-side prior);
+    a -jump means the opponent scored (gain-side prior is 1 - pre). Underdog scoring (gain prior <
+    SURPRISE_UNDERDOG) is the surprising case where the documented fade lives. Idempotent, so it can
+    run on trades read from old per-game JSONs without a reparse."""
+    pre, jump = tr.get("pre"), tr.get("jump")
+    if pre is not None and jump is not None:
+        gain_prior = pre if jump > 0 else (1.0 - pre)
+        tr["gain_prior"] = round(gain_prior, 4)
+        tr["surprise"] = round(abs(jump) / max(gain_prior, 0.05), 3)
+        tr["surprising"] = bool(gain_prior < SURPRISE_UNDERDOG)
+    return tr
 
 
 def match_goals(pairs: list[dict], cap: str) -> tuple[int | None, str]:
@@ -124,18 +142,21 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
         for s in sorted(kept, key=lambda s: s["t_ms"]):
             tr = we.overreaction_trade(series, s, ENTRY_S, EXIT_S, COST)
             if tr:                                         # None if the 6-min exit runs past capture
-                trades.append(tr)
+                trades.append(annotate_surprise(tr))
     else:
         label, venue = None, None
 
+    surprising = [t for t in trades if t.get("surprising")]
     summary = we._ovr_summary(trades)
+    summary_surprising = we._ovr_summary(surprising)
     os.makedirs(OVR_DIR, exist_ok=True)
     with open(os.path.join(OVR_DIR, slug + ".json"), "w", encoding="utf-8") as f:
         json.dump({"match": match, "capture": cap, "n_goals": n_goals, "goals_source": src,
                    "reference": {"label": label, "venue": venue}, "n_detected": n_detected,
                    "n_trades": len(trades), "trades": trades, "summary": summary,
+                   "n_surprising": len(surprising), "summary_surprising": summary_surprising,
                    "params": {"entry_s": ENTRY_S, "exit_s": EXIT_S, "min_jump": MIN_JUMP,
-                              "cost_pp": COST * 100}}, f, indent=2)
+                              "cost_pp": COST * 100, "surprise_underdog": SURPRISE_UNDERDOG}}, f, indent=2)
     gtag = f"{n_goals}g/{src}" if n_goals is not None else f"cap{cap_n}/{src}"
     print(f"  processed {match:<22} {len(events):>10,} ev · {n_detected:>2} shocks -> "
           f"{len(trades)} goal-trades ({gtag}) · ref {label}/{venue} -> {slug}.json")
@@ -153,24 +174,32 @@ def pool_from_archive() -> dict:
             continue
         if not isinstance(d, dict) or "trades" not in d:
             continue
-        all_trades += d["trades"]
+        all_trades += [annotate_surprise(t) for t in d["trades"]]   # idempotent; works on old JSONs
         per_match.append({"match": d.get("match"), "n_goals": d.get("n_goals"),
                           "n_trades": d.get("n_trades"), **d.get("summary", {})})
+    surprising = [t for t in all_trades if t.get("surprising")]
     summary = we._ovr_summary(all_trades)
-    payload = {"summary": summary, "per_match": per_match, "n_matches": len(per_match),
+    summary_surprising = we._ovr_summary(surprising)
+    payload = {"summary": summary, "summary_surprising": summary_surprising,
+               "n_surprising": len(surprising), "per_match": per_match, "n_matches": len(per_match),
                "params": {"entry_s": ENTRY_S, "exit_s": EXIT_S, "min_jump": MIN_JUMP,
                           "cost_pp": COST * 100, "refractory_min": REFRACTORY_MS // 60000,
-                          "confirm_s": CONFIRM_MS // 1000, "gate": "top-N by |jump|, N = match goal count"},
-       "note": "goal-gated overreaction fade, pooled across matches; paper, net of modeled cost; "
-               "one trade per goal (top-N persistent shocks on the most-liquid mid). Live test of a "
-               "documented ~2-3%/trade edge — if it is arbed away, the pooled summary says so."}
+                          "confirm_s": CONFIRM_MS // 1000, "gate": "top-N by |jump|, N = match goal count",
+                          "surprise_underdog": SURPRISE_UNDERDOG},
+       "note": "goal-gated overreaction fade, pooled across matches; paper, net of modeled cost. The "
+               "documented edge (Choi & Hui 2014) is the fade of SURPRISING goals (an underdog scoring), "
+               "so summary_surprising is the like-for-like test; the all-goals summary includes "
+               "unsurprising goals where no overreaction is expected. Reported with n, edge or not."}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.OVERREACTION = " + json.dumps(payload) + ";\n")
-    s = summary
+    s, ss = summary, summary_surprising
     if s["n"]:
         print(f"POOLED · n={s['n']} trades across {len(per_match)} match(es) · total {s['total_pnl_pp']}pp "
-              f"· hit {s['hit_rate']} · mean {s['mean_pnl_pp']}pp/trade · sharpe {s['per_trade_sharpe']}")
+              f"· hit {s['hit_rate']} · mean {s['mean_pnl_pp']}pp/trade")
+        print(f"  SURPRISING goals only (the documented edge): n={ss['n']} · "
+              f"total {ss['total_pnl_pp']}pp · mean {ss['mean_pnl_pp']}pp/trade" if ss["n"]
+              else "  SURPRISING goals only: none yet (no underdog-scored goal in the pool)")
     else:
         print(f"POOLED · no goal-trades across {len(per_match)} match(es) yet")
     print(f"wrote {os.path.relpath(OUT, ROOT)} (pooled from {len(per_match)} per-game JSON(s))")

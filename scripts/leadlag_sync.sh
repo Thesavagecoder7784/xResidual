@@ -57,6 +57,20 @@ if [ "$pulled" -gt 0 ]; then
   "$PY" "$ROOT/scripts/build_micro_all.py"      >> "$LOG" 2>&1 || log "  build_micro_all error"
 fi
 
+# 2b. publish the pooled microstructure findings into docs/data so lab.html loads them live.
+#     The model dashboards are published by the VM; these three are laptop-generated, so the
+#     laptop drops them in docs/data here and they go out with the next commit. Cheap; runs every
+#     cycle so the site never goes stale even when no new tape was pulled.
+cp -f "$ROOT/viz/market/_ofi.js"         "$ROOT/docs/data/ofi.js"          2>/dev/null || true
+cp -f "$ROOT/viz/model/_overreaction.js" "$ROOT/docs/data/overreaction.js" 2>/dev/null || true
+[ -f "$ROOT/writeups/_leadlag_results.json" ] && "$PY" - "$ROOT" <<'PYEOF' 2>/dev/null || true
+import json, sys
+r = sys.argv[1]
+d = json.load(open(r + "/writeups/_leadlag_results.json"))
+open(r + "/docs/data/leadlag.js", "w").write("window.LEADLAG_POOLED = " + json.dumps(
+    {"pooled": d.get("pooled"), "n_matches": d.get("n_matches"), "min_jump": d.get("min_jump")}) + ";\n")
+PYEOF
+
 # 3. render any per-game .js whose .png is missing or stale
 OVR='.series{stroke-dashoffset:0!important;animation:none!important}.reveal{opacity:1!important;animation:none!important}'
 ( cd "$ROOT/viz/market" && for js in "$LL"/*.js; do
@@ -69,6 +83,26 @@ OVR='.series{stroke-dashoffset:0!important;animation:none!important}.reveal{opac
       --window-size=1600,900 --screenshot="$png" "file://$PWD/_tmp_$g.html" 2>/dev/null
     rm -f "_tmp_$g.html"; log "rendered $g.png"
   done )
+
+# 3b. re-render the three pooled finding graphics (house-style 1600x900 cards) when their data has
+#     changed, then drop a downsized copy into docs/img for the Market Lab page. render.sh lets the
+#     bar/timeline animations finish (virtual-time-budget) before the screenshot.
+render_pooled(){            # $1 html (rel to viz/)  $2 full png  $3 data file it reads
+  [ -x "$CHROME" ] || return 0
+  [ -f "$3" ] || return 0
+  if [ -f "$2" ] && [ "$2" -nt "$3" ]; then return 0; fi      # png already newer than its data
+  if "$ROOT/viz/render.sh" "$1" >> "$LOG" 2>&1; then
+    local base; base=$(basename "$2")
+    cp -f "$2" "$ROOT/docs/img/$base" 2>/dev/null && sips -Z 800 "$ROOT/docs/img/$base" --out "$ROOT/docs/img/$base" >/dev/null 2>&1
+    log "rendered $base (+ docs/img thumb)"
+  else
+    log "  render $1 failed"
+  fi
+}
+mkdir -p "$ROOT/docs/img"
+render_pooled market/leadlag_lead.html          "$ROOT/viz/market/leadlag_lead.png"          "$ROOT/docs/data/leadlag.js"
+render_pooled market/ofi_mechanism.html         "$ROOT/viz/market/ofi_mechanism.png"         "$ROOT/viz/market/_ofi.js"
+render_pooled model/overreaction_surprise.html  "$ROOT/viz/model/overreaction_surprise.png"  "$ROOT/viz/model/_overreaction.js"
 
 # 4. delete only local tapes that produced ALL THREE per-game JSONs (lead-lag, overreaction, OFI);
 #    keep a tape if any pipeline failed, so the next run can retry. The VM copy persists 48h anyway.
