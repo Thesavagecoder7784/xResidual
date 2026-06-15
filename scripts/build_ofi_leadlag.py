@@ -121,12 +121,22 @@ def _binned(events, ticker_kind, cid):
 
 
 def _grids(b, t0, t1):
-    """OFI-per-bin and mid-return-per-bin on a shared [t0,t1] grid for one venue's series dict."""
+    """OFI-per-bin and mid-return-per-bin on a shared [t0,t1] grid for one venue's series dict.
+
+    OFI is NaN in bins with NO book update (rather than a real 0): a quiet bin is "no observation",
+    not "flow was zero". Encoding it as 0 would add a dense cloud of (0, ~0) points that inflate n
+    and shrink the standardized OFI->return correlation (regression dilution toward 0), attenuating
+    the very effect we measure. Restricting to active bins makes the regression conditional on there
+    being book activity, the standard event-time treatment, and keeps the support honest."""
     n = max(1, (t1 - t0) // BIN_MS + 1)
     ofi = np.zeros(n)
+    active = np.zeros(n, dtype=bool)
     for t, e in b["ofi"]:
         if t0 <= t <= t1:
-            ofi[min(n - 1, (t - t0) // BIN_MS)] += e
+            i = min(n - 1, (t - t0) // BIN_MS)
+            ofi[i] += e
+            active[i] = True
+    ofi[~active] = np.nan                       # quiet bin -> no observation, not a zero
     mid_grid = we._grid(b["mid"], t0, t1, BIN_MS, max_gap_ms=MAX_GAP_MS)
     ret = np.full(n, np.nan)
     ret[1:] = np.diff(mid_grid)
@@ -268,7 +278,11 @@ def pool_from_archive() -> dict:
     payload = {**pooled,
                "note": "OFI price impact (Cont-Kukanov-Stoikov 2014), cross-venue predictive lead-lag "
                        "(the order-flow mechanism behind the price lead), and microprice (Stoikov 2017) "
-                       "vs mid lead-lag. Standardized per match; pooled by sufficient statistics. Paper."}
+                       "vs mid lead-lag. Standardized per match; pooled by sufficient statistics. Paper. "
+                       "t-stats are BIN-LEVEL OLS, not corrected for 1s autocorrelation or match "
+                       "clustering, so they overstate significance: treat corr/R^2 as the effect size and "
+                       "judge significance across matches (n_matches), not bins.",
+               "significance_basis": "per-bin OLS (uncorrected); n_matches is the real unit"}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.OFI = " + json.dumps(payload) + ";\n")
