@@ -65,10 +65,12 @@ cp -f "$ROOT/viz/market/_ofi.js"         "$ROOT/docs/data/ofi.js"          2>/de
 cp -f "$ROOT/viz/model/_overreaction.js" "$ROOT/docs/data/overreaction.js" 2>/dev/null || true
 [ -f "$ROOT/writeups/_leadlag_results.json" ] && "$PY" - "$ROOT" <<'PYEOF' 2>/dev/null || true
 import json, sys
+from datetime import datetime, timezone
 r = sys.argv[1]
 d = json.load(open(r + "/writeups/_leadlag_results.json"))
 open(r + "/docs/data/leadlag.js", "w").write("window.LEADLAG_POOLED = " + json.dumps(
-    {"pooled": d.get("pooled"), "n_matches": d.get("n_matches"), "min_jump": d.get("min_jump")}) + ";\n")
+    {"pooled": d.get("pooled"), "n_matches": d.get("n_matches"), "min_jump": d.get("min_jump"),
+     "asof": datetime.now(timezone.utc).isoformat()}) + ";\n")  # publish stamp for the lab page footer
 PYEOF
 
 # 3. render any per-game .js whose .png is missing or stale
