@@ -56,7 +56,8 @@
 let M=null, mfil="All";
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
-function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function renderH2H(){const h=M.head_to_head;const el=document.getElementById('h2h');
   if(!h||!h.n_resolved){el.innerHTML=`<p>Pending. It fills in as the games both versions pre-committed resolve (first ones Jun 12 onward). Until then, the draw-calibrated forecasts are locked in below.</p>`;return;}
   el.innerHTML=`<p><b>${h.n_resolved} games resolved.</b></p>
@@ -81,7 +82,7 @@ function render(){const groups=[...new Set(M.matches.map(m=>m.group))].sort();
   document.getElementById('mlist').innerHTML=head+M.matches.filter(m=>mfil==="All"||m.group===mfil).map(mRow).join('');}
 const s=document.createElement('script');s.src='data/matches_v2.js?'+Date.now();
 s.onload=()=>{M=window.GAMESV2;
-  document.getElementById('foot').innerHTML=`${fmtAge(M.asof)} · v2 = zero-inflated Skellam (ω=${M.omega}) · pre-committed forward, graded vs v1`;
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(M.asof)}</b> · ${fmtAge(M.asof)} · v2 = zero-inflated Skellam (ω=${M.omega}) · pre-committed forward, graded vs v1`;
   renderH2H();render();};
 s.onerror=()=>{document.getElementById('mlist').innerHTML=`<div class="loading">could not load data</div>`;};
 document.body.appendChild(s);

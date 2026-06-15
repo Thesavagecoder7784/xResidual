@@ -74,7 +74,8 @@ const MKT={champion:"Champion",advance:"Advance",group_win:"Win group",reach_qf:
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 let DATA=null, M=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
-function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function renderStats(){const c=DATA.clv,cal=DATA.calibration,live=cal.status==='live';
   const played=M?`${M.played}/${M.n}`:'—', ll=(M&&M.logloss!=null)?(+M.logloss).toFixed(3):'—';
   // CLV + calibration stay "pending" until the group stage resolves — early CLV here is correlated
@@ -123,7 +124,7 @@ function fail(){
   const race=document.getElementById('race'); if(race&&!race.children.length) race.innerHTML=`<div class="loading">live data updating…</div>`;}
 const s=document.createElement('script');s.src='data/dashboard.js?'+Date.now();
 s.onload=()=>{if(!window.DASH)return fail();DATA=window.DASH;
-  document.getElementById('foot').innerHTML=`${fmtAge(DATA.asof)} · point-in-time joint sim vs live Polymarket · the sim conditions on played results · graded on CLV + calibration`;
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(DATA.asof)}</b> · ${fmtAge(DATA.asof)} · point-in-time joint sim vs live Polymarket · the sim conditions on played results · graded on CLV + calibration`;
   renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();
   document.getElementById('search').oninput=e=>{query=e.target.value.toLowerCase().trim();renderTable();};};
 s.onerror=fail;

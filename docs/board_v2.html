@@ -79,7 +79,8 @@
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 let DATA=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
-function fmtAge(iso){const d=Math.round((Date.now()-new Date(iso))/3.6e6);return d<1?"updated <1h ago":d<24?`updated ${d}h ago`:`updated ${Math.round(d/24)}d ago`;}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function renderStats(){
   document.getElementById('stats').innerHTML=[
     [`${DATA.n_forecasts}`,'calibrated forecasts','a'],
@@ -120,7 +121,7 @@ s.onload=()=>{if(!window.DASH_V2)return fail();DATA=window.DASH_V2;
   document.getElementById('tval').textContent='(T = '+T+')';
   document.getElementById('tbig').textContent='T '+T;
   document.getElementById('tsub').textContent=`Fit at T = ${T} on the 2018 + 2022 World Cups.`;
-  document.getElementById('foot').innerHTML=`${fmtAge(DATA.asof)} · point-in-time joint sim, temperature-calibrated (T=${T}) vs live Polymarket · the sim conditions on played results · grading stays on v1's ledger`;
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(DATA.asof)}</b> · ${fmtAge(DATA.asof)} · point-in-time joint sim, temperature-calibrated (T=${T}) vs live Polymarket · grading stays on v1's ledger`;
   renderStats();renderRace();renderTabs();renderHead();renderTable();
   document.getElementById('search').oninput=e=>{query=e.target.value.toLowerCase().trim();renderTable();};};
 s.onerror=fail;
