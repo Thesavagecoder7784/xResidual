@@ -32,6 +32,7 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/build_bracket.py    || echo "  bracket failed"
 "$PY" scripts/build_dashboard.py  || echo "  dashboard failed"
 "$PY" scripts/build_dashboard_v2.py || echo "  dashboard v2 failed"   # temperature-calibrated board (v2)
+"$PY" scripts/build_buildup_trajectory.py || echo "  buildup failed"   # title-race trajectory card data; INCREMENTAL (merges onto the seeded series), so the VM's limited snapshot retention never truncates the full May-onward history. Not published — kept fresh on the VM for the laptop to pull + render the card.
 "$PY" scripts/venue_calibration.py || echo "  venue calibration failed"   # pending until ~Jun 27
 
 # Publish: refresh the clone, copy regenerated data + the pre-committed forecast LEDGERS in,
