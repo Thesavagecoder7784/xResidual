@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>xResidual · group stage (v2)</title>
-<meta name="description" content="v2 of the xResidual group-stage board: zero-inflated-Skellam draw calibration, pre-committed forward and graded head-to-head against v1." />
+<title>xResidual · group stage (v3)</title>
+<meta name="description" content="v3 of the xResidual group-stage board: a format-conditional draw lift on top of v2's zero-inflated Skellam, pre-committed forward and graded head-to-head against v2." />
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png"><meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,20 +27,19 @@
 
 <div class="wrap">
   <header class="hero">
-    <a class="v2link" href="games.html"><span class="v2tag" style="background:var(--dim)">v1</span> back to original <span class="arr">→</span></a>
-    <a class="v2link" href="games_v3.html"><span class="v2tag" style="background:var(--accent)">v3</span> draw-lift fork <span class="arr">→</span></a>
-    <div class="kicker">2026 World Cup · group stage · <b style="color:var(--accent)">v2</b></div>
-    <h1>Group stage, <em>v2.</em></h1>
-    <div class="lede">The same model as the original board, with one change: <b>draws are calibrated</b>. Same winner picks, better-weighted draw probabilities.</div>
+    <a class="v2link" href="games_v2.html"><span class="v2tag" style="background:var(--dim)">v2</span> back to v2 <span class="arr">→</span></a>
+    <div class="kicker">2026 World Cup · group stage · <b style="color:var(--accent)">v3</b></div>
+    <h1>Group stage, <em>v3.</em></h1>
+    <div class="lede">v2 with one more change: a <b>format-aware draw lift</b>. The 48-team best-thirds format rewards drawing, so even matches draw more than history alone implies. Winner picks unchanged; the draw carries more weight where it should.</div>
   </header>
 
   <div class="v2banner">
-    <b>What v2 is, and why.</b> The original board (v1) builds win/draw/loss from a plain Skellam goal model, which is known to <b>under-predict draws</b>. v2 swaps in the <b>zero-inflated Skellam</b> (Karlis &amp; Ntzoufras), with one parameter fit on historical data and frozen, lifting the draw probability to its empirical level (the group-stage draw rate moves about 19% to 22%, and the close games rise from ~25% to ~28%). It is a <b>pre-committed fork run forward in parallel</b> with v1, it never edits v1, and it is <b>graded head-to-head</b> as games resolve. The winner pick is unchanged; what changes is how much weight the draw carries, which is exactly what calibration and CLV reward. v2 launched after the opener, so it covers the remaining group games.
+    <b>What v3 is, and why.</b> The 48-team format lets a team advance on three draws (cf. Slovenia at Euro 2024, P3 W0 D3), so <b>even matches draw more than v2's historical calibration captures</b>. v3 adds a <b>closeness-conditional</b> lift to v2's zero-inflated Skellam: <span style="font-family:var(--fm)">ω = 0.04 + 0.10·(1 − |p1 − p2|)</span> — extra draw mass in even games, almost none in mismatches (a 93% favourite stays ~93%). The lift was <b>validated out-of-sample</b>: it improves W/D/L log-loss on the expanded-format Euros (the optimum, 1.026 → 1.017) while being net-harmful on the old 32-team World Cups — i.e. genuinely format-specific, not a blanket draw bump. Like v2 it is <b>pre-committed forward</b> in its own ledger and <b>graded head-to-head against v2</b> as the remaining group games resolve. v3 launched mid-tournament, so it covers the games still to be played.
   </div>
 
   <section style="border-top:none;padding-top:4px">
-    <div class="h2">v1 vs v2, head-to-head</div>
-    <div class="sub">Log-loss and Brier on the games <b>both</b> versions pre-committed, as they resolve. Lower is better. This is the real test of whether the draw fix helps.</div>
+    <div class="h2">v2 vs v3, head-to-head</div>
+    <div class="sub">Log-loss and Brier on the games <b>both</b> versions pre-committed, as they resolve. Lower is better. The clean live test of whether the format draw lift helps.</div>
     <div class="panel" id="h2h" style="margin-top:12px"><div class="loading">loading…</div></div>
   </section>
 
@@ -60,10 +59,10 @@ const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror
 function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function renderH2H(){const h=M.head_to_head;const el=document.getElementById('h2h');
-  if(!h||!h.n_resolved){el.innerHTML=`<p>Pending. It fills in as the games both versions pre-committed resolve (first ones Jun 12 onward). Until then, the draw-calibrated forecasts are locked in below.</p>`;return;}
+  if(!h||!h.n_resolved){el.innerHTML=`<p>Pending. It fills in as the remaining group games (the ones both v2 and v3 pre-committed) resolve. Until then, the draw-lifted forecasts are locked in below.</p>`;return;}
   el.innerHTML=`<p><b>${h.n_resolved} games resolved.</b></p>
-    <p style="font-family:var(--fm);font-size:13px;margin-top:6px">v1 (Skellam) &nbsp; log-loss ${h.v1.logloss} · Brier ${h.v1.brier}<br>
-    v2 (ZISM) &nbsp;&nbsp;&nbsp; log-loss <b class="${h.v2.logloss<h.v1.logloss?'hi':''}">${h.v2.logloss}</b> · Brier <b class="${h.v2.brier<h.v1.brier?'hi':''}">${h.v2.brier}</b></p>`;}
+    <p style="font-family:var(--fm);font-size:13px;margin-top:6px">v2 (ZISM) &nbsp;&nbsp;&nbsp; log-loss ${h.v2.logloss} · Brier ${h.v2.brier}<br>
+    v3 (format lift) &nbsp; log-loss <b class="${h.v3.logloss<h.v2.logloss?'hi':''}">${h.v3.logloss}</b> · Brier <b class="${h.v3.brier<h.v2.brier?'hi':''}">${h.v3.brier}</b></p>`;}
 function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="mt",res;
   if(m.played){if(m.result==="t1")t2c+=" lose";else if(m.result==="t2")t1c+=" lose";
     res=`<span class="sc">${m.s1}-${m.s2}</span> ${m.correct?'<span class="ok">✓</span>':'<span class="x">✗</span>'}`;}
@@ -79,11 +78,11 @@ function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="m
 function render(){const groups=[...new Set(M.matches.map(m=>m.group))].sort();
   document.getElementById('mfilter').innerHTML=["All",...groups].map(g=>`<button class="tab ${g===mfil?'on':''}" data-g="${g}">${g==="All"?"All groups":"Group "+g}</button>`).join('');
   document.querySelectorAll('#mfilter .tab').forEach(b=>b.onclick=()=>{mfil=b.dataset.g;render();});
-  const head=`<div class="mhead"><span></span><span class="r">home</span><span class="c">model W / D / L (v2)</span><span>away</span><span>prediction (win)</span><span class="r">result</span></div>`;
+  const head=`<div class="mhead"><span></span><span class="r">home</span><span class="c">model W / D / L (v3)</span><span>away</span><span>prediction (win)</span><span class="r">result</span></div>`;
   document.getElementById('mlist').innerHTML=head+M.matches.filter(m=>mfil==="All"||m.group===mfil).map(mRow).join('');}
-const s=document.createElement('script');s.src='data/matches_v2.js?'+Date.now();
-s.onload=()=>{M=window.GAMESV2;
-  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(M.asof)}</b> · ${fmtAge(M.asof)} · v2 = zero-inflated Skellam (ω=${M.omega}) · pre-committed forward, graded vs v1`;
+const s=document.createElement('script');s.src='data/matches_v3.js?'+Date.now();
+s.onload=()=>{M=window.GAMESV3;
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(M.asof)}</b> · ${fmtAge(M.asof)} · v3 = v2 + format draw lift (Wf=${M.wf_format}) · pre-committed forward, graded vs v2`;
   renderH2H();render();};
 s.onerror=()=>{document.getElementById('mlist').innerHTML=`<div class="loading">could not load data</div>`;};
 document.body.appendChild(s);

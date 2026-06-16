@@ -29,6 +29,7 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/prediction_board.py --calibrate || echo "  calibrate failed"
 "$PY" scripts/build_matches.py    || echo "  matches failed"
 "$PY" scripts/build_matches_v2.py || echo "  matches v2 failed"   # parallel ZISM draw-calibrated model, vs v1
+"$PY" scripts/build_matches_v3.py || echo "  matches v3 failed"   # v3 = v2 + format-conditional draw lift; live A/B vs v2 on the remaining group games
 "$PY" scripts/build_bracket.py    || echo "  bracket failed"
 "$PY" scripts/build_dashboard.py  || echo "  dashboard failed"
 "$PY" scripts/build_dashboard_v2.py || echo "  dashboard v2 failed"   # temperature-calibrated board (v2)
@@ -43,8 +44,8 @@ cd "$PUB" || { echo "  no publish clone at $PUB"; exit 1; }
 git pull --rebase --autostash 2>&1 | tail -1
 rsync -a "$REPO/docs/data/" "$PUB/docs/data/"
 mkdir -p "$PUB/paper"
-rsync -a "$REPO/paper/forecasts.jsonl" "$REPO/paper/match_forecasts.jsonl" "$REPO/paper/match_forecasts_v2.jsonl" "$PUB/paper/" 2>/dev/null || true
-git add docs/data paper/forecasts.jsonl paper/match_forecasts.jsonl paper/match_forecasts_v2.jsonl
+rsync -a "$REPO/paper/forecasts.jsonl" "$REPO/paper/match_forecasts.jsonl" "$REPO/paper/match_forecasts_v2.jsonl" "$REPO/paper/match_forecasts_v3.jsonl" "$PUB/paper/" 2>/dev/null || true
+git add docs/data paper/forecasts.jsonl paper/match_forecasts.jsonl paper/match_forecasts_v2.jsonl paper/match_forecasts_v3.jsonl
 if git diff --cached --quiet; then
   echo "  no changes — nothing to publish"
 else
