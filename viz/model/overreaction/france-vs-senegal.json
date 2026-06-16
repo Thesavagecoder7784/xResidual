@@ -1,0 +1,62 @@
+{
+  "match": "France vs Senegal",
+  "capture": "20260616T182710Z-france-vs-senegal",
+  "n_goals": 2,
+  "goals_source": "results",
+  "reference": {
+    "label": "France",
+    "venue": "polymarket"
+  },
+  "n_detected": 3,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781641324134,
+      "jump": 0.05,
+      "pre": 0.465,
+      "p_entry": 0.695,
+      "p_exit": 0.435,
+      "reverted_pp": 26.0,
+      "pnl_pp": 25.5,
+      "surprise": 0.108,
+      "gain_prior": 0.465,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781641784680,
+      "jump": 0.13,
+      "pre": 0.425,
+      "p_entry": 0.775,
+      "p_exit": 0.805,
+      "reverted_pp": -3.0,
+      "pnl_pp": -3.5,
+      "surprise": 0.306,
+      "gain_prior": 0.425,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": 22.0,
+    "hit_rate": 0.5,
+    "mean_reverted_pp": 11.5,
+    "mean_pnl_pp": 11.0,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
