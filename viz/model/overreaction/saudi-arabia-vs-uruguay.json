@@ -1,0 +1,86 @@
+{
+  "match": "Saudi Arabia vs Uruguay",
+  "capture": "20260615T213253Z-saudi-arabia-vs-uruguay",
+  "n_goals": 5,
+  "goals_source": "results",
+  "reference": {
+    "label": "Uruguay",
+    "venue": "polymarket"
+  },
+  "n_detected": 5,
+  "n_trades": 4,
+  "trades": [
+    {
+      "t_ms": 1781563443852,
+      "jump": -0.11,
+      "pre": 0.515,
+      "p_entry": 0.235,
+      "p_exit": 0.245,
+      "reverted_pp": 1.0,
+      "pnl_pp": 0.5,
+      "surprise": 0.227,
+      "gain_prior": 0.485,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781563819503,
+      "jump": -0.08,
+      "pre": 0.325,
+      "p_entry": 0.245,
+      "p_exit": 0.235,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.119,
+      "gain_prior": 0.675,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781567117369,
+      "jump": 0.055,
+      "pre": 0.095,
+      "p_entry": 0.275,
+      "p_exit": 0.285,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.579,
+      "gain_prior": 0.095,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781567517314,
+      "jump": -0.05,
+      "pre": 0.285,
+      "p_entry": 0.225,
+      "p_exit": 0.18,
+      "reverted_pp": -4.5,
+      "pnl_pp": -5.0,
+      "surprise": 0.07,
+      "gain_prior": 0.715,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 4,
+    "total_pnl_pp": -7.5,
+    "hit_rate": 0.25,
+    "mean_reverted_pp": -1.375,
+    "mean_pnl_pp": -1.875,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": -1.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -1.0,
+    "mean_pnl_pp": -1.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
