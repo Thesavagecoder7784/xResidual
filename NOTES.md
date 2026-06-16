@@ -35,7 +35,8 @@ A running scratchpad of decisions, dead ends, and things I still want to do. Les
   - **v2 vs v3 A/B** — fills as the ~55 remaining group games resolve; readout ~Jun 27.
   - **Lead-lag pool** — 9/16 dual-venue extracted, null holding (0ms, 49% split); release the flagship when ~15-20.
   - **Re-poll fix** — confirmed dual-venue on France-Senegal, but both books listed early; still want an *obscure* match (late Polymarket listing) to stress the late-subscribe path.
-- **DATED follow-ups:** ~Jun 27 group-stage calibration check-in + v3 readout · ~Jun 28 (R32) the knockout-conditioning fix above.
+- **DRAW WATCH (form/style overlay on v3's coin-flips, Jun 16).** v3 lifts even-match draws to ~35% but that still maxes as mush (every game near 33/33/33). Layered a qualitative form+style read on the dead-even games to discriminate: **HIGH-conviction draw = Cape Verde v Saudi (Jun 26)** — two low-block low-scorers, both proved they sit deep (CV held Spain 0-0; Saudi drew Uruguay 1-1); the model picks CV but the overlay overrides to draw. **MED = Switzerland v Canada (Jun 24)** — both low-block, both opened drawing. **FADE the model's other 3 draw-picks** (Türkiye-USA, Japan-Sweden, Algeria-Austria — all attack-leaky/stylistic-mismatch, lean goals). The decisive driver (both teams needing only a point) only becomes knowable **after round 2 (~Jun 23)** — all these except Norway-Senegal are final-round games, so **revisit the draw calls ~Jun 23** once standings/incentives are set. Also tightened the games_v3 "draw live" badge (was pd≥0.23 → fired on 52/55; now modal-or-within-2pp → 5).
+- **DATED follow-ups:** ~Jun 23 revisit final-round draw calls w/ standings incentives · ~Jun 27 group-stage calibration check-in + v3 readout · ~Jun 28 (R32) the knockout-conditioning fix above.
 - **CONTENT ready to post (in CONTENT.md, unposted):** buildup trajectory (France overtook Spain), and the cross-cards trap / smartmoney / stakes.
 
 ## Stack notes

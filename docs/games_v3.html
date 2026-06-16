@@ -71,7 +71,7 @@ function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="m
     res=`<span class="sc">${m.s1}-${m.s2}</span> ${m.correct?'<span class="ok">✓</span>':'<span class="x">✗</span>'}`;}
   else res=`<span class="pre">${m.date.slice(5)}</span>`;
   const pn=m.fav==="t1"?m.t1:m.fav==="t2"?m.t2:"Draw",pc=m.fav==="t1"?"h":m.fav==="t2"?"a":"d",pp=Math.round(Math.max(m.p1,m.pd,m.p2)*100);
-  const dl=m.pd>=0.23;
+  const dl=m.fav==="draw"||m.pd>=Math.max(m.p1,m.p2)-0.02;  // genuine draw candidate: modal, or within 2pp of the leader
   return `<div class="mrow${dl?' drawlive':''}"><div class="gchip">${m.group}</div><div class="${t1c}"><span>${m.t1}</span>${flag(m.t1)}</div>
     <div class="wdl" title="${p1.toFixed(0)} / ${pd.toFixed(0)} / ${p2.toFixed(0)}">
       <span class="a" style="width:${p1}%"></span><span class="d" style="width:${pd}%"></span><span class="t" style="width:${p2}%"></span></div>

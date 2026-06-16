@@ -14,7 +14,7 @@ push-code:
 	$(RSYNC) --exclude '.git/' --exclude '.venv/' --exclude '__pycache__/' \
 	         --exclude '*.pyc' --exclude 'logger/data/' --exclude '*.png' \
 	         --exclude 'paper/forecasts.jsonl' --exclude 'paper/match_forecasts.jsonl' \
-	         --exclude 'paper/match_forecasts_v2.jsonl' \
+	         --exclude 'paper/match_forecasts_v2.jsonl' --exclude 'paper/match_forecasts_v3.jsonl' \
 	         --exclude 'data/cache/wc_scores_overlay.json' --exclude 'data/cache/wc_scores_meta.json' \
 	         ./ $(VM):$(REPO)/
 
