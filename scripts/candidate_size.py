@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 sys.path.insert(0, os.path.join(ROOT, "logger"))
 from xresidual import baseline, data, elo, group_sim, knockout, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 from venue_prices import poly_quotes  # noqa: E402
 
 
@@ -82,11 +83,14 @@ def joint_kelly(R, cap=0.9):
 
 def main() -> int:
     print("building joint sim ...")
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)
     fx = pd.read_csv(os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
-    sim, det = group_sim.simulate(fx, ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    grp_results = wc_played_results(df, fx)   # condition on games played (was UNCONDITIONED)
+    sim, det = group_sim.simulate(fx, ratings, params, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
     paths = knockout.simulate(det, sim, ratings, return_paths=True)["paths"]
     gidx = det["gidx"]
 

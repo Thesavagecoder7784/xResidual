@@ -30,6 +30,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 sys.path.insert(0, os.path.join(ROOT, "logger"))
 from xresidual import baseline, data, elo, group_sim, knockout, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 from venue_prices import poly_quotes  # noqa: E402
 
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
@@ -55,11 +56,14 @@ def mid(q):
 
 def main() -> int:
     print("building joint sim ...")
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)
     fixtures = pd.read_csv(FIXTURES)
-    sim, det = group_sim.simulate(fixtures, ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    grp_results = wc_played_results(df, fixtures)   # condition on games played (was UNCONDITIONED)
+    sim, det = group_sim.simulate(fixtures, ratings, params, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
     reach = knockout.simulate(det, sim, ratings)["reach"]   # team -> {r16,qf,sf,final,win} in %
 
     # live Polymarket mids

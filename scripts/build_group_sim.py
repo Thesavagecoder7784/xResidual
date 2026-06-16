@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim  # noqa: E402
 from pull_forecast_data import ISO, KIT, INK, team_probs  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_groupsim.js")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
@@ -30,7 +31,8 @@ FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 
 def main() -> int:
     print("loading results + computing Elo ...")
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     print(f"  beta={params.beta:.3f} goals/100 Elo · total_goals={params.total_goals:.2f}")
 
@@ -40,7 +42,16 @@ def main() -> int:
     # teams (Finding #10). On advancement it diverged from the market ~8.9pp; the blend halves
     # that to ~4.4pp and converges on the liquid advance market, so the sim runs on the blend.
     ratings = blended_ratings(res.ratings)
-    sim, det = group_sim.simulate(fixtures, ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    # Condition on every group game played so far. Previously UNCONDITIONED, so the cards showed
+    # PRE-TOURNAMENT numbers (e.g. Australia advancing ~38% after it had already beaten Turkey, vs
+    # ~83% conditioned). Uses the same wc_played_results() the dashboard/bracket builds condition on,
+    # so the whole site stays consistent and the third-place / openness / leverage cards update with
+    # results. (Conditioning freshness tracks the results feed; if it lags, every conditioned build
+    # lags together — not just this card.)
+    grp_results = wc_played_results(df, fixtures)
+    print(f"  conditioning on {len(grp_results) // 2} played group games")
+    sim, det = group_sim.simulate(fixtures, ratings, params, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
 
     # Market reference: Polymarket's P(advance) per team, for a model-vs-market overlay.
     try:

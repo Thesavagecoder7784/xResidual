@@ -45,6 +45,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout, venues_wc2026, wc2026_teams as W  # noqa: E402
 from xresidual.baseline import LAMBDA_FLOOR  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_simnative.js")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
@@ -158,11 +159,14 @@ def conf_credit(rank_key, primary, member_cols, pick_max: bool):
 
 def main() -> int:
     print(f"simulating the tournament (n={N}) ...")
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)                # Elo + squad value (Finding #10)
-    out, det = group_sim.simulate(pd.read_csv(FIXTURES), ratings, params,
-                                  n=N, seed=SEED, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    fx = pd.read_csv(FIXTURES)
+    grp_results = wc_played_results(df, fx)               # condition on games played (was UNCONDITIONED)
+    out, det = group_sim.simulate(fx, ratings, params, n=N, seed=SEED,
+                                  return_detail=True, sigma=group_sim.MODEL_SIGMA, results=grp_results)
     ko = knockout.simulate(det, out, ratings, return_paths=True,
                            return_matchups=True, return_slots=True)
     teams = ko["teams_arr"]; gidx = det["gidx"]; rating_arr = ko["rating_arr"]

@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout  # noqa: E402
 from pull_forecast_data import ISO, KIT, INK, team_probs  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_knockout.js")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
@@ -29,10 +30,14 @@ FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 
 def main() -> int:
     print("loading results + Elo + simulating group stage ...")
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)   # Elo + squad value (Finding #10), not raw Elo
-    out, det = group_sim.simulate(pd.read_csv(FIXTURES), ratings, params, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    fx = pd.read_csv(FIXTURES)
+    grp_results = wc_played_results(df, fx)   # condition on games played (was UNCONDITIONED -> stale cards)
+    out, det = group_sim.simulate(fx, ratings, params, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
 
     print("simulating the knockouts ...")
     ko = knockout.simulate(det, out, ratings)

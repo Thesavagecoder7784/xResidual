@@ -26,6 +26,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout as K  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 from pull_forecast_data import ISO  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_incentive.js")
@@ -33,13 +34,19 @@ N = 60_000
 
 
 def main() -> int:
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     fx = pd.read_csv(os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
     ratings = blended_ratings(res.ratings)
 
-    print(f"simulating N={N:,} ...")
-    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    # Condition on games played so far (was UNCONDITIONED -> the projected bracket, and so the
+    # path-delta, used pre-tournament group winners). Knockout stays projected from the conditioned
+    # group sim (no knockout games yet); add ko results here too once the bracket starts.
+    grp_results = wc_played_results(df, fx)
+    print(f"simulating N={N:,} · conditioning on {len(grp_results) // 2} played games ...")
+    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
     ko = K.simulate(det, out, ratings, return_slots=True)
     r32 = ko["r32"]; rat = np.array(ko["rating_arr"]); teams = np.array(ko["teams_arr"])
 

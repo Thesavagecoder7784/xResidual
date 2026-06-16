@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout  # noqa: E402
 from pull_forecast_data import ISO, KIT, INK  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_collision.js")
 N = 200_000
@@ -32,13 +33,16 @@ CONTENDERS = ["Spain", "France", "England", "Argentina", "Brazil", "Portugal",
 
 
 def main() -> int:
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     fx = pd.read_csv(FIXTURES := os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
     ratings = blended_ratings(res.ratings)
+    grp_results = wc_played_results(df, fx)   # condition on games played (was UNCONDITIONED -> stale cards)
 
     print(f"simulating N={N:,} (value-blended) ...")
-    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
     ko = knockout.simulate(det, out, ratings, return_matchups=True)
     gidx, M = det["gidx"], ko["matchups"]
 
