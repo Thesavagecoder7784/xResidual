@@ -21,6 +21,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from prediction_board import wc_played_results  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_storylines.js")
 N = 200_000
@@ -32,13 +33,16 @@ PAST_WINNERS = ["Brazil", "Germany", "Argentina", "France", "Uruguay", "England"
 
 
 def main() -> int:
-    res = elo.build_ratings(data.load_results())
+    df = data.load_results()
+    res = elo.build_ratings(df)
     params = baseline.calibrate(res.calib)
     fx = pd.read_csv(os.path.join(ROOT, "data", "wc2026_fixtures.csv"))
     ratings = blended_ratings(res.ratings)
+    grp_results = wc_played_results(df, fx)   # condition on games played (was UNCONDITIONED -> stale cards)
 
     print(f"simulating N={N:,} ...")
-    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True, sigma=group_sim.MODEL_SIGMA)
+    out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True,
+                                  sigma=group_sim.MODEL_SIGMA, results=grp_results)
     ko = knockout.simulate(det, out, ratings, return_matchups=True)
     gidx, M, reach = det["gidx"], ko["matchups"], ko["reach"]
 
