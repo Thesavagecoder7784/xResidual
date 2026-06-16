@@ -120,9 +120,11 @@ td.num{font-family:var(--fm);text-align:right}
 .v2link{position:absolute;top:2px;right:0;display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:11.5px;font-weight:600;color:var(--ink);background:var(--card);border:1px solid var(--rule-2);border-radius:999px;padding:7px 13px;text-decoration:none;transition:.12s}
 .v2link:hover{border-color:var(--accent);color:var(--accent)}
 .v2link .v2tag{background:var(--accent);color:#fff;font-size:9px;letter-spacing:.04em;padding:1px 6px;border-radius:999px}
+.vswitch{position:absolute;top:2px;right:0;display:flex;gap:8px;align-items:center}
+.vswitch .v2link{position:static}
 .v2banner{background:var(--accent-soft);border:1px solid var(--rule-2);border-left:3px solid var(--accent);border-radius:6px;padding:15px 20px;margin:0 0 22px;font-size:13.5px;line-height:1.55;color:var(--muted)}
 .v2banner b{color:var(--ink)}
-@media(max-width:640px){.v2link{position:static;margin-bottom:14px}}
+@media(max-width:640px){.v2link,.vswitch{position:static;margin-bottom:14px}.vswitch{flex-wrap:wrap}}
 .gchip{font-family:var(--fm);font-size:10px;color:var(--dim);border:1px solid var(--rule-2);border-radius:5px;padding:3px 0;text-align:center}
 .byline{margin-top:16px;font-size:14.5px;line-height:1.55;color:var(--muted);max-width:780px}
 .byline a{color:var(--ink);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
