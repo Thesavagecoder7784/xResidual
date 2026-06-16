@@ -24,6 +24,9 @@
   .grow .gadv{font-family:var(--fm);font-size:13px;font-weight:600;flex:none;width:40px;text-align:right}
   .grow.in .gadv{color:var(--good)} .grow.bub .gadv{color:var(--gold)} .grow.out .gadv{color:var(--dim)}
   .grow.out .gnm{color:var(--muted)}
+  .grow .gpos{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--dim);width:15px;flex:none;text-align:center}
+  .grow.in .gpos{color:var(--good)} .grow.bub .gpos{color:var(--gold)}
+  .gcard .gcut{border-top:1px dashed var(--rule);margin:2px 0 0;height:0}
 </style>
 </head>
 <body>
@@ -56,8 +59,8 @@
   </section>
 
   <section class="gsec" id="groups-sec" style="display:none">
-    <h2>Projected <em>group stage</em></h2>
-    <div class="lede">Each group's teams by the model's probability of <b>reaching the knockouts</b> — top two or one of the eight best third-placed teams — conditioned on every game played so far. Points so far in mono. <span style="color:var(--good);font-weight:600">green</span> on track · <span style="color:var(--gold);font-weight:600">amber</span> on the bubble.</div>
+    <h2>Projected <em>group finishes</em></h2>
+    <div class="lede">Each group's <b>projected final order (1–4)</b>, ranked by the model's probability of <b>reaching the knockouts</b> — top two (above the dashed line) or one of the eight best third-placed teams — conditioned on every game played so far. Points so far in mono. <span style="color:var(--good);font-weight:600">green</span> on track · <span style="color:var(--gold);font-weight:600">amber</span> on the bubble.</div>
     <div class="ggrid" id="groups"></div>
   </section>
 
@@ -81,13 +84,15 @@ function card(m){
     ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
     ${row(m.b,m.pb,m.pick===m.b,m.final,m.wp)}</div>`;}
 function gcard(L,teams){
-  const rows=teams.map(t=>{
+  const sorted=[...teams].sort((a,b)=>b.padv-a.padv||b.p1-a.p1||b.gd-a.gd);
+  const rows=sorted.map((t,i)=>{
     const tier=t.padv>=65?'in':t.padv>=30?'bub':'out';
     const pts=t.pl?`${t.pts} pt${t.pts==1?'':'s'}`:'—';
     const gf=t.iso?`<img class="gflag" src="flags/${t.iso}.svg" alt="" onerror="this.style.visibility='hidden'">`:`<span class="gflag"></span>`;
-    return `<div class="grow ${tier}">${gf}<span class="gnm">${t.team}</span><span class="gpts">${pts}</span><span class="gadv">${t.padv}%</span></div>`;
+    return `<div class="grow ${tier}"><span class="gpos">${i+1}</span>${gf}<span class="gnm">${t.team}</span><span class="gpts">${pts}</span><span class="gadv">${t.padv}%</span></div>`
+      + (i===1?'<div class="gcut" title="top two auto-qualify"></div>':'');
   }).join('');
-  return `<div class="gcard"><h4>Group ${L}<span class="qn">P(advance)</span></h4>${rows}</div>`;
+  return `<div class="gcard"><h4>Group ${L}<span class="qn">finish · P(adv)</span></h4>${rows}</div>`;
 }
 function renderGroups(){
   if(!D.groups){document.getElementById('groups-sec').style.display='none';return;}
