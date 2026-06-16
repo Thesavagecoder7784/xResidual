@@ -55,20 +55,36 @@ def main() -> int:
                 if t not in cell or ts > cell[t][0]:
                     cell[t] = (ts, float(mid))
 
-    days = sorted(latest)
     # per day, per venue: de-vig the whole field, then average across venues per team
-    series = {t: [] for t in TEAMS}
-    for day in days:
+    new_by_day: dict = {}  # day -> {team: pct or None}
+    for day in sorted(latest):
         devigged = {}  # venue -> {team: fair prob}
         for v in VENUES:
             raw = {t: mp[1] for t, mp in latest[day].get(v, {}).items()}
             s = sum(raw.values())
             if s > 0:
                 devigged[v] = {t: p / s for t, p in raw.items()}
+        row = {}
         for t in TEAMS:
             vals = [devigged[v][t] for v in VENUES if t in devigged.get(v, {})]
-            series[t].append(round(statistics.mean(vals) * 100, 2) if vals else None)
+            row[t] = round(statistics.mean(vals) * 100, 2) if vals else None
+        new_by_day[day] = row
 
+    # INCREMENTAL MERGE: the VM keeps only recent snapshots, so a full rebuild there would drop the
+    # early buildup (May onward). Read the prior series and overlay only the days we just recomputed —
+    # old days persist from the existing card, recent days refresh, new days extend. Retention-proof,
+    # so this can run on the VM daily without losing history (it just needs the seeded card present).
+    by_day: dict = {}
+    try:
+        prev = json.loads(open(OUT, encoding="utf-8").read().split("=", 1)[1].rstrip().rstrip(";\n"))
+        for i, day in enumerate(prev.get("dates", [])):
+            by_day[day] = {t: (prev["series"].get(t, []) + [None] * len(prev["dates"]))[i] for t in TEAMS}
+    except Exception:
+        pass
+    by_day.update(new_by_day)                      # recomputed days overwrite; older days persist
+
+    days = sorted(by_day)
+    series = {t: [by_day[d].get(t) for d in days] for t in TEAMS}
     payload = {"dates": days, "series": series}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
