@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -25,9 +26,35 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
 from prediction_board import wc_played_results  # noqa: E402
+from pull_forecast_data import ISO  # noqa: E402
 
 OUT = os.path.join(ROOT, "docs", "data", "bracket.js")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
+
+
+def live_results():
+    """Played group results from the live site ledger (docs/data/matches.js) — the freshest feed,
+    ahead of the Elo results feed mid-tournament. Returns ({(c1,c2):(s1,s2),...}, standings-by-team
+    with actual points/GD/played so far)."""
+    p = os.path.join(ROOT, "docs", "data", "matches.js")
+    if not os.path.exists(p):
+        return {}, {}
+    try:
+        d = json.loads(re.search(r"=\s*(\{.*\});", open(p, encoding="utf-8").read(), re.S).group(1))
+    except Exception:
+        return {}, {}
+    results, st = {}, {}
+    for m in d.get("matches", []):
+        if not m.get("played"):
+            continue
+        t1, t2, s1, s2 = m["t1"], m["t2"], int(m["s1"]), int(m["s2"])
+        results[(t1, t2)] = (s1, s2); results[(t2, t1)] = (s2, s1)
+        grp = str(m.get("group", "")).replace("Group ", "")
+        for tm, gf, ga in ((t1, s1, s2), (t2, s2, s1)):
+            r = st.setdefault(tm, {"played": 0, "pts": 0, "gd": 0, "group": grp})
+            r["played"] += 1; r["gd"] += gf - ga
+            r["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
+    return results, st
 ROUNDS = [("Round of 32", "R32"), ("Round of 16", "R16"), ("Quarter-finals", "QF"),
           ("Semi-finals", "SF"), ("Final", "Final")]
 
@@ -38,7 +65,12 @@ def main() -> int:
     params = baseline.calibrate(res.calib)
     ratings = blended_ratings(res.ratings)
     fx = pd.read_csv(FIXTURES)
-    grp_results = wc_played_results(df, fx)
+    # Condition on the freshest results: the live site ledger (matches.js) runs ahead of the Elo
+    # results feed mid-tournament, so prefer it when it carries more games. `standings` = the actual
+    # points/GD so far, shown on the projected group tables.
+    live, standings = live_results()
+    fallback = wc_played_results(df, fx)
+    grp_results = live if len(live) >= len(fallback) else fallback
     sim, det = group_sim.simulate(fx, ratings, params, return_detail=True,
                                   sigma=group_sim.MODEL_SIGMA, results=grp_results)
     gidx = det["gidx"]
@@ -91,9 +123,23 @@ def main() -> int:
         rounds.append({"round": label, "matches": matches})
 
     champ, cp = mode(paths["champ"].reshape(-1))
+
+    # projected group standings (conditioned): each team by its advance probability, with win-group
+    # probability and actual points so far — rendered under the bracket.
+    groups = {}
+    for t, r in sim.items():
+        s = standings.get(t, {})
+        groups.setdefault(r["group"], []).append({
+            "team": t, "iso": ISO.get(t, ""),
+            "p1": round(r["p1"] * 100), "padv": round(r["padv"] * 100),
+            "pts": s.get("pts", 0), "pl": s.get("played", 0), "gd": s.get("gd", 0)})
+    for g in groups:
+        groups[g].sort(key=lambda x: (-x["padv"], -x["pts"], -x["gd"]))
+
     payload = {"asof": datetime.now(timezone.utc).isoformat(),
                "group_done": bool((len(grp_results) // 2) >= 72),
-               "rounds": rounds, "champion": {"team": champ, "p": round(float(cp) * 100, 1), "final": bool(cp > 0.999)}}
+               "rounds": rounds, "champion": {"team": champ, "p": round(float(cp) * 100, 1), "final": bool(cp > 0.999)},
+               "groups": groups}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.BRACKET = " + json.dumps(payload, separators=(",", ":")) + ";\n")
