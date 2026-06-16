@@ -8,6 +8,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  .gsec{border-top:1px solid var(--rule);margin-top:34px;padding-top:26px}
+  .gsec h2{font-family:var(--fd);font-size:27px;font-weight:600;letter-spacing:-.012em;margin:0 0 5px}
+  .gsec h2 em{font-style:italic;color:var(--accent)}
+  .gsec .lede{font-size:14.5px;color:var(--muted);max-width:660px;line-height:1.5;margin-bottom:20px}
+  .ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .gcard{border:1px solid var(--rule);border-radius:11px;background:var(--card);padding:12px 14px 10px}
+  .gcard h4{font-family:var(--fm);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:0 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+  .gcard h4 .qn{color:var(--dim);font-weight:400;font-size:10px;letter-spacing:.06em}
+  .grow{display:flex;align-items:center;gap:9px;padding:6px 0;border-top:1px solid var(--rule)}
+  .grow .gflag{width:19px;height:19px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .grow .gnm{font-size:14px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .grow .gpts{font-family:var(--fm);font-size:11px;color:var(--dim);margin-left:auto;flex:none}
+  .grow .gadv{font-family:var(--fm);font-size:13px;font-weight:600;flex:none;width:40px;text-align:right}
+  .grow.in .gadv{color:var(--good)} .grow.bub .gadv{color:var(--gold)} .grow.out .gadv{color:var(--dim)}
+  .grow.out .gnm{color:var(--muted)}
+</style>
 </head>
 <body>
 <nav><div class="nav">
@@ -29,13 +46,19 @@
   <header class="hero">
     <div class="kicker">2026 World Cup · knockouts</div>
     <h1>The knockout <em>bracket.</em></h1>
-    <div class="lede">The model's projected path through the knockouts, <b>most-likely team in each slot</b>, with the model's pick to advance. Before the group stage it's a projection; it fills in with the <b>real teams</b> once groups resolve, and the sim <b>conditions on every knockout game</b>, so a played tie becomes final and the rest re-forecasts.</div>
+    <div class="lede">The model's projected path through the knockouts, <b>most-likely team in each slot</b>, with the model's pick to advance. A <b>live projection</b> that fills in with the <b>real teams</b> as the groups resolve — the sim <b>conditions on every game played</b>, so a settled tie becomes final and the rest re-forecasts.</div>
   </header>
 
   <section style="border-top:none;padding-top:10px">
     <div class="champ-banner" id="champ"></div>
     <div class="bwrap"><div class="bcols" id="bracket"><div class="loading">loading…</div></div></div>
     <div class="legend" style="margin-top:14px"><span class="a">●</span> model's pick to advance · faint % = how likely that team is to reach the slot (projected) · ✓ = result in</div>
+  </section>
+
+  <section class="gsec" id="groups-sec" style="display:none">
+    <h2>Projected <em>group stage</em></h2>
+    <div class="lede">Each group's teams by the model's probability of <b>reaching the knockouts</b> — top two or one of the eight best third-placed teams — conditioned on every game played so far. Points so far in mono. <span style="color:var(--good);font-weight:600">green</span> on track · <span style="color:var(--gold);font-weight:600">amber</span> on the bubble.</div>
+    <div class="ggrid" id="groups"></div>
   </section>
 
   <footer><div id="foot"></div>
@@ -57,12 +80,28 @@ function card(m){
   return `<div class="bmatch ${m.final?'final':''}">
     ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
     ${row(m.b,m.pb,m.pick===m.b,m.final,m.wp)}</div>`;}
+function gcard(L,teams){
+  const rows=teams.map(t=>{
+    const tier=t.padv>=65?'in':t.padv>=30?'bub':'out';
+    const pts=t.pl?`${t.pts} pt${t.pts==1?'':'s'}`:'—';
+    const gf=t.iso?`<img class="gflag" src="flags/${t.iso}.svg" alt="" onerror="this.style.visibility='hidden'">`:`<span class="gflag"></span>`;
+    return `<div class="grow ${tier}">${gf}<span class="gnm">${t.team}</span><span class="gpts">${pts}</span><span class="gadv">${t.padv}%</span></div>`;
+  }).join('');
+  return `<div class="gcard"><h4>Group ${L}<span class="qn">P(advance)</span></h4>${rows}</div>`;
+}
+function renderGroups(){
+  if(!D.groups){document.getElementById('groups-sec').style.display='none';return;}
+  const order="ABCDEFGHIJKL".split('').filter(L=>D.groups[L]);
+  document.getElementById('groups').innerHTML=order.map(L=>gcard(L,D.groups[L])).join('');
+  document.getElementById('groups-sec').style.display='';
+}
 function render(){
   const c=D.champion;
   document.getElementById('champ').innerHTML=
     `<span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${c.team}</span><span class="cp">${c.final?'':c.p+'% to lift it'}</span>`;
   document.getElementById('bracket').innerHTML=D.rounds.map(r=>
     `<div class="bcol"><h3>${r.round}</h3>${r.matches.map(card).join('')}</div>`).join('');
+  renderGroups();
 }
 const s=document.createElement('script');s.src='data/bracket.js?'+Date.now();
 s.onload=()=>{D=window.BRACKET;
