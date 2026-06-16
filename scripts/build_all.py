@@ -40,6 +40,8 @@ MODEL_BUILDERS = [
     ("build_heat.py", False),
     ("build_incentive.py", False),
     ("build_drawluck.py", False),
+    ("build_elimination.py", False),    # 7-way elimination + coherence; market overlay is guarded, so offline-safe. Must precede mispricing.
+    ("build_simnative.py", False),      # format-native sim families (elimination/BTTS/totals); market overlay guarded
     ("build_mispricing.py", False),     # last: reads _groupsim/_knockout/_elimination
 ]
 MARKET_BUILDERS = [
