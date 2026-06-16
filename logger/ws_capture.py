@@ -26,6 +26,7 @@ import random
 import ssl
 import sys
 import time
+import unicodedata
 
 import certifi
 import requests
@@ -263,12 +264,43 @@ async def supervise(name: str, factory, deadline: float) -> None:
             backoff *= 2
 
 
+# Venue / FIFA-name variants our canonical bridge (elo_name∘canonical) does NOT already collapse.
+# Keyed by the canonical alnum norm; values are the extra alnum spellings the venues use. Without
+# these, "Mexico vs. Korea Republic" never matches our "South Korea" and the match is lost entirely.
+_TEAM_ALIASES = {
+    "southkorea": ["korearepublic", "korea"],
+    "iran": ["iriran"],
+    "ivorycoast": ["cotedivoire"],
+    "capeverde": ["caboverde"],
+}
+_ALIAS_TO_CANON = {alt: canon for canon, alts in _TEAM_ALIASES.items() for alt in alts}
+
+
+def _alnum(s: str) -> str:
+    """Accent-stripped, lowercased, alphanumerics only (so 'Côte d'Ivoire' -> 'cotedivoire')."""
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().lower()
+    return "".join(c for c in s if c.isalnum())
+
+
 def _norm(name: str) -> str:
     """Loose team-name match across venue spellings. Bridge through the WC name map
-    (elo_name∘canonical) so USA/United States, Bosnia & Herzegovina/Bosnia and Herzegovina,
-    Czechia/Czech Republic, Curacao/Curaçao, Turkiye/Turkey all collapse to one key before the
-    alnum strip; non-team strings (Tie, full questions) pass through unchanged."""
-    return "".join(c for c in _wt.elo_name(_wt.canonical(name)).lower() if c.isalnum())
+    (elo_name∘canonical) so USA/United States, Bosnia variants, Czechia/Czech Republic,
+    Curacao/Curaçao, Turkiye/Turkey collapse to one key, then fold in the FIFA-name aliases above
+    (Korea Republic, IR Iran, Côte d'Ivoire, Cabo Verde) that the bridge misses; non-team strings
+    (Tie, full questions) pass through unchanged."""
+    base = _alnum(_wt.elo_name(_wt.canonical(name)))
+    return _ALIAS_TO_CANON.get(base, base)
+
+
+def _spellings(name: str) -> set:
+    """Every alnum spelling a venue might use for `name` (canonical + its FIFA aliases) — for
+    substring-matching event titles, which carry the venue's spelling, not ours."""
+    canon = _norm(name)
+    return {canon, _alnum(name), *(a for a, c in _ALIAS_TO_CANON.items() if c == canon)}
+
+
+def _title_has(title_alnum: str, name: str) -> bool:
+    return any(sp and sp in title_alnum for sp in _spellings(name))
 
 
 def discover_match_markets(env: dict, team_a: str, team_b: str):
@@ -291,26 +323,47 @@ def discover_match_markets(env: dict, team_a: str, team_b: str):
             kalshi = sorted(names.values())  # the 3 outcome tickers (incl. Tie)
             k_by_name = names                 # normalized outcome name -> ticker
             break
-    # --- Polymarket (best-effort; may not exist yet) ---
+    # --- Polymarket (best-effort; the per-match moneyline lists close to kickoff) ---
     poly, p_by_name = [], {}
     try:
         # search by team names only (no "World Cup" suffix) so warm-up FRIENDLIES are
         # found too; the title filter below keeps the right event. The suffix used to make
         # discovery miss friendlies like Argentina v Iceland that aren't titled "World Cup".
-        s = requests.get("https://gamma-api.polymarket.com/public-search",
-                         params={"q": f"{team_a} {team_b}"}, timeout=15).json()
-        for e in s.get("events", []):
-            title = _norm(e.get("title", ""))
-            if a in title and b in title:
-                ev = requests.get("https://gamma-api.polymarket.com/events",
-                                  params={"slug": e.get("slug")}, timeout=15).json()
-                ev = ev[0] if isinstance(ev, list) and ev else ev
-                for mm in (ev.get("markets", []) if isinstance(ev, dict) else []):
+        # Search the plain names PLUS each team's FIFA aliases, so events titled with the venue's
+        # spelling (e.g. "Mexico vs. Korea Republic") still surface; dedupe by slug.
+        queries = [f"{team_a} {team_b}"]
+        queries += [f"{alt} {team_b}" for alt in _TEAM_ALIASES.get(a, [])]
+        queries += [f"{team_a} {alt}" for alt in _TEAM_ALIASES.get(b, [])]
+        events, seen = [], set()
+        for q in queries:
+            try:
+                for e in requests.get("https://gamma-api.polymarket.com/public-search",
+                                      params={"q": q}, timeout=15).json().get("events", []):
+                    sl = e.get("slug")
+                    if sl and sl not in seen:
+                        seen.add(sl); events.append(e)
+            except Exception:
+                continue
+        for e in events:
+            title = _alnum(e.get("title", ""))
+            if not (_title_has(title, team_a) and _title_has(title, team_b)):
+                continue
+            ev = requests.get("https://gamma-api.polymarket.com/events",
+                              params={"slug": e.get("slug")}, timeout=15).json()
+            ev = ev[0] if isinstance(ev, list) and ev else ev
+            for mm in (ev.get("markets", []) if isinstance(ev, dict) else []):
+                # Keep ONLY the match-winner outcomes — their groupItemTitle is the team name
+                # ('Brazil'/'Haiti'), keyed like Kalshi's yes_sub_title, so they pair by team.
+                # This skips the prop / '-more-markets' events (spreads, totals, BTTS) whose
+                # markets never key by team and so produced 0 pairs — which silently zeroed
+                # USA-Paraguay (it matched a 24-market prop event first, non-deterministically).
+                if _norm(mm.get("groupItemTitle") or "") in (a, b):
                     toks = venues._maybe_json_list(mm.get("clobTokenIds"))
                     if toks:
-                        poly.append(toks[0])
-                        p_by_name[_norm(mm.get("groupItemTitle") or mm.get("question", ""))] = toks[0]
+                        p_by_name[_norm(mm["groupItemTitle"])] = toks[0]
+            if p_by_name:            # found the moneyline event's team outcomes — stop scanning
                 break
+        poly = list(p_by_name.values())
     except Exception:
         pass
     # pair the same outcome across venues by normalized name (team A, team B)
@@ -361,19 +414,27 @@ def _write_pairs(pairs: list[dict], name: str) -> None:
     _log(f"recorded {len(pairs)} cross-venue pair(s) -> {os.path.basename(path)}")
 
 
+# Re-discover markets this often (seconds) until both venues are streaming — Polymarket lists
+# per-match markets close to / after kickoff (and Kalshi occasionally lags), so a one-shot
+# subscribe at start used to lose the whole game on the late venue. Env-overridable for tuning.
+REPOLL_SECONDS = int(os.environ.get("WSCAP_REPOLL_S", "90"))
+
+
 async def main_async(args) -> int:
     env = envtools.load_env()
     pairs = []
     label = None
+    match_teams = None                       # set for --match -> enables the re-poll loop
     if args.match:
         parts = [p.strip() for p in args.match.replace(" vs ", ",").split(",") if p.strip()]
         if len(parts) != 2:
             _log("--match expects 'Team A vs Team B'")
             return 1
+        match_teams = (parts[0], parts[1])
         label = f"{parts[0]} vs {parts[1]}"
         kalshi, poly, pairs = discover_match_markets(env, parts[0], parts[1])
         _log(f"match '{parts[0]} vs {parts[1]}' — kalshi tickers: {kalshi or 'NONE'}")
-        _log(f"  polymarket tokens: {len(poly)}" + ("" if poly else " (per-match market not listed yet — Kalshi-only for now)"))
+        _log(f"  polymarket tokens: {len(poly)}" + ("" if poly else " (per-match market not listed yet — will re-poll)"))
         _log(f"  cross-venue pairs: {len(pairs)}")
     elif args.outright_test:
         kalshi, poly, pairs = discover_outright_markets(env)
@@ -387,16 +448,70 @@ async def main_async(args) -> int:
     _write_pairs(pairs, name)
     w = Writer(DATA_DIR, name)
     deadline = time.time() + args.seconds
-    tasks = []
-    if kalshi and "KALSHI_ACCESS_KEY" in env:
-        tasks.append(supervise("kalshi", lambda: kalshi_stream(kalshi, env, w, deadline), deadline))
-    if poly:
-        tasks.append(supervise("polymarket", lambda: polymarket_stream(poly, w, deadline), deadline))
-    if not tasks:
+
+    # Launch each venue's stream the moment its market is available — not just once at start.
+    # start_* are idempotent (a venue is started at most once); the re-poll task below brings up
+    # a late-listing venue and records its cross-venue pairs mid-capture.
+    active: dict[str, asyncio.Future] = {}
+
+    def start_kalshi(tickers) -> bool:
+        if "kalshi" in active or not tickers or "KALSHI_ACCESS_KEY" not in env:
+            return False
+        active["kalshi"] = asyncio.ensure_future(
+            supervise("kalshi", lambda: kalshi_stream(tickers, env, w, deadline), deadline))
+        return True
+
+    def start_poly(tokens) -> bool:
+        if "polymarket" in active or not tokens:
+            return False
+        active["polymarket"] = asyncio.ensure_future(
+            supervise("polymarket", lambda: polymarket_stream(tokens, w, deadline), deadline))
+        return True
+
+    start_kalshi(kalshi)
+    start_poly(poly)
+
+    async def repoll() -> None:
+        """Re-discover the match markets until both venues stream and a pair exists (or the
+        capture ends), subscribing late-listed markets and appending new cross-venue pairs.
+        Discovery runs in a thread so its blocking HTTP calls don't stall the live streams."""
+        loop = asyncio.get_event_loop()
+        seen = {(p["kalshi"], p["poly"]) for p in pairs}
+        while time.time() < deadline:
+            if "kalshi" in active and "polymarket" in active and seen:
+                _log("re-poll: both venues streaming and paired — discovery done")
+                return
+            await asyncio.sleep(REPOLL_SECONDS)
+            try:
+                k2, p2, pr2 = await loop.run_in_executor(
+                    None, discover_match_markets, env, match_teams[0], match_teams[1])
+            except Exception as e:
+                _log(f"re-poll discovery error ({type(e).__name__}); retrying")
+                continue
+            if start_kalshi(k2):
+                _log(f"re-poll: late Kalshi listing ({len(k2)} tickers) — subscribed")
+            if start_poly(p2):
+                _log(f"re-poll: late Polymarket listing ({len(p2)} tokens) — subscribed")
+            fresh = [p for p in pr2 if (p["kalshi"], p["poly"]) not in seen]
+            if fresh:
+                _write_pairs(fresh, name)
+                seen |= {(p["kalshi"], p["poly"]) for p in fresh}
+                _log(f"re-poll: {len(fresh)} new cross-venue pair(s) recorded")
+
+    repoll_task = asyncio.ensure_future(repoll()) if match_teams else None
+
+    if not active and repoll_task is None:
         _log("nothing to stream — pass --kalshi/--polymarket or --outright-test")
+        w.close()
         return 1
+    if not active:
+        _log("no markets listed at start — re-polling until they appear")
+
     try:
-        await asyncio.gather(*tasks)
+        if repoll_task is not None:
+            await repoll_task                # runs concurrently with the streams; returns at both-up or deadline
+        if active:
+            await asyncio.gather(*active.values())
     finally:
         w.close()
     _log(f"done — {w.n} events written to {os.path.relpath(w.path)}")
