@@ -158,23 +158,39 @@ td.num{font-family:var(--fm);text-align:right}
 .mres .sc{font-weight:600}.mres .ok{color:var(--good)}.mres .x{color:var(--bad)}.mres .pre{color:var(--dim);font-size:11px}
 
 /* knockout bracket */
-.champ-banner{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:18px 22px;border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:6px;background:var(--card);margin-bottom:24px}
-.champ-banner .ck{font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.champ-banner .cv{font-family:var(--fd);font-weight:600;font-size:30px;color:var(--accent);line-height:1}
-.champ-banner .cp{font-family:var(--fm);font-size:14px;color:var(--muted)}
-.bwrap{overflow-x:auto;padding-bottom:10px}
-.bcols{display:flex;gap:14px;min-width:780px;align-items:stretch}
-.bcol{flex:1;min-width:150px;display:flex;flex-direction:column;justify-content:flex-start}
-.bcol h3{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:10px}
-.bmatch{border:1px solid var(--rule);border-radius:6px;background:var(--card);margin-bottom:8px;overflow:hidden}
-.bmatch.final{border-color:var(--rule-2)}
-.bteam{display:flex;justify-content:space-between;align-items:center;padding:7px 11px;font-size:12.5px;gap:8px}
+.champ-banner{display:flex;align-items:center;gap:18px;padding:20px 26px;border:1px solid var(--rule-2);border-radius:12px;
+  background:radial-gradient(130% 240% at 0% 0%,rgba(179,18,42,.07),transparent 55%),var(--card);
+  margin-bottom:28px;position:relative;box-shadow:0 2px 16px rgba(27,24,19,.06)}
+.champ-banner .medal{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 35%,var(--accent),var(--accent-deep));box-shadow:0 0 0 5px var(--accent-soft);
+  font-family:var(--fd);font-weight:600;font-size:19px;color:#fff}
+.champ-banner .ctext{display:flex;flex-direction:column;gap:3px}
+.champ-banner .ck{font-family:var(--fm);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.champ-banner .cv{font-family:var(--fd);font-weight:600;font-size:32px;color:var(--accent);line-height:1;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.champ-banner .cv .flag{width:27px;height:27px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.champ-banner .cp{font-family:var(--fm);font-size:13px;color:var(--muted);margin-left:auto;align-self:flex-end}
+.bwrap{overflow-x:auto;padding:4px 0 18px}
+.bcols{display:flex;gap:38px;min-width:960px;align-items:stretch;position:relative}
+.bcol{flex:1;min-width:160px;display:flex;flex-direction:column}
+.bcol h3{font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:center;padding-bottom:9px;margin-bottom:6px;border-bottom:1px solid var(--rule)}
+/* matches fill the column below the (pinned) header and distribute evenly, so each round's ties
+   centre between the two that feed them — the bracket-tree geometry the JS connectors then trace. */
+.bmatches{flex:1;display:flex;flex-direction:column;justify-content:space-around}
+.blines{position:absolute;top:0;left:0;pointer-events:none;z-index:0}
+.bmatch{position:relative;z-index:1;border:1px solid var(--rule);border-radius:9px;background:var(--card);overflow:hidden;
+  box-shadow:0 1px 3px rgba(27,24,19,.05);transition:box-shadow .14s,transform .14s}
+.bmatch:hover{box-shadow:0 4px 14px rgba(27,24,19,.10);transform:translateY(-1px);z-index:2}
+.bmatch.final{border-color:var(--accent);box-shadow:0 2px 16px rgba(179,18,42,.13)}
+.bteam{display:flex;justify-content:space-between;align-items:center;padding:9px 12px 9px 13px;font-size:12.5px;gap:8px;position:relative}
 .bteam+.bteam{border-top:1px solid var(--rule)}
 .bteam.win{font-weight:600;color:var(--ink);background:var(--accent-soft)}
-.bteam.win .wp{color:var(--accent);font-family:var(--fm);font-size:10.5px}
+.bteam.win::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+.bteam.win .wp{color:var(--accent);font-family:var(--fm);font-size:10.5px;font-weight:600}
 .bteam.out{color:var(--dim)}
-.bteam .bn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bteam .bn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:7px;min-width:0}
 .bteam .pp{font-family:var(--fm);font-size:9.5px;color:var(--dim);margin-left:5px;font-weight:400}
+.bmatch .flag{width:17px;height:17px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+@media(max-width:560px){.bcols{gap:20px;min-width:720px}}
 footer{padding:32px 0 54px;border-top:1px solid var(--rule);font-family:var(--fm);font-size:11.5px;color:var(--dim);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;margin-top:16px}
 footer b{color:var(--ink)}
 .loading{padding:54px 0;text-align:center;color:var(--dim);font-family:var(--fm)}
