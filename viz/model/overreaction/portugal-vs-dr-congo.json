@@ -1,0 +1,74 @@
+{
+  "match": "Portugal vs Dr Congo",
+  "capture": "20260617T162723Z-portugal-vs-dr-congo",
+  "n_goals": null,
+  "goals_source": "not-found",
+  "reference": {
+    "label": "DR Congo",
+    "venue": "polymarket"
+  },
+  "n_detected": 4,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1781718656499,
+      "jump": 0.0615,
+      "pre": 0.0235,
+      "p_entry": 0.0725,
+      "p_exit": 0.0775,
+      "reverted_pp": -0.5,
+      "pnl_pp": -1.0,
+      "surprise": 1.23,
+      "gain_prior": 0.0235,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781720354349,
+      "jump": 0.0515,
+      "pre": 0.0525,
+      "p_entry": 0.0865,
+      "p_exit": 0.0865,
+      "reverted_pp": -0.0,
+      "pnl_pp": -0.5,
+      "surprise": 0.981,
+      "gain_prior": 0.0525,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781721705580,
+      "jump": -0.0515,
+      "pre": 0.121,
+      "p_entry": 0.0825,
+      "p_exit": 0.088,
+      "reverted_pp": 0.55,
+      "pnl_pp": 0.05,
+      "surprise": 0.059,
+      "gain_prior": 0.879,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": -1.45,
+    "hit_rate": 0.333,
+    "mean_reverted_pp": 0.017,
+    "mean_pnl_pp": -0.483,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 2,
+  "summary_surprising": {
+    "n": 2,
+    "total_pnl_pp": -1.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -0.25,
+    "mean_pnl_pp": -0.75,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
