@@ -7095,6 +7095,2308 @@
       "match": "Brazil vs Morocco"
     },
     {
+      "label": "Croatia",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-CRO",
+      "poly": "55443738818158231803517291185008080654932985451404315852703585757411667902597",
+      "n_events": 20,
+      "events": [
+        {
+          "t_ms": 1781726898242,
+          "jump": 0.06,
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6575926182171278,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.175,
+            "settle": 0.1013,
+            "jump": -0.0737,
+            "surprise": 0.825,
+            "reversals": {
+              "60": {
+                "level": 0.095,
+                "reversal_frac": -0.085
+              },
+              "180": {
+                "level": 0.105,
+                "reversal_frac": 0.051
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": -0.356
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.166,
+            "settle": 0.0917,
+            "jump": -0.0743,
+            "surprise": 0.834,
+            "reversals": {
+              "60": {
+                "level": 0.105,
+                "reversal_frac": 0.179
+              },
+              "180": {
+                "level": 0.105,
+                "reversal_frac": 0.179
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": -0.225
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781726928908,
+          "jump": 0.08,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.1046,
+            "settle": 0.095,
+            "jump": -0.0096,
+            "surprise": 0.895,
+            "reversals": {
+              "60": {
+                "level": 0.165,
+                "reversal_frac": 7.28
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -2.08
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": -2.08
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1033,
+            "settle": 0.0941,
+            "jump": -0.0092,
+            "surprise": 0.897,
+            "reversals": {
+              "60": {
+                "level": 0.165,
+                "reversal_frac": 7.736
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -2.09
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": -2.09
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -18000,
+            "best_corr": -0.7,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781726978363,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.0904,
+            "settle": 0.165,
+            "jump": 0.0746,
+            "surprise": 0.91,
+            "reversals": {
+              "60": {
+                "level": 0.095,
+                "reversal_frac": 0.938
+              },
+              "180": {
+                "level": 0.085,
+                "reversal_frac": 1.072
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": 1.206
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0893,
+            "settle": 0.1738,
+            "jump": 0.0845,
+            "surprise": 0.911,
+            "reversals": {
+              "60": {
+                "level": 0.08,
+                "reversal_frac": 1.11
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": 1.17
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": 1.17
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 19600,
+            "best_corr": -0.91,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727038362,
+          "jump": 0.09,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.1181,
+            "settle": 0.085,
+            "jump": -0.0331,
+            "surprise": 0.882,
+            "reversals": {
+              "60": {
+                "level": 0.085,
+                "reversal_frac": -0.0
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -0.302
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": -0.605
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1159,
+            "settle": 0.0935,
+            "jump": -0.0224,
+            "surprise": 0.884,
+            "reversals": {
+              "60": {
+                "level": 0.085,
+                "reversal_frac": -0.379
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -0.825
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": -1.27
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -17400,
+            "best_corr": -0.51,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727085289,
+          "jump": 0.045,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.105,
+            "settle": 0.0894,
+            "jump": -0.0156,
+            "surprise": 0.895,
+            "reversals": {
+              "60": {
+                "level": 0.085,
+                "reversal_frac": -0.28
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -0.92
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": -1.56
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1068,
+            "settle": 0.0851,
+            "jump": -0.0217,
+            "surprise": 0.893,
+            "reversals": {
+              "60": {
+                "level": 0.075,
+                "reversal_frac": -0.466
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": -0.466
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": -0.927
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19000,
+            "best_corr": 0.4,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727120910,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.0765,
+            "settle": 0.0767,
+            "jump": 0.0001,
+            "surprise": 0.923,
+            "reversals": {
+              "60": {
+                "level": 0.075,
+                "reversal_frac": 13.0
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": 13.0
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": 91.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.075,
+            "settle": 0.0783,
+            "jump": 0.0033,
+            "surprise": 0.925,
+            "reversals": {
+              "60": {
+                "level": 0.075,
+                "reversal_frac": 1.0
+              },
+              "180": {
+                "level": 0.075,
+                "reversal_frac": 1.0
+              },
+              "300": {
+                "level": 0.065,
+                "reversal_frac": 4.047
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 10800,
+            "best_corr": -0.29,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781728538386,
+          "jump": 0.135,
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.9037508279032525,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.065,
+            "settle": 0.2056,
+            "jump": 0.1406,
+            "surprise": 0.935,
+            "reversals": {
+              "60": {
+                "level": 0.175,
+                "reversal_frac": 0.218
+              },
+              "180": {
+                "level": 0.175,
+                "reversal_frac": 0.218
+              },
+              "300": {
+                "level": 0.165,
+                "reversal_frac": 0.289
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0648,
+            "settle": 0.2269,
+            "jump": 0.1621,
+            "surprise": 0.935,
+            "reversals": {
+              "60": {
+                "level": 0.175,
+                "reversal_frac": 0.32
+              },
+              "180": {
+                "level": 0.175,
+                "reversal_frac": 0.32
+              },
+              "300": {
+                "level": 0.165,
+                "reversal_frac": 0.382
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781728568432,
+          "jump": 0.135,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.1742,
+            "settle": 0.1638,
+            "jump": -0.0105,
+            "surprise": 0.826,
+            "reversals": {
+              "60": {
+                "level": 0.185,
+                "reversal_frac": 2.028
+              },
+              "180": {
+                "level": 0.165,
+                "reversal_frac": 0.119
+              },
+              "300": {
+                "level": 0.165,
+                "reversal_frac": 0.119
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1754,
+            "settle": 0.1653,
+            "jump": -0.0101,
+            "surprise": 0.825,
+            "reversals": {
+              "60": {
+                "level": 0.195,
+                "reversal_frac": 2.937
+              },
+              "180": {
+                "level": 0.165,
+                "reversal_frac": -0.032
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -1.022
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 16600,
+            "best_corr": 0.54,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781728598451,
+          "jump": 0.1,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.1696,
+            "settle": 0.1862,
+            "jump": 0.0166,
+            "surprise": 0.83,
+            "reversals": {
+              "60": {
+                "level": 0.185,
+                "reversal_frac": 0.075
+              },
+              "180": {
+                "level": 0.165,
+                "reversal_frac": 1.277
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": 6.688
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1685,
+            "settle": 0.1842,
+            "jump": 0.0157,
+            "surprise": 0.832,
+            "reversals": {
+              "60": {
+                "level": 0.175,
+                "reversal_frac": 0.585
+              },
+              "180": {
+                "level": 0.165,
+                "reversal_frac": 1.222
+              },
+              "300": {
+                "level": 0.075,
+                "reversal_frac": 6.959
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19800,
+            "best_corr": 0.37,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781728880914,
+          "jump": 0.05,
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7089510141207532,
+            "leader": "polymarket",
+            "n_bins": 149
+          },
+          "kalshi_reaction": {
+            "pre": 0.165,
+            "settle": 0.0769,
+            "jump": -0.0881,
+            "surprise": 0.835,
+            "reversals": {
+              "60": {
+                "level": 0.065,
+                "reversal_frac": -0.135
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.248
+              },
+              "300": {
+                "level": 0.055,
+                "reversal_frac": -0.248
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.155,
+            "settle": 0.075,
+            "jump": -0.08,
+            "surprise": 0.845,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -0.25
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.25
+              },
+              "300": {
+                "level": 0.055,
+                "reversal_frac": -0.25
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781728911440,
+          "jump": 0.1,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.0773,
+            "settle": 0.065,
+            "jump": -0.0123,
+            "surprise": 0.923,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -0.813
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.813
+              },
+              "300": {
+                "level": 0.055,
+                "reversal_frac": -0.813
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0719,
+            "settle": 0.0605,
+            "jump": -0.0113,
+            "surprise": 0.928,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -0.488
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.488
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": -1.371
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -18200,
+            "best_corr": 0.49,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781728941445,
+          "jump": 0.1,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.065,
+            "settle": 0.06,
+            "jump": -0.005,
+            "surprise": 0.935,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -1.0
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -1.0
+              },
+              "300": {
+                "level": 0.055,
+                "reversal_frac": -1.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0565,
+            "settle": 0.062,
+            "jump": 0.0054,
+            "surprise": 0.943,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": 1.284
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": 1.284
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": 3.129
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 16600,
+            "best_corr": -0.71,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781729400252,
+          "jump": 0.1,
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5892273477183727,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.055,
+            "settle": 0.1456,
+            "jump": 0.0906,
+            "surprise": 0.945,
+            "reversals": {
+              "60": {
+                "level": 0.095,
+                "reversal_frac": 0.559
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": -0.103
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -0.103
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.055,
+            "settle": 0.1569,
+            "jump": 0.1019,
+            "surprise": 0.945,
+            "reversals": {
+              "60": {
+                "level": 0.105,
+                "reversal_frac": 0.509
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": 0.019
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": 0.019
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781729430297,
+          "jump": 0.1,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.145,
+            "settle": 0.135,
+            "jump": -0.01,
+            "surprise": 0.855,
+            "reversals": {
+              "60": {
+                "level": 0.165,
+                "reversal_frac": 3.0
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": 2.0
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": 2.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.155,
+            "settle": 0.1351,
+            "jump": -0.0199,
+            "surprise": 0.845,
+            "reversals": {
+              "60": {
+                "level": 0.165,
+                "reversal_frac": 1.503
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": 1.0
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": 1.0
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 1600,
+            "best_corr": 0.46,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781729460743,
+          "jump": 0.165,
+          "lead": {
+            "best_lag_ms": -1400,
+            "best_corr": 0.6902198141702527,
+            "leader": "kalshi",
+            "n_bins": 148
+          },
+          "kalshi_reaction": {
+            "pre": 0.115,
+            "settle": 0.1488,
+            "jump": 0.0338,
+            "surprise": 0.885,
+            "reversals": {
+              "60": {
+                "level": 0.155,
+                "reversal_frac": -0.185
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": -0.185
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -0.185
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1193,
+            "settle": 0.1335,
+            "jump": 0.0142,
+            "surprise": 0.881,
+            "reversals": {
+              "60": {
+                "level": 0.155,
+                "reversal_frac": -1.517
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": -1.517
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -1.517
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781729499172,
+          "jump": 0.04,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.1604,
+            "settle": 0.155,
+            "jump": -0.0054,
+            "surprise": 0.84,
+            "reversals": {
+              "60": {
+                "level": 0.155,
+                "reversal_frac": -0.0
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": -0.0
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.1641,
+            "settle": 0.16,
+            "jump": -0.0041,
+            "surprise": 0.836,
+            "reversals": {
+              "60": {
+                "level": 0.155,
+                "reversal_frac": -1.222
+              },
+              "180": {
+                "level": 0.155,
+                "reversal_frac": -1.222
+              },
+              "300": {
+                "level": 0.155,
+                "reversal_frac": -1.222
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -15800,
+            "best_corr": 1.0,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781730640908,
+          "jump": 0.07,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.155,
+            "settle": 0.095,
+            "jump": -0.06,
+            "surprise": 0.845,
+            "reversals": {
+              "60": {
+                "level": 0.085,
+                "reversal_frac": -0.167
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.667
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": -0.833
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.155,
+            "settle": 0.075,
+            "jump": -0.08,
+            "surprise": 0.845,
+            "reversals": {
+              "60": {
+                "level": 0.075,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.045,
+                "reversal_frac": -0.375
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": -0.375
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -13600,
+            "best_corr": -0.99,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781730670915,
+          "jump": 0.1,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.0912,
+            "settle": 0.075,
+            "jump": -0.0162,
+            "surprise": 0.909,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -1.238
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -1.238
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": -1.857
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0818,
+            "settle": 0.065,
+            "jump": -0.0168,
+            "surprise": 0.918,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -0.595
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.595
+              },
+              "300": {
+                "level": 0.04,
+                "reversal_frac": -1.487
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -6000,
+            "best_corr": -0.42,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781730708908,
+          "jump": 0.04,
+          "lead": {
+            "best_lag_ms": -3800,
+            "best_corr": 0.5727128425310515,
+            "leader": "kalshi",
+            "n_bins": 145
+          },
+          "kalshi_reaction": {
+            "pre": 0.0773,
+            "settle": 0.055,
+            "jump": -0.0223,
+            "surprise": 0.923,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": -0.0
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.0
+              },
+              "300": {
+                "level": 0.045,
+                "reversal_frac": -0.448
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0692,
+            "settle": 0.055,
+            "jump": -0.0142,
+            "surprise": 0.931,
+            "reversals": {
+              "60": {
+                "level": 0.045,
+                "reversal_frac": -0.706
+              },
+              "180": {
+                "level": 0.055,
+                "reversal_frac": -0.0
+              },
+              "300": {
+                "level": 0.035,
+                "reversal_frac": -1.412
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781734115908,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "England vs Croatia"
+    },
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-ENG",
+      "poly": "45513813860398961340723481590130352932611791552209098368268600222240572304551",
+      "n_events": 28,
+      "events": [
+        {
+          "t_ms": 1781726898130,
+          "jump": 0.08,
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7378831834303786,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.585,
+            "settle": 0.7288,
+            "jump": 0.1438,
+            "surprise": 0.415,
+            "reversals": {
+              "60": {
+                "level": 0.755,
+                "reversal_frac": -0.183
+              },
+              "180": {
+                "level": 0.745,
+                "reversal_frac": -0.113
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": -0.252
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.575,
+            "settle": 0.7561,
+            "jump": 0.1811,
+            "surprise": 0.425,
+            "reversals": {
+              "60": {
+                "level": 0.755,
+                "reversal_frac": 0.006
+              },
+              "180": {
+                "level": 0.735,
+                "reversal_frac": 0.116
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": -0.049
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781726928908,
+          "jump": 0.16,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.735,
+            "settle": 0.745,
+            "jump": 0.01,
+            "surprise": 0.265,
+            "reversals": {
+              "60": {
+                "level": 0.585,
+                "reversal_frac": 16.0
+              },
+              "180": {
+                "level": 0.775,
+                "reversal_frac": -3.0
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": -2.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7422,
+            "settle": 0.7237,
+            "jump": -0.0184,
+            "surprise": 0.258,
+            "reversals": {
+              "60": {
+                "level": 0.585,
+                "reversal_frac": -7.528
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 2.24
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": 2.24
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19000,
+            "best_corr": 0.57,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781726958908,
+          "jump": 0.15,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7521,
+            "settle": 0.7817,
+            "jump": 0.0295,
+            "surprise": 0.248,
+            "reversals": {
+              "60": {
+                "level": 0.745,
+                "reversal_frac": 1.242
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 0.565
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": 0.565
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7416,
+            "settle": 0.7721,
+            "jump": 0.0305,
+            "surprise": 0.258,
+            "reversals": {
+              "60": {
+                "level": 0.735,
+                "reversal_frac": 1.217
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 0.234
+              },
+              "300": {
+                "level": 0.755,
+                "reversal_frac": 0.562
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19400,
+            "best_corr": -0.57,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781726988929,
+          "jump": 0.16,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.6481,
+            "settle": 0.595,
+            "jump": -0.0531,
+            "surprise": 0.352,
+            "reversals": {
+              "60": {
+                "level": 0.735,
+                "reversal_frac": 2.638
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 3.203
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": 3.203
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.6179,
+            "settle": 0.5983,
+            "jump": -0.0195,
+            "surprise": 0.382,
+            "reversals": {
+              "60": {
+                "level": 0.725,
+                "reversal_frac": 6.487
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 8.535
+              },
+              "300": {
+                "level": 0.765,
+                "reversal_frac": 8.535
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -400,
+            "best_corr": 0.43,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727025914,
+          "jump": 0.18,
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6866450106326847,
+            "leader": "synchronous",
+            "n_bins": 145
+          },
+          "kalshi_reaction": {
+            "pre": 0.7371,
+            "settle": 0.7037,
+            "jump": -0.0334,
+            "surprise": 0.263,
+            "reversals": {
+              "60": {
+                "level": 0.805,
+                "reversal_frac": 3.032
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 1.834
+              },
+              "300": {
+                "level": 0.785,
+                "reversal_frac": 2.433
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.735,
+            "settle": 0.7201,
+            "jump": -0.0148,
+            "surprise": 0.265,
+            "reversals": {
+              "60": {
+                "level": 0.805,
+                "reversal_frac": 5.719
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 3.023
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 3.697
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781727056908,
+          "jump": 0.18,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7404,
+            "settle": 0.7281,
+            "jump": -0.0123,
+            "surprise": 0.26,
+            "reversals": {
+              "60": {
+                "level": 0.78,
+                "reversal_frac": 4.231
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 3.008
+              },
+              "300": {
+                "level": 0.785,
+                "reversal_frac": 4.639
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7293,
+            "settle": 0.7363,
+            "jump": 0.0071,
+            "surprise": 0.271,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": -4.055
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": -4.055
+              },
+              "300": {
+                "level": 0.785,
+                "reversal_frac": -6.885
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19600,
+            "best_corr": -0.6,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727086908,
+          "jump": 0.08,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7488,
+            "settle": 0.7906,
+            "jump": 0.0417,
+            "surprise": 0.251,
+            "reversals": {
+              "60": {
+                "level": 0.755,
+                "reversal_frac": 0.852
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 0.613
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 0.373
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7448,
+            "settle": 0.7784,
+            "jump": 0.0336,
+            "surprise": 0.255,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": 0.399
+              },
+              "180": {
+                "level": 0.755,
+                "reversal_frac": 0.697
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 0.102
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -20000,
+            "best_corr": -0.86,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781727116914,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7777,
+            "settle": 0.7725,
+            "jump": -0.0052,
+            "surprise": 0.222,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": -1.444
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": -1.444
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 0.481
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7664,
+            "settle": 0.765,
+            "jump": -0.0014,
+            "surprise": 0.234,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.765,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 7.021
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781727146924,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7631,
+            "settle": 0.755,
+            "jump": -0.0081,
+            "surprise": 0.237,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": 1.238
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": 3.714
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 2.476
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.765,
+            "settle": 0.765,
+            "jump": 0.0,
+            "surprise": 0.235,
+            "reversals": {
+              "60": {
+                "level": 0.765,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.775,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781728538297,
+          "jump": 0.265,
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8951054075130217,
+            "leader": "polymarket",
+            "n_bins": 147
+          },
+          "kalshi_reaction": {
+            "pre": 0.7842,
+            "settle": 0.5319,
+            "jump": -0.2524,
+            "surprise": 0.216,
+            "reversals": {
+              "60": {
+                "level": 0.525,
+                "reversal_frac": -0.027
+              },
+              "180": {
+                "level": 0.505,
+                "reversal_frac": -0.106
+              },
+              "300": {
+                "level": 0.535,
+                "reversal_frac": 0.012
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7837,
+            "settle": 0.5187,
+            "jump": -0.265,
+            "surprise": 0.216,
+            "reversals": {
+              "60": {
+                "level": 0.525,
+                "reversal_frac": 0.024
+              },
+              "180": {
+                "level": 0.515,
+                "reversal_frac": -0.014
+              },
+              "300": {
+                "level": 0.525,
+                "reversal_frac": 0.024
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781728568348,
+          "jump": 0.265,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.5296,
+            "settle": 0.5425,
+            "jump": 0.0129,
+            "surprise": 0.47,
+            "reversals": {
+              "60": {
+                "level": 0.505,
+                "reversal_frac": 2.91
+              },
+              "180": {
+                "level": 0.515,
+                "reversal_frac": 2.134
+              },
+              "300": {
+                "level": 0.535,
+                "reversal_frac": 0.582
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.5311,
+            "settle": 0.5319,
+            "jump": 0.0007,
+            "surprise": 0.469,
+            "reversals": {
+              "60": {
+                "level": 0.505,
+                "reversal_frac": 37.88
+              },
+              "180": {
+                "level": 0.525,
+                "reversal_frac": 9.67
+              },
+              "300": {
+                "level": 0.545,
+                "reversal_frac": -18.539
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -13400,
+            "best_corr": -0.59,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781728598355,
+          "jump": 0.245,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.5304,
+            "settle": 0.525,
+            "jump": -0.0054,
+            "surprise": 0.47,
+            "reversals": {
+              "60": {
+                "level": 0.505,
+                "reversal_frac": -3.714
+              },
+              "180": {
+                "level": 0.515,
+                "reversal_frac": -1.857
+              },
+              "300": {
+                "level": 0.785,
+                "reversal_frac": 48.286
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.5267,
+            "settle": 0.5152,
+            "jump": -0.0115,
+            "surprise": 0.473,
+            "reversals": {
+              "60": {
+                "level": 0.515,
+                "reversal_frac": -0.017
+              },
+              "180": {
+                "level": 0.515,
+                "reversal_frac": -0.017
+              },
+              "300": {
+                "level": 0.775,
+                "reversal_frac": 22.624
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -19000,
+            "best_corr": -0.55,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781728880914,
+          "jump": 0.095,
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8339031333748951,
+            "leader": "polymarket",
+            "n_bins": 149
+          },
+          "kalshi_reaction": {
+            "pre": 0.535,
+            "settle": 0.7888,
+            "jump": 0.2538,
+            "surprise": 0.465,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": 0.015
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": 0.015
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -0.025
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.545,
+            "settle": 0.7762,
+            "jump": 0.2312,
+            "surprise": 0.455,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -0.038
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.038
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -0.081
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781728911107,
+          "jump": 0.25,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.775,
+            "settle": 0.7844,
+            "jump": 0.0094,
+            "surprise": 0.225,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -0.067
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.067
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -1.133
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7718,
+            "settle": 0.775,
+            "jump": 0.0032,
+            "surprise": 0.228,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -3.152
+              },
+              "180": {
+                "level": 0.795,
+                "reversal_frac": -6.304
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -6.304
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 19600,
+            "best_corr": 0.58,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781728941196,
+          "jump": 0.25,
+          "lead": {
+            "best_lag_ms": 5000,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.775,
+            "settle": 0.785,
+            "jump": 0.01,
+            "surprise": 0.225,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.785,
+                "reversal_frac": 0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7775,
+            "settle": 0.785,
+            "jump": 0.0075,
+            "surprise": 0.223,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.795,
+                "reversal_frac": -1.33
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -1.33
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781729400122,
+          "jump": 0.235,
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7084093988873462,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.785,
+            "settle": 0.5406,
+            "jump": -0.2444,
+            "surprise": 0.215,
+            "reversals": {
+              "60": {
+                "level": 0.61,
+                "reversal_frac": 0.284
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": -0.228
+              },
+              "300": {
+                "level": 0.485,
+                "reversal_frac": -0.228
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.795,
+            "settle": 0.5293,
+            "jump": -0.2657,
+            "surprise": 0.205,
+            "reversals": {
+              "60": {
+                "level": 0.595,
+                "reversal_frac": 0.247
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": -0.167
+              },
+              "300": {
+                "level": 0.495,
+                "reversal_frac": -0.129
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781729430123,
+          "jump": 0.28,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.5188,
+            "settle": 0.5438,
+            "jump": 0.0249,
+            "surprise": 0.481,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": 2.359
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": 2.359
+              },
+              "300": {
+                "level": 0.485,
+                "reversal_frac": 2.359
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.5053,
+            "settle": 0.5483,
+            "jump": 0.043,
+            "surprise": 0.495,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": 1.473
+              },
+              "180": {
+                "level": 0.495,
+                "reversal_frac": 1.24
+              },
+              "300": {
+                "level": 0.505,
+                "reversal_frac": 1.007
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -15600,
+            "best_corr": -0.5,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781729460143,
+          "jump": 0.28,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.5669,
+            "settle": 0.4912,
+            "jump": -0.0757,
+            "surprise": 0.433,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": -0.083
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": -0.083
+              },
+              "300": {
+                "level": 0.485,
+                "reversal_frac": -0.083
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.5653,
+            "settle": 0.4868,
+            "jump": -0.0786,
+            "surprise": 0.435,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": -0.022
+              },
+              "180": {
+                "level": 0.495,
+                "reversal_frac": 0.105
+              },
+              "300": {
+                "level": 0.505,
+                "reversal_frac": 0.232
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 17600,
+            "best_corr": 0.75,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781729490148,
+          "jump": 0.06,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.4804,
+            "settle": 0.485,
+            "jump": 0.0046,
+            "surprise": 0.52,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.485,
+                "reversal_frac": 0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.485,
+            "settle": 0.485,
+            "jump": 0.0,
+            "surprise": 0.515,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.495,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.505,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781729520257,
+          "jump": 0.11,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.485,
+            "settle": 0.485,
+            "jump": -0.0,
+            "surprise": 0.515,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.485,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.485,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.485,
+            "settle": 0.485,
+            "jump": 0.0,
+            "surprise": 0.515,
+            "reversals": {
+              "60": {
+                "level": 0.485,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.495,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.505,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781730640396,
+          "jump": 0.285,
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8929261652205255,
+            "leader": "polymarket",
+            "n_bins": 147
+          },
+          "kalshi_reaction": {
+            "pre": 0.495,
+            "settle": 0.755,
+            "jump": 0.26,
+            "surprise": 0.505,
+            "reversals": {
+              "60": {
+                "level": 0.715,
+                "reversal_frac": 0.154
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.115
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -0.154
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.505,
+            "settle": 0.749,
+            "jump": 0.244,
+            "surprise": 0.495,
+            "reversals": {
+              "60": {
+                "level": 0.745,
+                "reversal_frac": 0.016
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.148
+              },
+              "300": {
+                "level": 0.805,
+                "reversal_frac": -0.23
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781730670396,
+          "jump": 0.285,
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6762509173534228,
+            "leader": "synchronous",
+            "n_bins": 147
+          },
+          "kalshi_reaction": {
+            "pre": 0.7119,
+            "settle": 0.765,
+            "jump": 0.0531,
+            "surprise": 0.288,
+            "reversals": {
+              "60": {
+                "level": 0.775,
+                "reversal_frac": -0.188
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.377
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -0.565
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7233,
+            "settle": 0.7665,
+            "jump": 0.0432,
+            "surprise": 0.277,
+            "reversals": {
+              "60": {
+                "level": 0.775,
+                "reversal_frac": -0.198
+              },
+              "180": {
+                "level": 0.795,
+                "reversal_frac": -0.661
+              },
+              "300": {
+                "level": 0.805,
+                "reversal_frac": -0.893
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781730700448,
+          "jump": 0.28,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.7196,
+            "settle": 0.7637,
+            "jump": 0.0441,
+            "surprise": 0.28,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -0.481
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.481
+              },
+              "300": {
+                "level": 0.795,
+                "reversal_frac": -0.708
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7392,
+            "settle": 0.7688,
+            "jump": 0.0296,
+            "surprise": 0.261,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -0.546
+              },
+              "180": {
+                "level": 0.785,
+                "reversal_frac": -0.546
+              },
+              "300": {
+                "level": 0.815,
+                "reversal_frac": -1.559
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 13400,
+            "best_corr": -0.64,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781730750927,
+          "jump": 0.12,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.775,
+            "settle": 0.7812,
+            "jump": 0.0062,
+            "surprise": 0.225,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": -0.6
+              },
+              "180": {
+                "level": 0.795,
+                "reversal_frac": -2.2
+              },
+              "300": {
+                "level": 0.805,
+                "reversal_frac": -3.8
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.7831,
+            "settle": 0.7862,
+            "jump": 0.0031,
+            "surprise": 0.217,
+            "reversals": {
+              "60": {
+                "level": 0.785,
+                "reversal_frac": 0.384
+              },
+              "180": {
+                "level": 0.795,
+                "reversal_frac": -2.887
+              },
+              "300": {
+                "level": 0.805,
+                "reversal_frac": -6.158
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -3800,
+            "best_corr": -0.48,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781732939166,
+          "jump": 0.04,
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6768796954572243,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.865,
+            "settle": 0.9669,
+            "jump": 0.1019,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": -0.178
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": -0.276
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": -0.276
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.865,
+            "settle": 0.9823,
+            "jump": 0.1173,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": -0.023
+              },
+              "180": {
+                "level": 0.9955,
+                "reversal_frac": -0.112
+              },
+              "300": {
+                "level": 0.9985,
+                "reversal_frac": -0.138
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781732969329,
+          "jump": 0.12,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9804,
+            "settle": 0.985,
+            "jump": 0.0046,
+            "surprise": 0.02,
+            "reversals": {
+              "60": {
+                "level": 0.995,
+                "reversal_frac": -2.167
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": -2.167
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": -2.167
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9845,
+            "settle": 0.985,
+            "jump": 0.0005,
+            "surprise": 0.016,
+            "reversals": {
+              "60": {
+                "level": 0.99,
+                "reversal_frac": -9.511
+              },
+              "180": {
+                "level": 0.9965,
+                "reversal_frac": -21.874
+              },
+              "300": {
+                "level": 0.9985,
+                "reversal_frac": -25.679
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781732999346,
+          "jump": 0.12,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.985,
+            "settle": 0.985,
+            "jump": 0.0,
+            "surprise": 0.015,
+            "reversals": {
+              "60": {
+                "level": 0.995,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.985,
+            "settle": 0.9852,
+            "jump": 0.0002,
+            "surprise": 0.015,
+            "reversals": {
+              "60": {
+                "level": 0.99,
+                "reversal_frac": -30.0
+              },
+              "180": {
+                "level": 0.997,
+                "reversal_frac": -73.4
+              },
+              "300": {
+                "level": 0.9985,
+                "reversal_frac": -82.7
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781734115908,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "England vs Croatia"
+    },
+    {
       "label": "France",
       "kalshi": "KXWCGAME-26JUN16FRASEN-FRA",
       "poly": "10541943766977992250149902475024620982770128161688998706490955791758263657916",
@@ -18269,17 +20571,17 @@
     }
   ],
   "pooled": {
-    "n": 68,
+    "n": 83,
     "median_lead_ms": 200.0,
     "iqr_ms": [
-      -250.0,
+      -200.0,
       600.0
     ],
     "leader": "polymarket",
-    "leader_share": 0.515,
-    "poly_leads": 35,
-    "kalshi_leads": 24
+    "leader_share": 0.554,
+    "poly_leads": 46,
+    "kalshi_leads": 26
   },
-  "n_matches": 14,
+  "n_matches": 15,
   "min_jump": 0.04
 }
