@@ -1,0 +1,74 @@
+{
+  "match": "Iraq vs Norway",
+  "capture": "20260616T213023Z-iraq-vs-norway",
+  "n_goals": null,
+  "goals_source": "not-found",
+  "reference": {
+    "label": "Norway",
+    "venue": "polymarket"
+  },
+  "n_detected": 5,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1781648954205,
+      "jump": 0.05,
+      "pre": 0.725,
+      "p_entry": 0.885,
+      "p_exit": 0.905,
+      "reverted_pp": -2.0,
+      "pnl_pp": -2.5,
+      "surprise": 0.069,
+      "gain_prior": 0.725,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781649860747,
+      "jump": 0.18,
+      "pre": 0.715,
+      "p_entry": 0.905,
+      "p_exit": 0.895,
+      "reverted_pp": 1.0,
+      "pnl_pp": 0.5,
+      "surprise": 0.252,
+      "gain_prior": 0.715,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781650183408,
+      "jump": 0.06,
+      "pre": 0.835,
+      "p_entry": 0.885,
+      "p_exit": 0.875,
+      "reverted_pp": 1.0,
+      "pnl_pp": 0.5,
+      "surprise": 0.072,
+      "gain_prior": 0.835,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": -1.5,
+    "hit_rate": 0.667,
+    "mean_reverted_pp": 0.0,
+    "mean_pnl_pp": -0.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
