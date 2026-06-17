@@ -59,7 +59,7 @@
 let M=null, mfil="All";
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
-function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/New_York',hour12:false})+' ET';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function renderStats(){
   const pl=M.matches.filter(m=>m.played);

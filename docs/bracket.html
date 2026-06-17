@@ -73,7 +73,7 @@
 let D=null;
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
-function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/New_York',hour12:false})+' ET';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
 function row(name,pp,isPick,isFinal,wp){
   const cls=isPick?"bteam win":"bteam out";
@@ -104,11 +104,30 @@ function renderGroups(){
 function render(){
   const c=D.champion;
   document.getElementById('champ').innerHTML=
-    `<span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${c.team}</span><span class="cp">${c.final?'':c.p+'% to lift it'}</span>`;
+    `<span class="medal">★</span><div class="ctext"><span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${flag(c.team)}${c.team}</span></div><span class="cp">${c.final?'lifted it ✓':c.p+'% to lift it'}</span>`;
   document.getElementById('bracket').innerHTML=D.rounds.map(r=>
-    `<div class="bcol"><h3>${r.round}</h3>${r.matches.map(card).join('')}</div>`).join('');
+    `<div class="bcol"><h3>${r.round}</h3><div class="bmatches">${r.matches.map(card).join('')}</div></div>`).join('')
+    + '<svg class="blines" id="blines"></svg>';
+  requestAnimationFrame(drawConnectors);   // measure after layout settles
   renderGroups();
 }
+// trace the bracket: each match feeds round r+1 match floor(i/2); draw an elbow from each feeder to its child.
+function drawConnectors(){
+  const wrap=document.getElementById('bracket'), svg=document.getElementById('blines');
+  if(!wrap||!svg)return;
+  const cols=[...wrap.querySelectorAll('.bcol')].map(c=>[...c.querySelectorAll('.bmatch')]);
+  const W=wrap.scrollWidth, H=wrap.scrollHeight, o=wrap.getBoundingClientRect();
+  svg.setAttribute('width',W);svg.setAttribute('height',H);
+  const paths=[];
+  for(let r=0;r<cols.length-1;r++) cols[r].forEach((m,i)=>{
+    const child=cols[r+1][Math.floor(i/2)]; if(!child)return;
+    const a=m.getBoundingClientRect(), b=child.getBoundingClientRect();
+    const x1=a.right-o.left, y1=a.top-o.top+a.height/2, x2=b.left-o.left, y2=b.top-o.top+b.height/2, mx=(x1+x2)/2;
+    paths.push(`M${x1.toFixed(1)} ${y1.toFixed(1)} H${mx.toFixed(1)} V${y2.toFixed(1)} H${x2.toFixed(1)}`);
+  });
+  svg.innerHTML=`<path d="${paths.join(' ')}" fill="none" stroke="#c3b9a3" stroke-width="1.5" stroke-linejoin="round"/>`;
+}
+addEventListener('resize',()=>{clearTimeout(window._blt);window._blt=setTimeout(drawConnectors,120);});
 const s=document.createElement('script');s.src='data/bracket.js?'+Date.now();
 s.onload=()=>{D=window.BRACKET;
   document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(D.asof)}</b> · ${fmtAge(D.asof)} · ${D.group_done?'real bracket, conditions on every knockout game':'projected, fills in after the group stage'} · joint Monte-Carlo sim`;
