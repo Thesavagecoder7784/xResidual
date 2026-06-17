@@ -93,14 +93,37 @@ def cards_for(args):
     return cards
 
 
+def pull_snapshots() -> None:
+    """Pull the VM's latest market snapshots before building. The laptop renders cards from LOCAL
+    snapshots; if they lag the always-on VM, the cards look frozen even though they re-render fine
+    (the title race, money map, cross-venue basis all read these). Snapshots only — fast, no tapes.
+    Override the host/key with XRES_VM / XRES_KEY."""
+    import subprocess
+    vm = os.environ.get("XRES_VM", "azureuser@57.154.16.193")
+    key = os.environ.get("XRES_KEY", os.path.expanduser("~/Downloads/Sportslogging_key.pem"))
+    dest = os.path.join(ROOT, "logger", "data") + os.sep
+    src = f"{vm}:~/xResidual/logger/data/snapshots-*.jsonl"
+    print("── pulling fresh snapshots from the VM " + "─" * 26)
+    cmd = ["rsync", "-az", "-e", f"ssh -i {key} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20", src, dest]
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+        print("  snapshots synced ✓" if r.returncode == 0
+              else f"  pull FAILED (rc {r.returncode}) — building from local snapshots: {r.stderr.strip()[:140]}")
+    except Exception as e:
+        print(f"  pull skipped ({e}) — building from local snapshots")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Rebuild all xResidual visualizations.")
     ap.add_argument("--offline", action="store_true", help="skip the live-network builders")
+    ap.add_argument("--pull", action="store_true", help="rsync fresh market snapshots from the VM first, so cards aren't built on stale local data")
     ap.add_argument("--data-only", action="store_true", help="build _*.js, don't render")
     ap.add_argument("--render-only", action="store_true", help="render only, reuse _*.js")
     ap.add_argument("--models-only", action="store_true")
     ap.add_argument("--markets-only", action="store_true")
     args = ap.parse_args()
+    if args.pull and not args.render_only:
+        pull_snapshots()
 
     results = []  # (kind, name, ok, secs, note)
 
