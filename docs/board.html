@@ -15,6 +15,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+.callrow{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--rule)}
+.callrow .ct{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.callrow .cm{font-family:var(--fm);font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);flex:none;width:52px;text-align:right}
+.callrow .cv{font-family:var(--fm);font-size:11px;color:var(--muted);flex:none;width:46px;text-align:right}
+.callrow .ce{font-family:var(--fm);flex:none;width:28px;text-align:right}
+.callrow .cc{font-family:var(--fm);font-size:11px;flex:none;width:36px;text-align:right}
+</style>
 </head>
 <body>
 <nav><div class="nav">
@@ -25,6 +33,7 @@
     <a href="board.html" class="on">Forecast board</a>
     <a href="games.html">Group stage</a>
     <a href="bracket.html">Bracket</a>
+    <a href="results.html">Scorecard</a>
     <a href="note.html">Research note</a>
     <a href="method.html">How it works</a>
     <a href="lab.html">Market lab</a>
@@ -61,6 +70,9 @@
           <p><b>Closing-Line Value.</b> Share of forecasts the market has since drifted toward, a skill signal independent of who eventually wins. <span id="clvsub"></span></p>
           <p style="color:var(--dim);font-size:12px;margin-top:8px">Early sample. CLV is conclusive only over a few hundred forecasts, and these are correlated across markets, so treat it as a signal forming, not a verdict.</p></div>
         <div class="panel"><div class="h2" style="font-size:18px;margin-bottom:8px">Calibration</div><div id="calib"></div></div>
+        <div class="panel"><div class="h2" style="font-size:18px;margin-bottom:4px">Biggest calls</div>
+          <div class="sub" style="margin:0 0 8px">Where the model most disagrees with the market — <span class="hi">+</span>/<span class="lo">−</span> edge in points, model <b>v</b> market. CLV <span class="pos">▲</span> if the price has since moved toward us, <span class="neg">▼</span> if it's drifted away.</div>
+          <div id="calls"></div></div>
       </div>
     </div>
   </section>
@@ -83,7 +95,7 @@ function renderStats(){const c=DATA.clv,cal=DATA.calibration,live=cal.status==='
   document.getElementById('stats').innerHTML=[
     [`${DATA.n_forecasts}`,'forecasts logged','a'],
     [played,'games played','t'],
-    [live?(c.positive_pct==null?'—':c.positive_pct+'%'):'pending', live?'positive CLV':'CLV', live?'t':''],
+    [c.positive_pct==null?'—':c.positive_pct+'%', 'positive CLV · forming', 't'],
     [live?'+'+(cal.brier_skill*100).toFixed(0)+'%':'pending', live?'Brier skill':'calibration', live?'a':''],
     [ll,'log-loss · 1.10 uniform','']
   ].map(([v,k,cl])=>`<div class="stat"><div class="v ${cl}">${v}</div><div class="k">${k}</div></div>`).join('');}
@@ -117,6 +129,15 @@ function renderSide(){const c=DATA.clv;document.getElementById('clvbig').textCon
   else el.innerHTML=`<div style="font-family:var(--fm);font-size:13px;margin-bottom:10px">Brier <b>${cal.brier}</b> · log-loss <b>${cal.logloss}</b> · skill <b style="color:var(--accent)">+${(cal.brier_skill*100).toFixed(0)}%</b> · n=${cal.n}</div>`
     +`<div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">predicted → actual</div>`
     +cal.reliability.map(r=>`<div class="relrow"><span>${r.bucket}%</span><span>${r.pred}% → <b>${r.actual}%</b> <span style="color:var(--dim)">(${r.n})</span></span></div>`).join('');}
+function renderCalls(){const el=document.getElementById('calls');if(!el||!DATA.biggest_calls)return;
+  el.innerHTML=DATA.biggest_calls.slice(0,8).map(c=>{
+    const ec=c.edge>0?'hi':'lo', cc=c.clv==null?'':(c.clv>0?'pos':c.clv<0?'neg':'');
+    const cv=c.clv==null?'<span style="color:var(--dim)">·</span>':(c.clv>0?'▲':c.clv<0?'▼':'·')+Math.abs(c.clv).toFixed(0);
+    return `<div class="callrow"><span class="ct">${flag(c.team)}${c.team}</span>
+      <span class="cm">${c.market_label}</span>
+      <span class="cv">${c.model.toFixed(0)}<span style="color:var(--dim)"> v </span>${c.price.toFixed(0)}</span>
+      <span class="ce ${ec}">${c.edge>0?'+':''}${c.edge.toFixed(0)}</span>
+      <span class="cc ${cc}">${cv}</span></div>`;}).join('');}
 function fail(){
   if(window.DASH) return;   // data arrived; nothing to fall back to
   const links=`see the <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a> and the <a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/writeups/cross-venue-price-discovery.md">research note</a>`;
@@ -125,7 +146,7 @@ function fail(){
 const s=document.createElement('script');s.src='data/dashboard.js?'+Date.now();
 s.onload=()=>{if(!window.DASH)return fail();DATA=window.DASH;
   document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(DATA.asof)}</b> · ${fmtAge(DATA.asof)} · point-in-time joint sim vs live Polymarket · the sim conditions on played results · graded on CLV + calibration`;
-  renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();
+  renderStats();renderRace();renderTabs();renderHead();renderTable();renderSide();renderCalls();
   document.getElementById('search').oninput=e=>{query=e.target.value.toLowerCase().trim();renderTable();};};
 s.onerror=fail;
 setTimeout(fail,8000);

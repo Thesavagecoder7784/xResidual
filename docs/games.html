@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+.vswitch{position:absolute;top:2px;right:0;display:flex;gap:8px;align-items:center}
+.vswitch .v2link{position:static}
+.drawcall{margin-top:16px;padding:11px 15px;border-left:3px solid var(--accent);background:var(--card);border-radius:0 7px 7px 0;font-size:14px;color:var(--muted);line-height:1.5;max-width:820px}
+.drawcall b{color:var(--ink)} .drawcall a{color:var(--accent);font-weight:600;text-decoration:none}
+@media(max-width:640px){.vswitch{position:static;margin-bottom:14px;flex-wrap:wrap}}
+</style>
 </head>
 <body>
 <nav><div class="nav">
@@ -18,6 +25,7 @@
     <a href="board.html">Forecast board</a>
     <a href="games.html" class="on">Group stage</a>
     <a href="bracket.html">Bracket</a>
+    <a href="results.html">Scorecard</a>
     <a href="note.html">Research note</a>
     <a href="method.html">How it works</a>
     <a href="lab.html">Market lab</a>
@@ -27,11 +35,15 @@
 
 <div class="wrap">
   <header class="hero">
-    <a class="v2link" href="games_v2.html" title="v2: a draw-calibrated fork of this model (zero-inflated Skellam). It fixes the draw under-prediction, is pre-committed forward, and is graded head-to-head against this board."><span class="v2tag">v2</span> calibrated draws <span class="arr">→</span></a>
+    <div class="vswitch">
+      <a class="v2link" href="games_v2.html" title="v2: a draw-calibrated fork (zero-inflated Skellam), pre-committed forward and graded head-to-head against this board."><span class="v2tag">v2</span> calibrated draws <span class="arr">→</span></a>
+      <a class="v2link" href="games_v3.html" title="v3: v2 plus a format-conditional draw lift for the 48-team format; pre-committed forward, graded vs v2."><span class="v2tag" style="background:var(--accent)">v3</span> format lift <span class="arr">→</span></a>
+    </div>
     <div class="kicker">2026 World Cup · group stage</div>
     <h1>Every group game, <em>predicted, then learned from.</em></h1>
     <div class="lede">All 72 group matches, called up front (<span class="m">model win</span> · draw · <span class="k">model win</span>). As each resolves, the model <b>conditions on the result</b>, the forecasts on the board update, and once the group stage is done the knockout simulation runs on the <b>real bracket and updated ratings</b>. The model learning from the tournament, in the open.</div>
     <div class="stats" id="stats"></div>
+    <div class="drawcall" id="drawcall"></div>
   </header>
 
   <section style="border-top:none;padding-top:8px">
@@ -49,11 +61,22 @@ const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argent
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
-function renderStats(){document.getElementById('stats').innerHTML=[
+function renderStats(){
+  const pl=M.matches.filter(m=>m.played);
+  const draws=pl.filter(m=>m.result==='draw').length;
+  const sidePicks=pl.filter(m=>m.result==='draw'&&m.fav!=='draw').length;  // draws where the model called a side
+  document.getElementById('stats').innerHTML=[
     [`${M.played}/${M.n}`,'games played',''],
+    [`${draws}/${M.played}`,'ended level','t'],
     [`${M.accuracy==null?'—':Math.round(M.accuracy*100)+'%'}`,'favourite correct','a'],
-    [`${M.logloss==null?'—':M.logloss}`,'match log-loss','t']
-  ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');}
+    [`${M.logloss==null?'—':M.logloss}`,'log-loss · 1.10 uniform','']
+  ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
+  const dc=document.getElementById('drawcall');
+  if(dc&&M.played>=4&&draws>=2){
+    const sideTxt=sidePicks===draws?`a side in all ${draws}`:`a side in ${sidePicks} of them`;
+    dc.innerHTML=`<b>${draws} of ${M.played} games ended level (${Math.round(draws/M.played*100)}%)</b> — far above the historical ~16%, and the model picked ${sideTxt}. That's why the favourite-accuracy looks low: the 48-team format rewards drawing, and a strength model rarely picks the draw. The miss is exactly what the <a href="games_v2.html">v2</a> and <a href="games_v3.html">v3</a> draw-calibration forks were built to fix.`;
+  } else if(dc){dc.innerHTML='';}
+}
 function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="mt",res;
   if(m.played){if(m.result==="t1")t2c+=" lose";else if(m.result==="t2")t1c+=" lose";
     res=`<span class="sc">${m.s1}-${m.s2}</span> ${m.correct?'<span class="ok">✓</span>':'<span class="x">✗</span>'}`;}

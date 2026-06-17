@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · scorecard</title>
+<meta name="description" content="How the xResidual model is actually doing: running accuracy and log-loss vs the uniform baseline, the v1→v2→v3 head-to-head ladder, live CLV, and the biggest surprises (residuals) the tournament has thrown." />
+<meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .ladder{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  .ladder th{font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);font-weight:500}
+  .ladder th.n,.ladder td.n{text-align:right;font-family:var(--fm)}
+  .ladder td{padding:10px;border-bottom:1px solid var(--rule);vertical-align:top}
+  .ladder .vtag{font-family:var(--fm);font-weight:600;font-size:12px;color:#fff;background:var(--dim);border-radius:3px;padding:1px 6px;margin-right:7px}
+  .ladder .vtag.v2{background:var(--gold)} .ladder .vtag.v3{background:var(--accent)}
+  .ladder .ch{font-size:12.5px;color:var(--muted)}
+  .ladder .win{color:var(--good);font-weight:600} .ladder .pend{color:var(--dim)}
+  .rrow{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--rule)}
+  .rrow .rk{font-family:var(--fm);font-size:12px;color:var(--dim);width:18px;flex:none;text-align:right}
+  .rrow .rm{flex:1;display:flex;align-items:center;gap:7px;font-size:14px;min-width:0}
+  .rrow .rm .sc{font-family:var(--fm);font-weight:600;color:var(--ink);margin:0 3px}
+  .rrow .rm .fl{width:17px;height:17px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .rrow .rm .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rrow .rsurp{flex:none;width:230px;display:flex;align-items:center;gap:9px}
+  .rrow .rtrack{flex:1;height:7px;background:rgba(0,0,0,.06);border-radius:4px;overflow:hidden}
+  .rrow .rfill{height:100%;border-radius:4px;background:var(--accent)}
+  .rrow .rpct{font-family:var(--fm);font-size:12.5px;width:104px;flex:none;text-align:right;color:var(--muted)}
+  .rrow .rpct b{color:var(--ink)}
+  .rlead{font-size:13.5px;color:var(--dim);margin:5px 0 16px;max-width:760px;line-height:1.55}
+  @media(max-width:640px){.rrow .rsurp{width:120px}.rrow .rpct{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="nav">
+  <a class="brand" href="index.html">xResidual</a>
+  <span class="live"><span class="dot"></span>live</span>
+  <div class="navlinks">
+    <a href="index.html">Home</a>
+    <a href="board.html">Forecast board</a>
+    <a href="games.html">Group stage</a>
+    <a href="bracket.html">Bracket</a>
+    <a href="results.html" class="on">Scorecard</a>
+    <a href="note.html">Research note</a>
+    <a href="method.html">How it works</a>
+    <a href="lab.html">Market lab</a>
+    <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">2026 World Cup · how the model is doing</div>
+    <h1>The <em>scorecard.</em></h1>
+    <div class="lede">No cherry-picking: the running grade on every pre-committed forecast. Favourite accuracy and match <b>log-loss against the uniform baseline</b>, the <b>v1→v2→v3 head-to-head</b> as the draw fixes earn (or don't earn) their keep, Closing-Line Value, and the <b>biggest surprises</b> — the residuals the model didn't see coming. The honest version is the point.</div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <div class="h2">Model versions, head-to-head</div>
+    <div class="sub">Each version is a pre-committed fork run forward in parallel, graded only on games <b>both</b> versions forecast. Log-loss and Brier, lower is better. v1 is never edited; the forks fork forward.</div>
+    <div class="tablewrap"><table class="ladder" id="ladder"><tbody><tr><td class="loading">loading…</td></tr></tbody></table></div>
+  </section>
+
+  <section>
+    <div class="h2">Biggest surprises <span style="color:var(--dim);font-weight:400;font-size:15px">· the residuals</span></div>
+    <div class="rlead">Played games ranked by how much the result surprised the model — the probability it gave the <b>actual</b> outcome before kickoff. Low = the model was confident and wrong (or a true upset). This is the <em>residual</em> the project is named for; the pattern in the misses is the finding.</div>
+    <div id="resid"><div class="loading">loading…</div></div>
+  </section>
+
+  <footer><div id="foot"></div>
+    <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
+</div>
+
+<script>
+let G=null,D=null,V2=null,V3=null;
+const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
+const fl=t=>ISO[t]?`<img class="fl" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.visibility='hidden'">`:'<span class="fl"></span>';
+function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC',hour12:false})+' UTC';}
+function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
+
+function renderScore(){if(!G)return;
+  const pl=G.matches.filter(m=>m.played), draws=pl.filter(m=>m.result==='draw').length;
+  const ll=G.logloss==null?'—':(+G.logloss).toFixed(3), llc=(G.logloss!=null&&G.logloss>1.099)?'':'a';
+  const clv=(D&&D.clv&&D.clv.positive_pct!=null)?D.clv.positive_pct+'%':'—';
+  document.getElementById('stats').innerHTML=[
+    [`${G.played}/${G.n}`,'games graded',''],
+    [`${G.accuracy==null?'—':Math.round(G.accuracy*100)+'%'}`,'favourite correct','a'],
+    [ll,'log-loss · vs 1.10 uniform','t'],
+    [`${draws}/${G.played}`,'ended level',''],
+    [clv,'positive CLV · forming','a']
+  ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');}
+
+function renderLadder(){if(!G)return;
+  const h2=V2&&V2.head_to_head, h3=V3&&V3.head_to_head;
+  const rows=[];
+  rows.push(['v1','','Plain Skellam goal model',
+    h2&&h2.v1?h2.v1.logloss.toFixed(3):'—', h2&&h2.v1?h2.v1.brier.toFixed(3):'—',
+    'the original board · the baseline the forks must beat']);
+  rows.push(['v2','v2','+ draw calibration (zero-inflated Skellam)',
+    h2&&h2.v2?h2.v2.logloss.toFixed(3):'—', h2&&h2.v2?h2.v2.brier.toFixed(3):'—',
+    h2&&h2.v2&&h2.v1?(h2.v2.logloss<h2.v1.logloss?`<span class="win">beats v1</span> on ${h2.n_resolved} games`:`behind v1 on ${h2.n_resolved} games`):'pending']);
+  rows.push(['v3','v3','+ format-conditional draw lift',
+    h3&&h3.v3?h3.v3.logloss.toFixed(3):'—', h3&&h3.v3?h3.v3.brier.toFixed(3):'—',
+    h3&&h3.n_resolved?(h3.v3&&h3.v2&&h3.v3.logloss<h3.v2.logloss?`<span class="win">beats v2</span> on ${h3.n_resolved}`:`vs v2 on ${h3.n_resolved}`):'<span class="pend">pending · fills in as its games resolve</span>']);
+  const head=`<thead><tr><th>Version</th><th>What changed</th><th class="n">Log-loss</th><th class="n">Brier</th><th>Head-to-head</th></tr></thead>`;
+  const body=rows.map(r=>`<tr><td><span class="vtag ${r[1]}">${r[0]}</span></td><td class="ch">${r[2]}</td><td class="n">${r[3]}</td><td class="n">${r[4]}</td><td class="ch">${r[5]}</td></tr>`).join('');
+  document.getElementById('ladder').innerHTML=head+'<tbody>'+body+'</tbody>';}
+
+function renderResiduals(){if(!G)return;
+  const pl=G.matches.filter(m=>m.played&&m.model_p!=null).slice().sort((a,b)=>a.model_p-b.model_p);
+  const lab=m=>m.result==='draw'?`drew ${m.s1}-${m.s2}`:(m.result==='t1'?`${m.t1} won`:`${m.t2} won`);
+  document.getElementById('resid').innerHTML=pl.map((m,i)=>{
+    const p=Math.round(m.model_p*100), surp=100-p;
+    const col=p<15?'var(--accent)':p<30?'var(--gold)':'var(--good)';
+    return `<div class="rrow"><span class="rk">${i+1}</span>
+      <div class="rm">${fl(m.t1)}<span class="nm">${m.t1}</span><span class="sc">${m.s1}-${m.s2}</span><span class="nm">${m.t2}</span>${fl(m.t2)}</div>
+      <div class="rsurp"><div class="rtrack"><div class="rfill" style="width:${surp}%;background:${col}"></div></div></div>
+      <div class="rpct">model gave <b>${p}%</b></div></div>`;}).join('')
+    +`<div class="rlead" style="margin-top:14px">Read the misses together: the biggest surprises are <b>favourites held to draws</b> (Spain, Switzerland, Belgium) — the format effect the v2/v3 forks target — not random noise. That pattern <em>is</em> the residual finding.</div>`;}
+
+function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Date.now();s.onload=cb;s.onerror=()=>cb&&cb();document.body.appendChild(s);}
+load('data/matches.js',()=>{G=window.GAMES||null;
+  if(!G){document.getElementById('resid').innerHTML='<div class="loading">could not load data</div>';return;}
+  document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(G.asof)}</b> · ${fmtAge(G.asof)} · every forecast pre-committed to an append-only ledger, graded as games resolve`;
+  renderScore();renderResiduals();renderLadder();
+  load('data/dashboard.js',()=>{D=window.DASH||null;renderScore();});
+  load('data/matches_v2.js',()=>{V2=window.GAMESV2||null;renderLadder();});
+  load('data/matches_v3.js',()=>{V3=window.GAMESV3||null;renderLadder();});
+});
+</script>
+</body></html>
