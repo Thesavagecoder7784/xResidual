@@ -1,0 +1,86 @@
+{
+  "match": "Austria vs Jordan",
+  "capture": "20260617T032721Z-austria-vs-jordan",
+  "n_goals": 4,
+  "goals_source": "results",
+  "reference": {
+    "label": "Austria",
+    "venue": "polymarket"
+  },
+  "n_detected": 5,
+  "n_trades": 4,
+  "trades": [
+    {
+      "t_ms": 1781670174705,
+      "jump": 0.055,
+      "pre": 0.665,
+      "p_entry": 0.845,
+      "p_exit": 0.845,
+      "reverted_pp": -0.0,
+      "pnl_pp": -0.5,
+      "surprise": 0.083,
+      "gain_prior": 0.665,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781673255954,
+      "jump": -0.055,
+      "pre": 0.845,
+      "p_entry": 0.515,
+      "p_exit": 0.485,
+      "reverted_pp": -3.0,
+      "pnl_pp": -3.5,
+      "surprise": 0.355,
+      "gain_prior": 0.155,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781674319734,
+      "jump": 0.055,
+      "pre": 0.425,
+      "p_entry": 0.73,
+      "p_exit": 0.385,
+      "reverted_pp": 34.5,
+      "pnl_pp": 34.0,
+      "surprise": 0.129,
+      "gain_prior": 0.425,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781674859161,
+      "jump": 0.055,
+      "pre": 0.395,
+      "p_entry": 0.865,
+      "p_exit": 0.875,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.139,
+      "gain_prior": 0.395,
+      "surprising": true
+    }
+  ],
+  "summary": {
+    "n": 4,
+    "total_pnl_pp": 28.5,
+    "hit_rate": 0.25,
+    "mean_reverted_pp": 7.625,
+    "mean_pnl_pp": 7.125,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 2,
+  "summary_surprising": {
+    "n": 2,
+    "total_pnl_pp": -5.0,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -2.0,
+    "mean_pnl_pp": -2.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
