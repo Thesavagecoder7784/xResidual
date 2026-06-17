@@ -39,7 +39,14 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 # Microstructure: streaming single pass (lead-lag + OFI + overreaction) now fits the VM (~0.5 GB peak,
 # was ~7 GB), so the VM processes settled tapes itself — no more laptop dependency. Then publish the
 # pooled feeds into docs/data (the VM now BUILDS these; it used to only relay the laptop's copies).
-"$PY" scripts/build_micro_all.py || echo "  micro_all failed"
+# MEMORY GUARD: a ~800 MB tape (~0.7 GB peak) + a live capture (~150 MB) overruns the 898 MB VM and OOMs.
+# So only process when NO capture is running — settled tapes wait for a gap between matches. Feeds below
+# still republish every cycle regardless, so the live site stays current.
+if pgrep -f "[w]s_capture.py" >/dev/null 2>&1; then
+  echo "  capture live — deferring tape processing this cycle (memory guard); feeds still republished"
+else
+  "$PY" scripts/build_micro_all.py || echo "  micro_all failed"
+fi
 cp -f viz/market/_ofi.js docs/data/ofi.js 2>/dev/null || true
 cp -f viz/model/_overreaction.js docs/data/overreaction.js 2>/dev/null || true
 "$PY" - <<'PYLL' || echo "  leadlag feed extract failed"
