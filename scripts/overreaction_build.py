@@ -113,22 +113,27 @@ def _reference_series(events: list[dict], pairs: list[dict]):
     return best
 
 
-def process_capture(cap: str, events=None, pairs=None) -> str | None:
-    """Parse ONE tape, goal-gate the shocks, fade each, write its per-game JSON. Heavy (a 1 GB tape
-    parses to several GB) so it runs once per match on the laptop. Returns the match label or None.
-    `events`/`pairs` can be passed in (already loaded) so one tape parse can feed several pipelines."""
-    if events is None:
-        events = we.load_ws_events(DATA_DIR, capture=cap)
+def process_capture(cap: str, events=None, pairs=None, sm_bundle=None) -> str | None:
+    """Parse ONE tape, goal-gate the shocks, fade each, write its per-game JSON. Streams the tape in
+    one low-memory pass (sm_bundle) by default so it fits the 900 MB VM; `events` (full load) or a
+    prebuilt `sm_bundle` can be passed so one tape parse can feed several pipelines."""
     if pairs is None:
         pairs = we.load_pairs(DATA_DIR, capture=cap)
-    if not events or not pairs:
+    if sm_bundle is None and events is None:
+        import stream_micro as _sm
+        sm_bundle = _sm.stream_all(os.path.join(DATA_DIR, f"ws-events-{cap}.jsonl"), pairs)
+    if not pairs or (sm_bundle is None and not events):
         return None
     match = _match_label(cap)
     slug = cap.split("-", 1)[1] if "-" in cap else cap
     n_goals, src = match_goals(pairs, cap)
     cap_n = n_goals if n_goals else DEFAULT_GOAL_CAP
 
-    ref = _reference_series(events, pairs)
+    if sm_bundle is not None:
+        import stream_micro as _sm
+        ref = _sm.reference_series(sm_bundle, pairs)
+    else:
+        ref = _reference_series(events, pairs)
     trades, n_detected = [], 0
     if ref:
         label, venue, series = ref
@@ -158,9 +163,9 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
                    "params": {"entry_s": ENTRY_S, "exit_s": EXIT_S, "min_jump": MIN_JUMP,
                               "cost_pp": COST * 100, "surprise_underdog": SURPRISE_UNDERDOG}}, f, indent=2)
     gtag = f"{n_goals}g/{src}" if n_goals is not None else f"cap{cap_n}/{src}"
-    print(f"  processed {match:<22} {len(events):>10,} ev · {n_detected:>2} shocks -> "
+    n_ev = len(events) if events is not None else sum(len(s) for s in sm_bundle["k_mid"].values()) + sum(len(s) for s in sm_bundle["p_mid"].values())
+    print(f"  processed {match:<22} {n_ev:>10,} ev · {n_detected:>2} shocks -> "
           f"{len(trades)} goal-trades ({gtag}) · ref {label}/{venue} -> {slug}.json")
-    del events
     return match
 
 

@@ -143,13 +143,16 @@ def _grids(b, t0, t1):
     return _z(ofi), _z(ret)
 
 
-def process_capture(cap: str, events=None, pairs=None) -> str | None:
-    if events is None:
-        events = we.load_ws_events(DATA_DIR, capture=cap)
+def process_capture(cap: str, events=None, pairs=None, sm_bundle=None) -> str | None:
     if pairs is None:
         pairs = we.load_pairs(DATA_DIR, capture=cap)
-    if not events or not pairs:
+    if sm_bundle is None and events is None:
+        import stream_micro as _sm                # default to the streaming single pass (fits the VM)
+        sm_bundle = _sm.stream_all(os.path.join(DATA_DIR, f"ws-events-{cap}.jsonl"), pairs)
+    if not pairs or (sm_bundle is None and not events):
         return None
+    if sm_bundle is not None:
+        import stream_micro as _sm
     match = _match_label(cap)
     slug = cap.split("-", 1)[1] if "-" in cap else cap
 
@@ -162,8 +165,12 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
         kt, pa = pr.get("kalshi"), pr.get("poly")
         if not kt or not pa:
             continue
-        bk = _binned(events, "kalshi", kt)
-        bp = _binned(events, "poly", pa)
+        if sm_bundle is not None:
+            bk = _sm.binned(sm_bundle, "kalshi", kt)
+            bp = _sm.binned(sm_bundle, "poly", pa)
+        else:
+            bk = _binned(events, "kalshi", kt)
+            bp = _binned(events, "poly", pa)
         if not bk or not bp:
             continue
         t0, t1 = max(bk["t0"], bp["t0"]), min(bk["t1"], bp["t1"])
@@ -204,9 +211,9 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
     with open(os.path.join(OFI_DIR, slug + ".json"), "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
     bk_imp = payload["impact"]["kalshi"] or {}
-    print(f"  processed {match:<22} {len(events):>10,} ev · {n_pairs} pair(s) · "
+    n_ev = len(events) if events is not None else sum(len(s) for s in sm_bundle["k_tob"].values()) + sum(len(s) for s in sm_bundle["p_tob"].values())
+    print(f"  processed {match:<22} {n_ev:>10,} ev · {n_pairs} pair(s) · "
           f"OFI->price r2 kalshi={bk_imp.get('r2','?')} -> {slug}.json")
-    del events
     return match
 
 
