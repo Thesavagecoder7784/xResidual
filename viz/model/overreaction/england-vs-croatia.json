@@ -1,0 +1,74 @@
+{
+  "match": "England vs Croatia",
+  "capture": "20260617T193011Z-england-vs-croatia",
+  "n_goals": 0,
+  "goals_source": "results",
+  "reference": {
+    "label": "England",
+    "venue": "polymarket"
+  },
+  "n_detected": 6,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1781726898130,
+      "jump": 0.055,
+      "pre": 0.575,
+      "p_entry": 0.745,
+      "p_exit": 0.755,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.096,
+      "gain_prior": 0.575,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781728538346,
+      "jump": -0.055,
+      "pre": 0.775,
+      "p_entry": 0.515,
+      "p_exit": 0.775,
+      "reverted_pp": 26.0,
+      "pnl_pp": 25.5,
+      "surprise": 0.244,
+      "gain_prior": 0.225,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781728881179,
+      "jump": 0.055,
+      "pre": 0.525,
+      "p_entry": 0.785,
+      "p_exit": 0.795,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.105,
+      "gain_prior": 0.525,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": 22.5,
+    "hit_rate": 0.333,
+    "mean_reverted_pp": 8.0,
+    "mean_pnl_pp": 7.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": 25.5,
+    "hit_rate": 1.0,
+    "mean_reverted_pp": 26.0,
+    "mean_pnl_pp": 25.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
