@@ -1,132 +1,132 @@
 {
-  "n_matches": 10,
+  "n_matches": 11,
   "impact": {
     "kalshi": {
-      "corr": 0.0611,
-      "r2": 0.0037,
-      "tstat": 24.12,
-      "n": 155057
+      "corr": 0.0635,
+      "r2": 0.004,
+      "tstat": 26.33,
+      "n": 171019
     },
     "poly": {
-      "corr": 0.0689,
-      "r2": 0.0047,
-      "tstat": 28.27,
-      "n": 167568
+      "corr": 0.0747,
+      "r2": 0.0056,
+      "tstat": 32.25,
+      "n": 185410
     }
   },
   "poly_to_kalshi": {
-    "best_lag_s": 0,
-    "corr": -0.0211,
+    "best_lag_s": 1,
+    "corr": 0.0207,
     "r2": 0.0004,
-    "tstat": -8.65,
-    "n": 167560,
+    "tstat": 8.94,
+    "n": 185401,
     "by_lag": {
       "-3": {
-        "corr": -0.0013,
+        "corr": -0.0012,
         "r2": 0.0,
-        "tstat": -0.51,
-        "n": 167505
+        "tstat": -0.52,
+        "n": 185346
       },
       "-2": {
-        "corr": 0.0026,
+        "corr": 0.0032,
         "r2": 0.0,
-        "tstat": 1.07,
-        "n": 167525
+        "tstat": 1.39,
+        "n": 185367
       },
       "-1": {
-        "corr": 0.0044,
+        "corr": 0.0049,
         "r2": 0.0,
-        "tstat": 1.78,
-        "n": 167542
+        "tstat": 2.11,
+        "n": 185385
       },
       "0": {
-        "corr": -0.0211,
-        "r2": 0.0004,
-        "tstat": -8.65,
-        "n": 167560
+        "corr": -0.0169,
+        "r2": 0.0003,
+        "tstat": -7.28,
+        "n": 185403
       },
       "1": {
-        "corr": 0.0192,
+        "corr": 0.0207,
         "r2": 0.0004,
-        "tstat": 7.87,
-        "n": 167559
+        "tstat": 8.94,
+        "n": 185401
       },
       "2": {
-        "corr": 0.0084,
+        "corr": 0.0089,
         "r2": 0.0001,
-        "tstat": 3.46,
-        "n": 167540
+        "tstat": 3.83,
+        "n": 185380
       },
       "3": {
-        "corr": 0.0026,
+        "corr": 0.0006,
         "r2": 0.0,
-        "tstat": 1.05,
-        "n": 167521
+        "tstat": 0.24,
+        "n": 185359
       }
     }
   },
   "kalshi_to_poly": {
     "best_lag_s": 0,
-    "corr": 0.0317,
-    "r2": 0.001,
-    "tstat": 12.42,
-    "n": 153735,
+    "corr": 0.0346,
+    "r2": 0.0012,
+    "tstat": 14.26,
+    "n": 169695,
     "by_lag": {
       "-3": {
-        "corr": 0.0031,
+        "corr": 0.0036,
         "r2": 0.0,
-        "tstat": 1.23,
-        "n": 153684
+        "tstat": 1.49,
+        "n": 169639
       },
       "-2": {
-        "corr": 0.0056,
+        "corr": 0.006,
         "r2": 0.0,
-        "tstat": 2.21,
-        "n": 153701
+        "tstat": 2.45,
+        "n": 169657
       },
       "-1": {
-        "corr": 0.0265,
-        "r2": 0.0007,
-        "tstat": 10.39,
-        "n": 153718
+        "corr": 0.0302,
+        "r2": 0.0009,
+        "tstat": 12.45,
+        "n": 169676
       },
       "0": {
-        "corr": 0.0317,
-        "r2": 0.001,
-        "tstat": 12.42,
-        "n": 153735
+        "corr": 0.0346,
+        "r2": 0.0012,
+        "tstat": 14.26,
+        "n": 169695
       },
       "1": {
-        "corr": 0.0261,
-        "r2": 0.0007,
-        "tstat": 10.23,
-        "n": 153730
+        "corr": 0.0279,
+        "r2": 0.0008,
+        "tstat": 11.5,
+        "n": 169690
       },
       "2": {
-        "corr": 0.0235,
-        "r2": 0.0006,
-        "tstat": 9.2,
-        "n": 153713
+        "corr": 0.0258,
+        "r2": 0.0007,
+        "tstat": 10.62,
+        "n": 169671
       },
       "3": {
-        "corr": 0.0195,
-        "r2": 0.0004,
-        "tstat": 7.67,
-        "n": 153702
+        "corr": 0.0175,
+        "r2": 0.0003,
+        "tstat": 7.19,
+        "n": 169659
       }
     }
   },
-  "verdict": "No clean cross-venue flow asymmetry yet (Poly->Kalshi -0.02, Kalshi->Poly +0.03); contemporaneous, not a lead.",
+  "verdict": "No clean cross-venue flow asymmetry yet (Poly->Kalshi +0.02, Kalshi->Poly +0.03); contemporaneous, not a lead.",
   "microprice_leadlag": {
     "mid": {
       "median_lag_ms": 400,
-      "median_abs_corr": 0.445,
-      "n_matches": 10
+      "median_abs_corr": 0.415,
+      "n_matches": 11
     },
     "micro": {
       "median_lag_ms": 400,
-      "median_abs_corr": 0.425,
-      "n_matches": 10
+      "median_abs_corr": 0.347,
+      "n_matches": 11
     }
   },
   "note": "OFI price impact (Cont-Kukanov-Stoikov 2014), cross-venue predictive lead-lag (the order-flow mechanism behind the price lead), and microprice (Stoikov 2017) vs mid lead-lag. Standardized per match; pooled by sufficient statistics. Paper. t-stats are BIN-LEVEL OLS, not corrected for 1s autocorrelation or match clustering, so they overstate significance: treat corr/R^2 as the effect size and judge significance across matches (n_matches), not bins.",
