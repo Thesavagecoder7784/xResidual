@@ -10,7 +10,22 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--fb);line-height:1.55;-webkit-font-smoothing:antialiased}
+body{
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/></svg>"),
+    radial-gradient(116% 56% at 50% -9%, rgba(179,18,42,.055), transparent 56%),
+    var(--paper);
+  color:var(--ink);font-family:var(--fb);line-height:1.55;-webkit-font-smoothing:antialiased}
+/* one orchestrated page-load reveal: hero first, then sections cascade in */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero,.wrap>section{animation:rise .6s cubic-bezier(.2,.6,.2,1) both}
+.wrap>section:nth-of-type(1){animation-delay:.07s}
+.wrap>section:nth-of-type(2){animation-delay:.14s}
+.wrap>section:nth-of-type(3){animation-delay:.21s}
+.wrap>section:nth-of-type(4){animation-delay:.28s}
+.wrap>section:nth-of-type(5){animation-delay:.35s}
+.wrap>section:nth-of-type(n+6){animation-delay:.42s}
+@media(prefers-reduced-motion:reduce){.hero,.wrap>section{animation:none}}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 
