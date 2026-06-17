@@ -35,8 +35,13 @@
   .card .ct{font-family:var(--fd);font-weight:600;font-size:18px;color:var(--ink)}
   .card .cd{font-size:13.5px;color:var(--dim);margin-top:6px;line-height:1.46}
   .card .ar{color:var(--accent);font-family:var(--fm);font-size:12.5px;margin-top:9px;display:inline-block}
-  .findings{margin-top:16px;display:flex;flex-direction:column;gap:13px}
-  .finding{font-size:15.5px;line-height:1.56;color:var(--muted)} .finding b{color:var(--ink);font-weight:600} .finding .n{font-family:var(--fm);color:var(--accent);font-weight:600}
+  .findings{margin-top:16px;display:flex;flex-direction:column}
+  .finding{display:flex;gap:24px;padding:18px 2px;border-top:1px solid var(--rule);align-items:baseline}
+  .finding:last-child{border-bottom:1px solid var(--rule)}
+  .finding .fstat{flex:0 0 132px;font-family:var(--fd);font-weight:600;font-size:30px;line-height:1;color:var(--accent);letter-spacing:-.012em}
+  .finding .fstat small{display:block;font-family:var(--fm);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-top:7px;font-weight:400}
+  .finding .ftext{flex:1;font-size:15px;line-height:1.58;color:var(--muted)} .finding .ftext b{color:var(--ink);font-weight:600}
+  @media(max-width:560px){.finding{flex-direction:column;gap:7px}.finding .fstat{flex-basis:auto}}
   .built{margin-top:14px;font-size:15.5px;line-height:1.62;color:var(--muted);max-width:840px} .built b{color:var(--ink)}
 </style>
 </head>
@@ -66,6 +71,8 @@
       <a class="cta solid" href="note.html">Read the research note →</a>
       <a class="cta ghost" href="board.html">See the live forecast board</a>
     </div>
+    <div class="stats" id="lpscore" style="margin-top:26px"></div>
+    <div id="lpfresh" style="font-family:var(--fm);font-size:11.5px;color:var(--dim);margin-top:10px"></div>
   </header>
 
   <section>
@@ -85,10 +92,14 @@
     <div class="h2">Findings so far</div>
     <div class="sub">The pre-match results are in; the in-play price-discovery result fills in as the tournament is played and the pre-registration grades on Jul 19.</div>
     <div class="findings">
-      <div class="finding"><b>The cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to <span class="n">~0.15pp</span>; the visible "5 to 8 cent" gap is the house overround (Kalshi <span class="n">~5.4%</span> vs Polymarket <span class="n">~3.0%</span>). The durable difference is cost, not price.</div>
-      <div class="finding"><b>And there is no convergence edge to harvest.</b> Tested out-of-sample, a relative-value convergence trade returned a clean null: <span class="n">6 trades, −2.6pp, Sharpe −1.95</span>. The "edge" is a cost illusion, exactly what law-of-one-price implies. Reported as a negative result because it is one.</div>
-      <div class="finding"><b>The market is hard to beat wherever it's liquid.</b> Across 238 contracts, the deepest market (the title) agrees with the model to <span class="n">~0.4pp</span>; where the model disagreed most, an independent bookmaker sided with the market, and the error was a confederation bias in the model, fixed with empirical-Bayes shrinkage (<span class="n">+4.6% out-of-sample RPS, DM p≈0.009</span>).</div>
-      <div class="finding"><b>The infrastructure is real.</b> A 24/7 capture pipeline across three venues plus an on-chain layer reading signed flow from Polymarket's CTF Exchange; validated end-to-end at <span class="n">~172k events / 6 ms median</span> inter-event spacing.</div>
+      <div class="finding"><div class="fstat">0.15pp<small>venues agree</small></div>
+        <div class="ftext"><b>The cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the visible "5 to 8 cent" gap is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). The durable difference is cost, not price.</div></div>
+      <div class="finding"><div class="fstat">−2.6pp<small>convergence null</small></div>
+        <div class="ftext"><b>And there's no convergence edge to harvest.</b> Tested out-of-sample, a relative-value convergence trade returned a clean null — 6 trades, Sharpe −1.95. The "edge" is a cost illusion, exactly what law-of-one-price implies. Reported as a negative result because it is one.</div></div>
+      <div class="finding"><div class="fstat">0.4pp<small>model vs sharp price</small></div>
+        <div class="ftext"><b>The market is hard to beat wherever it's liquid.</b> Across 238 contracts, the deepest market (the title) agrees with the model to ~0.4pp; where the model disagreed most, an independent bookmaker sided with the market — the error was a confederation bias in our model, fixed with empirical-Bayes shrinkage (+4.6% out-of-sample RPS, DM p≈0.009).</div></div>
+      <div class="finding"><div class="fstat">~6ms<small>between events</small></div>
+        <div class="ftext"><b>The infrastructure is real.</b> A 24/7 capture pipeline across three venues plus an on-chain layer reading signed flow from Polymarket's CTF Exchange; running live across <span style="color:var(--accent);font-weight:600" id="f-nmatches">multiple</span> matches captured tick-by-tick on both venues, at millisecond resolution.</div></div>
     </div>
   </section>
 
@@ -100,4 +111,25 @@
   <footer><div>A live, phased project, finalised after the final on 2026-07-19.</div>
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a></div></footer>
 </div>
+<script>
+// live scoreboard — reads the same feeds the rest of the site does, so the landing page never goes stale
+let G=null,D=null,L=null;
+function fmtAge(iso){if(!iso)return'';const h=(Date.now()-new Date(iso))/3.6e6;return h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`;}
+function paint(){
+  const t=[];
+  if(G)t.push([`${G.played}/${G.n}`,'games graded','']);
+  if(G&&G.logloss!=null)t.push([(+G.logloss).toFixed(2),'log-loss · 1.10 base','t']);
+  if(D&&D.clv&&D.clv.positive_pct!=null)t.push([D.clv.positive_pct+'%','positive CLV · forming','a']);
+  if(L&&L.pooled)t.push([`${L.pooled.median_lead_ms>=0?'+':''}${Math.round(L.pooled.median_lead_ms)}ms`,`cross-venue lead · ${Math.round(L.pooled.leader_share*100)}% poly, forming`,'']);
+  if(L&&L.n_matches!=null)t.push([`${L.n_matches}`,'match tapes pooled','']);
+  const el=document.getElementById('lpscore'); if(el)el.innerHTML=t.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
+  const fn=document.getElementById('f-nmatches'); if(fn&&L&&L.n_matches!=null)fn.textContent=L.n_matches;
+  const asof=(G&&G.asof)||(D&&D.asof); const fr=document.getElementById('lpfresh');
+  if(fr&&asof)fr.innerHTML=`live · updated ${fmtAge(asof)} · numbers read from the same feeds as the <a href="board.html" style="color:var(--dim)">board</a> and <a href="results.html" style="color:var(--dim)">scorecard</a>`;
+}
+function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Date.now();s.onload=cb;s.onerror=()=>cb&&cb();document.body.appendChild(s);}
+load('data/matches.js',()=>{G=window.GAMES;paint();});
+load('data/dashboard.js',()=>{D=window.DASH;paint();});
+load('data/leadlag.js',()=>{L=window.LEADLAG_POOLED;paint();});
+</script>
 </body></html>
