@@ -86,20 +86,29 @@ def _match_label(cap: str) -> str:
     return slug.replace("-vs-", " vs ").replace("-", " ").title().replace(" Vs ", " vs ")
 
 
-def process_capture(cap: str, events=None, pairs=None) -> str | None:
+def process_capture(cap: str, events=None, pairs=None, sm_bundle=None) -> str | None:
     """Parse ONE capture's tape, gate the leads, and write its per-game <slug>.js + <slug>.json.
     This is the heavy step (a 1 GB tape parses to several GB of dicts), so it runs ONCE per match,
     then never again — the pooled aggregate is rebuilt from the JSONs, not the tapes. Run on the
     laptop, not the 900 MB collection VM. Returns the match label, or None if the tape is unusable.
     `events`/`pairs` can be passed in (already loaded) so one tape parse can feed several pipelines."""
     BEFORE_S, AFTER_S, BIN_MS = 10, 20, 200       # match auto_lead_lag defaults
-    if events is None:
-        events = we.load_ws_events(DATA_DIR, capture=cap)
     if pairs is None:
         pairs = we.load_pairs(DATA_DIR, capture=cap)
-    if not events or not pairs:
+    if sm_bundle is None and events is None:
+        import stream_micro as _sm                # default to streaming (fits the 900 MB VM)
+        sm_bundle = _sm.stream_all(os.path.join(DATA_DIR, f"ws-events-{cap}.jsonl"), pairs)
+    if not pairs:
         return None
-    results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
+    if sm_bundle is not None:
+        import stream_micro as _sm
+        results = _sm.auto_lead_lag(sm_bundle, pairs, min_jump=MIN_JUMP)
+        n_ev = sum(len(s) for s in sm_bundle["k_mid"].values()) + sum(len(s) for s in sm_bundle["p_mid"].values())
+    else:
+        if not events:
+            return None
+        results = we.auto_lead_lag(events, pairs, min_jump=MIN_JUMP)
+        n_ev = len(events)
     dropped = gate_leads(results)
     match = _match_label(cap)
     slug = cap.split("-", 1)[1] if "-" in cap else cap     # game slug -> filename
@@ -114,7 +123,11 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
                 mbest = (r, e)
     if mbest:
         r, e = mbest
-        tape = we.event_window(events, r["kalshi"], r["poly"], e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
+        if sm_bundle is not None:
+            tape = _sm._event_window(sm_bundle["k_mid"].get(r["kalshi"], []), sm_bundle["p_mid"].get(r["poly"], []),
+                                     e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
+        else:
+            tape = we.event_window(events, r["kalshi"], r["poly"], e["t_ms"], BEFORE_S, AFTER_S, BIN_MS)
         cfg = tape_config(r["label"], e)
         cfg["match"] = match              # dek title -> the full matchup, not just the team/market
         with open(os.path.join(LEADLAG_DIR, slug + ".js"), "w", encoding="utf-8") as f:
@@ -128,9 +141,8 @@ def process_capture(cap: str, events=None, pairs=None) -> str | None:
     n_leads = sum(1 for r in results for e in r["events"] if e.get("lead"))
     n_shocks = sum(r["n_events"] for r in results)
     tag = (f"{mpooled['leader']} {mpooled['median_lead_ms']:+.0f}ms" if mpooled else "no clean lead")
-    print(f"  processed {match:<24} {len(events):>10,} ev · {n_shocks:>2} shocks · {n_leads:>2} leads"
+    print(f"  processed {match:<24} {n_ev:>10,} ev · {n_shocks:>2} shocks · {n_leads:>2} leads"
           + (f" · dropped {dropped}" if dropped else "") + f"  -> {slug}.{{js,json}} ({tag})")
-    del events
     return match
 
 
