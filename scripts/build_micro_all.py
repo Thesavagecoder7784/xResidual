@@ -22,6 +22,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import ws_events as we  # noqa: E402
+import stream_micro as sm              # noqa: E402  streaming single-pass reader (fits the 900 MB VM)
 import build_leadlag as ll             # noqa: E402
 import overreaction_build as ovr       # noqa: E402
 import build_ofi_leadlag as ofi        # noqa: E402
@@ -56,14 +57,15 @@ def main() -> int:
         if not need:
             continue
         print(f"parsing {cap} once for: {', '.join(lbl for _, lbl in need)}")
-        events = we.load_ws_events(DATA_DIR, capture=cap)   # the one expensive load
         pairs = we.load_pairs(DATA_DIR, capture=cap)
+        tape = os.path.join(DATA_DIR, f"ws-events-{cap}.jsonl")
+        sm_bundle = sm.stream_all(tape, pairs)              # ONE streaming pass (~MB, not ~7 GB)
         for mod, lbl in need:
             try:
-                mod.process_capture(cap, events, pairs)
+                mod.process_capture(cap, pairs=pairs, sm_bundle=sm_bundle)
             except Exception as e:                          # one pipeline failing must not lose the others
                 print(f"  {lbl} failed on {_slug(cap)}: {e}")
-        del events
+        del sm_bundle
         parsed += 1
     if not parsed:
         print(f"no tapes need processing ({len(caps)} present, all archived); re-pooling.")

@@ -36,12 +36,29 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/build_buildup_trajectory.py || echo "  buildup failed"   # title-race trajectory card data; INCREMENTAL (merges onto the seeded series), so the VM's limited snapshot retention never truncates the full May-onward history. Not published — kept fresh on the VM for the laptop to pull + render the card.
 "$PY" scripts/venue_calibration.py || echo "  venue calibration failed"   # pending until ~Jun 27
 
+# Microstructure: streaming single pass (lead-lag + OFI + overreaction) now fits the VM (~0.5 GB peak,
+# was ~7 GB), so the VM processes settled tapes itself — no more laptop dependency. Then publish the
+# pooled feeds into docs/data (the VM now BUILDS these; it used to only relay the laptop's copies).
+"$PY" scripts/build_micro_all.py || echo "  micro_all failed"
+cp -f viz/market/_ofi.js docs/data/ofi.js 2>/dev/null || true
+cp -f viz/model/_overreaction.js docs/data/overreaction.js 2>/dev/null || true
+"$PY" - <<'PYLL' || echo "  leadlag feed extract failed"
+import json
+from datetime import datetime, timezone
+d = json.load(open("writeups/_leadlag_results.json"))
+open("docs/data/leadlag.js", "w").write("window.LEADLAG_POOLED = " + json.dumps(
+    {"pooled": d.get("pooled"), "n_matches": d.get("n_matches"), "min_jump": d.get("min_jump"),
+     "asof": datetime.now(timezone.utc).isoformat()}) + ";\n")
+PYLL
+
 # Publish: refresh the clone, copy regenerated data + the pre-committed forecast LEDGERS in,
 # commit + push. Publishing the ledgers (the auditable "receipts") keeps origin in sync with
 # the live track record — the timestamped commits are the proof of pre-commitment — and stops
 # the laptop ever diverging from the VM-owned ledger. The VM is the single writer.
 cd "$PUB" || { echo "  no publish clone at $PUB"; exit 1; }
 git pull --rebase --autostash 2>&1 | tail -1
+# The VM now builds leadlag/ofi/overreaction itself (streaming made them fit), so they publish
+# straight from $REPO/docs/data with everything else — no exclude, no laptop relay.
 rsync -a "$REPO/docs/data/" "$PUB/docs/data/"
 mkdir -p "$PUB/paper"
 rsync -a "$REPO/paper/forecasts.jsonl" "$REPO/paper/match_forecasts.jsonl" "$REPO/paper/match_forecasts_v2.jsonl" "$REPO/paper/match_forecasts_v3.jsonl" "$PUB/paper/" 2>/dev/null || true
