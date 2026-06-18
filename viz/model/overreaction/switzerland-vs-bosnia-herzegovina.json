@@ -1,0 +1,62 @@
+{
+  "match": "Switzerland vs Bosnia Herzegovina",
+  "capture": "20260618T183109Z-switzerland-vs-bosnia-herzegovina",
+  "n_goals": 2,
+  "goals_source": "results",
+  "reference": {
+    "label": "Switzerland",
+    "venue": "polymarket"
+  },
+  "n_detected": 3,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781813724161,
+      "jump": -0.05,
+      "pre": 0.555,
+      "p_entry": 0.485,
+      "p_exit": 0.475,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.112,
+      "gain_prior": 0.445,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781814776485,
+      "jump": 0.055,
+      "pre": 0.395,
+      "p_entry": 0.855,
+      "p_exit": 0.925,
+      "reverted_pp": -7.0,
+      "pnl_pp": -7.5,
+      "surprise": 0.139,
+      "gain_prior": 0.395,
+      "surprising": true
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": -9.0,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -4.0,
+    "mean_pnl_pp": -4.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": -7.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -7.0,
+    "mean_pnl_pp": -7.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

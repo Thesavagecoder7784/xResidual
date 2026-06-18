@@ -1,0 +1,48 @@
+{
+  "match": "Switzerland vs Bosnia Herzegovina",
+  "capture": "20260618T183109Z-switzerland-vs-bosnia-herzegovina",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.6213,
+  "match_poly_gg": 0.6715,
+  "contracts": [
+    {
+      "label": "Bosnia & Herzegovina",
+      "kalshi": "KXWCGAME-26JUN18SUIBIH-BIH",
+      "poly": "66489726367925595502503158446006075400401621519147621264189323965755835894613",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00709,
+      "alpha_b": 0.00338,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6828,
+      "n": 7954
+    },
+    {
+      "label": "Switzerland",
+      "kalshi": "KXWCGAME-26JUN18SUIBIH-SUI",
+      "poly": "106591280142630626115724651117201657682325101150171422307265130569697670708657",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6715,
+      "gg_b": 0.3285,
+      "alpha_a": -0.01135,
+      "alpha_b": 0.02321,
+      "hasbrouck_a_lo": 0.5925,
+      "hasbrouck_a_hi": 0.6501,
+      "hasbrouck_a_mid": 0.6213,
+      "cointegrated": true,
+      "adf_p": 0.0115,
+      "n": 8255
+    }
+  ]
+}
