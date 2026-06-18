@@ -48,6 +48,7 @@ else
   "$PY" scripts/build_micro_all.py || echo "  micro_all failed"
 fi
 cp -f viz/market/_ofi.js docs/data/ofi.js 2>/dev/null || true
+cp -f viz/market/_infoshare.js docs/data/infoshare.js 2>/dev/null || true
 cp -f viz/model/_overreaction.js docs/data/overreaction.js 2>/dev/null || true
 "$PY" - <<'PYLL' || echo "  leadlag feed extract failed"
 import json
