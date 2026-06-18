@@ -53,6 +53,17 @@ FULL_MIN = 92.0          # nominal full-time incl. typical stoppage, for "minute
 SETTLE_MS = 30000        # market WP measured ~30s after a goal (let the jump settle)
 REVERT_MS = 90000        # and again ~90s after, to test reversion toward fair value
 
+# Name bridge: our slug-derived labels ("Dr Congo"), the fixtures/model feeds ("DR Congo"), and
+# football-data.org ("Côte d'Ivoire", "Korea Republic", ...) all spell teams differently. Canonicalise
+# to alnum-lowercase + a small alias map so every lookup (fixtures, pre-game, goals) matches robustly.
+_ALIAS = {"cotedivoire": "ivorycoast", "korearepublic": "southkorea", "iriran": "iran",
+          "czechia": "czechrepublic", "turkiye": "turkey", "unitedstates": "usa"}
+
+
+def _cn(s: str) -> str:
+    c = re.sub(r"[^a-z0-9]", "", (s or "").lower())
+    return _ALIAS.get(c, c)
+
 
 # ---- the in-play win-probability model (proven in test_livewp.py) --------------------------
 def _pois(k: int, m: float) -> float:
@@ -112,8 +123,8 @@ def load_fixtures() -> dict:
     with open(FIXTURES, encoding="utf-8") as f:
         for r in csv.DictReader(f):
             k = _parse_kickoff(r.get("date", ""), r.get("time", ""))
-            out[(r["team1"], r["team2"])] = {"kickoff": k,
-                                             "s1": _num(r.get("score1")), "s2": _num(r.get("score2"))}
+            out[(_cn(r["team1"]), _cn(r["team2"]))] = {"kickoff": k,
+                                                       "s1": _num(r.get("score1")), "s2": _num(r.get("score2"))}
     return out
 
 
@@ -129,19 +140,33 @@ def load_pregame() -> dict:
         d = json.loads(open(MATCHES).read().split("=", 1)[1].strip().rstrip(";"))
     except Exception:
         return {}
-    return {(g["t1"], g["t2"]): (g["p1"], g["pd"], g["p2"]) for g in d.get("matches", [])}
+    return {(_cn(g["t1"]), _cn(g["t2"])): (g["p1"], g["pd"], g["p2"]) for g in d.get("matches", [])}
 
 
-def load_curated_goals(match: str) -> list | None:
-    """data/wc_goals.json or FOOTBALL_DATA_KEY override -> [{'minute':int,'team':str}] or None."""
-    if os.path.exists(GOALS_CURATED):
-        try:
-            j = json.load(open(GOALS_CURATED))
-            if match in j and j[match]:
-                return sorted(j[match], key=lambda g: g["minute"])
-        except Exception:
-            pass
-    return None  # FOOTBALL_DATA_KEY hook: a fetch_goals(match) can populate GOALS_CURATED out-of-band
+def load_curated_goals(home: str, away: str) -> list | None:
+    """Exact goal minutes for this fixture from data/wc_goals.json (populated by fetch_goals.py off
+    FOOTBALL_DATA_KEY, or hand-curated). Returns [{'minute','injury','team'}] with team mapped to the
+    home/away NAME via the name bridge, sorted chronologically; None if absent or names don't match."""
+    if not os.path.exists(GOALS_CURATED):
+        return None
+    try:
+        j = json.load(open(GOALS_CURATED))
+    except Exception:
+        return None
+    for key, goals in j.items():
+        if " vs " not in key:
+            continue
+        kh, ka = [s.strip() for s in key.split(" vs ", 1)]
+        if (_cn(kh), _cn(ka)) != (_cn(home), _cn(away)) or not goals:
+            continue
+        out = []
+        for g in goals:
+            role = home if _cn(g.get("team", "")) == _cn(home) else (away if _cn(g.get("team", "")) == _cn(away) else None)
+            if role is None:
+                return None                                  # a goal's team didn't match either side -> don't trust
+            out.append({"minute": g["minute"], "injury": g.get("injury", 0), "team": role})
+        return sorted(out, key=lambda x: (x["minute"], x["injury"]))
+    return None
 
 
 # ---- clock: kickoff anchor + detected halftime ---------------------------------------------
@@ -194,8 +219,8 @@ def process_capture(cap, pairs=None, sm_bundle=None, fixtures=None, pregame=None
         return None
     home, away = [s.strip() for s in match.split(" vs ", 1)]
 
-    fx = fixtures.get((home, away))
-    pg = pregame.get((home, away))
+    fx = fixtures.get((_cn(home), _cn(away)))
+    pg = pregame.get((_cn(home), _cn(away)))
     if not fx or not fx.get("kickoff") or not pg:
         print(f"  skip {match}: missing kickoff/pre-game"); return None
     lh, la = fit_lambdas(*pg)
@@ -214,23 +239,29 @@ def process_capture(cap, pairs=None, sm_bundle=None, fixtures=None, pregame=None
     final = (fx["s1"], fx["s2"]) if fx["s1"] is not None else None
     mkt = lambda s, t: min(s, key=lambda x: abs(x[0] - t))[1]
 
-    curated = load_curated_goals(match)
+    curated = load_curated_goals(home, away)
     if curated:
-        # exact MINUTES from feed/curation (for the model's minutes-left), but the accurate WALL time
-        # from the matching shock (for reading the market move). Pair chronologically when counts agree.
-        ig, _, _ = infer_goals(hs, as_, home, away, final)
-        goals = []
-        if len(ig) == len(curated):
-            for cg, sh in zip(curated, ig):
-                goals.append({"t_ms": sh["t_ms"], "team": cg["team"], "minute": cg["minute"]})
-            src = "curated-min + shock-time"
-        else:
-            ht = halftime_gap_ms(hs, t_kick)
-            for cg in curated:
-                wt = t_kick + cg["minute"] * 60000 + (ht if cg["minute"] > 45 else 0)
-                goals.append({"t_ms": wt, "team": cg["team"], "minute": cg["minute"]})
-            src = f"curated-min + kickoff-time ({len(ig)} shocks != {len(curated)} goals)"
+        # exact MINUTES from curation (for the model's minutes-left); for the WALL time (to read the
+        # market move) SNAP each goal to its nearest detected shock — robust to spurious/missing shocks
+        # (a 1-0 can throw several blips; a quiet goal none), unlike requiring equal counts. Estimate
+        # = kickoff + minute (+ halftime past the break); snap to a shock within 4 min, else keep the est.
+        shocks = sorted(infer_goals(hs, as_, home, away, final)[0], key=lambda x: x["t_ms"])
+        ht = halftime_gap_ms(hs, t_kick)
+        est_wall = lambda mn, inj: t_kick + int((mn + inj + (ht / 60000.0 if mn > 45 else 0)) * 60000)
+        goals, used, snapped = [], set(), 0
+        for cg in curated:
+            est = est_wall(cg["minute"], cg.get("injury", 0))
+            best, bestd = None, 240000
+            for k, sh in enumerate(shocks):
+                if k not in used and abs(sh["t_ms"] - est) < bestd:
+                    best, bestd = k, abs(sh["t_ms"] - est)
+            if best is not None:
+                used.add(best); wt = shocks[best]["t_ms"]; snapped += 1
+            else:
+                wt = est
+            goals.append({"t_ms": wt, "team": cg["team"], "minute": cg["minute"]})
         goals.sort(key=lambda x: x["t_ms"])
+        src = f"curated-min ({snapped}/{len(curated)} snapped to shocks)"
         score_ok = True
     else:
         ig, score_ok, counts = infer_goals(hs, as_, home, away, final)
