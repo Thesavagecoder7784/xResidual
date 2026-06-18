@@ -1,0 +1,62 @@
+{
+  "match": "Ghana vs Panama",
+  "capture": "20260617T223224Z-ghana-vs-panama",
+  "n_goals": null,
+  "goals_source": "not-found",
+  "reference": {
+    "label": "Ghana",
+    "venue": "polymarket"
+  },
+  "n_detected": 4,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781742114209,
+      "jump": 0.06,
+      "pre": 0.165,
+      "p_entry": 0.225,
+      "p_exit": 0.225,
+      "reverted_pp": -0.0,
+      "pnl_pp": -0.5,
+      "surprise": 0.364,
+      "gain_prior": 0.165,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781744144189,
+      "jump": 0.075,
+      "pre": 0.05,
+      "p_entry": 0.975,
+      "p_exit": 0.9865,
+      "reverted_pp": -1.15,
+      "pnl_pp": -1.65,
+      "surprise": 1.5,
+      "gain_prior": 0.05,
+      "surprising": true
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": -2.15,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -0.575,
+    "mean_pnl_pp": -1.075,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 2,
+  "summary_surprising": {
+    "n": 2,
+    "total_pnl_pp": -2.15,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -0.575,
+    "mean_pnl_pp": -1.075,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
