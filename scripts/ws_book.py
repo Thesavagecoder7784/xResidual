@@ -117,6 +117,13 @@ def ofi_increments(tob: list[dict]) -> list[tuple[int, float]]:
     return inc
 
 
+# CAUTION (audit 2026-06-18): the two *_signed_trades helpers below are UNUSED by any reported
+# finding — OFI is reconstructed from top-of-book changes (ofi_increments, Cont-Kukanov-Stoikov),
+# and lead-lag/info-share run on mids, so all current results are immune to trade-direction error.
+# Kalshi's `taker_side` is exchange-authoritative. Polymarket's `last_trade_price` `side` is the
+# public-feed field a 2026 paper (arXiv 2604.24366) found agrees with on-chain only ~59%; BEFORE
+# using polymarket_signed_trades in any measure, validate it against data-api /trades (which carries
+# ground-truth side/asset/price/size/timestamp) and re-sign from chain if agreement is low.
 def kalshi_signed_trades(events: list[dict], ticker: str) -> list[tuple[int, float, float]]:
     """(t, signed_size, price) for Kalshi trades: +size if the taker bought yes, -size if no."""
     out = []
