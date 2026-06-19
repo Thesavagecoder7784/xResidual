@@ -1,0 +1,48 @@
+{
+  "match": "Mexico vs South Korea",
+  "capture": "20260619T002622Z-mexico-vs-south-korea",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.5886,
+  "match_poly_gg": 0.7826,
+  "contracts": [
+    {
+      "label": "South Korea",
+      "kalshi": "KXWCGAME-26JUN18MEXKOR-KOR",
+      "poly": "40559900670015709472472801511880289852513956415696043408438494025364180866146",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6196,
+      "gg_b": 0.3804,
+      "alpha_a": -0.01531,
+      "alpha_b": 0.02493,
+      "hasbrouck_a_lo": 0.187,
+      "hasbrouck_a_hi": 0.2287,
+      "hasbrouck_a_mid": 0.2079,
+      "cointegrated": true,
+      "adf_p": 0.0055,
+      "n": 8878
+    },
+    {
+      "label": "Mexico",
+      "kalshi": "KXWCGAME-26JUN18MEXKOR-MEX",
+      "poly": "84622337225923971667543390025202237459542894380445135038857655043890030217262",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9456,
+      "gg_b": 0.0544,
+      "alpha_a": -0.00333,
+      "alpha_b": 0.0579,
+      "hasbrouck_a_lo": 0.9425,
+      "hasbrouck_a_hi": 0.9961,
+      "hasbrouck_a_mid": 0.9693,
+      "cointegrated": true,
+      "adf_p": 0.0003,
+      "n": 8962
+    }
+  ]
+}
