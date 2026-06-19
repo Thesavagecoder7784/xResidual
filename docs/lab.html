@@ -98,6 +98,10 @@
       <a class="thumb" href="img/overreaction_surprise.png" target="_blank" rel="noopener"><img src="img/overreaction_surprise.png" alt="Fade only surprising goals; documented edge, forming sample"><span class="cap">shareable card ↗</span></a>
       <h3>The overreaction fade, <em>tested honestly</em>.</h3>
       <div id="ovr-body"><p class="loading">loading…</p></div></div>
+
+    <div class="find" id="f-livewp"><div class="ft">Finding 05 · live model vs live market</div>
+      <h3>Does the market track <em>fair value</em> on a goal?</h3>
+      <div id="lw-body"><p class="loading">loading…</p></div></div>
   </section>
 
   <footer><div id="foot">cross-venue microstructure · paper, net of modeled cost · pooled from per-match summaries</div>
@@ -185,11 +189,25 @@ function loaded(){
       </div>
       <div class="verdict form"><b>Too early to call, and that is the honest answer.</b> The edge is documented and replicated, and it lives in <i>surprising</i> goals, where our pool is only n=${ss.n||0} so far${ss.n&&ss.total_pnl_pp>0?' (and the early sign points the documented way)':''}. The all-goals number dilutes it with ordinary goals that should not revert, which is why it reads negative. We are not claiming the edge is gone, only that the pool is still too thin to test it. It grows by one match at a time.</div>`;
   } else vb.innerHTML=`<p>Live data updating.</p>`;
+
+  // ---- Finding 05: live model vs live market ----
+  const lwb=document.getElementById('lw-body'), LW=window.LIVEWP;
+  if(LW && LW.n_goals){
+    const ov=LW.mean_overshoot_home_wp, under=ov<0, pp=(Math.abs(ov)*100).toFixed(1);
+    lwb.innerHTML=`<p>Our in-play model (Elo + Poisson, calibrated to the pre-game price) gives a <b>fair</b> win-probability at every moment, so at each goal the fair jump is well-defined and we can ask whether the live market moves by more or less than it should. Across <b>${LW.n_matches} matches / ${LW.n_goals} goals</b> (exact goal minutes), the market's move on a goal is on average <b>${pp}pp ${under?'smaller':'larger'}</b> than the model's fair jump in P(home win).</p>
+      <div class="mini">
+        <div><div class="v ${under?'':'a'}">${ov>=0?'+':''}${(ov*100).toFixed(1)}pp</div><div class="k">market move − fair jump · ${LW.n_goals} goals</div></div>
+        <div><div class="v">${LW.n_matches}</div><div class="k">matches scored</div></div>
+      </div>
+      <div class="verdict ${under?'form':'null'}">${under
+        ? `<b>The market under-reacts to goals — and that is not (yet) an edge.</b> A score-and-clock model over-swings on the scoreboard; the market stays calmer because it keeps the team-strength prior the model discards. So the gap reads as the market being <i>smart</i>, not slow. Telling "smart" from "slow" needs a dominance-aware model (live xG) — the next build.`
+        : `<b>The market moves slightly more than the naive model on a goal.</b> Forming sample; descriptive until the pool deepens.`}</div>`;
+  } else if(lwb) lwb.innerHTML=`<p>Live data updating.</p>`;
 }
-let need=4;
+let need=5;
 function ld(src){const s=document.createElement('script');s.src=src+'?'+Date.now();
   s.onload=s.onerror=()=>{if(--need===0)loaded();};document.body.appendChild(s);}
-ld('data/leadlag.js');ld('data/infoshare.js');ld('data/ofi.js');ld('data/overreaction.js');
+ld('data/leadlag.js');ld('data/infoshare.js');ld('data/ofi.js');ld('data/overreaction.js');ld('data/livewp.js');
 setTimeout(()=>{if(need>0){need=0;loaded();}},8000);
 </script>
 </body></html>
