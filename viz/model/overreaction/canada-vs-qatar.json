@@ -1,0 +1,62 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "n_goals": 2,
+  "goals_source": "results",
+  "reference": {
+    "label": "Canada",
+    "venue": "polymarket"
+  },
+  "n_detected": 2,
+  "n_trades": 2,
+  "trades": [
+    {
+      "t_ms": 1781820999332,
+      "jump": 0.055,
+      "pre": 0.795,
+      "p_entry": 0.915,
+      "p_exit": 0.925,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.069,
+      "gain_prior": 0.795,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781821756102,
+      "jump": 0.055,
+      "pre": 0.925,
+      "p_entry": 0.985,
+      "p_exit": 0.9935,
+      "reverted_pp": -0.85,
+      "pnl_pp": -1.35,
+      "surprise": 0.059,
+      "gain_prior": 0.925,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 2,
+    "total_pnl_pp": -2.85,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -0.925,
+    "mean_pnl_pp": -1.425,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

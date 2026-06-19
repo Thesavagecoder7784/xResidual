@@ -1,0 +1,37 @@
+{
+  "match": "Mexico vs South Korea",
+  "capture": "20260619T002622Z-mexico-vs-south-korea",
+  "n_goals": 1,
+  "goals_source": "results",
+  "reference": {
+    "label": "Mexico",
+    "venue": "polymarket"
+  },
+  "n_detected": 4,
+  "n_trades": 0,
+  "trades": [],
+  "summary": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

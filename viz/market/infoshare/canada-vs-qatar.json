@@ -1,0 +1,48 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Qatar",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-QAT",
+      "poly": "12449312449220028732329011560175624873500857403580896927070982513454645477597",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01851,
+      "alpha_b": 0.01555,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.5818,
+      "n": 4499
+    },
+    {
+      "label": "Canada",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-CAN",
+      "poly": "72434460309427898004674696764153066565237298072408402131497058701161364650505",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01817,
+      "alpha_b": 0.0121,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.2407,
+      "n": 6091
+    }
+  ]
+}

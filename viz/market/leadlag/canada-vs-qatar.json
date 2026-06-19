@@ -1,0 +1,341 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "pooled": {
+    "n": 1,
+    "median_lead_ms": -8000.0,
+    "iqr_ms": [
+      -8000.0,
+      -8000.0
+    ],
+    "leader": "kalshi",
+    "leader_share": 1.0,
+    "poly_leads": 0,
+    "kalshi_leads": 1
+  },
+  "pairs": [
+    {
+      "label": "Qatar",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-QAT",
+      "poly": "12449312449220028732329011560175624873500857403580896927070982513454645477597",
+      "n_events": 3,
+      "events": [
+        {
+          "t_ms": 1781820999922,
+          "jump": 0.045,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.065,
+            "settle": 0.025,
+            "jump": -0.04,
+            "surprise": 0.935,
+            "reversals": {
+              "60": {
+                "level": 0.025,
+                "reversal_frac": -0.0
+              },
+              "180": {
+                "level": 0.025,
+                "reversal_frac": -0.0
+              },
+              "300": {
+                "level": 0.025,
+                "reversal_frac": -0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.065,
+            "settle": 0.0258,
+            "jump": -0.0392,
+            "surprise": 0.935,
+            "reversals": {
+              "60": {
+                "level": 0.025,
+                "reversal_frac": -0.02
+              },
+              "180": {
+                "level": 0.0215,
+                "reversal_frac": -0.109
+              },
+              "300": {
+                "level": 0.0215,
+                "reversal_frac": -0.109
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -17400,
+            "best_corr": -0.91,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781821029942,
+          "jump": 0.045,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.025,
+            "settle": 0.03,
+            "jump": 0.005,
+            "surprise": 0.975,
+            "reversals": {
+              "60": {
+                "level": 0.025,
+                "reversal_frac": 1.0
+              },
+              "180": {
+                "level": 0.025,
+                "reversal_frac": 1.0
+              },
+              "300": {
+                "level": 0.025,
+                "reversal_frac": 1.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0287,
+            "settle": 0.025,
+            "jump": -0.0037,
+            "surprise": 0.971,
+            "reversals": {
+              "60": {
+                "level": 0.022,
+                "reversal_frac": -0.817
+              },
+              "180": {
+                "level": 0.0225,
+                "reversal_frac": -0.681
+              },
+              "300": {
+                "level": 0.0215,
+                "reversal_frac": -0.954
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781827389662,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Canada vs Qatar"
+    },
+    {
+      "label": "Canada",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-CAN",
+      "poly": "72434460309427898004674696764153066565237298072408402131497058701161364650505",
+      "n_events": 5,
+      "events": [
+        {
+          "t_ms": 1781820999318,
+          "jump": 0.08,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.8068,
+            "settle": 0.905,
+            "jump": 0.0982,
+            "surprise": 0.193,
+            "reversals": {
+              "60": {
+                "level": 0.905,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.915,
+                "reversal_frac": -0.102
+              },
+              "300": {
+                "level": 0.915,
+                "reversal_frac": -0.102
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.798,
+            "settle": 0.9056,
+            "jump": 0.1076,
+            "surprise": 0.202,
+            "reversals": {
+              "60": {
+                "level": 0.915,
+                "reversal_frac": -0.087
+              },
+              "180": {
+                "level": 0.925,
+                "reversal_frac": -0.18
+              },
+              "300": {
+                "level": 0.925,
+                "reversal_frac": -0.18
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 15400,
+            "best_corr": -0.65,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781821029470,
+          "jump": 0.11,
+          "lead": {
+            "best_lag_ms": -8000,
+            "best_corr": 0.8152394645841088,
+            "leader": "kalshi",
+            "n_bins": 149
+          },
+          "kalshi_reaction": {
+            "pre": 0.895,
+            "settle": 0.905,
+            "jump": 0.01,
+            "surprise": 0.105,
+            "reversals": {
+              "60": {
+                "level": 0.915,
+                "reversal_frac": -1.0
+              },
+              "180": {
+                "level": 0.915,
+                "reversal_frac": -1.0
+              },
+              "300": {
+                "level": 0.915,
+                "reversal_frac": -1.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.905,
+            "settle": 0.9109,
+            "jump": 0.0059,
+            "surprise": 0.095,
+            "reversals": {
+              "60": {
+                "level": 0.915,
+                "reversal_frac": -0.694
+              },
+              "180": {
+                "level": 0.925,
+                "reversal_frac": -2.388
+              },
+              "300": {
+                "level": 0.925,
+                "reversal_frac": -2.388
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781821755672,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9208,
+            "settle": 0.9663,
+            "jump": 0.0454,
+            "surprise": 0.079,
+            "reversals": {
+              "60": {
+                "level": 0.975,
+                "reversal_frac": -0.193
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": -0.633
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": -0.633
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9392,
+            "settle": 0.975,
+            "jump": 0.0358,
+            "surprise": 0.061,
+            "reversals": {
+              "60": {
+                "level": 0.975,
+                "reversal_frac": -0.0
+              },
+              "180": {
+                "level": 0.99,
+                "reversal_frac": -0.419
+              },
+              "300": {
+                "level": 0.9925,
+                "reversal_frac": -0.489
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 15200,
+            "best_corr": 0.67,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781821785723,
+          "jump": 0.06,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.975,
+            "settle": 0.975,
+            "jump": 0.0,
+            "surprise": 0.025,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.975,
+            "settle": 0.975,
+            "jump": 0.0,
+            "surprise": 0.025,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.9975,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.994,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781827389662,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Canada vs Qatar"
+    }
+  ],
+  "min_jump": 0.04
+}
