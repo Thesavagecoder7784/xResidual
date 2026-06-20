@@ -62,7 +62,12 @@ def main() -> int:
                           "clv": clv, "outcome": resolved.get(k)})
 
     title = sorted([f for f in forecasts if f["market"] == "champion"], key=lambda f: -f["model"])[:12]
-    calls = sorted(forecasts, key=lambda f: -abs(f["edge"]))[:20]
+    # Biggest calls EXCLUDE the advance-to-R32 layer: there the model systematically disagrees with
+    # BOTH bookmakers and Polymarket (the mispricing "our model, not the market" verdict — the
+    # squad-value / minnow-advancement bias), so its largest "edges" are our model's bias, not real
+    # calls. Lead the board with the markets where the model-vs-market gap is genuine (reach-QF/SF
+    # favourite overpricing, group winner), not the layer we'd never actually trade.
+    calls = sorted([f for f in forecasts if f["market"] != "advance"], key=lambda f: -abs(f["edge"]))[:20]
 
     clv_vals = [f["clv"] for f in forecasts if f["clv"] is not None]
     clv_summary = {"n": len(clv_vals),
