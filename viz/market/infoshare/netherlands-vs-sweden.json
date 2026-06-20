@@ -1,0 +1,48 @@
+{
+  "match": "Netherlands vs Sweden",
+  "capture": "20260620T163021Z-netherlands-vs-sweden",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Netherlands",
+      "kalshi": "KXWCGAME-26JUN20NEDSWE-NED",
+      "poly": "81043398291360463170235957547610256181022662944963722274721633505163503937838",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01587,
+      "alpha_b": 0.01415,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.3565,
+      "n": 8062
+    },
+    {
+      "label": "Sweden",
+      "kalshi": "KXWCGAME-26JUN20NEDSWE-SWE",
+      "poly": "40679081595356904709519473256184794013741938720159613262750624703767617499056",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": 0.00039,
+      "alpha_b": 0.00247,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.8851,
+      "n": 7621
+    }
+  ]
+}
