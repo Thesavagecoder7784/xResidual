@@ -1,18 +1,26 @@
 {
-  "n_matches": 2,
-  "n_cointegrated_contracts": 3,
+  "n_matches": 3,
+  "n_cointegrated_contracts": 5,
   "bin_ms": 1000,
-  "poly_infoshare_hasbrouck_mid": 0.6049,
-  "poly_infoshare_gg": 0.727,
+  "poly_infoshare_hasbrouck_mid": 0.6213,
+  "poly_infoshare_gg": 0.7826,
   "hasbrouck_mid_band": [
-    0.5925,
-    0.6501
+    0.7673,
+    0.9799
   ],
   "match_leader_counts": {
-    "polymarket": 2,
+    "polymarket": 3,
     "kalshi": 0
   },
   "per_match": [
+    {
+      "match": "Germany vs Ivory Coast",
+      "n_contracts": 2,
+      "n_cointegrated": 2,
+      "poly_hasbrouck_mid": 0.9308,
+      "poly_gg": 1.0206,
+      "leader": "polymarket"
+    },
     {
       "match": "Switzerland vs Bosnia Herzegovina",
       "n_contracts": 2,
