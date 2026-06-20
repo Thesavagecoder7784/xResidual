@@ -419,6 +419,37 @@ def _write_pairs(pairs: list[dict], name: str) -> None:
 # subscribe at start used to lose the whole game on the late venue. Env-overridable for tuning.
 REPOLL_SECONDS = int(os.environ.get("WSCAP_REPOLL_S", "90"))
 
+# Adaptive early-stop: end the capture once the match's market has gone silent, instead of
+# blindly running the full --seconds window (which over-ran every group game by ~40 min of dead
+# post-match recording — wasting tape and keeping the memory guard up so the micro pools couldn't
+# refresh). Fires ONLY when BOTH conditions hold, so it can never trip mid-match or at half-time:
+#   - at least IDLE_STOP_AFTER_S elapsed (past any plausible full-time), AND
+#   - no new events for IDLE_STOP_SILENCE_S (a live match always emits events; only a settled,
+#     post-match market goes fully silent).
+# Adapts to length automatically: a group game stops near full-time, a knockout only after ET/pens.
+# The --seconds value stays the hard backstop. Env-overridable; set IDLE_STOP_AFTER_S=0 to disable.
+IDLE_STOP_AFTER_S = int(os.environ.get("WSCAP_IDLE_AFTER_S", "6000"))     # 100 min elapsed floor
+IDLE_STOP_SILENCE_S = int(os.environ.get("WSCAP_IDLE_SILENCE_S", "900"))  # 15 min of no events
+IDLE_STOP_POLL_S = int(os.environ.get("WSCAP_IDLE_POLL_S", "30"))         # how often to check
+
+
+async def idle_watchdog(w, deadline: float, stop: "asyncio.Event") -> None:
+    """Set `stop` when the market has been silent past full-time (see constants above)."""
+    if IDLE_STOP_AFTER_S <= 0:
+        return
+    start = time.time()
+    last_n, last_change = w.n, time.time()
+    while time.time() < deadline and not stop.is_set():
+        await asyncio.sleep(IDLE_STOP_POLL_S)
+        if w.n != last_n:
+            last_n, last_change = w.n, time.time()
+            continue
+        if (time.time() - start) > IDLE_STOP_AFTER_S and (time.time() - last_change) > IDLE_STOP_SILENCE_S:
+            _log(f"idle-stop: no events for {IDLE_STOP_SILENCE_S/60:.0f} min past full-time "
+                 f"({(time.time()-start)/60:.0f} min elapsed) — ending capture early")
+            stop.set()
+            return
+
 
 async def main_async(args) -> int:
     env = envtools.load_env()
@@ -507,12 +538,26 @@ async def main_async(args) -> int:
     if not active:
         _log("no markets listed at start — re-polling until they appear")
 
+    stop = asyncio.Event()
+    watchdog = asyncio.ensure_future(idle_watchdog(w, deadline, stop))
     try:
         if repoll_task is not None:
             await repoll_task                # runs concurrently with the streams; returns at both-up or deadline
         if active:
-            await asyncio.gather(*active.values())
+            # wait for the streams to finish at the hard deadline, OR the idle-watchdog to fire
+            # post-match — whichever comes first.
+            stop_waiter = asyncio.ensure_future(stop.wait())
+            await asyncio.wait([*active.values(), stop_waiter], return_when=asyncio.FIRST_COMPLETED)
+            stop_waiter.cancel()
+            if stop.is_set():                       # idle-stop fired: cancel the still-running streams
+                for t in active.values():
+                    if not t.done():
+                        t.cancel()
+            # drain ALL stream tasks (whether they finished at the deadline or were just cancelled)
+            # before the writer is closed in `finally`, so nothing writes to a closed tape.
+            await asyncio.gather(*active.values(), return_exceptions=True)
     finally:
+        watchdog.cancel()
         w.close()
     _log(f"done — {w.n} events written to {os.path.relpath(w.path)}")
     if args.analyze:
