@@ -1,0 +1,86 @@
+{
+  "match": "Germany vs Ivory Coast",
+  "capture": "20260620T193323Z-germany-vs-ivory-coast",
+  "n_goals": 4,
+  "goals_source": "results",
+  "reference": {
+    "label": "Germany",
+    "venue": "polymarket"
+  },
+  "n_detected": 7,
+  "n_trades": 4,
+  "trades": [
+    {
+      "t_ms": 1781987343222,
+      "jump": -0.06,
+      "pre": 0.595,
+      "p_entry": 0.385,
+      "p_exit": 0.375,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.148,
+      "gain_prior": 0.405,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781987889718,
+      "jump": 0.07,
+      "pre": 0.365,
+      "p_entry": 0.385,
+      "p_exit": 0.325,
+      "reverted_pp": 6.0,
+      "pnl_pp": 5.5,
+      "surprise": 0.192,
+      "gain_prior": 0.365,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781990345296,
+      "jump": 0.075,
+      "pre": 0.12,
+      "p_entry": 0.185,
+      "p_exit": 0.185,
+      "reverted_pp": -0.0,
+      "pnl_pp": -0.5,
+      "surprise": 0.625,
+      "gain_prior": 0.12,
+      "surprising": true
+    },
+    {
+      "t_ms": 1781991858039,
+      "jump": -0.06,
+      "pre": 0.325,
+      "p_entry": 0.255,
+      "p_exit": 0.165,
+      "reverted_pp": -9.0,
+      "pnl_pp": -9.5,
+      "surprise": 0.089,
+      "gain_prior": 0.675,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 4,
+    "total_pnl_pp": -6.0,
+    "hit_rate": 0.25,
+    "mean_reverted_pp": -1.0,
+    "mean_pnl_pp": -1.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 2,
+  "summary_surprising": {
+    "n": 2,
+    "total_pnl_pp": 5.0,
+    "hit_rate": 0.5,
+    "mean_reverted_pp": 3.0,
+    "mean_pnl_pp": 2.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
