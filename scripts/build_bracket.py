@@ -99,6 +99,24 @@ def main() -> int:
             "SF": paths["wsf"], "Final": paths["champ"].reshape(paths["champ"].shape[0], -1)}
     n = mu["R32"].shape[0]
 
+    # The sim's per-round arrays are in knockout-list order, where R16/QF/… are fed by NON-adjacent
+    # earlier matches (R16 #89 <- R32 #74 & #77, i.e. list positions 1 & 4 — NOT 0 & 1). Reorder
+    # every round's columns into bracket-tree leaf order, so match j really is fed by matches 2j and
+    # 2j+1 — which is what the chaining below AND the page's elbow connectors both assume. Without
+    # this the bracket pairs teams that never actually meet (the structural incoherence).
+    _trees = {1: knockout.R16, 2: knockout.QF, 3: knockout.SF, 4: knockout.FN}
+    _ids = {0: list(knockout.R32_IDS), 1: [m[0] for m in knockout.R16], 2: [m[0] for m in knockout.QF],
+            3: [m[0] for m in knockout.SF], 4: [m[0] for m in knockout.FN]}
+    _bo = {4: _ids[4][:]}                                       # bracket-order match-ids, per round
+    for r in (3, 2, 1, 0):
+        feed = {m[0]: (m[1], m[2]) for m in _trees[r + 1]}
+        _bo[r] = [f for pid in _bo[r + 1] for f in feed[pid]]
+    for r, key in enumerate(["R32", "R16", "QF", "SF", "Final"]):
+        pos = {mid: i for i, mid in enumerate(_ids[r])}
+        perm = [pos[mid] for mid in _bo[r]]
+        mu[key] = mu[key][:, perm, :]
+        pmap[key] = pmap[key][:, perm]
+
     rate = {names[i]: float(ko["rating_arr"][i]) for i in range(len(names))}
 
     def mode(col):
