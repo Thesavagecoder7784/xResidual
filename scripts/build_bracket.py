@@ -106,13 +106,37 @@ def main() -> int:
         i = int(c.argmax())
         return names[int(v[i])], c[i] / n
 
+    def assign_round(arr):
+        """Greedy one-team-per-slot projection for a round. Filling each slot with its independent
+        modal team double-books a team that is the most-likely occupant of two mutually-exclusive
+        slots (e.g. Bosnia as Group-B runner-up AND as a best-third — it can be one or the other in
+        any single sim, never both). Instead, rank every (slot, team) by its sim count and assign
+        greedily, skipping any slot or team already taken, so no team appears twice in one round."""
+        cand = []
+        for j in range(arr.shape[1]):
+            for side in (0, 1):
+                v, c = np.unique(arr[:, j, side], return_counts=True)
+                cand += [(int(ci), j * 2 + side, int(vi)) for vi, ci in zip(v, c)]
+        cand.sort(reverse=True)
+        asg, used = {}, set()
+        for ci, slot, ti in cand:
+            if slot in asg or ti in used:
+                continue
+            asg[slot] = (names[ti], ci / n)
+            used.add(ti)
+        for j in range(arr.shape[1]):                 # fallback: any slot left unfilled keeps its mode
+            for side in (0, 1):
+                asg.setdefault(j * 2 + side, mode(arr[:, j, side]))
+        return asg
+
     rounds = []
     for label, key in ROUNDS:
         arr, win = mu[key], pmap[key]
+        asg = assign_round(arr)
         matches = []
         for j in range(arr.shape[1]):
-            ta, pa = mode(arr[:, j, 0])
-            tb, pb = mode(arr[:, j, 1])
+            ta, pa = asg[j * 2 + 0]
+            tb, pb = asg[j * 2 + 1]
             wt, wp = mode(win[:, j])
             final = bool(pa > 0.999 and pb > 0.999 and wp > 0.999)   # both teams fixed + a result in
             if wt not in (ta, tb):  # projected, and marginal modes don't form a coherent tie ->
