@@ -129,24 +129,55 @@ def main() -> int:
                 asg.setdefault(j * 2 + side, mode(arr[:, j, side]))
         return asg
 
-    rounds = []
-    for label, key in ROUNDS:
+    name_idx = {names[i]: i for i in range(len(names))}
+
+    def reach_p(arr, team):
+        """P(`team` reaches this round) — it appears in ANY slot of the round across sims. We use
+        round-level reach, not exact-slot occupancy: the deduped + chained projection deliberately
+        moves a team onto a slot the raw sim rarely fills with it, so slot-level counts read ~0
+        (the '0%' bug). Round-level is the coherent 'how likely to reach this stage' the card wants."""
+        idx = name_idx.get(team)
+        return float((arr == idx).any(axis=2).any(axis=1).sum()) / n if idx is not None else 0.0
+
+    # Build a COHERENT bracket: project the R32 slots (deduped), then advance each match's pick into
+    # the next round, chaining up — so every R16+ team is actually the winner of the two matches that
+    # feed it. Filling each round independently with its marginal mode left R16+ slots showing the
+    # most-likely team to REACH that slot, which often wasn't either feeder's winner (the connectors
+    # led to a team not in the two matches above it — the "not accurate" bug). The pick prefers the
+    # sim's conditional advancer (= the real result once a knockout tie is played) and falls back to
+    # the Elo head-to-head for a purely projected tie, so it is always one of the slot's two teams.
+    rounds, prev_winners = [], None
+    for ri, (label, key) in enumerate(ROUNDS):
         arr, win = mu[key], pmap[key]
-        asg = assign_round(arr)
-        matches = []
-        for j in range(arr.shape[1]):
-            ta, pa = asg[j * 2 + 0]
-            tb, pb = asg[j * 2 + 1]
-            wt, wp = mode(win[:, j])
-            final = bool(pa > 0.999 and pb > 0.999 and wp > 0.999)   # both teams fixed + a result in
-            if wt not in (ta, tb):  # projected, and marginal modes don't form a coherent tie ->
-                ra, rb = rate.get(ta, 1500.0), rate.get(tb, 1500.0)  # use the Elo head-to-head pick
+        nm = arr.shape[1]
+        if ri == 0:
+            asg = assign_round(arr)
+            slots = [asg[s] for s in range(nm * 2)]            # deduped R32 occupants
+        else:
+            slots = [(w, reach_p(arr, w)) for w in prev_winners]   # chain the winners; round-level reach %
+        matches, winners = [], []
+        for j in range(nm):
+            ta, pa = slots[2 * j]
+            tb, pb = slots[2 * j + 1]
+            wt, wp = mode(win[:, j])                            # sim advancer
+            # Use the sim's advancer ONLY when a real knockout result has decided this tie (the
+            # winner is one of the two shown teams AND near-certain). Otherwise it's a marginal mode
+            # of the slot — which can name a team at 21% even though it's the "pick" — so fall back to
+            # the model head-to-head of the TWO TEAMS ACTUALLY SHOWN, giving a coherent >50% pick.
+            if wt not in (ta, tb) or wp < 0.95:
+                ra, rb = rate.get(ta, 1500.0), rate.get(tb, 1500.0)
                 wt, wp = (ta, 1 / (1 + 10 ** ((rb - ra) / 400))) if ra >= rb else (tb, 1 / (1 + 10 ** ((ra - rb) / 400)))
             matches.append({"a": ta, "pa": int(round(pa * 100)), "b": tb, "pb": int(round(pb * 100)),
-                            "pick": wt, "wp": int(round(wp * 100)), "final": final})
+                            "pick": wt, "wp": int(round(wp * 100)),
+                            "final": bool(pa > 0.999 and pb > 0.999 and wp > 0.999)})
+            winners.append(wt)
         rounds.append({"round": label, "matches": matches})
+        prev_winners = winners
 
-    champ, cp = mode(paths["champ"].reshape(-1))
+    # champion = the bracket's Final winner (coherent with the traced path), with its marginal P(win)
+    champ = prev_winners[0] if prev_winners else None
+    v, c = np.unique(paths["champ"].reshape(-1), return_counts=True)
+    cp = {names[int(vi)]: ci / n for vi, ci in zip(v, c)}.get(champ, 0.0)
 
     # projected group standings (conditioned): each team by its advance probability, with win-group
     # probability and actual points so far — rendered under the bracket.
