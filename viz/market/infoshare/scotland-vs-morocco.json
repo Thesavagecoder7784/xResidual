@@ -1,0 +1,48 @@
+{
+  "match": "Scotland vs Morocco",
+  "capture": "20260619T213423Z-scotland-vs-morocco",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Morocco",
+      "kalshi": "KXWCGAME-26JUN19SCOMAR-MAR",
+      "poly": "40791250908933508853723465614961035896557737979546129504169818299128524475478",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00464,
+      "alpha_b": 0.01889,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.4283,
+      "n": 8670
+    },
+    {
+      "label": "Scotland",
+      "kalshi": "KXWCGAME-26JUN19SCOMAR-SCO",
+      "poly": "101256141817216466245038151589296191044974050560393587426784474074655264282404",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01629,
+      "alpha_b": 0.00773,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6781,
+      "n": 8446
+    }
+  ]
+}

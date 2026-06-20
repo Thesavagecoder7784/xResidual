@@ -1,0 +1,74 @@
+{
+  "match": "Scotland vs Morocco",
+  "capture": "20260619T213423Z-scotland-vs-morocco",
+  "n_goals": 3,
+  "goals_source": "results",
+  "reference": {
+    "label": "Morocco",
+    "venue": "polymarket"
+  },
+  "n_detected": 3,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1781906479133,
+      "jump": 0.06,
+      "pre": 0.585,
+      "p_entry": 0.775,
+      "p_exit": 0.785,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.103,
+      "gain_prior": 0.585,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781910711310,
+      "jump": 0.055,
+      "pre": 0.73,
+      "p_entry": 0.795,
+      "p_exit": 0.805,
+      "reverted_pp": -1.0,
+      "pnl_pp": -1.5,
+      "surprise": 0.075,
+      "gain_prior": 0.73,
+      "surprising": false
+    },
+    {
+      "t_ms": 1781913061299,
+      "jump": 0.095,
+      "pre": 0.77,
+      "p_entry": 0.895,
+      "p_exit": 0.935,
+      "reverted_pp": -4.0,
+      "pnl_pp": -4.5,
+      "surprise": 0.123,
+      "gain_prior": 0.77,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": -7.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -2.0,
+    "mean_pnl_pp": -2.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
