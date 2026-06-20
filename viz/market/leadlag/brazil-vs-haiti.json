@@ -1,0 +1,341 @@
+{
+  "match": "Brazil vs Haiti",
+  "capture": "20260619T235702Z-brazil-vs-haiti",
+  "pooled": {
+    "n": 2,
+    "median_lead_ms": 2400.0,
+    "iqr_ms": [
+      1200.0,
+      3600.0
+    ],
+    "leader": "polymarket",
+    "leader_share": 0.5,
+    "poly_leads": 1,
+    "kalshi_leads": 0
+  },
+  "pairs": [
+    {
+      "label": "Haiti",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-HTI",
+      "poly": "103635844992876723144379951385842243916752648056505794536281053774467895997557",
+      "n_events": 1,
+      "events": [
+        {
+          "t_ms": 1781923934881,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Brazil vs Haiti"
+    },
+    {
+      "label": "Brazil",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-BRA",
+      "poly": "103041090730063233481678246468943921262520375914356653176409396265510672924686",
+      "n_events": 7,
+      "events": [
+        {
+          "t_ms": 1781916242583,
+          "jump": 0.06,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.865,
+            "settle": 0.895,
+            "jump": 0.03,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.875,
+                "reversal_frac": 0.667
+              },
+              "180": {
+                "level": 0.865,
+                "reversal_frac": 1.0
+              },
+              "300": {
+                "level": 0.875,
+                "reversal_frac": 0.667
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.865,
+            "settle": 0.8839,
+            "jump": 0.0189,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.865,
+                "reversal_frac": 1.0
+              },
+              "180": {
+                "level": 0.875,
+                "reversal_frac": 0.47
+              },
+              "300": {
+                "level": 0.865,
+                "reversal_frac": 1.0
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -4800,
+            "best_corr": -0.43,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1781916302593,
+          "jump": 0.05,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.875,
+            "settle": 0.8688,
+            "jump": -0.0062,
+            "surprise": 0.125,
+            "reversals": {
+              "60": {
+                "level": 0.875,
+                "reversal_frac": 1.0
+              },
+              "180": {
+                "level": 0.865,
+                "reversal_frac": -0.6
+              },
+              "300": {
+                "level": 0.865,
+                "reversal_frac": -0.6
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.865,
+            "settle": 0.865,
+            "jump": 0.0,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.875,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.865,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.865,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781916922499,
+          "jump": 0.05,
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5552901675434498,
+            "leader": "synchronous",
+            "n_bins": 148
+          },
+          "kalshi_reaction": {
+            "pre": 0.865,
+            "settle": 0.935,
+            "jump": 0.07,
+            "surprise": 0.135,
+            "reversals": {
+              "60": {
+                "level": 0.935,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.945,
+                "reversal_frac": -0.143
+              },
+              "300": {
+                "level": 0.945,
+                "reversal_frac": -0.143
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.8669,
+            "settle": 0.9404,
+            "jump": 0.0735,
+            "surprise": 0.133,
+            "reversals": {
+              "60": {
+                "level": 0.945,
+                "reversal_frac": -0.063
+              },
+              "180": {
+                "level": 0.945,
+                "reversal_frac": -0.063
+              },
+              "300": {
+                "level": 0.955,
+                "reversal_frac": -0.199
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781916952537,
+          "jump": 0.07,
+          "lead": {
+            "best_lag_ms": 4800,
+            "best_corr": 0.7056739392254966,
+            "leader": "polymarket",
+            "n_bins": 148
+          },
+          "kalshi_reaction": {
+            "pre": 0.935,
+            "settle": 0.935,
+            "jump": -0.0,
+            "surprise": 0.065,
+            "reversals": {
+              "60": {
+                "level": 0.935,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.945,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.945,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.935,
+            "settle": 0.935,
+            "jump": 0.0,
+            "surprise": 0.065,
+            "reversals": {
+              "60": {
+                "level": 0.945,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.945,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.955,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781917694108,
+          "jump": 0.04,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9458,
+            "settle": 0.975,
+            "jump": 0.0292,
+            "surprise": 0.054,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": -0.342
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": -0.684
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": -0.684
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9489,
+            "settle": 0.985,
+            "jump": 0.0361,
+            "surprise": 0.051,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.994,
+                "reversal_frac": -0.249
+              },
+              "300": {
+                "level": 0.993,
+                "reversal_frac": -0.221
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 19000,
+            "best_corr": 0.57,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1781917724756,
+          "jump": 0.04,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9827,
+            "settle": 0.985,
+            "jump": 0.0023,
+            "surprise": 0.017,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.995,
+                "reversal_frac": -4.333
+              },
+              "300": {
+                "level": 0.995,
+                "reversal_frac": -4.333
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.985,
+            "settle": 0.985,
+            "jump": 0.0,
+            "surprise": 0.015,
+            "reversals": {
+              "60": {
+                "level": 0.985,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.994,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.993,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1781923934881,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Brazil vs Haiti"
+    }
+  ],
+  "min_jump": 0.04
+}

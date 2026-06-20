@@ -1,0 +1,48 @@
+{
+  "match": "Brazil vs Haiti",
+  "capture": "20260619T235702Z-brazil-vs-haiti",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Haiti",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-HTI",
+      "poly": "103635844992876723144379951385842243916752648056505794536281053774467895997557",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00705,
+      "alpha_b": 0.02206,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6762,
+      "n": 5008
+    },
+    {
+      "label": "Brazil",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-BRA",
+      "poly": "103041090730063233481678246468943921262520375914356653176409396265510672924686",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01676,
+      "alpha_b": 0.00437,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6506,
+      "n": 6471
+    }
+  ]
+}
