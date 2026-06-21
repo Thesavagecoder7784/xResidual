@@ -1,0 +1,48 @@
+{
+  "match": "Tunisia vs Japan",
+  "capture": "20260621T033229Z-tunisia-vs-japan",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Tunisia",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-TUN",
+      "poly": "62516949205730668430138255140150438665483187962069999240136080804116109915287",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0234,
+      "alpha_b": -0.00435,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.892,
+      "n": 6981
+    },
+    {
+      "label": "Japan",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-JPN",
+      "poly": "91234906493805354217250440222911012200186057450151286874925972448339630680686",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.02601,
+      "alpha_b": 0.00751,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.3985,
+      "n": 7468
+    }
+  ]
+}

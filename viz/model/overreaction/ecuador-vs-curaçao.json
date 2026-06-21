@@ -1,0 +1,74 @@
+{
+  "match": "Ecuador vs Cura\u00e7ao",
+  "capture": "20260620T232821Z-ecuador-vs-cura\u00e7ao",
+  "n_goals": null,
+  "goals_source": "not-found",
+  "reference": {
+    "label": "Ecuador",
+    "venue": "polymarket"
+  },
+  "n_detected": 5,
+  "n_trades": 3,
+  "trades": [
+    {
+      "t_ms": 1782004543918,
+      "jump": -0.055,
+      "pre": 0.7,
+      "p_entry": 0.645,
+      "p_exit": 0.605,
+      "reverted_pp": -4.0,
+      "pnl_pp": -4.5,
+      "surprise": 0.183,
+      "gain_prior": 0.3,
+      "surprising": true
+    },
+    {
+      "t_ms": 1782005807269,
+      "jump": -0.06,
+      "pre": 0.565,
+      "p_entry": 0.495,
+      "p_exit": 0.415,
+      "reverted_pp": -8.0,
+      "pnl_pp": -8.5,
+      "surprise": 0.138,
+      "gain_prior": 0.435,
+      "surprising": false
+    },
+    {
+      "t_ms": 1782006123455,
+      "jump": -0.06,
+      "pre": 0.485,
+      "p_entry": 0.385,
+      "p_exit": 0.355,
+      "reverted_pp": -3.0,
+      "pnl_pp": -3.5,
+      "surprise": 0.117,
+      "gain_prior": 0.515,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 3,
+    "total_pnl_pp": -16.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -5.0,
+    "mean_pnl_pp": -5.5,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 1,
+  "summary_surprising": {
+    "n": 1,
+    "total_pnl_pp": -4.5,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -4.0,
+    "mean_pnl_pp": -4.5,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}
