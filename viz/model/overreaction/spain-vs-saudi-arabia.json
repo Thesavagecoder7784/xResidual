@@ -1,0 +1,50 @@
+{
+  "match": "Spain vs Saudi Arabia",
+  "capture": "20260621T152835Z-spain-vs-saudi-arabia",
+  "n_goals": 1,
+  "goals_source": "results",
+  "reference": {
+    "label": "Spain",
+    "venue": "polymarket"
+  },
+  "n_detected": 1,
+  "n_trades": 1,
+  "trades": [
+    {
+      "t_ms": 1782058247457,
+      "jump": 0.05,
+      "pre": 0.895,
+      "p_entry": 0.965,
+      "p_exit": 0.9685,
+      "reverted_pp": -0.35,
+      "pnl_pp": -0.85,
+      "surprise": 0.056,
+      "gain_prior": 0.895,
+      "surprising": false
+    }
+  ],
+  "summary": {
+    "n": 1,
+    "total_pnl_pp": -0.85,
+    "hit_rate": 0.0,
+    "mean_reverted_pp": -0.35,
+    "mean_pnl_pp": -0.85,
+    "per_trade_sharpe": null
+  },
+  "n_surprising": 0,
+  "summary_surprising": {
+    "n": 0,
+    "total_pnl_pp": 0.0,
+    "hit_rate": null,
+    "mean_reverted_pp": null,
+    "mean_pnl_pp": null,
+    "per_trade_sharpe": null
+  },
+  "params": {
+    "entry_s": 120,
+    "exit_s": 360,
+    "min_jump": 0.05,
+    "cost_pp": 0.5,
+    "surprise_underdog": 0.4
+  }
+}

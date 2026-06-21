@@ -28347,6 +28347,133 @@
       "match": "Scotland vs Morocco"
     },
     {
+      "label": "Spain",
+      "kalshi": "KXWCGAME-26JUN21ESPKSA-ESP",
+      "poly": "73510205866448375978164321647457824822309414197359016110940718743916953674850",
+      "n_events": 3,
+      "events": [
+        {
+          "t_ms": 1782058247241,
+          "jump": 0.04,
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5536513755227314,
+            "leader": "polymarket",
+            "n_bins": 147
+          },
+          "kalshi_reaction": {
+            "pre": 0.915,
+            "settle": 0.955,
+            "jump": 0.04,
+            "surprise": 0.085,
+            "reversals": {
+              "60": {
+                "level": 0.955,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": -0.25
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": -0.25
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.895,
+            "settle": 0.9595,
+            "jump": 0.0645,
+            "surprise": 0.105,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -0.086
+              },
+              "180": {
+                "level": 0.968,
+                "reversal_frac": -0.133
+              },
+              "300": {
+                "level": 0.9685,
+                "reversal_frac": -0.14
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782058277390,
+          "jump": 0.07,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.955,
+            "settle": 0.955,
+            "jump": 0.0,
+            "surprise": 0.045,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": null
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.965,
+            "settle": 0.965,
+            "jump": 0.0,
+            "surprise": 0.035,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": null
+              },
+              "180": {
+                "level": 0.9675,
+                "reversal_frac": null
+              },
+              "300": {
+                "level": 0.9685,
+                "reversal_frac": null
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782065036760,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Spain vs Saudi Arabia"
+    },
+    {
+      "label": "Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN21ESPKSA-KSA",
+      "poly": "34595222436901694034568466087145334098073564547697700427928775408006876228602",
+      "n_events": 1,
+      "events": [
+        {
+          "t_ms": 1782065036760,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Spain vs Saudi Arabia"
+    },
+    {
       "label": "Tunisia",
       "kalshi": "KXWCGAME-26JUN14SWETUN-TUN",
       "poly": "83899205056028320634506792090435502639229370708908873019388029731945043477417",
@@ -31513,17 +31640,17 @@
     }
   ],
   "pooled": {
-    "n": 120,
+    "n": 121,
     "median_lead_ms": 200.0,
     "iqr_ms": [
       -200.0,
       600.0
     ],
     "leader": "polymarket",
-    "leader_share": 0.567,
-    "poly_leads": 68,
+    "leader_share": 0.57,
+    "poly_leads": 69,
     "kalshi_leads": 38
   },
-  "n_matches": 26,
+  "n_matches": 27,
   "min_jump": 0.04
 }
