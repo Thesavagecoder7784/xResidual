@@ -183,8 +183,9 @@ The same machinery, sliced:
 - **Favorite–longshot bias**: realized frequency vs. implied probability at the
   tails (the least-data, most-caveated region).
 - **Group vs. knockout efficiency**: calibration metrics computed within each stage.
-- **Cross-venue update speed**: using the logged price time series (§5, §6), lead–lag
-  between Kalshi / Polymarket / Betfair on shared markets.
+- **Cross-venue update speed**: using the logged price time series (§5, §6),
+  price discovery between Kalshi / Polymarket / Betfair on shared markets — matured
+  into the §16 information-share machinery (the project's flagship).
 
 ## 5. Recovering implied probabilities from prices
 
@@ -417,7 +418,10 @@ fixture, written to per-capture files so each match is self-contained. From the 
 mids, `xresidual/ws_events.py` auto-detects price shocks (goals, red cards) without a
 hand-typed goal time, and `overreaction_backtest` fades them — the documented ~2–3%/trade
 reversion after a *surprising* goal (Choi & Hui; "Role of Surprise"), entered ~2 min after and
-held ~6 min, net of modeled cost. This is the P10 edge test, paper-only and disclosed.
+held ~6 min, net of modeled cost. This is the P10 edge test, paper-only and disclosed. The
+benchmark the live price is measured against is the in-play win-probability model (§17), which
+re-prices each surprising goal to a fair value: the test reads the market as **under-reacting
+to goals by ~5pp** relative to that benchmark before the fair value is reached.
 
 Shock detection is tuned to reject thin-market noise (learned on the Argentina–Iceland friendly,
 where the naive detector turned 3 goals into 11 "shocks"): a candidate fires only if the mid
@@ -440,3 +444,73 @@ published card is traceable to the exact code and data that produced it, and the
 changed without the build surfacing which cards now need regenerating. The simulation's own
 format invariants (§12) are checked the same way — exact-by-construction, so a violation is a
 code bug, not a silent modelling drift.
+
+## 16. Price discovery across venues: lead–lag and information share (flagship)
+
+This is the project's flagship microstructure result, and it matured over the tournament from
+an early "which venue reads a goal first — does Kalshi or Polymarket move first?" framing into a
+pooled, population-grade statement of price discovery. A standalone desk research note writes it
+up in full (`writeups/price_discovery_note.pdf`).
+
+**Pooled lead–lag (the headline).** Across the **22 captured matches** logged through
+2026-06-20, **Polymarket leads ≈62% of goal repricings** — the venue that moves first when a goal
+hits the book, pooled over every detected shock across all matches. Under the null of no lead
+(a coin flip on which venue moves first), that lead is **≈3.4σ**. The unit is the goal repricing,
+not the match, so the inferential weight comes from the pool of shocks, not from any single
+fixture; per-match leads are descriptive color.
+
+**Information share (the mechanism).** The lead–lag count is corroborated by a structural
+price-discovery decomposition. For each pair of matched contracts across the two venues, I fit a
+**VECM on the two order-book MID series** and compute both the **Hasbrouck (1995) information
+share** and the **Gonzalo–Granger (1995) permanent-component share**. The decomposition is
+**gated by a cointegration test** (ADF / Engle–Granger): only matched contracts that pass are
+pooled, since the shares are only defined when the two mids share a common stochastic trend.
+Computing on **mids** is what makes this robust to the trade-direction-classification problem —
+Lee–Ready-style signing misclassifies ≈59% of prediction-market trades (arXiv:2604.24366), so any
+flow- or trade-signed discovery measure would inherit that error; the MID series carries no
+direction to misclassify. Result: **Polymarket's permanent-component share is ≈78%**, and it
+**leads in 10/10 cointegrated matches** — the same venue, the same direction as the raw lead–lag
+count, which is the cross-check that makes the flagship robust. The ≈62% lead and the ≈78%
+information share are two independent reads of one fact: Polymarket is where this World Cup's
+price is discovered.
+
+## 17. In-play win-probability model
+
+The benchmark against which a live price is judged (the §14 / §16 goal tests) is a model of
+**fair win/draw/loss probability conditional on the live game state** (score and time elapsed).
+Remaining goals for each side are modelled as **independent Poisson processes over the time left**,
+so the in-play W/D/L distribution follows from convolving the two remaining-goal counts with the
+current score — the same Skellam logic as §2, run on the remainder of the match rather than the
+whole. The per-team in-play rates are **calibrated so that at minute 0 (kickoff, 0–0) the model
+recovers the pre-kickoff market W/D/L probabilities exactly**; the rates are then carried forward
+and the distribution is re-evaluated as the clock runs. On each goal, the state **snaps** to the
+new score (a per-goal shock snap), and the model re-prices the remaining match from that new state.
+This gives a continuous fair-value track that jumps at goals, which is precisely the object the
+in-play "market under-reacts to goals (~5pp)" test fades the market against (§14): the gap between
+where the price moves and where the WP model says it should move.
+
+## 18. Order-flow imbalance: the within-venue mechanism
+
+Lead–lag and information share (§16) describe *which venue* moves first; order-flow imbalance
+explains *how* flow becomes price **inside** a venue. I compute **OFI à la Cont, Kukanov &
+Stoikov (2014)** from **order-book level changes** — the signed change in depth at the best
+quotes as the book updates. It is **book-derived, not trade-signed**, so like the §16 mids it is
+**immune to the ≈59% trade-direction-classification problem** (arXiv:2604.24366): nothing is
+inferred about whether a trade was buyer- or seller-initiated. Regressing contemporaneous mid
+changes on OFI gives the within-venue impact channel, **strongly significant (t ≈ 30)** — the
+mechanism linking flow to price impact that sits underneath the cross-venue lead. Where the book
+detail supports it, the **microprice (Stoikov 2017)** — the size-weighted fair value between bid
+and ask — is the natural companion estimate of where the next mid is headed, refining the plain
+bid/ask mid the rest of the pipeline uses.
+
+## 19. Draw-rate calibration: validated, applied forward only
+
+The 2026 World Cup's 48-team format ran an unusually high draw rate, and the v2 draw-rate
+adjustment (a recalibration of the Dixon–Coles low-score correction, §12) was **validated out of
+sample** against the realized results. It is, however, **applied forward only**. The forward
+ledger **locks every committed forecast** as of its capture timestamp — the whole point of a
+forward-only ledger is that a forecast cannot be revised after the fact — so the draw fix is
+**forked forward into new scripts and never back-edited into a committed forecast**. This is the
+same discipline as the v1 file-level freeze (the §2/§12 core is not edited; improvements fork
+forward), so the out-of-sample claim stays honest: the validation set is genuinely held out from
+the forecasts the fix would change.

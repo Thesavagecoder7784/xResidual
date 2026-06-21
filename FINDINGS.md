@@ -2,9 +2,9 @@
 
 A living log. Each entry states what the data shows, then *what it would mean to someone trading or making markets on it*. The point isn't the chart, it's the decision the chart implies. Methodology in [METHODOLOGY.md](METHODOLOGY.md); numbers regenerate from `scripts/run_analysis.py`.
 
-Pre-tournament snapshot (data accumulating since June 5, 2026). Claims sharpen as the sample grows; small-sample reads are flagged.
+Live snapshot, updated 2026-06-20: the World Cup is **in progress** — group stage, ~33 of 72 group games played, Round of 32 begins ~June 28. Data has accumulated since June 5, 2026. Claims sharpen as the sample grows; small-sample reads are flagged, and the early pre-tournament reads below now have first contact with results to test them against.
 
-**On multiplicity.** These are the survivors of a wider exploratory sweep, and the angles that didn't hold are logged as nulls rather than buried — altitude as a goals edge (#7), heat on the pre-match goal line and on cards (#13, #17), the group-winner watch-list "drama" (#14), and the cross-venue convergence paper-trade (#20). Read the numbered list as the reported set, nulls included, not a cherry-picked highlight reel. The binding, pre-committed tests (with significance and power thresholds set before outcomes) live in [PREREGISTRATION.md](PREREGISTRATION.md); the entries here are descriptive reads on pre-tournament data.
+**On multiplicity.** These are the survivors of a wider exploratory sweep, and the angles that didn't hold are logged as nulls — or retracted out of sample — rather than buried: altitude as a goals edge (#7), heat on the pre-match goal line and on cards (#13, #17), the group-winner watch-list "drama" (#14), the cross-venue convergence paper-trade (#20), and the now-**retracted** mismatch-draw read (#31). Read the numbered list as the reported set — nulls and retractions included — not a cherry-picked highlight reel. The binding, pre-committed tests (with significance and power thresholds set before outcomes) live in [PREREGISTRATION.md](PREREGISTRATION.md); the descriptive reads here are kept honest by grading against those.
 
 ---
 
@@ -292,6 +292,44 @@ Three reads:
 3. **It can't be fit from our data anyway.** A few-% effect against international football's variance, confounded with home/away, opponent quality, and competition tier — so it would have to be an imported literature prior, not a fitted edge.
 
 **The trader's read.** This joins **altitude (#7)** and the **"12σ" shocks (#21)** as a folk-wisdom prior that doesn't survive rigor: the headline-friendly thing isn't where the signal is. So I **did not** add a jet-lag term to the model — modelled honestly with recovery it's ~0 for 2026, and manufacturing an effect football's own cleanest study denies would be the opposite of the discipline. The deliverable is the *descriptive* burden (a clean, novel, validatable fact — the schedule is the schedule) plus the myth-bust: **the travel is real, the jet-lag edge isn't.** (`scripts/build_travel.py`, timezone + residual-zone analysis.)
+
+---
+
+## 26. The goals-and-draws paradox: 2026 is scoring like no modern World Cup while drawing like a defensive one
+
+Through the first **33 group games**, 2026 is running **3.09 goals/game** — the highest scoring rate of the modern era (1970–2022) — *and* a **~30% draw rate**, which sits in the top tier historically. Plotted on the goals-vs-draws map, no modern World Cup has occupied this corner: high scoring and high draws usually trade off, and 2026 is doing both at once. (`draws_paradox`.)
+
+**The trader's read.** This is **descriptive/structural only — not a "broken law."** The historical goals-vs-draws relationship is real but *weak* (r ≈ −0.35), so a single tournament landing off-trend is well within what a weak correlation allows, and both rates typically ease in the knockouts (tighter, more cautious football, plus extra time/penalties changing the draw math). So the honest framing is a striking *snapshot* of an unusual tournament, not a claim that the underlying tendency has changed. For a market-maker the so-what is modest but real: if you priced totals and draw lines off a prior that assumes the usual goals/draws trade-off, the early 2026 sample is a reminder that this field is generating both — though with only 33 games and a knockout reversion ahead, it's a watch item, not a re-pricing mandate. The tournament is simply doing something rare, in plain view.
+
+## 27. The 48-team group stage didn't kill the jeopardy — it moved it to goal difference
+
+A live critique of the expanded format is that the group stage has "no jeopardy" — too many teams advance, nothing's at stake. The conditioned tournament Monte Carlo (40k sims) is the data rebuttal: the **last third-placed team that advances and the first team that misses out finish level on points 86% of the time**, and the qualification cut lands on **exactly 3 points (one win) 91% of the time**. So the final Round-of-32 ticket is overwhelmingly decided by **goal difference, not points**. (`jeopardy_gd`.)
+
+**The trader's read.** The jeopardy didn't disappear, it relocated — from "win or go home" to "every goal margin is a tiebreak input." That sharpens the read on #8 and #9: with the cut-line pinned at one win and ties broken on GD, a late goal in a settled-looking blowout still moves the advancement field, because it moves a team's GD relative to the bubble pack across other groups. For anyone trading advancement (not outright), it means the relevant live variable in dead-rubber-looking games is the **scoreline**, not just the result — the six-pointers (#9) decide who's level on points, and goal difference decides who survives being level. The format is doing its job; the stakes just live one tiebreak deeper than the points table shows.
+
+## 28. The in-play market under-reacts to goals by about 5pp
+
+An independent in-play win-probability model — independent-Poisson on remaining goals, calibrated to each game's **pre-match** probabilities — run against the live order-book tape shows the market **under-reacts to goals by ~5pp**: immediately after a goal, the traded price moves less than the model's recomputed fair value implies, then drifts the rest of the way. (`livewp_underreaction` / `live_match`.)
+
+**The trader's read.** This is the live, real-surprise counterpart to the dry-run in #23 (where a heavy favourite extending a lead was *non*-news and nothing moved). A ~5pp under-reaction to genuine goal information is the in-play repricing edge the pipeline was built to catch — small, but directionally the documented under-reaction-to-news pattern, observed on this tournament's tape rather than imported. Caveats stay loud: it's an early, modest-sample read, the magnitude is sensitive to exactly when you mark "post-goal," and it's the *descriptive* sibling of the pre-registered goal-reaction test (P10), graded Jul 19 — not yet a pre-committed result. Treated carefully, it says the market does fully price the goal, just not instantly, and the lag is where a fast in-play book lives.
+
+## 29. Cross-venue price discovery, matured: Polymarket leads, and it survives the trade-classification problem
+
+The flagship is now mature across **22 captured matches**. Two layers agree. (1) **Lead–lag:** on goal repricings, Polymarket moves first **~62% of the time (~3.4σ)**. (2) **Information share, done rigorously:** a VECM with an ADF cointegration gate, decomposed via **Hasbrouck (1995)** information share and the **Gonzalo–Granger (1995)** permanent-component share, computed on order-book **mids**, puts **Polymarket's share near 78%**, leading in **10/10 cointegrated matches**. Within-venue mechanism: **order-flow imbalance → price impact** (Cont–Kukanov–Stoikov 2014, book-derived; t ≈ 30). A 4-page desk research note is at `writeups/price_discovery_note.pdf`. (`leadlag`, `infoshare`, `ofi`.)
+
+**The trader's read.** This is the payoff of the price-discovery question #3 set up before kickoff — and the methodological point is the contribution. Because the information share is computed on **mids, not signed trades**, it sidesteps the **~59% trade-direction-classification accuracy** problem that is the open question in the 2026 Polymarket paper (arXiv 2604.24366): you don't have to guess who initiated a trade to know where the permanent price component is formed. The convergent answer — lead–lag and information share both naming Polymarket the price leader, robust across 22 matches and 10/10 cointegrated ones — is exactly what #1's depth finding predicted: size goes where the discovery happens. For a maker, the so-what is concrete: on World Cup goal news, Polymarket is the reference price and Kalshi the follower, so quote and hedge accordingly. The markets are working; this just measures *which one works first*.
+
+## 30. The favourites stumbled — and the title market re-sorted instead of panicking
+
+The group stage handed the contenders genuine jolts: **Spain held 0–0 by Cape Verde, Portugal 1–1 with DR Congo.** The title market's response was orderly — the top contenders moved only about **±3pp**, and the move was a **re-sort among the contenders**, not a repricing of the whole field. (`chaos_mirage`.)
+
+**The trader's read.** This is the flat-field finding (#11) doing its job under live stress. In a field where the top sits at ~16% with the top four ~49% combined, a favourite dropping points is *information about ordering*, not about whether a title is suddenly up for grabs — so probability shifts *between* near-equal contenders rather than draining out of the top. The ~±3pp move is the market absorbing a surprise with the composure a deep, liquid outright market should have: the tournament delivered the shock (its job), and the price did the bookkeeping (its job). No panic to fade, no overreaction to capture — just a sharp market re-weighting a parity field, which is what #11 said this structure would produce.
+
+## 31. RETRACTED — the mismatch-draw underpricing read did not survive out of sample
+
+**Retraction, recorded honestly.** An earlier *tentative* read held that the market under-prices **mismatch draws** (a heavy favourite held when the underdog parks the bus). It **regressed out of sample**: by **June 18, 2026** the hit rate was **6/17 = 35%**, **not significant versus the model**, and **Canada 6–0 Qatar** was a clean counterexample of a mismatch resolving exactly as priced. The earlier **"5/10, p = 0.013"** figure is **stale — do not cite it.** (`mismatch_draws`.)
+
+**The trader's read.** This is the discipline the whole log is supposed to enforce: a promising small-sample signal, tested as the sample grew, and reported as failed rather than quietly dropped or re-anchored on its best early number. The market was pricing those mismatches about right; the apparent edge was small-sample noise that the tournament unwound. Kept on the board, with its history, precisely *because* a finding that can't be wrong isn't a finding — and this one turned out to be wrong, which is worth more on the record than buried. The pre-registered tests (PREREGISTRATION.md) remain the binding scorecard; this descriptive read is now closed as a null.
 
 ---
 
