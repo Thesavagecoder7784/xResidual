@@ -1,0 +1,34 @@
+{
+  "match": "Switzerland vs Bosnia Herzegovina",
+  "capture": "20260618T183109Z-switzerland-vs-bosnia-herzegovina",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 8.0,
+    "cost_med_c": 1.0,
+    "net_med_c": 7.3,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.012,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1152
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 45.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 45.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2902
+  },
+  "all": {
+    "n": 4,
+    "gross_med_c": 8.0,
+    "cost_med_c": 0.7,
+    "net_med_c": 7.3,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1152
+  }
+}

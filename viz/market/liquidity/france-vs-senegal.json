@@ -1,0 +1,18 @@
+{
+  "match": "France vs Senegal",
+  "capture": "20260616T182710Z-france-vs-senegal",
+  "kalshi": {
+    "n": 14,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.14,
+    "resilience_ms_med": 3789,
+    "n_recovered": 13
+  },
+  "poly": {
+    "n": 12,
+    "spread_widen_med": 6.0,
+    "depth_withdraw_med": 0.04,
+    "resilience_ms_med": 3012,
+    "n_recovered": 12
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Iraq vs Norway",
+  "capture": "20260616T213023Z-iraq-vs-norway",
+  "follower_kalshi": {
+    "n": 6,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.49,
+    "net_med_c": 9.01,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.015,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 583
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 17.5,
+    "cost_med_c": 1.0,
+    "net_med_c": 16.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 263
+  },
+  "all": {
+    "n": 7,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.03,
+    "net_med_c": 9.01,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.01,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 547
+  }
+}

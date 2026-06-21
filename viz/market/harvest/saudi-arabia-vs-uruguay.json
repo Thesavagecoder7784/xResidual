@@ -1,0 +1,25 @@
+{
+  "match": "Saudi Arabia vs Uruguay",
+  "capture": "20260615T213253Z-saudi-arabia-vs-uruguay",
+  "follower_kalshi": {
+    "n": 6,
+    "gross_med_c": 27.0,
+    "cost_med_c": 2.19,
+    "net_med_c": 24.91,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2324
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 6,
+    "gross_med_c": 27.0,
+    "cost_med_c": 2.19,
+    "net_med_c": 24.91,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2324
+  }
+}

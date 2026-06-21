@@ -1,0 +1,18 @@
+{
+  "match": "Brazil vs Haiti",
+  "capture": "20260619T235702Z-brazil-vs-haiti",
+  "kalshi": {
+    "n": 4,
+    "spread_widen_med": 100.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 4001,
+    "n_recovered": 2
+  },
+  "poly": {
+    "n": 3,
+    "spread_widen_med": 4.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3009,
+    "n_recovered": 3
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "match": "Belgium vs Egypt",
+  "capture": "20260615T182907Z-belgium-vs-egypt",
+  "goal": {
+    "n_windows": 11,
+    "poly_hasbrouck_med": 0.847,
+    "poly_gg_med": 0.8009
+  },
+  "calm": {
+    "n_windows": 11,
+    "poly_hasbrouck_med": 0.6825,
+    "poly_gg_med": 0.6394
+  }
+}

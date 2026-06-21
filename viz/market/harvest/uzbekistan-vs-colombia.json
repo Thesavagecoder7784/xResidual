@@ -1,0 +1,34 @@
+{
+  "match": "Uzbekistan vs Colombia",
+  "capture": "20260618T013525Z-uzbekistan-vs-colombia",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 17.0,
+    "cost_med_c": 1.29,
+    "net_med_c": 15.73,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 423
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 30.25,
+    "cost_med_c": 1.0,
+    "net_med_c": 29.25,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1786
+  },
+  "all": {
+    "n": 5,
+    "gross_med_c": 17.0,
+    "cost_med_c": 1.27,
+    "net_med_c": 15.73,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 423
+  }
+}

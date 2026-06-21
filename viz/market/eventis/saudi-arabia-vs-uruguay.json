@@ -1,0 +1,14 @@
+{
+  "match": "Saudi Arabia vs Uruguay",
+  "capture": "20260615T213253Z-saudi-arabia-vs-uruguay",
+  "goal": {
+    "n_windows": 8,
+    "poly_hasbrouck_med": 0.7961,
+    "poly_gg_med": 1.0213
+  },
+  "calm": {
+    "n_windows": 17,
+    "poly_hasbrouck_med": 0.7354,
+    "poly_gg_med": 0.7243
+  }
+}

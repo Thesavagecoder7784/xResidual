@@ -1,0 +1,18 @@
+{
+  "match": "Saudi Arabia vs Uruguay",
+  "capture": "20260615T213253Z-saudi-arabia-vs-uruguay",
+  "kalshi": {
+    "n": 14,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 4009,
+    "n_recovered": 12
+  },
+  "poly": {
+    "n": 10,
+    "spread_widen_med": 10.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3009,
+    "n_recovered": 10
+  }
+}

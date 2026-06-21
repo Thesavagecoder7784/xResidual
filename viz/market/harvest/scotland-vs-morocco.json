@@ -1,0 +1,25 @@
+{
+  "match": "Scotland vs Morocco",
+  "capture": "20260619T213423Z-scotland-vs-morocco",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 16.0,
+    "cost_med_c": 1.81,
+    "net_med_c": 14.19,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1319
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 2,
+    "gross_med_c": 16.0,
+    "cost_med_c": 1.81,
+    "net_med_c": 14.19,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1319
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Austria vs Jordan",
+  "capture": "20260617T032721Z-austria-vs-jordan",
+  "follower_kalshi": {
+    "n": 10,
+    "gross_med_c": 7.88,
+    "cost_med_c": 1.37,
+    "net_med_c": 6.67,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.034,
+    "pct_harvestable": 30.0,
+    "lead_ms_med": 605
+  },
+  "follower_poly": {
+    "n": 4,
+    "gross_med_c": 19.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 18.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2221
+  },
+  "all": {
+    "n": 14,
+    "gross_med_c": 9.5,
+    "cost_med_c": 1.21,
+    "net_med_c": 9.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.014,
+    "pct_harvestable": 21.4,
+    "lead_ms_med": 615
+  }
+}

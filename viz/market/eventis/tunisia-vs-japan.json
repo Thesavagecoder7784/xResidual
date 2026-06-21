@@ -1,0 +1,14 @@
+{
+  "match": "Tunisia vs Japan",
+  "capture": "20260621T033229Z-tunisia-vs-japan",
+  "goal": {
+    "n_windows": 2,
+    "poly_hasbrouck_med": 0.656,
+    "poly_gg_med": 0.9491
+  },
+  "calm": {
+    "n_windows": 4,
+    "poly_hasbrouck_med": 0.6957,
+    "poly_gg_med": 0.5926
+  }
+}

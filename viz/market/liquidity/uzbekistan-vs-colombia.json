@@ -1,0 +1,18 @@
+{
+  "match": "Uzbekistan vs Colombia",
+  "capture": "20260618T013525Z-uzbekistan-vs-colombia",
+  "kalshi": {
+    "n": 9,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3953,
+    "n_recovered": 7
+  },
+  "poly": {
+    "n": 8,
+    "spread_widen_med": 17.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3011,
+    "n_recovered": 8
+  }
+}

@@ -373,6 +373,30 @@ Over the buildup, **Argentina (±1.46pp), Spain (±1.35pp) and Portugal (±1.32p
 
 ---
 
+### The anatomy of a goal (tape-based microstructure, #38–#40)
+
+Three measurements on the captured order-book tapes (~20 matches), all sign-free (mids + book changes, robust to the ~59% trade-direction problem), that together describe what happens to both venues in the seconds around a goal — and complete the price-discovery flagship (#29).
+
+## 38. The order book vanishes at a goal — and the price leader withdraws hardest
+
+Around each detected goal shock (~370 across ~20 matches), the top of book collapses. On **Polymarket the spread blows out ~8× and best-price depth falls to under 1% of its pre-goal level**; on **Kalshi the spread roughly doubles and depth falls to ~1%**. Both books refill (spread back within 1.5× baseline) in **~3–4 seconds**. The striking cross: the venue that prices the goal *first* (Polymarket, #29) also **withdraws liquidity the hardest**. (`book_vanishes`.)
+
+**The trader's read.** This is informational adverse selection in the open: at a goal, makers face being picked off by anyone who saw the goal, so they pull quotes until the new level is clear. The novelty for prediction markets is the contrast with betting exchanges — Betfair *suspends* the market and cancels resting orders on a goal, so its depth collapse is mechanical; Kalshi and Polymarket **never suspend**, so this withdrawal is genuine information-driven liquidity provision, not a halt. The so-what feeds #40: the goal is priced into a book with almost nothing resting in it.
+
+## 39. Price discovery isn't a steady hum — it concentrates at goals
+
+Conditioning the flagship's information share on the news (the same VECM / Gonzalo–Granger estimator, run in ±180s goal windows vs 360s calm windows), Polymarket's share of price discovery is **~86% at goals (136 windows) versus ~53% in calm play (217 windows)** — Hasbrouck tells the same story (~82% vs ~56%). In quiet periods the two venues are roughly coequal; the instant a goal lands, Polymarket does the overwhelming majority of the discovery. (`goal_discovery`.)
+
+**The trader's read.** This sharpens #29's static ~78% into something more useful: the lead is **a news-event phenomenon, not a background constant** — Polymarket leads *because* it incorporates the goal first, and away from goals there is little to lead. For anyone aggregating prediction-market signals, the prescription is conditional: weight Polymarket's mid as the leading indicator *especially on the goals*, where the gap is widest. Caveat: it is windowed VECM on ~20 matches, a couple of low-liquidity matches (Brazil–Haiti, Ecuador) invert in the noise, and this reports conditional IS/GG rather than the noise-robust Putniņš ILS (the natural refinement). The pooled direction is unambiguous.
+
+## 40. The cross-venue lead is real — and untradeable. The edge is a mirage
+
+The honest capstone, and a caught error worth recording. A first pass at a harvestability ledger said a reactor on the lagging venue could net **+10.2c on 100% of goals** — a too-good-to-be-true result that was a *bug*: it credited the full goal move while ignoring that the quote you'd lift has withdrawn. Gating on available depth gives the real answer: the lagging venue is stale by a gross **~11.4c** for ~**711ms**, **net-positive on paper on 100% of goals after the spread — but the depth at the goal is 0.4% of normal, so 0% is actually harvestable.** (`edge_mirage`.)
+
+**The trader's read.** This is the pro-market punchline of the whole microstructure program, and it lands *because* it nearly went the other way. The cross-venue lead (#29) is genuinely there, and on a naive spread-only calculation it looks like free money on every goal — exactly the kind of "edge" the discipline exists to kill. The thing that kills it isn't the spread; it's the **liquidity withdrawal (#38)**: by the time the lead is observable, the resting quote that would carry the edge is gone. So "the news is in the price before you can trade it" (Croxson-Reade 2014) holds here for a specific, measured reason — not slow pricing, but a book that empties in the same instant it reprices. The lead is a property of *price discovery*, not a tradable opportunity. The honest version, recorded with its correction, is worth more than the headline it replaced.
+
+---
+
 ## Thread drafts (the public voice)
 
 **Thread A, depth (microstructure):**

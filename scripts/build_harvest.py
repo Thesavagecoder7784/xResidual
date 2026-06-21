@@ -127,18 +127,31 @@ def process_capture(cap):
             if spr is None or spr <= 0:
                 continue
             cost = spr / 2.0 + fee(foll, post_c)
-            ledger.append((foll, gross, cost, gross - cost, lead_ms))
+            # KEY: can you actually lift the follower's stale quote, or has its book withdrawn?
+            # depth_frac = top-of-book size at the goal / pre-goal size. If ~0, the resting order
+            # you'd capture the +gross edge against is GONE — the edge is untradeable at size.
+            dep = lambda r: (r["bid_sz"] or 0.0) + (r["ask_sz"] or 0.0)
+            dpre = [dep(r) for r in ftob if t + PRE[0] <= r["t"] <= t + PRE[1]]
+            dat = [dep(r) for r in ftob if t + SPREAD_WIN[0] <= r["t"] <= t + SPREAD_WIN[1]]
+            depth_frac = (min(dat) / st.median(dpre)) if (dpre and dat and st.median(dpre) > 0) else None
+            ledger.append((foll, gross, cost, gross - cost, lead_ms, depth_frac))
 
     def summ(rows):
         if not rows:
             return None
         med = lambda a: sorted(a)[len(a) // 2]
         net = [r[3] for r in rows]
+        fr = [r[5] for r in rows if r[5] is not None]
+        # "harvestable" requires BOTH a positive net edge AND a quote still there to lift
+        # (>=25% of pre-goal depth). Naive pct_net_positive ignores the second clause.
+        harv = sum(1 for r in rows if r[3] > 0 and r[5] is not None and r[5] >= 0.25)
         return {"n": len(rows),
                 "gross_med_c": round(med([r[1] for r in rows]) * 100, 2),
                 "cost_med_c": round(med([r[2] for r in rows]) * 100, 2),
                 "net_med_c": round(med(net) * 100, 2),
-                "pct_harvestable": round(sum(1 for x in net if x > 0) / len(net) * 100, 1),
+                "pct_net_positive": round(sum(1 for x in net if x > 0) / len(net) * 100, 1),
+                "depth_frac_med": round(med(fr), 3) if fr else None,
+                "pct_harvestable": round(harv / len(rows) * 100, 1),
                 "lead_ms_med": med([r[4] for r in rows])}
 
     payload = {"match": match, "capture": cap,
@@ -171,6 +184,8 @@ def pool_from_archive():
                   "gross_med_c": med([s["gross_med_c"] for s in allr]),
                   "cost_med_c": med([s["cost_med_c"] for s in allr]),
                   "net_med_c": med([s["net_med_c"] for s in allr]),
+                  "pct_net_positive": med([s["pct_net_positive"] for s in allr]),
+                  "depth_frac_med": med([s["depth_frac_med"] for s in allr if s.get("depth_frac_med") is not None]),
                   "pct_harvestable": med([s["pct_harvestable"] for s in allr]),
                   "lead_ms_med": med([s["lead_ms_med"] for s in allr])}
     payload = {"pooled": pooled, "n_matches": n, "min_jump": MIN_JUMP}
@@ -181,8 +196,9 @@ def pool_from_archive():
         json.dump(payload, f, indent=2)
     if pooled:
         print(f"POOLED · {pooled['n_matches']} matches · {pooled['n_goals']} goals · "
-              f"gross {pooled['gross_med_c']}c vs cost {pooled['cost_med_c']}c -> "
-              f"net {pooled['net_med_c']}c · {pooled['pct_harvestable']}% harvestable · lead {pooled['lead_ms_med']}ms")
+              f"gross {pooled['gross_med_c']}c vs cost {pooled['cost_med_c']}c -> net {pooled['net_med_c']}c · "
+              f"net+ {pooled['pct_net_positive']}% BUT depth at goal {pooled['depth_frac_med']}x -> "
+              f"{pooled['pct_harvestable']}% actually harvestable · lead {pooled['lead_ms_med']}ms")
     else:
         print(f"POOLED · {n} match-files · no goals yet")
     return payload

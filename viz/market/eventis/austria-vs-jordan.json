@@ -1,0 +1,14 @@
+{
+  "match": "Austria vs Jordan",
+  "capture": "20260617T032721Z-austria-vs-jordan",
+  "goal": {
+    "n_windows": 15,
+    "poly_hasbrouck_med": 0.6955,
+    "poly_gg_med": 0.7266
+  },
+  "calm": {
+    "n_windows": 12,
+    "poly_hasbrouck_med": 0.5345,
+    "poly_gg_med": 0.5131
+  }
+}

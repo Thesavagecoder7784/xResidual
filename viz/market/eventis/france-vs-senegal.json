@@ -1,0 +1,14 @@
+{
+  "match": "France vs Senegal",
+  "capture": "20260616T182710Z-france-vs-senegal",
+  "goal": {
+    "n_windows": 11,
+    "poly_hasbrouck_med": 0.8821,
+    "poly_gg_med": 0.8553
+  },
+  "calm": {
+    "n_windows": 12,
+    "poly_hasbrouck_med": 0.4533,
+    "poly_gg_med": 0.4538
+  }
+}

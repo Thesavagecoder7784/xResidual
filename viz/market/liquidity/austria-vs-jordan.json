@@ -1,0 +1,18 @@
+{
+  "match": "Austria vs Jordan",
+  "capture": "20260617T032721Z-austria-vs-jordan",
+  "kalshi": {
+    "n": 16,
+    "spread_widen_med": 1.0,
+    "depth_withdraw_med": 0.02,
+    "resilience_ms_med": 3931,
+    "n_recovered": 15
+  },
+  "poly": {
+    "n": 17,
+    "spread_widen_med": 13.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3031,
+    "n_recovered": 17
+  }
+}

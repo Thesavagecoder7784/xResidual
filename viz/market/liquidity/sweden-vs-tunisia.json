@@ -1,0 +1,18 @@
+{
+  "match": "Sweden vs Tunisia",
+  "capture": "20260615T012609Z-sweden-vs-tunisia",
+  "kalshi": {
+    "n": 8,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.02,
+    "resilience_ms_med": 3899,
+    "n_recovered": 7
+  },
+  "poly": {
+    "n": 7,
+    "spread_widen_med": 10.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3017,
+    "n_recovered": 7
+  }
+}

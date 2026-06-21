@@ -1,0 +1,14 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "goal": {
+    "n_windows": 1,
+    "poly_hasbrouck_med": 0.6704,
+    "poly_gg_med": 0.5752
+  },
+  "calm": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.3947,
+    "poly_gg_med": 0.4262
+  }
+}
