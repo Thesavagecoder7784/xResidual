@@ -1,0 +1,48 @@
+{
+  "match": "Ghana vs Panama",
+  "capture": "20260617T223224Z-ghana-vs-panama",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6835,
+  "match_poly_gg": 0.8096,
+  "contracts": [
+    {
+      "label": "Panama",
+      "kalshi": "KXWCGAME-26JUN17GHAPAN-PAN",
+      "poly": "98450368978745606301240607141388168410536324949220985931158206007509106995457",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6541,
+      "gg_b": 0.3459,
+      "alpha_a": -0.032,
+      "alpha_b": 0.0605,
+      "hasbrouck_a_lo": 0.33,
+      "hasbrouck_a_hi": 0.4088,
+      "hasbrouck_a_mid": 0.3694,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8656
+    },
+    {
+      "label": "Ghana",
+      "kalshi": "KXWCGAME-26JUN17GHAPAN-GHA",
+      "poly": "4583065636155233526779653080435458405485537158452842777526478181105245518840",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9651,
+      "gg_b": 0.0349,
+      "alpha_a": -0.00684,
+      "alpha_b": 0.18899,
+      "hasbrouck_a_lo": 0.9959,
+      "hasbrouck_a_hi": 0.9993,
+      "hasbrouck_a_mid": 0.9976,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9037
+    }
+  ]
+}

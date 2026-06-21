@@ -1,0 +1,48 @@
+{
+  "match": "Uzbekistan vs Colombia",
+  "capture": "20260618T013525Z-uzbekistan-vs-colombia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.8637,
+  "match_poly_gg": 0.8473,
+  "contracts": [
+    {
+      "label": "Colombia",
+      "kalshi": "KXWCGAME-26JUN17UZBCOL-COL",
+      "poly": "107303881689780116979934419713652545873528717512161697004408881489729317049047",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8473,
+      "gg_b": 0.1527,
+      "alpha_a": -0.02812,
+      "alpha_b": 0.15598,
+      "hasbrouck_a_lo": 0.7864,
+      "hasbrouck_a_hi": 0.941,
+      "hasbrouck_a_mid": 0.8637,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8524
+    },
+    {
+      "label": "Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN17UZBCOL-UZB",
+      "poly": "42349324891891531052261785579549036042703894030589864369388972549681820562082",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01493,
+      "alpha_b": 0.16016,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.991,
+      "n": 8294
+    }
+  ]
+}

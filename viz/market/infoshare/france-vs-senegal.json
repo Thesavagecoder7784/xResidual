@@ -1,0 +1,48 @@
+{
+  "match": "France vs Senegal",
+  "capture": "20260616T182710Z-france-vs-senegal",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.9208,
+  "match_poly_gg": 1.4242,
+  "contracts": [
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUN16FRASEN-FRA",
+      "poly": "10541943766977992250149902475024620982770128161688998706490955791758263657916",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.4242,
+      "gg_b": -0.4242,
+      "alpha_a": 0.02372,
+      "alpha_b": 0.07964,
+      "hasbrouck_a_lo": 0.8871,
+      "hasbrouck_a_hi": 0.9545,
+      "hasbrouck_a_mid": 0.9208,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9186
+    },
+    {
+      "label": "Senegal",
+      "kalshi": "KXWCGAME-26JUN16FRASEN-SEN",
+      "poly": "68110647781535190797837703927589470479832774174814667833732459898847586979826",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00673,
+      "alpha_b": 0.02276,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.1676,
+      "n": 9157
+    }
+  ]
+}

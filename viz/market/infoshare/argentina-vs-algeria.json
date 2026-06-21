@@ -1,0 +1,48 @@
+{
+  "match": "Argentina vs Algeria",
+  "capture": "20260617T003453Z-argentina-vs-algeria",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.3541,
+  "match_poly_gg": 0.565,
+  "contracts": [
+    {
+      "label": "Algeria",
+      "kalshi": "KXWCGAME-26JUN16ARGDZA-DZA",
+      "poly": "83723975923165835008525905491690092591784814181150430498971361513206559812229",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0109,
+      "alpha_b": 0.08006,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.2641,
+      "n": 7460
+    },
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUN16ARGDZA-ARG",
+      "poly": "7496871387824498705150337097986995704782987980926026827618928384721521953608",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.565,
+      "gg_b": 0.435,
+      "alpha_a": -0.04376,
+      "alpha_b": 0.05684,
+      "hasbrouck_a_lo": 0.255,
+      "hasbrouck_a_hi": 0.4533,
+      "hasbrouck_a_mid": 0.3541,
+      "cointegrated": true,
+      "adf_p": 0.023,
+      "n": 7556
+    }
+  ]
+}
