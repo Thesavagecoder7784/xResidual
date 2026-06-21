@@ -37,7 +37,9 @@ STATE = os.path.join(DATA_DIR, "captured-matches.json")
 LEAD_S = 35 * 60        # consider launching from 35 min before kickoff
 GRACE_S = 10 * 60       # ... up to 10 min after (recovery if a tick was missed)
 FORCE_S = 8 * 60        # launch regardless by 8 min before KO (don't miss the match)
-CAPTURE_S = 10800       # capture 3h: pre-match + 90' + stoppage + ET/pens + post
+CAPTURE_S = 10800       # knockout backstop: pre-match + 90' + stoppage + ET/pens + post
+GROUP_CAPTURE_S = 9600  # group games can't reach ET/pens: 35' pre-roll + ~115' match + buffer,
+                        # so cap them ~20 min tighter than the knockout backstop (less dead-air over-capture)
 
 
 def kickoff_utc(date_str: str, time_str: str) -> datetime | None:
@@ -61,7 +63,8 @@ def load_fixtures() -> list[dict]:
             continue
         key = f"{r.date}_{r.team1}_{r.team2}".replace(" ", "")
         out.append({"key": key, "team1": r.team1, "team2": r.team2,
-                    "kickoff": ko, "ground": getattr(r, "ground", "")})
+                    "kickoff": ko, "ground": getattr(r, "ground", ""),
+                    "group": str(getattr(r, "group", ""))})
     return sorted(out, key=lambda f: f["kickoff"])
 
 
@@ -156,7 +159,11 @@ def main() -> int:
             print(f"WOULD launch {f['team1']} vs {f['team2']} "
                   f"(KO {f['kickoff']:%H:%M}Z, T{dt/60:+.0f}m, k/p={ready}, forced={force and not both})")
             continue
-        pid = launch(f, args.seconds)
+        # group games can't go to extra time/penalties, so cap their capture tighter than the
+        # knockout backstop (saves ~20 min of post-match dead air per group tape). Only when using
+        # the default --seconds; an explicit override is always respected.
+        cap = GROUP_CAPTURE_S if (f.get("group", "").startswith("Group") and args.seconds == CAPTURE_S) else args.seconds
+        pid = launch(f, cap)
         state[f["key"]] = {
             "launched_utc": now.isoformat(), "pid": pid,
             "kickoff_utc": f["kickoff"].isoformat(),
