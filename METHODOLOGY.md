@@ -452,7 +452,7 @@ an early "which venue reads a goal first — does Kalshi or Polymarket move firs
 pooled, population-grade statement of price discovery. A standalone desk research note writes it
 up in full (`writeups/price_discovery_note.pdf`).
 
-**Pooled lead–lag (the headline).** Across the **22 captured matches** logged through
+**Pooled lead–lag (the headline).** Across the **24 captured matches** logged through
 2026-06-20, **Polymarket leads ≈62% of goal repricings** — the venue that moves first when a goal
 hits the book, pooled over every detected shock across all matches. Under the null of no lead
 (a coin flip on which venue moves first), that lead is **≈3.4σ**. The unit is the goal repricing,
@@ -469,7 +469,7 @@ Computing on **mids** is what makes this robust to the trade-direction-classific
 Lee–Ready-style signing misclassifies ≈59% of prediction-market trades (arXiv:2604.24366), so any
 flow- or trade-signed discovery measure would inherit that error; the MID series carries no
 direction to misclassify. Result: **Polymarket's permanent-component share is ≈78%**, and it
-**leads in 10/10 cointegrated matches** — the same venue, the same direction as the raw lead–lag
+**leads in 11/11 cointegrated matches** — the same venue, the same direction as the raw lead–lag
 count, which is the cross-check that makes the flagship robust. The ≈62% lead and the ≈78%
 information share are two independent reads of one fact: Polymarket is where this World Cup's
 price is discovered.

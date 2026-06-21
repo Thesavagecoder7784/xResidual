@@ -1,0 +1,48 @@
+{
+  "match": "Austria vs Jordan",
+  "capture": "20260617T032721Z-austria-vs-jordan",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6265,
+  "match_poly_gg": 0.7697,
+  "contracts": [
+    {
+      "label": "Jordan",
+      "kalshi": "KXWCGAME-26JUN17AUTJOR-JOR",
+      "poly": "10127485596146788190022715162162490005929142831190335412854285290235849822876",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6988,
+      "gg_b": 0.3012,
+      "alpha_a": -0.02255,
+      "alpha_b": 0.0523,
+      "hasbrouck_a_lo": 0.3598,
+      "hasbrouck_a_hi": 0.4263,
+      "hasbrouck_a_mid": 0.393,
+      "cointegrated": true,
+      "adf_p": 0.0163,
+      "n": 9318
+    },
+    {
+      "label": "Austria",
+      "kalshi": "KXWCGAME-26JUN17AUTJOR-AUT",
+      "poly": "20499437472769847560241881624039508074540415562884114297532631910880371793587",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8407,
+      "gg_b": 0.1593,
+      "alpha_a": -0.03523,
+      "alpha_b": 0.18589,
+      "hasbrouck_a_lo": 0.7526,
+      "hasbrouck_a_hi": 0.9673,
+      "hasbrouck_a_mid": 0.86,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9531
+    }
+  ]
+}

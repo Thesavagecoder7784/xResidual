@@ -1,0 +1,48 @@
+{
+  "match": "Portugal vs Dr Congo",
+  "capture": "20260617T162723Z-portugal-vs-dr-congo",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.4344,
+  "match_poly_gg": 0.5911,
+  "contracts": [
+    {
+      "label": "Portugal",
+      "kalshi": "KXWCGAME-26JUN17PORCOD-POR",
+      "poly": "76071109489406808599878692125264766321676001700733380917373465772841855210643",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5911,
+      "gg_b": 0.4089,
+      "alpha_a": -0.04081,
+      "alpha_b": 0.05899,
+      "hasbrouck_a_lo": 0.3367,
+      "hasbrouck_a_hi": 0.5321,
+      "hasbrouck_a_mid": 0.4344,
+      "cointegrated": true,
+      "adf_p": 0.0011,
+      "n": 9077
+    },
+    {
+      "label": "DR Congo",
+      "kalshi": "KXWCGAME-26JUN17PORCOD-COD",
+      "poly": "59454896622130760276442490722222126894150925046963444585060045915889624278803",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.026,
+      "alpha_b": 0.02348,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.8969,
+      "n": 9092
+    }
+  ]
+}

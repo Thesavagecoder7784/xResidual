@@ -1,0 +1,48 @@
+{
+  "match": "England vs Croatia",
+  "capture": "20260617T193011Z-england-vs-croatia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.7293,
+  "match_poly_gg": 0.7992,
+  "contracts": [
+    {
+      "label": "Croatia",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-CRO",
+      "poly": "55443738818158231803517291185008080654932985451404315852703585757411667902597",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6544,
+      "gg_b": 0.3456,
+      "alpha_a": -0.0505,
+      "alpha_b": 0.09563,
+      "hasbrouck_a_lo": 0.4558,
+      "hasbrouck_a_hi": 0.5827,
+      "hasbrouck_a_mid": 0.5192,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8429
+    },
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-ENG",
+      "poly": "45513813860398961340723481590130352932611791552209098368268600222240572304551",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.944,
+      "gg_b": 0.056,
+      "alpha_a": -0.00629,
+      "alpha_b": 0.10607,
+      "hasbrouck_a_lo": 0.8827,
+      "hasbrouck_a_hi": 0.9961,
+      "hasbrouck_a_mid": 0.9394,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8878
+    }
+  ]
+}
