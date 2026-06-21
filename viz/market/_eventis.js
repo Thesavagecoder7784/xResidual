@@ -1,0 +1,1 @@
+window.EVENTIS = {"goal": {"n_matches": 20, "n_windows": 136, "poly_hasbrouck_med": 0.8188, "poly_gg_med": 0.8617}, "calm": {"n_matches": 21, "n_windows": 217, "poly_hasbrouck_med": 0.5628, "poly_gg_med": 0.5343}, "n_matches": 21};

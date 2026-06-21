@@ -1,0 +1,14 @@
+{
+  "match": "Germany vs Ivory Coast",
+  "capture": "20260620T193323Z-germany-vs-ivory-coast",
+  "goal": {
+    "n_windows": 12,
+    "poly_hasbrouck_med": 0.6878,
+    "poly_gg_med": 0.871
+  },
+  "calm": {
+    "n_windows": 13,
+    "poly_hasbrouck_med": 0.508,
+    "poly_gg_med": 0.5035
+  }
+}

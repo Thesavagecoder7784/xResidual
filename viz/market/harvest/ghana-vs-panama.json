@@ -1,0 +1,25 @@
+{
+  "match": "Ghana vs Panama",
+  "capture": "20260617T223224Z-ghana-vs-panama",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 82.5,
+    "cost_med_c": 1.34,
+    "net_med_c": 81.16,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 4813
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 82.5,
+    "cost_med_c": 1.34,
+    "net_med_c": 81.16,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 4813
+  }
+}

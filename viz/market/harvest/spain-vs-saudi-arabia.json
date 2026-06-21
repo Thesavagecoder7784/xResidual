@@ -1,0 +1,25 @@
+{
+  "match": "Spain vs Saudi Arabia",
+  "capture": "20260621T152835Z-spain-vs-saudi-arabia",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 5.5,
+    "cost_med_c": 0.77,
+    "net_med_c": 4.73,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1192
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 5.5,
+    "cost_med_c": 0.77,
+    "net_med_c": 4.73,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1192
+  }
+}

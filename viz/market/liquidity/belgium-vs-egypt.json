@@ -1,0 +1,18 @@
+{
+  "match": "Belgium vs Egypt",
+  "capture": "20260615T182907Z-belgium-vs-egypt",
+  "kalshi": {
+    "n": 10,
+    "spread_widen_med": 2.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3996,
+    "n_recovered": 8
+  },
+  "poly": {
+    "n": 12,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3005,
+    "n_recovered": 12
+  }
+}

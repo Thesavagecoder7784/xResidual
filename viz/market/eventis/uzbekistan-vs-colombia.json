@@ -1,0 +1,14 @@
+{
+  "match": "Uzbekistan vs Colombia",
+  "capture": "20260618T013525Z-uzbekistan-vs-colombia",
+  "goal": {
+    "n_windows": 8,
+    "poly_hasbrouck_med": 0.8951,
+    "poly_gg_med": 0.9183
+  },
+  "calm": {
+    "n_windows": 11,
+    "poly_hasbrouck_med": 0.6667,
+    "poly_gg_med": 0.5343
+  }
+}

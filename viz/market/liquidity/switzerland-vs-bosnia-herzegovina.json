@@ -1,0 +1,18 @@
+{
+  "match": "Switzerland vs Bosnia Herzegovina",
+  "capture": "20260618T183109Z-switzerland-vs-bosnia-herzegovina",
+  "kalshi": {
+    "n": 6,
+    "spread_widen_med": 2.0,
+    "depth_withdraw_med": 0.07,
+    "resilience_ms_med": 3999,
+    "n_recovered": 5
+  },
+  "poly": {
+    "n": 5,
+    "spread_widen_med": 4.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3013,
+    "n_recovered": 5
+  }
+}

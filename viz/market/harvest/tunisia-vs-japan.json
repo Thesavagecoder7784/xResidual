@@ -1,0 +1,25 @@
+{
+  "match": "Tunisia vs Japan",
+  "capture": "20260621T033229Z-tunisia-vs-japan",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 10.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 9.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 697
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 3,
+    "gross_med_c": 10.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 9.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 697
+  }
+}

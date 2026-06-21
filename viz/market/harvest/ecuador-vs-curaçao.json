@@ -1,0 +1,25 @@
+{
+  "match": "Ecuador vs Cura\u00e7ao",
+  "capture": "20260620T232821Z-ecuador-vs-cura\u00e7ao",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 6.25,
+    "cost_med_c": 0.77,
+    "net_med_c": 5.48,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.101,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 7648
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 6.25,
+    "cost_med_c": 0.77,
+    "net_med_c": 5.48,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.101,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 7648
+  }
+}

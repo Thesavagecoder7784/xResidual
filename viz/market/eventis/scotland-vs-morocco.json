@@ -1,0 +1,14 @@
+{
+  "match": "Scotland vs Morocco",
+  "capture": "20260619T213423Z-scotland-vs-morocco",
+  "goal": {
+    "n_windows": 2,
+    "poly_hasbrouck_med": 0.8576,
+    "poly_gg_med": 0.8694
+  },
+  "calm": {
+    "n_windows": 10,
+    "poly_hasbrouck_med": 0.5686,
+    "poly_gg_med": 0.5891
+  }
+}

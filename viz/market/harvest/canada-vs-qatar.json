@@ -1,0 +1,25 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.1,
+    "net_med_c": 9.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.75,
+    "pct_harvestable": 50.0,
+    "lead_ms_med": 649
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 2,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.1,
+    "net_med_c": 9.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.75,
+    "pct_harvestable": 50.0,
+    "lead_ms_med": 649
+  }
+}

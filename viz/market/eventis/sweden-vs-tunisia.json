@@ -1,0 +1,14 @@
+{
+  "match": "Sweden vs Tunisia",
+  "capture": "20260615T012609Z-sweden-vs-tunisia",
+  "goal": {
+    "n_windows": 5,
+    "poly_hasbrouck_med": 0.5882,
+    "poly_gg_med": 0.7593
+  },
+  "calm": {
+    "n_windows": 7,
+    "poly_hasbrouck_med": 0.5292,
+    "poly_gg_med": 0.437
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "match": "Argentina vs Algeria",
+  "capture": "20260617T003453Z-argentina-vs-algeria",
+  "goal": {
+    "n_windows": 6,
+    "poly_hasbrouck_med": 0.7549,
+    "poly_gg_med": 1.0754
+  },
+  "calm": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.7487,
+    "poly_gg_med": 0.984
+  }
+}

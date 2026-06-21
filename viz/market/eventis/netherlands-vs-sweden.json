@@ -1,0 +1,14 @@
+{
+  "match": "Netherlands vs Sweden",
+  "capture": "20260620T163021Z-netherlands-vs-sweden",
+  "goal": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.7204,
+    "poly_gg_med": 0.8617
+  },
+  "calm": {
+    "n_windows": 8,
+    "poly_hasbrouck_med": 0.5131,
+    "poly_gg_med": 0.5257
+  }
+}

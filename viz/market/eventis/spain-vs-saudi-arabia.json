@@ -1,0 +1,10 @@
+{
+  "match": "Spain vs Saudi Arabia",
+  "capture": "20260621T152835Z-spain-vs-saudi-arabia",
+  "goal": null,
+  "calm": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.5605,
+    "poly_gg_med": 0.4213
+  }
+}

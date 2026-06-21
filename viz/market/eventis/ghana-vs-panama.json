@@ -1,0 +1,14 @@
+{
+  "match": "Ghana vs Panama",
+  "capture": "20260617T223224Z-ghana-vs-panama",
+  "goal": {
+    "n_windows": 6,
+    "poly_hasbrouck_med": 0.958,
+    "poly_gg_med": 0.8522
+  },
+  "calm": {
+    "n_windows": 17,
+    "poly_hasbrouck_med": 0.5944,
+    "poly_gg_med": 0.5385
+  }
+}

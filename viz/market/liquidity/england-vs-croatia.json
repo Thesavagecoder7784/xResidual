@@ -1,0 +1,18 @@
+{
+  "match": "England vs Croatia",
+  "capture": "20260617T193011Z-england-vs-croatia",
+  "kalshi": {
+    "n": 23,
+    "spread_widen_med": 2.0,
+    "depth_withdraw_med": 0.04,
+    "resilience_ms_med": 3993,
+    "n_recovered": 22
+  },
+  "poly": {
+    "n": 21,
+    "spread_widen_med": 5.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3013,
+    "n_recovered": 21
+  }
+}

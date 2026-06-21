@@ -1,0 +1,18 @@
+{
+  "match": "Portugal vs Dr Congo",
+  "capture": "20260617T162723Z-portugal-vs-dr-congo",
+  "kalshi": {
+    "n": 9,
+    "spread_widen_med": 2.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3994,
+    "n_recovered": 7
+  },
+  "poly": {
+    "n": 6,
+    "spread_widen_med": 17.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3089,
+    "n_recovered": 6
+  }
+}
