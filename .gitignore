@@ -261,3 +261,11 @@ CONTENT-PLAYBOOK.md
 # Jump fellowship), so keep it out of the public repo. Deployed to the VM via scp, not git.
 scripts/probcup_*.py
 deploy/systemd/xresidual-probcup.*
+
+viz/market/ofi
+viz/market/liquidity
+viz/market/leadlag
+viz/market/infoshare
+viz/market/harvest
+viz/market/eventis
+viz/model/overreaction
