@@ -29897,6 +29897,433 @@
       "match": "Switzerland vs Bosnia Herzegovina"
     },
     {
+      "label": "Tunisia",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-TUN",
+      "poly": "62516949205730668430138255140150438665483187962069999240136080804116109915287",
+      "n_events": 3,
+      "events": [
+        {
+          "t_ms": 1782014610625,
+          "jump": 0.07,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.115,
+            "settle": 0.045,
+            "jump": -0.07,
+            "surprise": 0.885,
+            "reversals": {
+              "60": {
+                "level": 0.055,
+                "reversal_frac": 0.143
+              },
+              "180": {
+                "level": 0.035,
+                "reversal_frac": -0.143
+              },
+              "300": {
+                "level": 0.035,
+                "reversal_frac": -0.143
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.115,
+            "settle": 0.0407,
+            "jump": -0.0743,
+            "surprise": 0.885,
+            "reversals": {
+              "60": {
+                "level": 0.0395,
+                "reversal_frac": -0.017
+              },
+              "180": {
+                "level": 0.0385,
+                "reversal_frac": -0.03
+              },
+              "300": {
+                "level": 0.0385,
+                "reversal_frac": -0.03
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 16200,
+            "best_corr": -0.85,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1782014640632,
+          "jump": 0.07,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.0565,
+            "settle": 0.0562,
+            "jump": -0.0003,
+            "surprise": 0.943,
+            "reversals": {
+              "60": {
+                "level": 0.045,
+                "reversal_frac": -39.0
+              },
+              "180": {
+                "level": 0.035,
+                "reversal_frac": -73.667
+              },
+              "300": {
+                "level": 0.035,
+                "reversal_frac": -73.667
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.0508,
+            "settle": 0.0545,
+            "jump": 0.0037,
+            "surprise": 0.949,
+            "reversals": {
+              "60": {
+                "level": 0.0465,
+                "reversal_frac": 2.147
+              },
+              "180": {
+                "level": 0.0385,
+                "reversal_frac": 4.293
+              },
+              "300": {
+                "level": 0.0355,
+                "reversal_frac": 5.098
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 14400,
+            "best_corr": -0.7,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1782021450776,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Tunisia vs Japan"
+    },
+    {
+      "label": "Japan",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-JPN",
+      "poly": "91234906493805354217250440222911012200186057450151286874925972448339630680686",
+      "n_events": 7,
+      "events": [
+        {
+          "t_ms": 1782014610659,
+          "jump": 0.075,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.6681,
+            "settle": 0.835,
+            "jump": 0.1669,
+            "surprise": 0.332,
+            "reversals": {
+              "60": {
+                "level": 0.835,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.835,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.835,
+                "reversal_frac": 0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.655,
+            "settle": 0.8428,
+            "jump": 0.1878,
+            "surprise": 0.345,
+            "reversals": {
+              "60": {
+                "level": 0.835,
+                "reversal_frac": 0.041
+              },
+              "180": {
+                "level": 0.835,
+                "reversal_frac": 0.041
+              },
+              "300": {
+                "level": 0.835,
+                "reversal_frac": 0.041
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 14000,
+            "best_corr": 0.76,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1782014640660,
+          "jump": 0.18,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.8412,
+            "settle": 0.8425,
+            "jump": 0.0013,
+            "surprise": 0.159,
+            "reversals": {
+              "60": {
+                "level": 0.835,
+                "reversal_frac": 5.571
+              },
+              "180": {
+                "level": 0.845,
+                "reversal_frac": -1.857
+              },
+              "300": {
+                "level": 0.845,
+                "reversal_frac": -1.857
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.8368,
+            "settle": 0.8209,
+            "jump": -0.0158,
+            "surprise": 0.163,
+            "reversals": {
+              "60": {
+                "level": 0.825,
+                "reversal_frac": 0.256
+              },
+              "180": {
+                "level": 0.835,
+                "reversal_frac": 0.889
+              },
+              "300": {
+                "level": 0.835,
+                "reversal_frac": 0.889
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": 16400,
+            "best_corr": -0.77,
+            "why": "weak/anti-corr"
+          }
+        },
+        {
+          "t_ms": 1782014670683,
+          "jump": 0.17,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.8388,
+            "settle": 0.8375,
+            "jump": -0.0013,
+            "surprise": 0.161,
+            "reversals": {
+              "60": {
+                "level": 0.835,
+                "reversal_frac": -1.857
+              },
+              "180": {
+                "level": 0.845,
+                "reversal_frac": 5.571
+              },
+              "300": {
+                "level": 0.855,
+                "reversal_frac": 13.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.8264,
+            "settle": 0.8182,
+            "jump": -0.0082,
+            "surprise": 0.174,
+            "reversals": {
+              "60": {
+                "level": 0.825,
+                "reversal_frac": 0.828
+              },
+              "180": {
+                "level": 0.845,
+                "reversal_frac": 3.269
+              },
+              "300": {
+                "level": 0.845,
+                "reversal_frac": 3.269
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -16200,
+            "best_corr": 0.57,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1782016208724,
+          "jump": 0.07,
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7176717514701164,
+            "leader": "kalshi",
+            "n_bins": 149
+          },
+          "kalshi_reaction": {
+            "pre": 0.845,
+            "settle": 0.935,
+            "jump": 0.09,
+            "surprise": 0.155,
+            "reversals": {
+              "60": {
+                "level": 0.955,
+                "reversal_frac": -0.222
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": -0.333
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": -0.333
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.835,
+            "settle": 0.9452,
+            "jump": 0.1102,
+            "surprise": 0.165,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -0.18
+              },
+              "180": {
+                "level": 0.9635,
+                "reversal_frac": -0.166
+              },
+              "300": {
+                "level": 0.9665,
+                "reversal_frac": -0.194
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782016238731,
+          "jump": 0.12,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.9373,
+            "settle": 0.955,
+            "jump": 0.0177,
+            "surprise": 0.063,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -0.565
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": -0.565
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": -0.565
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9515,
+            "settle": 0.955,
+            "jump": 0.0035,
+            "surprise": 0.048,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -2.868
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": -2.868
+              },
+              "300": {
+                "level": 0.9655,
+                "reversal_frac": -3.011
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782016268769,
+          "jump": 0.12,
+          "lead": {
+            "best_lag_ms": 4000,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 149
+          },
+          "kalshi_reaction": {
+            "pre": 0.955,
+            "settle": 0.965,
+            "jump": 0.01,
+            "surprise": 0.045,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.9579,
+            "settle": 0.965,
+            "jump": 0.0071,
+            "surprise": 0.042,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.9665,
+                "reversal_frac": -0.211
+              },
+              "300": {
+                "level": 0.967,
+                "reversal_frac": -0.281
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782021450775,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Tunisia vs Japan"
+    },
+    {
       "label": "Colombia",
       "kalshi": "KXWCGAME-26JUN17UZBCOL-COL",
       "poly": "107303881689780116979934419713652545873528717512161697004408881489729317049047",
@@ -31086,17 +31513,17 @@
     }
   ],
   "pooled": {
-    "n": 118,
+    "n": 120,
     "median_lead_ms": 200.0,
     "iqr_ms": [
       -200.0,
       600.0
     ],
     "leader": "polymarket",
-    "leader_share": 0.568,
-    "poly_leads": 67,
-    "kalshi_leads": 37
+    "leader_share": 0.567,
+    "poly_leads": 68,
+    "kalshi_leads": 38
   },
-  "n_matches": 25,
+  "n_matches": 26,
   "min_jump": 0.04
 }
