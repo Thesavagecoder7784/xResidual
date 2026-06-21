@@ -1,0 +1,48 @@
+{
+  "match": "Ecuador vs Cura\u00e7ao",
+  "capture": "20260620T232821Z-ecuador-vs-cura\u00e7ao",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.282,
+  "match_poly_gg": 0.4379,
+  "contracts": [
+    {
+      "label": "Ecuador",
+      "kalshi": "KXWCGAME-26JUN20ECUCUW-ECU",
+      "poly": "7079595983448256774998692261246256964535880004732387005017898482275441988994",
+      "leader": "kalshi",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.4379,
+      "gg_b": 0.5621,
+      "alpha_a": -0.06167,
+      "alpha_b": 0.04804,
+      "hasbrouck_a_lo": 0.2617,
+      "hasbrouck_a_hi": 0.3024,
+      "hasbrouck_a_mid": 0.282,
+      "cointegrated": true,
+      "adf_p": 0.002,
+      "n": 8806
+    },
+    {
+      "label": "Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN20ECUCUW-CUW",
+      "poly": "22922754856620040574706795332414925251832240378503831196222537952159137725220",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01068,
+      "alpha_b": 0.02355,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.5855,
+      "n": 8801
+    }
+  ]
+}
