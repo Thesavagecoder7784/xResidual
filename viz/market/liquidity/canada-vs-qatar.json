@@ -1,0 +1,18 @@
+{
+  "match": "Canada vs Qatar",
+  "capture": "20260618T213421Z-canada-vs-qatar",
+  "kalshi": {
+    "n": 3,
+    "spread_widen_med": 1.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3818,
+    "n_recovered": 2
+  },
+  "poly": {
+    "n": 2,
+    "spread_widen_med": 6.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3015,
+    "n_recovered": 2
+  }
+}

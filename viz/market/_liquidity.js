@@ -1,0 +1,1 @@
+window.LIQUIDITY = {"kalshi": {"n_matches": 20, "n_shocks": 202, "spread_widen_med": 2.0, "depth_withdraw_med": 0.01, "resilience_ms_med": 3996}, "poly": {"n_matches": 21, "n_shocks": 168, "spread_widen_med": 8.0, "depth_withdraw_med": 0.0, "resilience_ms_med": 3014}, "n_matches": 21, "min_jump": 0.04};

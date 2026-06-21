@@ -1,0 +1,14 @@
+{
+  "match": "Switzerland vs Bosnia Herzegovina",
+  "capture": "20260618T183109Z-switzerland-vs-bosnia-herzegovina",
+  "goal": {
+    "n_windows": 4,
+    "poly_hasbrouck_med": 0.9797,
+    "poly_gg_med": 1.1596
+  },
+  "calm": {
+    "n_windows": 13,
+    "poly_hasbrouck_med": 0.3701,
+    "poly_gg_med": 0.4927
+  }
+}

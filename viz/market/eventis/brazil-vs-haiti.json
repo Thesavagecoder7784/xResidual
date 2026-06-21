@@ -1,0 +1,14 @@
+{
+  "match": "Brazil vs Haiti",
+  "capture": "20260619T235702Z-brazil-vs-haiti",
+  "goal": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.8306,
+    "poly_gg_med": 0.7141
+  },
+  "calm": {
+    "n_windows": 8,
+    "poly_hasbrouck_med": 0.7884,
+    "poly_gg_med": 0.854
+  }
+}

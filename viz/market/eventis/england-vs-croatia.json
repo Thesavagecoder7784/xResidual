@@ -1,0 +1,14 @@
+{
+  "match": "England vs Croatia",
+  "capture": "20260617T193011Z-england-vs-croatia",
+  "goal": {
+    "n_windows": 21,
+    "poly_hasbrouck_med": 0.9267,
+    "poly_gg_med": 1.0246
+  },
+  "calm": {
+    "n_windows": 9,
+    "poly_hasbrouck_med": 0.5054,
+    "poly_gg_med": 0.5234
+  }
+}

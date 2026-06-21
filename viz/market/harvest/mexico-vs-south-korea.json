@@ -1,0 +1,34 @@
+{
+  "match": "Mexico vs South Korea",
+  "capture": "20260619T002622Z-mexico-vs-south-korea",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 12.62,
+    "cost_med_c": 4.22,
+    "net_med_c": 11.71,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 743
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 36.87,
+    "cost_med_c": 2.0,
+    "net_med_c": 34.87,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2552
+  },
+  "all": {
+    "n": 3,
+    "gross_med_c": 12.62,
+    "cost_med_c": 2.0,
+    "net_med_c": 11.71,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 743
+  }
+}

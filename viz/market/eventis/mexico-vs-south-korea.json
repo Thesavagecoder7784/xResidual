@@ -1,0 +1,14 @@
+{
+  "match": "Mexico vs South Korea",
+  "capture": "20260619T002622Z-mexico-vs-south-korea",
+  "goal": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.8859,
+    "poly_gg_med": 1.0945
+  },
+  "calm": {
+    "n_windows": 14,
+    "poly_hasbrouck_med": 0.4104,
+    "poly_gg_med": 0.382
+  }
+}

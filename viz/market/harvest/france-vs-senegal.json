@@ -1,0 +1,34 @@
+{
+  "match": "France vs Senegal",
+  "capture": "20260616T182710Z-france-vs-senegal",
+  "follower_kalshi": {
+    "n": 9,
+    "gross_med_c": 7.25,
+    "cost_med_c": 1.7,
+    "net_med_c": 5.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.022,
+    "pct_harvestable": 33.3,
+    "lead_ms_med": 1064
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 20.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 20.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.092,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2919
+  },
+  "all": {
+    "n": 11,
+    "gross_med_c": 7.25,
+    "cost_med_c": 1.42,
+    "net_med_c": 5.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.022,
+    "pct_harvestable": 27.3,
+    "lead_ms_med": 1064
+  }
+}

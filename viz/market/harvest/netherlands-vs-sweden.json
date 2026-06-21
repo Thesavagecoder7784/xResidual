@@ -1,0 +1,34 @@
+{
+  "match": "Netherlands vs Sweden",
+  "capture": "20260620T163021Z-netherlands-vs-sweden",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 7.13,
+    "cost_med_c": 1.09,
+    "net_med_c": 5.78,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 411
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 10.25,
+    "cost_med_c": 0.5,
+    "net_med_c": 9.75,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 134
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 9.75,
+    "cost_med_c": 0.99,
+    "net_med_c": 8.66,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 411
+  }
+}

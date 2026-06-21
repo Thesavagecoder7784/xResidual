@@ -1,0 +1,14 @@
+{
+  "match": "Portugal vs Dr Congo",
+  "capture": "20260617T162723Z-portugal-vs-dr-congo",
+  "goal": {
+    "n_windows": 3,
+    "poly_hasbrouck_med": 0.4134,
+    "poly_gg_med": 0.3831
+  },
+  "calm": {
+    "n_windows": 20,
+    "poly_hasbrouck_med": 0.5628,
+    "poly_gg_med": 0.6036
+  }
+}

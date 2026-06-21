@@ -1,0 +1,1 @@
+window.HARVEST = {"pooled": {"n_matches": 21, "n_goals": 117, "gross_med_c": 11.38, "cost_med_c": 1.21, "net_med_c": 10.17, "pct_net_positive": 100.0, "depth_frac_med": 0.004, "pct_harvestable": 0.0, "lead_ms_med": 711}, "n_matches": 21, "min_jump": 0.04};

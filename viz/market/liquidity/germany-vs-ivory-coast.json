@@ -1,0 +1,18 @@
+{
+  "match": "Germany vs Ivory Coast",
+  "capture": "20260620T193323Z-germany-vs-ivory-coast",
+  "kalshi": {
+    "n": 22,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 4002,
+    "n_recovered": 20
+  },
+  "poly": {
+    "n": 14,
+    "spread_widen_med": 12.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3018,
+    "n_recovered": 14
+  }
+}

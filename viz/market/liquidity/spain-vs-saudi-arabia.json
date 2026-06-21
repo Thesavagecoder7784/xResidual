@@ -1,0 +1,12 @@
+{
+  "match": "Spain vs Saudi Arabia",
+  "capture": "20260621T152835Z-spain-vs-saudi-arabia",
+  "kalshi": null,
+  "poly": {
+    "n": 1,
+    "spread_widen_med": 4.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3018,
+    "n_recovered": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "match": "Tunisia vs Japan",
+  "capture": "20260621T033229Z-tunisia-vs-japan",
+  "kalshi": {
+    "n": 4,
+    "spread_widen_med": 5.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3477,
+    "n_recovered": 3
+  },
+  "poly": {
+    "n": 3,
+    "spread_widen_med": 9.0,
+    "depth_withdraw_med": 0.0,
+    "resilience_ms_med": 3023,
+    "n_recovered": 3
+  }
+}

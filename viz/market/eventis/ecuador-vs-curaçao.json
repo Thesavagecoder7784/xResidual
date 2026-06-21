@@ -1,0 +1,14 @@
+{
+  "match": "Ecuador vs Cura\u00e7ao",
+  "capture": "20260620T232821Z-ecuador-vs-cura\u00e7ao",
+  "goal": {
+    "n_windows": 5,
+    "poly_hasbrouck_med": 0.5561,
+    "poly_gg_med": 0.4173
+  },
+  "calm": {
+    "n_windows": 18,
+    "poly_hasbrouck_med": 0.62,
+    "poly_gg_med": 0.639
+  }
+}

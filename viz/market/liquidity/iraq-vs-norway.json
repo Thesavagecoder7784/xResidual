@@ -1,0 +1,18 @@
+{
+  "match": "Iraq vs Norway",
+  "capture": "20260616T213023Z-iraq-vs-norway",
+  "kalshi": {
+    "n": 10,
+    "spread_widen_med": 1.0,
+    "depth_withdraw_med": 0.02,
+    "resilience_ms_med": 3997,
+    "n_recovered": 9
+  },
+  "poly": {
+    "n": 10,
+    "spread_widen_med": 15.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3060,
+    "n_recovered": 10
+  }
+}

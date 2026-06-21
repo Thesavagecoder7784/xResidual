@@ -1,0 +1,14 @@
+{
+  "match": "Iraq vs Norway",
+  "capture": "20260616T213023Z-iraq-vs-norway",
+  "goal": {
+    "n_windows": 7,
+    "poly_hasbrouck_med": 0.8188,
+    "poly_gg_med": 0.6557
+  },
+  "calm": {
+    "n_windows": 4,
+    "poly_hasbrouck_med": 0.6459,
+    "poly_gg_med": 0.5653
+  }
+}

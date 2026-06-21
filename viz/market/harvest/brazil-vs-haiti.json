@@ -1,0 +1,25 @@
+{
+  "match": "Brazil vs Haiti",
+  "capture": "20260619T235702Z-brazil-vs-haiti",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 7.0,
+    "cost_med_c": 0.93,
+    "net_med_c": 6.07,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 482
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 7.0,
+    "cost_med_c": 0.93,
+    "net_med_c": 6.07,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.004,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 482
+  }
+}

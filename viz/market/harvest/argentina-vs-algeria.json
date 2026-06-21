@@ -1,0 +1,34 @@
+{
+  "match": "Argentina vs Algeria",
+  "capture": "20260617T003453Z-argentina-vs-algeria",
+  "follower_kalshi": {
+    "n": 7,
+    "gross_med_c": 11.0,
+    "cost_med_c": 1.71,
+    "net_med_c": 9.04,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.011,
+    "pct_harvestable": 14.3,
+    "lead_ms_med": 499
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 19.25,
+    "cost_med_c": 0.5,
+    "net_med_c": 18.75,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 367
+  },
+  "all": {
+    "n": 8,
+    "gross_med_c": 11.38,
+    "cost_med_c": 1.71,
+    "net_med_c": 10.17,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.011,
+    "pct_harvestable": 12.5,
+    "lead_ms_med": 499
+  }
+}

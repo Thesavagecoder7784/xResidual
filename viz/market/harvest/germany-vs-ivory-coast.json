@@ -1,0 +1,34 @@
+{
+  "match": "Germany vs Ivory Coast",
+  "capture": "20260620T193323Z-germany-vs-ivory-coast",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 21.0,
+    "cost_med_c": 3.17,
+    "net_med_c": 17.83,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 374
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 17.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 16.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 92
+  },
+  "all": {
+    "n": 7,
+    "gross_med_c": 18.75,
+    "cost_med_c": 1.0,
+    "net_med_c": 16.66,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 221
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Sweden vs Tunisia",
+  "capture": "20260615T012609Z-sweden-vs-tunisia",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 19.5,
+    "cost_med_c": 1.21,
+    "net_med_c": 18.29,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 711
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 11.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 11.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 355
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 16.0,
+    "cost_med_c": 1.02,
+    "net_med_c": 15.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 711
+  }
+}

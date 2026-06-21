@@ -1,0 +1,34 @@
+{
+  "match": "Portugal vs Dr Congo",
+  "capture": "20260617T162723Z-portugal-vs-dr-congo",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 5.5,
+    "cost_med_c": 2.04,
+    "net_med_c": 4.36,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 896
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 12.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 11.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1191
+  },
+  "all": {
+    "n": 4,
+    "gross_med_c": 12.0,
+    "cost_med_c": 2.04,
+    "net_med_c": 11.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1122
+  }
+}

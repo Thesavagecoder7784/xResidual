@@ -1,0 +1,34 @@
+{
+  "match": "England vs Croatia",
+  "capture": "20260617T193011Z-england-vs-croatia",
+  "follower_kalshi": {
+    "n": 13,
+    "gross_med_c": 9.5,
+    "cost_med_c": 1.63,
+    "net_med_c": 8.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.037,
+    "pct_harvestable": 23.1,
+    "lead_ms_med": 710
+  },
+  "follower_poly": {
+    "n": 5,
+    "gross_med_c": 14.25,
+    "cost_med_c": 0.5,
+    "net_med_c": 13.75,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 287
+  },
+  "all": {
+    "n": 18,
+    "gross_med_c": 11.5,
+    "cost_med_c": 1.44,
+    "net_med_c": 10.86,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.02,
+    "pct_harvestable": 16.7,
+    "lead_ms_med": 687
+  }
+}

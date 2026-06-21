@@ -1,0 +1,18 @@
+{
+  "match": "Ecuador vs Cura\u00e7ao",
+  "capture": "20260620T232821Z-ecuador-vs-cura\u00e7ao",
+  "kalshi": {
+    "n": 6,
+    "spread_widen_med": 2.0,
+    "depth_withdraw_med": 0.05,
+    "resilience_ms_med": 3707,
+    "n_recovered": 6
+  },
+  "poly": {
+    "n": 7,
+    "spread_widen_med": 3.0,
+    "depth_withdraw_med": 0.01,
+    "resilience_ms_med": 3014,
+    "n_recovered": 7
+  }
+}
