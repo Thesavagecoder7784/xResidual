@@ -25,6 +25,25 @@ from pull_forecast_data import ISO, KIT, INK, ensure_flag  # noqa: E402
 
 OUT = os.path.join(ROOT, "viz", "model", "_heat.js")
 
+# Official 2026 R32 bracket: each group-position slot -> its 0-based position among the 16
+# Round-of-32 matches (in feed order). The live feed rewrites these slot labels into team
+# names as groups resolve ("1A" -> "Mexico"), which used to silently zero out the slot-code
+# path trace. We anchor on the fixed bracket position and trace from whatever label sits there.
+R32_ENTRY = {
+    "2A": 0, "2B": 0, "1E": 1, "1F": 2, "2C": 2, "1C": 3, "2F": 3, "1I": 4,
+    "2E": 5, "2I": 5, "1A": 6, "1L": 7, "1D": 8, "1G": 9, "2K": 10, "2L": 10,
+    "1H": 11, "2J": 11, "1B": 12, "1J": 13, "2H": 13, "1K": 14, "2D": 15, "2G": 15,
+}
+
+
+def entry_label(fx, slot: str) -> str:
+    """Current label occupying a fixed R32 slot — the canonical code while unresolved, or
+    the resolved team name once its group is decided. Both sides of the entry match share
+    the same downstream venue path, so heat.knockout_path traces it correctly from slot1."""
+    r32 = [m for m in heat.knockout_matches(fx) if str(m["round"]).startswith("Round of 32")]
+    return r32[R32_ENTRY[slot]]["slot1"]
+
+
 # UEFA teams in the field — for the Euro-TV mechanism (US afternoon = European evening,
 # so European sides get scheduled into the afternoon heat window for home prime-time).
 UEFA = {"Spain", "France", "England", "Portugal", "Germany", "Netherlands", "Belgium",
@@ -69,8 +88,8 @@ def main() -> int:
     for r in exp:
         cum, letter = None, tg.get(r["team"])
         if letter:
-            l1 = heat.path_load(fx, f"1{letter}")   # win the group -> this venue path
-            l2 = heat.path_load(fx, f"2{letter}")   # runner-up path
+            l1 = heat.path_load(fx, entry_label(fx, f"1{letter}"))   # win the group -> this venue path
+            l2 = heat.path_load(fx, entry_label(fx, f"2{letter}"))   # runner-up path
             cum = {"group_score": r["score"],
                    "ko_1st_score": l1["ko_score"], "ko_1st_extreme": l1["ko_extreme"],
                    "ko_2nd_score": l2["ko_score"], "ko_2nd_extreme": l2["ko_extreme"],
