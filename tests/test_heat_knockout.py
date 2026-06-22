@@ -1,11 +1,19 @@
-"""Tests for knockout-stage heat: deterministic bracket path + stage intensity."""
+"""Tests for knockout-stage heat: deterministic bracket path + stage intensity.
+
+Uses a committed fixtures snapshot, NOT the live feed: openfootball rewrites the R32
+slot labels into team names as groups resolve (e.g. "1A" -> "Mexico"), which is correct
+for production but makes a slot-code path trace non-deterministic. The snapshot pins the
+canonical slot codes so this exercises the bracket logic itself.
+"""
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from xresidual import data_fixtures, heat  # noqa: E402
+import pandas as pd
 
-FX = data_fixtures.load_fixtures()
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from xresidual import heat  # noqa: E402
+
+FX = pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "wc2026_fixtures_frozen.csv"))
 
 
 def test_winner_path_reaches_the_final():
