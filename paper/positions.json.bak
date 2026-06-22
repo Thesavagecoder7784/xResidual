@@ -85,6 +85,23 @@
     "realized_pnl_net": 1.27
   },
   {
+    "id": 6,
+    "ts_open": "2026-06-09T23:18:45.053690+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-nation-to-reach-quarterfinals",
+    "outcome": "Turkiye",
+    "side": "yes",
+    "entry_price": 0.23,
+    "stake_usd": 100.0,
+    "shares": 434.78,
+    "status": "closed",
+    "note": "FLB at the reach-round layer: model P(reach QF) ~26% vs market 23%. Challenger deep-run underpriced; cross-confirmed across group-winner/reach/elimination layers. | CLOSED 6/15: thesis dead after AUS 2-0 TUR \u2014 model reach-QF now 12.8 vs mkt 12.0 (edge gone). Closed at edge-invalidation, not on recovery hope.",
+    "exit_price": 0.12,
+    "ts_close": "2026-06-16T00:36:13.907422+00:00",
+    "realized_pnl": -47.83,
+    "realized_pnl_net": -48.83
+  },
+  {
     "id": 7,
     "ts_open": "2026-06-10T21:06:22.086393+00:00",
     "venue": "polymarket",
@@ -236,6 +253,23 @@
     "ts_close": null,
     "realized_pnl": null,
     "realized_pnl_net": null
+  },
+  {
+    "id": 16,
+    "ts_open": "2026-06-12T13:58:00.847966+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-group-e-winner",
+    "outcome": "Germany",
+    "side": "no",
+    "entry_price": 0.335,
+    "stake_usd": 30.0,
+    "shares": 89.55,
+    "status": "closed",
+    "note": "Fade Germany to win Group E: model 51% win vs market 66%. Group E genuinely open - Germany exited group stage 2018+2022; Ecuador 2nd in CONMEBOL w/ best defense (5 GA/18) on 15-game unbeaten; Ivory Coast AFCON champs who beat France 2-1 in prep. Validated via research. Diversifier (uncorrelated w/ advance cluster).",
+    "exit_price": 0.0,
+    "ts_close": "2026-06-21T20:13:09.465273+00:00",
+    "realized_pnl": -30.0,
+    "realized_pnl_net": -30.3
   },
   {
     "id": 17,
@@ -442,6 +476,23 @@
     "realized_pnl_net": null
   },
   {
+    "id": 29,
+    "ts_open": "2026-06-16T00:31:20.912673+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-group-e-winner",
+    "outcome": "Ivory Coast",
+    "side": "yes",
+    "entry_price": 0.202,
+    "stake_usd": 20.0,
+    "shares": 99.01,
+    "status": "closed",
+    "note": "Value back: model 33.5 vs mkt 20.2 (+13.2) to win Group E. The aggressive flip of the held Germany-win-E fade (AFCON champs, beat France 2-1 in prep, Group E genuinely open). Longshot YES with tail risk; sized moderate. Balances the fade-heavy book.",
+    "exit_price": 0.0,
+    "ts_close": "2026-06-21T20:13:09.641826+00:00",
+    "realized_pnl": -20.0,
+    "realized_pnl_net": -20.2
+  },
+  {
     "id": 30,
     "ts_open": "2026-06-16T00:31:20.925216+00:00",
     "venue": "polymarket",
@@ -596,19 +647,19 @@
   },
   {
     "id": 39,
-    "ts_open": "2026-06-21T20:53:47.297445+00:00",
-    "venue": "polymarket",
-    "market": "world-cup-team-to-advance-to-knockout-stages",
-    "outcome": "New Zealand",
-    "side": "no",
-    "entry_price": 0.74,
-    "stake_usd": 25.0,
-    "shares": 33.78,
-    "status": "open",
-    "note": "fade weakest team in G (OFC/conf-shrinkage); advance 0.26 -> NO @ 0.74; model 17 vs mkt 26, sim 9.5%/3.2% per game; research-validated Jun21",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "ts_open": "2026-06-16T21:41:42.066733+00:00",
+    "venue": "kalshi",
+    "market": "KXWCGAME-26JUN18CANQAT-TIE",
+    "outcome": "Tie",
+    "side": "yes",
+    "entry_price": 0.16,
+    "stake_usd": 15.0,
+    "shares": 93.75,
+    "status": "closed",
+    "note": "Organized-underdog mismatch draw. Market tie 16%, v3 26%, +10pp. Qatar already parked to hold Switzerland 1-1; Canada a modest favourite (1 goal in 2 games). Same validated thesis.",
+    "exit_price": 0.0,
+    "ts_close": "2026-06-19T19:05:23.500427+00:00",
+    "realized_pnl": -15.0,
+    "realized_pnl_net": -15.15
   }
 ]
