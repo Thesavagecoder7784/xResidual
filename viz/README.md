@@ -124,6 +124,7 @@ Tape-derived, from the captured `ws_capture` websocket feeds. Processed by `buil
 | `book_vanishes` | **NEW (anatomy of a goal)** — at a goal the order book evaporates: Polymarket spread ~8×, best-price depth →<1%; Kalshi 2×, →~1%; refill ~3–4s. The price leader withdraws hardest |
 | `goal_discovery` | **NEW (anatomy of a goal)** — price discovery concentrates at the news: Polymarket's information share is ~86% in goal windows vs ~53% in calm play. The lead is a news-event phenomenon, not a steady hum |
 | `edge_mirage` | **NEW (anatomy of a goal)** — the lead is real but untradeable: the stale follower is +10.2c on paper on every goal, but depth at the goal is 0.4% of normal → **0% harvestable**. The honest capstone |
+| `adverse_selection` | **NEW (the maker's view)** — the same ~11c reframed from the quoter's side: a maker who holds a resting quote through a goal is picked off for ~11c, so the book-pull (8× spread, depth→0) *is* the adverse-selection defence. The "what a quoter loses" chart for a market-making audience |
 
 > The rigorous information-share version (Hasbrouck 1995 + Gonzalo-Granger permanent-component,
 > `build_infoshare.py` → `_infoshare.js`, Polymarket GG ~78%) feeds `leadlag_lead` and the desk

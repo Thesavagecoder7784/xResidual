@@ -90,3 +90,14 @@ yet hands Morocco the harder route, trimming #5), which **reduces** book varianc
 cancelling edge. Expected value is linear, so two individually +EV bets stay +EV held together
 regardless of that correlation. None of this is real money (F-1); it's a timestamped record of
 theses and how they resolve.
+
+---
+
+**RETIRED 2026-06-19 — the mismatch-draw basket (#31/#34/#38/#39).** The thesis (favourite held to
+a draw by an organised minnow, traded at the cheap tie price) regressed as n grew: 5/10 (50%, p=0.013)
+on Jun 16 → **6/17 (35%) by Jun 18**, p~0.04 vs market but NOT significant vs the model's own ~17%
+draw expectation. Then **Canada 6-0 Qatar (Jun 18)** delivered the textbook counterexample — the minnow
+didn't park, it got blown out (the Curaçao-7 / Tunisia-5 failure mode). #39 graded as a −$15.2 loss;
+the three forward legs closed flat. Lesson: the edge was real-but-thin and conditional on the underdog
+being a proven parker; we over-extrapolated from a hot 5/10 start. No new capital to the draw lane.
+Keep [[mismatch-draw-underpricing]] as descriptive only.

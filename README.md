@@ -8,6 +8,14 @@ Markets like Kalshi and Polymarket turn thousands of opinions and a lot of real 
 
 A *residual* is what's left after you subtract expectation from reality: the surprise. The markets supply the expectation, the World Cup supplies the surprises, and this project is about both.
 
+## The headline finding — a real lead a market-maker can't trade
+
+The crown jewel is a microstructure result, written up as a short **[desk note (PDF)](writeups/price_discovery_note.pdf)**: from tick-level order-book tapes of both venues, **Polymarket discovers the price of a goal first** — a ~200 ms reaction lead and a **~78% Hasbrouck / Gonzalo–Granger information share** (computed on mids, which sidesteps the documented ~59% trade-direction-classification problem), and it's *concentrated at the news* — ~86% of price discovery in goal windows vs ~53% in calm play.
+
+**And it isn't tradeable.** At the goal the order book vanishes — spread ~8× wider, best-price depth under 1% of normal — so the ~11-cent stale-quote gap a reactor would lift nets +10c on paper but **0% after gating on the depth actually resting in the book.** That collapse-and-refill is the market-maker pulling quotes against toxic, information-motivated flow: **adverse selection observed in real time**, and the reason the lead is *information, not alpha*. Finding an edge and correctly killing it is the point.
+
+It's deliberately falsifiable: the project's forecasts were **pre-registered before kickoff and are graded publicly on July 19**, hits and misses — a track record that can't be edited after the fact ([PREREGISTRATION.md](PREREGISTRATION.md)).
+
 ![The 2026 title race as the prediction markets price it through the buildup](viz/market/buildup_trajectory.png)
 
 ## What it does
