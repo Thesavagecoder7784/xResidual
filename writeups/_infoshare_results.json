@@ -1,15 +1,15 @@
 {
-  "n_matches": 13,
-  "n_cointegrated_contracts": 20,
+  "n_matches": 15,
+  "n_cointegrated_contracts": 24,
   "bin_ms": 1000,
-  "poly_infoshare_hasbrouck_mid": 0.6265,
+  "poly_infoshare_hasbrouck_mid": 0.6835,
   "poly_infoshare_gg": 0.7826,
   "hasbrouck_mid_band": [
-    0.5955,
-    0.6804
+    0.6756,
+    0.8316
   ],
   "match_leader_counts": {
-    "polymarket": 12,
+    "polymarket": 14,
     "kalshi": 1
   },
   "per_match": [
@@ -30,6 +30,14 @@
       "leader": "polymarket"
     },
     {
+      "match": "Uruguay vs Cape Verde",
+      "n_contracts": 2,
+      "n_cointegrated": 2,
+      "poly_hasbrouck_mid": 0.9035,
+      "poly_gg": 0.7857,
+      "leader": "polymarket"
+    },
+    {
       "match": "Uzbekistan vs Colombia",
       "n_contracts": 2,
       "n_cointegrated": 1,
@@ -43,6 +51,14 @@
       "n_cointegrated": 2,
       "poly_hasbrouck_mid": 0.8031,
       "poly_gg": 0.8795,
+      "leader": "polymarket"
+    },
+    {
+      "match": "New Zealand vs Egypt",
+      "n_contracts": 2,
+      "n_cointegrated": 2,
+      "poly_hasbrouck_mid": 0.7321,
+      "poly_gg": 0.7495,
       "leader": "polymarket"
     },
     {
