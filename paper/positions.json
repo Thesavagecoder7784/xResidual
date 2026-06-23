@@ -145,12 +145,12 @@
     "entry_price": 0.66,
     "stake_usd": 30.0,
     "shares": 45.45,
-    "status": "open",
-    "note": "FLB fade (basket): model ~22% vs market ~35%",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "FLB fade (basket): model ~22% vs market ~35% | CLOSED 6/22: Panama fade past model (advance ~11%, NO 0.890); converged. Locked +10.2 net.",
+    "exit_price": 0.89,
+    "ts_close": "2026-06-22T22:09:42.072263+00:00",
+    "realized_pnl": 10.45,
+    "realized_pnl_net": 10.15
   },
   {
     "id": 11,
@@ -230,12 +230,12 @@
     "entry_price": 0.72,
     "stake_usd": 20.0,
     "shares": 27.78,
-    "status": "open",
-    "note": "Dark-horse back: model P(adv) 82.3% vs vig-adj market 72.2%. Clear 2nd favourite in Group G behind Belgium (Salah+Marmoush) over Iran/NZ. Sized down for Iran defensive-floor risk + Salah age/load. Validated via research.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "Dark-horse back: model P(adv) 82.3% vs vig-adj market 72.2%. Clear 2nd favourite in Group G behind Belgium (Salah+Marmoush) over Iran/NZ. Sized down for Iran defensive-floor risk + Salah age/load. Validated via research. | CLOSED 6/22: Egypt clinched (live 0.997); advance edge captured. Locked +7.5 net.",
+    "exit_price": 0.9965,
+    "ts_close": "2026-06-22T22:09:40.385318+00:00",
+    "realized_pnl": 7.68,
+    "realized_pnl_net": 7.48
   },
   {
     "id": 17,
@@ -349,12 +349,12 @@
     "entry_price": 0.825,
     "stake_usd": 30.0,
     "shares": 36.36,
-    "status": "open",
-    "note": "v2 raw model 92% advance vs mkt 82.5% (+9pp); co-host, not blend-biased, not a calibration artifact. Group B's clear leader after the 1-1 vs Bosnia.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "v2 raw model 92% advance vs mkt 82.5% (+9pp); co-host, not blend-biased, not a calibration artifact. Group B's clear leader after the 1-1 vs Bosnia. | CLOSED 6/22: Canada clinched (live 0.998); co-host advance edge fully captured, ~0.2pp left. Locked +6.0 net.",
+    "exit_price": 0.9975,
+    "ts_close": "2026-06-22T22:09:39.137174+00:00",
+    "realized_pnl": 6.27,
+    "realized_pnl_net": 5.97
   },
   {
     "id": 24,
@@ -446,13 +446,13 @@
     "ts_open": "2026-06-16T00:31:20.925216+00:00",
     "venue": "polymarket",
     "market": "world-cup-team-to-advance-to-knockout-stages",
-    "outcome": "Bosnia & Herzegovina",
+    "outcome": "Bosnia and Herzegovina",
     "side": "yes",
     "entry_price": 0.665,
     "stake_usd": 20.0,
     "shares": 30.08,
     "status": "open",
-    "note": "Value back: model P(advance) 75.6 vs mkt 66.5 (+9.1). Gift draw (draw-luck) + model rates Bosnia 2nd in Group B. Mild overlap with the Switzerland-win-B fade (same group); sized moderate.",
+    "note": "Value back: model P(advance) 75.6 vs mkt 66.5 (+9.1). Gift draw (draw-luck) + model rates Bosnia 2nd in Group B. Mild overlap with the Switzerland-win-B fade (same group); sized moderate. | MARKED 6/22: outcome slug fixed ('and' not '&') so it resolves live again; marks at 0.665, flat vs entry. Edge intact (model 75.6 vs mkt 66.5); holding into the Group B finale.",
     "exit_price": null,
     "ts_close": null,
     "realized_pnl": null,
@@ -485,12 +485,12 @@
     "entry_price": 0.695,
     "stake_usd": 30.0,
     "shares": 43.17,
-    "status": "open",
-    "note": "FLB fade: model P(advance) 17.6 vs mkt 30.5 (+12.9), positive CLV. Group G (Belgium/Egypt strong); NZ drew Iran 2-2. Biggest un-held edge on the board; diversifies out of the B/C/E clusters. Self-funded by the Tunisia (#9) close.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "FLB fade: model P(advance) 17.6 vs mkt 30.5 (+12.9), positive CLV. Group G (Belgium/Egypt strong); NZ drew Iran 2-2. Biggest un-held edge on the board; diversifies out of the B/C/E clusters. Self-funded by the Tunisia (#9) close. | CLOSED 6/22: FLB fade converged (NZ advance ~8%, NO 0.915); thesis done. Locked +9.2 net.",
+    "exit_price": 0.915,
+    "ts_close": "2026-06-22T22:09:41.183528+00:00",
+    "realized_pnl": 9.5,
+    "realized_pnl_net": 9.2
   },
   {
     "id": 33,
@@ -536,12 +536,12 @@
     "entry_price": 0.885,
     "stake_usd": 20.0,
     "shares": 22.6,
-    "status": "open",
-    "note": "FLB fade: model P(advance) 3.7 vs mkt ~11.5 (+8pp), positive CLV. Iraq a market longshot in a tough group; diversifies out of the B/E/G clusters. Thin book (0.10/0.13) noted.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "FLB fade: model P(advance) 3.7 vs mkt ~11.5 (+8pp), positive CLV. Iraq a market longshot in a tough group; diversifies out of the B/E/G clusters. Thin book (0.10/0.13) noted. | CLOSED 6/22: Iraq fade converged (advance ~3%, NO 0.972, thin book); done. Locked +1.8 net.",
+    "exit_price": 0.972,
+    "ts_close": "2026-06-22T22:09:42.604927+00:00",
+    "realized_pnl": 1.97,
+    "realized_pnl_net": 1.77
   },
   {
     "id": 36,
@@ -570,12 +570,12 @@
     "entry_price": 0.41,
     "stake_usd": 20.0,
     "shares": 48.78,
-    "status": "open",
-    "note": "Advance back, untouched Group K: model P(advance) 46.5 vs mkt 40.5 (+6.0). Completes group diversification (K had zero exposure). Caveat: CLV -3.0 (line drifting mildly against), so sized a touch smaller; revisit if CLV worsens.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "Advance back, untouched Group K: model P(advance) 46.5 vs mkt 40.5 (+6.0). Completes group diversification (K had zero exposure). Caveat: CLV -3.0 (line drifting mildly against), so sized a touch smaller; revisit if CLV worsens. | CLOSED 6/22: edge reversed, market advance 60.5% now above model 46.5% so no value left. Locked +9.3 net.",
+    "exit_price": 0.605,
+    "ts_close": "2026-06-22T22:09:40.724806+00:00",
+    "realized_pnl": 9.51,
+    "realized_pnl_net": 9.31
   },
   {
     "id": 38,
@@ -604,11 +604,11 @@
     "entry_price": 0.74,
     "stake_usd": 25.0,
     "shares": 33.78,
-    "status": "open",
-    "note": "fade weakest team in G (OFC/conf-shrinkage); advance 0.26 -> NO @ 0.74; model 17 vs mkt 26, sim 9.5%/3.2% per game; research-validated Jun21",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "status": "closed",
+    "note": "fade weakest team in G (OFC/conf-shrinkage); advance 0.26 -> NO @ 0.74; model 17 vs mkt 26, sim 9.5%/3.2% per game; research-validated Jun21 | CLOSED 6/22: duplicate NZ name (already held via #32), closed to de-concentrate + edge captured (NO 0.915). Locked +5.7 net.",
+    "exit_price": 0.915,
+    "ts_close": "2026-06-22T22:09:41.653254+00:00",
+    "realized_pnl": 5.91,
+    "realized_pnl_net": 5.66
   }
 ]
