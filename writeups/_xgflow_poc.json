@@ -1,0 +1,17 @@
+{
+  "source": "StatsBomb open data, FIFA World Cup 2018 + 2022, regulation only",
+  "n_matches": 128,
+  "checkpoint_min": 60,
+  "model": "remaining_goal_diff ~ 1 + goal_diff_t + xg_diff_t (home-minus-away)",
+  "coef_intercept": 0.1557,
+  "coef_goal_diff": 0.0124,
+  "t_goal_diff": 0.15,
+  "coef_xg_diff": 0.2072,
+  "t_xg_diff": 1.73,
+  "baseline_scoreline_only_coef_goal_diff": 0.084,
+  "disagree_subset": {
+    "n": 32,
+    "mean_remaining_gd_favouring_xg_leader": 0.375,
+    "share_xg_leader_outscores_rest": 0.406
+  }
+}
