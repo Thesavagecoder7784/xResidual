@@ -1,15 +1,15 @@
 {
-  "n_matches": 19,
-  "n_cointegrated_contracts": 30,
+  "n_matches": 20,
+  "n_cointegrated_contracts": 32,
   "bin_ms": 1000,
-  "poly_infoshare_hasbrouck_mid": 0.6958,
-  "poly_infoshare_gg": 0.7826,
+  "poly_infoshare_hasbrouck_mid": 0.6896,
+  "poly_infoshare_gg": 0.7762,
   "hasbrouck_mid_band": [
-    0.7147,
-    0.8962
+    0.6377,
+    0.8316
   ],
   "match_leader_counts": {
-    "polymarket": 18,
+    "polymarket": 19,
     "kalshi": 1
   },
   "per_match": [
@@ -164,6 +164,14 @@
       "poly_hasbrouck_mid": 0.282,
       "poly_gg": 0.4379,
       "leader": "kalshi"
+    },
+    {
+      "match": "England vs Ghana",
+      "n_contracts": 2,
+      "n_cointegrated": 2,
+      "poly_hasbrouck_mid": 0.111,
+      "poly_gg": 0.5272,
+      "leader": "polymarket"
     }
   ],
   "note": "Hasbrouck (1995) information share + Gonzalo-Granger (1995) permanent-component share, on 1s last-price tape mids per matched contract, dropping non-cointegrated pairs (ADF p>=0.10 on the (1,-1) spread). >50% = that venue leads price discovery. The honest unit is the match: headline is the median across matches of each match's median contract share. Hasbrouck gives a lo/hi band per contract (Cholesky ordering); GG is unique. Computed on MID moves, so robust to the ~59% WS trade-direction problem (arXiv 2604.24366).",
