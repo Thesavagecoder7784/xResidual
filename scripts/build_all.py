@@ -109,8 +109,16 @@ def pull_snapshots() -> None:
     key = os.environ.get("XRES_KEY", os.path.expanduser("~/Downloads/Sportslogging_key.pem"))
     ssh = f"ssh -i {key} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20"
     print("── pulling fresh data from the VM " + "─" * 31)
+    mkt = os.path.join(ROOT, "viz", "market") + os.sep
+    wup = os.path.join(ROOT, "writeups") + os.sep
     jobs = [
-        ("snapshots", ["rsync", "-az", "-e", ssh,
+        # snapshots: the market belief/price logs the trajectory / money-map / basis cards read.
+        # EGRESS GUARD: never pull the ws-events-*/ws-pairs-* TAPES — they are 0.5-1.2 GB each and
+        # leaving the VM is billed internet egress (only 15 GB/mo free). Microstructure is processed
+        # ON the VM (streaming build_micro_all, ~0.5 GB peak); the laptop pulls only the KB-scale
+        # pooled feeds (the "micro feeds"/"micro results" jobs below). The explicit excludes make
+        # that contract enforceable even if the source glob is ever widened.
+        ("snapshots", ["rsync", "-az", "-e", ssh, "--exclude=ws-events-*", "--exclude=ws-pairs-*",
                        f"{vm}:~/xResidual/logger/data/snapshots-*.jsonl",
                        os.path.join(ROOT, "logger", "data") + os.sep]),
         # results cache: only the result/overlay files, not unrelated cached blobs
@@ -118,6 +126,14 @@ def pull_snapshots() -> None:
                      "--include=international_results.csv", "--include=wc_scores_overlay.json",
                      "--include=wc_scores_meta.json", "--exclude=*",
                      f"{vm}:~/xResidual/data/cache/", os.path.join(ROOT, "data", "cache") + os.sep]),
+        # micro feeds: the VM-built pooled microstructure outputs (info-share / OFI / live-WP).
+        # All KB — egress-cheap, keeps the laptop's micro cards current WITHOUT pulling one tape.
+        ("micro feeds", ["rsync", "-az", "-e", ssh,
+                         "--include=_infoshare.js", "--include=_ofi.js", "--include=_livewp.js",
+                         "--exclude=*", f"{vm}:~/xResidual/viz/market/", mkt]),
+        # micro results: the citable pooled JSONs the price-discovery note reads (also KB).
+        ("micro results", ["rsync", "-az", "-e", ssh, "--include=_*_results.json", "--exclude=*",
+                           f"{vm}:~/xResidual/writeups/", wup]),
     ]
     for label, cmd in jobs:
         try:
@@ -131,7 +147,7 @@ def pull_snapshots() -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Rebuild all xResidual visualizations.")
     ap.add_argument("--offline", action="store_true", help="skip the live-network builders")
-    ap.add_argument("--pull", action="store_true", help="rsync the VM's fresh snapshots AND results cache first, so local cards condition on current games (the laptop cache lags ~1-2 days otherwise)")
+    ap.add_argument("--pull", action="store_true", help="rsync the VM's fresh snapshots, results cache, and KB-scale micro feeds first, so local cards condition on current games (the laptop cache lags ~1-2 days otherwise). Never pulls the GB-scale tapes — those are processed on the VM to stay under the 15 GB/mo egress grant.")
     ap.add_argument("--data-only", action="store_true", help="build _*.js, don't render")
     ap.add_argument("--render-only", action="store_true", help="render only, reuse _*.js")
     ap.add_argument("--models-only", action="store_true")
