@@ -1,15 +1,15 @@
 {
-  "n_matches": 18,
-  "n_cointegrated_contracts": 28,
+  "n_matches": 19,
+  "n_cointegrated_contracts": 30,
   "bin_ms": 1000,
-  "poly_infoshare_hasbrouck_mid": 0.7126,
-  "poly_infoshare_gg": 0.7841,
+  "poly_infoshare_hasbrouck_mid": 0.6958,
+  "poly_infoshare_gg": 0.7826,
   "hasbrouck_mid_band": [
-    0.7583,
+    0.7147,
     0.8962
   ],
   "match_leader_counts": {
-    "polymarket": 17,
+    "polymarket": 18,
     "kalshi": 1
   },
   "per_match": [
@@ -99,6 +99,14 @@
       "n_cointegrated": 2,
       "poly_hasbrouck_mid": 0.6835,
       "poly_gg": 0.8096,
+      "leader": "polymarket"
+    },
+    {
+      "match": "Jordan vs Algeria",
+      "n_contracts": 2,
+      "n_cointegrated": 2,
+      "poly_hasbrouck_mid": 0.6475,
+      "poly_gg": 0.694,
       "leader": "polymarket"
     },
     {
