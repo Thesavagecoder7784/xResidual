@@ -452,10 +452,10 @@ an early "which venue reads a goal first — does Kalshi or Polymarket move firs
 pooled, population-grade statement of price discovery. A standalone desk research note writes it
 up in full (`writeups/price_discovery_note.pdf`).
 
-**Pooled lead–lag (the headline).** Across the **24 captured matches** logged through
-2026-06-20, **Polymarket leads ≈62% of goal repricings** — the venue that moves first when a goal
+**Pooled lead–lag (the headline).** Across the **34 captured matches** logged through
+2026-06-20, **Polymarket leads ≈62% of goal repricings (103 vs 45 events, median +400ms)** — the venue that moves first when a goal
 hits the book, pooled over every detected shock across all matches. Under the null of no lead
-(a coin flip on which venue moves first), that lead is **≈3.4σ**. The unit is the goal repricing,
+(a coin flip on which venue moves first), that lead is **≈4.8σ** naively (103 vs 45 of 148 decisive events). But the unit is the goal repricing,
 not the match, so the inferential weight comes from the pool of shocks, not from any single
 fixture; per-match leads are descriptive color.
 
@@ -468,9 +468,9 @@ pooled, since the shares are only defined when the two mids share a common stoch
 Computing on **mids** is what makes this robust to the trade-direction-classification problem —
 Lee–Ready-style signing misclassifies ≈59% of prediction-market trades (arXiv:2604.24366), so any
 flow- or trade-signed discovery measure would inherit that error; the MID series carries no
-direction to misclassify. Result: **Polymarket's permanent-component share is ≈78%**, and it
-**leads in 11/11 cointegrated matches** — the same venue, the same direction as the raw lead–lag
-count, which is the cross-check that makes the flagship robust. The ≈62% lead and the ≈78%
+direction to misclassify. Result: **Polymarket's permanent-component share is ≈78.6%**, and it
+**leads in 20/21 cointegrated matches (34 contracts)** — the same venue, the same direction as the raw lead–lag
+count, which is the cross-check that makes the flagship robust. The ≈62% lead and the ≈78.6%
 information share are two independent reads of one fact: Polymarket is where this World Cup's
 price is discovered.
 
