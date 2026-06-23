@@ -34300,6 +34300,138 @@
       "match": "Portugal vs Dr Congo"
     },
     {
+      "label": "Portugal",
+      "kalshi": "KXWCGAME-26JUN23PORUZB-POR",
+      "poly": "46788745865873849751895851580006231458025441200398102606849707486161173481896",
+      "n_events": 3,
+      "events": [
+        {
+          "t_ms": 1782234360846,
+          "jump": 0.06,
+          "lead": null,
+          "kalshi_reaction": {
+            "pre": 0.8865,
+            "settle": 0.9537,
+            "jump": 0.0672,
+            "surprise": 0.113,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": -0.167
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": -0.167
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": -0.167
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.8904,
+            "settle": 0.953,
+            "jump": 0.0627,
+            "surprise": 0.11,
+            "reversals": {
+              "60": {
+                "level": 0.955,
+                "reversal_frac": -0.032
+              },
+              "180": {
+                "level": 0.9635,
+                "reversal_frac": -0.167
+              },
+              "300": {
+                "level": 0.9695,
+                "reversal_frac": -0.263
+              }
+            }
+          },
+          "lead_rejected": {
+            "best_lag_ms": -16000,
+            "best_corr": 0.8,
+            "why": "lag>cap"
+          }
+        },
+        {
+          "t_ms": 1782234391155,
+          "jump": 0.08,
+          "lead": {
+            "best_lag_ms": 7800,
+            "best_corr": 0.6425726197607968,
+            "leader": "polymarket",
+            "n_bins": 146
+          },
+          "kalshi_reaction": {
+            "pre": 0.955,
+            "settle": 0.965,
+            "jump": 0.01,
+            "surprise": 0.045,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              },
+              "180": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              },
+              "300": {
+                "level": 0.965,
+                "reversal_frac": 0.0
+              }
+            }
+          },
+          "poly_reaction": {
+            "pre": 0.96,
+            "settle": 0.955,
+            "jump": -0.005,
+            "surprise": 0.04,
+            "reversals": {
+              "60": {
+                "level": 0.965,
+                "reversal_frac": 2.018
+              },
+              "180": {
+                "level": 0.967,
+                "reversal_frac": 2.422
+              },
+              "300": {
+                "level": 0.9685,
+                "reversal_frac": 2.724
+              }
+            }
+          }
+        },
+        {
+          "t_ms": 1782241244819,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Portugal vs Uzbekistan"
+    },
+    {
+      "label": "Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN23PORUZB-UZB",
+      "poly": "76563067682631227603609066044534706683559659816004868232381337856810074987695",
+      "n_events": 1,
+      "events": [
+        {
+          "t_ms": 1782241244819,
+          "jump": 0.495,
+          "lead": null,
+          "kalshi_reaction": null,
+          "poly_reaction": null
+        }
+      ],
+      "match": "Portugal vs Uzbekistan"
+    },
+    {
       "label": "Switzerland",
       "kalshi": "KXWCGAME-26JUN13QATSUI-SUI",
       "poly": "66066640081366099233010777058886646300763486736056057848435195209438713673265",
@@ -44357,17 +44489,17 @@
     }
   ],
   "pooled": {
-    "n": 165,
+    "n": 166,
     "median_lead_ms": 400.0,
     "iqr_ms": [
       -200.0,
       800.0
     ],
     "leader": "polymarket",
-    "leader_share": 0.624,
-    "poly_leads": 103,
+    "leader_share": 0.627,
+    "poly_leads": 104,
     "kalshi_leads": 45
   },
-  "n_matches": 34,
+  "n_matches": 35,
   "min_jump": 0.04
 }
