@@ -3,8 +3,9 @@
 **Working draft, 2026.** Prabhat M. ([repo](https://github.com/Thesavagecoder7784/xResidual) · [portfolio](https://thesavagecoder7784.github.io/))
 
 > Status: this is a live, phased note. The pre-match microstructure results (Sections 5.1, 6.1)
-> are final; the in-play price-discovery result (Section 5.2) and its forward-test (Section 6.2)
-> are **forming** on the first marquee captures and reported as such; the event-study and
+> are final; the in-play price-discovery result (Section 5.2), its harvestability test (Section
+> 6.2), and the OFI study (5.5) are now **firm** on the full marquee-match sample (34 matches,
+> 165 events) and reported as such; the event-study and
 > calibration grades (Sections 5.3, 5.4) and the pre-registration grade (Section 7) fill in as
 > the 2026 World Cup is played. Every empirical claim here is bound to code and to a
 > pre-registration committed before kickoff (PREREGISTRATION.md), so the open results are
@@ -24,17 +25,23 @@ high-information in-play regime. We decompose each cross-venue quote into belief
 find the widely-quoted "5 to 8 cent" inter-venue gap is **almost entirely the house margin**:
 de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a relative-value
 convergence trade returns a documented loss net of costs. The residual belief gap is small but
-structured by audience (a home-crowd tilt). The central price-discovery result, estimated by
-cross-correlating mid-changes around each goal shock, is forming: over the first clean in-play
-matches an early read (n=8) put **Polymarket ~500ms ahead of Kalshi**, but it did not hold: across 24
-goal shocks over seven matches the lead fell to ~+100ms with a 50/50 split and an IQR straddling zero,
-so it is so far a null. (Early-read direction matched the pre-registered hypothesis: the
-deeper-liquidity venue leads). We then ask the question the lead invites, and answer it with two
+structured by audience (a home-crowd tilt). The central price-discovery result, estimated on
+mid-price moves around each goal shock, is now firm: across **34 matches and 165 repricing
+events Polymarket leads Kalshi 62% of the time** (103 vs 45), at a **median +400ms** (IQR
+[-200, +800]). The citable estimate is the formal decomposition: on the **21 cointegrated
+matches** Polymarket carries a **Gonzalo-Granger 78.6% / Hasbrouck-mid 72.9% [band 76-91%]**
+information share and **leads 20 of 21 matches**, rising to ~86% inside goal windows (vs ~53% in
+calm play). An early read (n=8) that flashed ~500ms and then appeared to wash out at n=24 was
+small-sample noise on the *event-timing* metric; the full sample and the information-share
+decomposition both confirm a real, direction-stable lead in the pre-registered direction (the
+deeper-liquidity venue leads). We then ask the question the lead invites, and answer it with
 disclosed forward-tests: the cross-venue gap is **not a harvestable edge**. The pre-match
-convergence trade is a clean null (a cost illusion), and the in-play lead-lag follow-trade is a
-**latency mirage** (a +14pp-per-trade backtest that evaporates by one second of execution
-latency). The one corner where a mechanical view plausibly beats the human-driven price is the
-favorite-longshot bias at price extremes. The through-line: price discovery here is real and
+convergence trade is a clean null (a cost illusion); and although a stale-quote ledger over 117
+goals shows a ~10.2pp net gap **on paper**, best-price depth at the goal collapses to ~0.4% of
+normal (spread ~8x on Polymarket, ~2x on Kalshi, refill ~3-4s), so 0% is harvestable. The lead
+is a **liquidity-withdrawal result, not slow pricing**: real, but un-harvestable after the cost
+of immediacy. The one corner where a mechanical view plausibly beats the human-driven price is
+the favorite-longshot bias at price extremes. The through-line: price discovery here is real and
 measurable, and almost none of it is harvestable, which is the honest pro-market reading.
 
 **Contribution.** The cross-venue, pre-match-vs-in-play price-discovery comparison across
@@ -86,6 +93,10 @@ test that prior against a third source before claiming an edge (Section 4.3).
   the SoK of Rahman, Al-Chami and Clark (2025) maps the microstructure of modern (incl. on-chain)
   prediction markets. Neither measures cross-venue price discovery, the gap this note fills. The
   lead-lag arbitrage literature (Poutré, Dionne and Yergeau, 2024) supplies the §6.2 benchmark.
+  Closest to this note, Ng, Peng, Tao and Zhou (2026) find Polymarket leads Kalshi and report an
+  economically meaningful cross-venue arbitrage; we corroborate the lead on a clean, repeated,
+  exogenous event stream (goals) but refine the arbitrage claim — net of the cost of immediacy the
+  lead is real yet un-harvestable (§6.2).
 
 ## 3. Data and infrastructure
 
@@ -148,23 +159,28 @@ A liquidity asymmetry underlies this: Polymarket quotes roughly **27x the depth 
 same spread** on the title market, so the two venues are integrated on price but very different
 on capacity.
 
-### 5.2 Cross-venue price discovery: Polymarket leads in-play (forming)
-On the first marquee captures (Mexico-South Africa, Qatar-Switzerland), the in-play lead-lag is
-estimated by cross-correlating binned mid-changes in a window around each auto-detected goal
-shock. A quality gate keeps only events with genuine positive co-movement (best cross-correlation
->= 0.5) and a plausible lag (<= 8s), discarding spurious detections: a "16-second lead at
-r = -0.70" is two books moving oppositely, a stale-tick artifact, not price discovery. Of the
-candidate shocks, an early read on four matches (**n = 8**) put **Polymarket a median +500ms ahead**,
-leading 6 of 8 with an interquartile range entirely positive, in the pre-registered direction (P6:
-the deeper-liquidity venue leads, and Polymarket quotes ~27x the depth, Section 5.1). **It did not
-hold.** As the pool grew to **24 clean goal shocks over seven matches**, the median lead fell to
-**+100ms** with a **50/50 leader split** (12 Polymarket, 8 Kalshi) and an interquartile range of
-[-200, +600]ms that straddles zero. The strong early signal looks like small-sample noise; there is
-no clean cross-venue lead at this sample. This is the pre-registration working as intended: the
-decision rule (evaluate at n >= 15-20 cross-venue matches) is precisely why a four-match flash was
-never published as a finding. The pre-match quiet-window leadership and the
-formal Hasbrouck/Gonzalo-Granger decomposition both accrue as more clean tapes land; each match's
-events and tape are archived per game so the sample is auditable, not overwritten.
+### 5.2 Cross-venue price discovery: Polymarket leads in-play (firm)
+The in-play lead-lag is estimated on binned mid-changes in a window around each auto-detected
+goal shock. A quality gate keeps only events with genuine positive co-movement (best
+cross-correlation >= 0.5) and a plausible lag (<= 8s), discarding spurious detections: a
+"16-second lead at r = -0.70" is two books moving oppositely, a stale-tick artifact, not price
+discovery. An early read on four matches (**n = 8**) put Polymarket a median +500ms ahead, then
+at **n = 24** the event-timing median appeared to wash to ~+100ms on a near-even split, which we
+flagged at the time as a possible small-sample null. **The full sample resolves it the other
+way.** Across **34 matches and 165 clean repricing events, Polymarket moves first in 103 vs
+Kalshi's 45 (62%)**, at a **median lead of +400ms** with an interquartile range of [-200, +800]ms,
+in the pre-registered direction (P6: the deeper-liquidity venue leads, and Polymarket quotes ~27x
+the depth, Section 5.1). The n=24 wobble was noise in the event-timing point estimate, not a
+reversal of the lead.
+
+The citable result is the formal decomposition (Section 4.2). On the **21 of 34 contracts that
+cointegrate**, Polymarket carries a **Gonzalo-Granger 78.6%** component share and a
+**Hasbrouck-mid 72.9% information share** (bounds [76%, 91%]), and it **leads in 20 of the 21
+matches** — a direction-stable result, not a thin majority. The lead is concentrated exactly
+where information arrives: Polymarket's information share is **~86% inside goal windows** versus
+**~53% in calm play**, i.e. the two venues co-discover in the quiet and Polymarket discovers
+first on the shock. Each match's events and tape are archived per game so the sample is
+auditable, not overwritten.
 
 ### 5.3 Goal-shock event study ⟦PENDING in-play sample⟧
 > Per goal (target ~260 over the tournament): surprise classification, overshoot, and
@@ -192,10 +208,12 @@ question, graded after the group stage. Notably, it is the *advance* market that
 signal: it runs near-zero margin, whereas the reach-round ladder is 12 to 31% overround, where a
 model's apparent "fades" are the vig, not an edge.
 
-### 5.5 Order-flow imbalance to short-horizon returns ⟦PENDING in-play sample⟧
-> On-chain signed OFI regressed on next-interval mid return; coefficient, R-squared, and regime
-> dependence. The on-chain layer and the regression are built; the in-play volume is the input
-> that accrues.
+### 5.5 Order-flow imbalance to short-horizon returns (in)
+On-chain signed OFI regressed on next-interval mid return is strongly significant **within** each
+venue — t ~= 58 on Polymarket and t ~= 50 on Kalshi — so order flow moves price as expected
+inside a book. But **cross-venue** order flow is *not* a clean lead: the cross-venue OFI relation
+is contemporaneous, not predictive, so the price-discovery lead in 5.2 is carried by quote
+revision, not by one venue's order flow front-running the other's price.
 
 ### 5.6 Infrastructure validation (final)
 The in-play pipeline was proven end-to-end before the tournament on a warm-up friendly:
@@ -216,21 +234,28 @@ convergence below 0.3pp or after a horizon, net of a 0.5pp modeled round-trip co
 -1.95.** The gap is real but does not converge enough to clear costs: the visible "edge" is a
 cost illusion, exactly what law-of-one-price implies.
 
-### 6.2 In-play lead-lag: a latency mirage (forming)
+### 6.2 In-play lead-lag: real lead, un-harvestable after the cost of immediacy (firm)
 The §5.2 lead means Kalshi reprices a goal slightly behind Polymarket, so the natural follow-up
-is whether that lag is capturable. Rule: when Polymarket's mid jumps >= 4pp inside a 3s window (a
-goal reprice), take Kalshi the same direction and hold 30s, with **fills crossing Kalshi's real
-bid/ask both ways** so the cost is the data, not an assumption. At zero execution latency the
-strategy returns **+14pp per trade** over 7 trades. That number is a trap, and surfacing it is the
-point. Sweeping a realistic entry latency, the edge **collapses to +0.4pp by 1 second, to zero by
-~2 seconds, and turns negative by 5**. The quotes filled were fresh (median 0.7s old) and the book
-was deep (>$5M traded per market), so this is not stale quotes or thin depth; it is pure speed.
-The entire apparent edge lives in the sub-second window only a co-located operator can reach.
-This is consistent with the high-frequency lead-lag literature: the naive mid-signal market-order
-strategy never clears the spread, and the versions that *do* profit (Poutré, Dionne and Yergeau,
-2024) require colocation and limit-order execution a read-only, paper-only study cannot access.
-A real lead, harvestable only by a co-located high-frequency operator, which is to say not an
-edge for anyone else.
+is whether that lag is capturable. We answer it with a **cost-of-immediacy ledger over 117
+goals**: at the instant Polymarket reprices, the gross gap to Kalshi's stale quote averages
+**~11.4¢**, and a follower pays **~1.2¢** to take Kalshi's posted price, leaving **~+10.2¢ net on
+paper**. That paper number is a trap, and surfacing it is the point. At the goal, Kalshi's
+best-price depth collapses to **~0.4% of its normal level** — the spread blows out ~8x on
+Polymarket and ~2x on Kalshi, and the book takes **~3-4s to refill**. There is no resting size to
+hit at the stale price: by the time depth returns, the quote has caught up. So of the +10.2¢ paper
+gap, **0% is harvestable**. The result is a **liquidity-withdrawal story, not slow pricing**: the
+lead is real, the follower cost is small, and the edge still vanishes because immediacy is
+withdrawn exactly when it would be valuable. This is consistent with the high-frequency lead-lag
+literature: the naive mid-signal market-order strategy never clears the spread, and the versions
+that *do* profit (Poutré, Dionne and Yergeau, 2024) require colocation and limit-order execution a
+read-only, paper-only study cannot access. A real lead, un-harvestable net of the cost of
+immediacy, which is to say not an edge for anyone trading across the two books.
+
+This both corroborates and refines the contemporaneous finding of Ng, Peng, Tao and Zhou (2026,
+SSRN 5331995) that Polymarket leads Kalshi: we confirm the lead on a clean, repeated, exogenous
+event stream (goals), but on that stream the lead is **un-harvestable** once the cost of immediacy
+is charged, which qualifies their "economically meaningful arbitrage" reading — the arbitrage is
+real on paper but not economically meaningful net of the liquidity withdrawal at the event.
 
 ## 7. Pre-registration and grading ⟦PENDING Jul 19⟧
 
@@ -243,13 +268,16 @@ deeper venue leads) and **P1** (the markets are well-calibrated). Graded publicl
 
 The unifying finding is a discipline for telling real edges from mirages. The cross-venue gap was
 probed three ways. The pre-match convergence trade is a cost illusion (6.1, a clean null). The
-in-play lead-lag is a real ~0.6s lead (5.2) that is a latency mirage once execution is realistic
-(6.2, a +14pp backtest that evaporates by one second). The favorite-longshot wedge (5.4) is a
-real but modest systematic tilt, the lone position the project takes. Two of the three look like
-alpha in a frictionless backtest and are not; the methods that separate them, de-vigging before
-calling any gap, crossing the real bid/ask, and sweeping execution latency, are the contribution
-as much as any single number. Price discovery here is genuine and measurable, and almost none of
-it is harvestable, which is the honest reading and the pro-market one.
+in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 62% of 165 events at
+a +400ms median, and a 73-79% information share leading 20 of 21 cointegrated matches (5.2) — that
+is nonetheless **un-harvestable net of the cost of immediacy** (6.2: a +10.2¢ paper gap over 117
+goals that 0% of is capturable because best-price depth collapses to ~0.4% at the event). The
+favorite-longshot wedge (5.4) is a real but modest systematic tilt, the lone position the project
+takes. The lead is genuine; the gap is a liquidity-withdrawal artifact, not slow pricing; the
+methods that separate real from harvestable — de-vigging before calling any gap, crossing the
+real bid/ask, charging the follower cost, and reading depth at the event — are the contribution as
+much as any single number. Price discovery here is genuine and measurable, and almost none of it
+is harvestable, which is the honest reading and the pro-market one.
 
 The headline is pro-market. Across a five-layer model-vs-market scan of 238 contracts, the
 liquid winner market is efficient (mean |model - market| ~0.4pp); the only soft corners are
@@ -270,3 +298,4 @@ manage.
 - Bürgi, C., Deng, W. and Whelan, K. (2025). Makers and Takers: The Economics of the Kalshi Prediction Market. Working paper (SSRN 5502658). (300,000+ contracts: prices are informative and improve toward close but show a clear favorite-longshot bias; the §5.4 basis.)
 - Snowberg, E. and Wolfers, J. (2010). Explaining the Favorite-Longshot Bias: Is it Risk-Love or Misperceptions? *Journal of Political Economy*.
 - Rahman, N., Al-Chami, J. and Clark, J. (2025). SoK: Market Microstructure for Decentralized Prediction Markets (DePMs). arXiv:2510.15612.
+- Ng, Peng, Tao and Zhou (2026). Working paper (SSRN 5331995). (Polymarket leads Kalshi in price discovery and reports economically meaningful cross-venue arbitrage; §6.2 corroborates the lead on a clean repeated-event stream but refines the arbitrage claim — the lead is un-harvestable net of the cost of immediacy.)

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Who Discovers the Price? — xResidual research note</title>
+<style>
+  @page { size: letter; margin: 0.9in 0.95in; }
+  :root{ --ink:#1b1813; --muted:#43403a; --dim:#7a736a; --accent:#a3122a; --rule:#d8d0bf; }
+  *{ box-sizing:border-box; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:Georgia,"Times New Roman",serif; color:var(--ink); font-size:10.6pt;
+        line-height:1.5; margin:0; }
+  h1{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:21pt; line-height:1.12; margin:0 0 2pt;
+      letter-spacing:-.01em; }
+  .sub{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:12pt; color:var(--accent);
+        font-weight:600; margin:0 0 10pt; }
+  .byline{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.6pt; color:var(--dim);
+           letter-spacing:.02em; border-bottom:1.5px solid var(--rule); padding-bottom:9pt; margin-bottom:13pt; }
+  h2{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:11.5pt; color:var(--accent);
+      margin:16pt 0 5pt; letter-spacing:.01em; }
+  h3{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:10pt; color:var(--ink); margin:9pt 0 3pt; }
+  p{ margin:0 0 7pt; } em{ font-style:italic; }
+  .abstract{ font-size:10.6pt; color:var(--muted); border-left:2.5px solid var(--accent);
+             padding:2pt 0 2pt 12pt; margin:0 0 13pt; font-style:italic; }
+  .box{ background:#f6f2ea; border:1px solid var(--rule); border-radius:5px; padding:10pt 13pt; margin:10pt 0; }
+  .box ul{ margin:4pt 0 0; padding-left:16pt; } .box li{ margin:2pt 0; }
+  .box b{ color:var(--ink); } .num{ font-family:"Helvetica Neue",Arial,sans-serif; font-weight:600; }
+  table{ border-collapse:collapse; width:100%; font-size:9.4pt; margin:7pt 0;
+         font-family:"Helvetica Neue",Arial,sans-serif; }
+  th,td{ text-align:left; padding:3.5pt 7pt; border-bottom:1px solid var(--rule); }
+  th{ color:var(--dim); font-weight:600; font-size:8.4pt; text-transform:uppercase; letter-spacing:.04em; }
+  td.r,th.r{ text-align:right; } .good{ color:#1e6f6a; } .bad{ color:var(--accent); }
+  .small{ font-size:9pt; color:var(--muted); } code{ font-family:"SF Mono",Menlo,monospace; font-size:8.8pt; }
+  .foot{ border-top:1px solid var(--rule); margin-top:16pt; padding-top:7pt; font-size:8.2pt; color:var(--dim);
+         font-family:"Helvetica Neue",Arial,sans-serif; }
+  ol.refs{ font-size:8.8pt; color:var(--muted); padding-left:16pt; } ol.refs li{ margin:2.5pt 0; }
+  .avoidbreak{ break-inside:avoid; }
+  figure.fig{ margin:13pt 0 4pt; break-inside:avoid; }
+  figure.fig img{ width:100%; border:1px solid var(--rule); border-radius:4px; display:block; }
+  figure.fig figcaption{ font-size:8.6pt; color:var(--muted); margin-top:5pt;
+    font-family:"Helvetica Neue",Arial,sans-serif; line-height:1.4; }
+  figure.fig figcaption b{ color:var(--ink); }
+</style></head>
+<body>
+
+<h1>Who Discovers the Price?</h1>
+<div class="sub">A real cross-venue price-discovery lead — and why a market-maker can't trade it. Tick-level evidence from the 2026 World Cup.</div>
+<div class="byline">Prabhat M · @PrabhatM27 · Math &amp; Statistics, Purdue · github.com/Thesavagecoder7784/xResidual · 23 June 2026 · working note</div>
+
+<div class="abstract">
+The headline of this note is a non-result, and that is the point. Using tick-level order-book data from 24 World
+Cup matches on Kalshi and Polymarket, I find a genuine cross-venue price-discovery lead &mdash; on a goal,
+Polymarket's mid moves <b>~400&thinsp;ms</b> first and carries a <b>~78%</b> Gonzalo–Granger information share,
+leading <b>20 of 21</b> cointegrated matches (computed on mid-quotes, which sidesteps the ~59% trade-direction
+problem documented for Polymarket). Conditioned on the news the lead is sharper still: <b>~86%</b> of price
+discovery in goal windows versus ~53% in calm play. <b>And then it is not tradeable.</b> At the goal the book
+vanishes &mdash; spread <b>~8&times;</b> wider, best-price depth under <b>1%</b> of normal &mdash; so the ~11-cent
+stale-quote gap a reactor would lift nets +10c on paper but <b>0%</b> after gating on the depth actually resting in
+the book. That collapse-and-refill is the market-maker pulling quotes against toxic, information-motivated flow:
+<b>adverse selection observed in real time</b>, and the reason the lead is a property of price discovery, not a free
+trade. Forecasts for the wider project were pre-registered before kickoff and graded publicly on 19 July &mdash;
+verifiable without trusting the author.
+</div>
+
+<div class="box avoidbreak">
+<b>Summary.</b>
+<ul>
+<li><b>Claim:</b> Polymarket is the price-discovery leader of the Kalshi–Polymarket pair on the same World Cup outcomes.</li>
+<li><b>Independent methods agree:</b> an event-study reaction lead, Hasbrouck / Gonzalo–Granger information shares, an order-flow mechanism check, and a cross-sectional level check against the sharp line.</li>
+<li><b>Numbers:</b> lead-lag <span class="num">103 vs 45</span> events to Polymarket (<span class="num">62%</span>, median <span class="num">+400&thinsp;ms</span>) across 34 matches; Gonzalo–Granger share <span class="num">~78%</span>, leading <span class="num">20/21</span> cointegrated matches; OFI&rarr;price impact <span class="num">t&approx;58</span> within-venue; mean gap to the sharp line <span class="num">0.18&thinsp;pp</span> (Poly) vs <span class="num">0.26&thinsp;pp</span> (Kalshi).</li>
+<li><b>Anatomy of a goal:</b> discovery concentrates at the news (Polymarket <span class="num">~86%</span> in goal windows vs <span class="num">~53%</span> calm); the book withdraws hardest where it leads (spread <span class="num">~8&times;</span>, depth <span class="num">&lt;1%</span>); so the ~11c stale-quote gap is +10c on paper but <span class="num">0%</span> harvestable once gated on the vanished depth.</li>
+<li><b>Honest caveats:</b> not tradeable after cost (sub-second + the book withdraws); one tournament, one sport; event-clustering means the formal significance unit is the match, not the event.</li>
+<li><b>The maker's view:</b> the collapse-and-refill is the quoter's defence against toxic flow &mdash; a maker who held stale quotes through the goal would be the one adversely selected. The unharvestable gap is exactly the loss the withdrawal avoids.</li>
+<li><b>Verifiable, not trust-me:</b> the project's forecasts were pre-registered before kickoff and are graded publicly on 19 July, hits and misses &mdash; a track record that can't be edited after the fact.</li>
+<li><b>Why it matters:</b> it answers a question a 2026 Polymarket microstructure study explicitly left open (on live in-play sports, not the election markets prior work used), and it tells anyone aggregating prediction-market signals which venue to trust first &mdash; while showing, with the costs in, that the lead is information not alpha.</li>
+</ul>
+</div>
+
+<figure class="fig">
+<img src="../viz/market/adverse_selection.png" alt="At a goal, fair value jumps ~11c; a resting quote is lifted at the stale price for a ~11c loss, so makers pull the book.">
+<figcaption><b>Figure 1. The anatomy of a goal, from the maker's side.</b> Fair value jumps ~11c in a few hundred milliseconds. A quote left resting in the book is lifted at the stale price and is down ~11c per contract &mdash; so makers pull: spread ~8&times; wider, depth to near zero, refilling in ~3&thinsp;s. That withdrawal is the adverse-selection defence, and the reason the price-discovery lead a reactor sees is information, not a tradeable edge. (Illustrative single goal on a 50&ndash;50 contract; magnitudes are the pooled medians across ~370 goal shocks.)</figcaption>
+</figure>
+
+<h2>1. The open question</h2>
+<p>Kalshi (US-regulated) and Polymarket (crypto-native) quote the <em>same</em> World Cup outcomes through very different
+microstructure &mdash; different fee and tick regimes, user bases, and settlement. That makes the pair a natural laboratory
+for cross-venue price discovery: when new information arrives, which venue moves first, and which merely follows?</p>
+<p>A 2026 study of the Polymarket order book [1] maps that venue's microstructure in detail but states plainly that a
+cross-venue comparison against Kalshi &mdash; the price-discovery question &mdash; is left for future work. This note answers
+it for a clean, repeated, exogenous information event: goals in the 2026 World Cup. I form no strong prior on direction
+and let the data decide.</p>
+
+<h2>2. Data</h2>
+<p>I capture both venues' full level-2 order books and every trade over WebSocket, at tick resolution, from an always-on
+collector running 24/7 through the tournament. For each match I pair contracts that reference the identical outcome (one
+Kalshi ticker and one Polymarket token per team and the draw), de-vig each venue's quotes to probabilities, and align the
+two mid-price series on a common clock. The event study and OFI run on <b>34 matches</b>, and the information-share
+estimates (below) on the <b>21 cointegrated matches</b> (34 contracts) whose cross-venue spread passes the ADF guard (all as of 23 June).</p>
+
+<h2>3. Methods</h2>
+<p>I measure the same phenomenon three ways, at increasing rigor, so the conclusion does not rest on any single technique.</p>
+<h3>3a. Event-study reaction lead</h3>
+<p>I detect repricing shocks (goals) on each venue's mid series and cross-correlate the two around each event to estimate
+which venue's mid moves first, to the millisecond. Intuitive, but timing in a sub-second window is noisy.</p>
+<h3>3b. Information shares (the core)</h3>
+<p>The two de-vigged mids for one outcome are cointegrated with the natural vector (1,&minus;1): arbitrage keeps their
+difference stationary. I test that with an Augmented Dickey–Fuller test and <em>discard any contract that fails</em> (on a
+non-cointegrated pair the shares are a spurious-regression artifact). On the survivors I fit a bivariate vector
+error-correction model and report the <b>Hasbrouck</b> [3] information-share bounds and the ordering-free
+<b>Gonzalo–Granger</b> [4] permanent-component share. The intuition: the venue that adjusts <em>less</em> to the spread
+(the smaller error-correction coefficient) is the one others converge toward &mdash; the price-discovery leader.</p>
+<h3>3c. Mechanism</h3>
+<p>I reconstruct order-flow imbalance (OFI) from top-of-book changes [5] and test (i) whether OFI moves each venue's own
+price &mdash; the canonical within-venue result &mdash; and (ii) whether one venue's flow predicts the <em>other's</em> next
+move. I also recompute the lead on the imbalance-weighted microprice [6] rather than the mid.</p>
+
+<h2>4. Results</h2>
+<p><b>The winner market is efficient.</b> As a control, the de-vigged outright-winner prices agree across venues (and with a
+calibrated model) to within ~0.4&thinsp;pp. There is no cross-venue mispricing in the liquid market; the effect below is
+about <em>speed of discovery</em>, not a level disagreement.</p>
+<p><b>And where they do differ, Polymarket sits closer to the sharp line.</b> Benchmarking each venue's de-vigged title
+price against the Betfair exchange (the standard sharp anchor) across 48 teams, Polymarket's mean absolute gap to the
+sharp line is <b>0.18&thinsp;pp</b> versus Kalshi's <b>0.26&thinsp;pp</b>, and Polymarket is the closer of the two on 22 teams
+to Kalshi's 11. So the venue that updates <em>first</em> is also the one sitting <em>closest</em> to the sharpest available
+consensus: here, leadership and level accuracy coincide &mdash; a mild counterpoint to the &ldquo;leadership need not mean
+efficiency&rdquo; caution raised for 2024 US-election markets.</p>
+<table class="avoidbreak">
+<tr><th>Measure</th><th class="r">Sample</th><th>Result</th></tr>
+<tr><td>Reaction lead (event study)</td><td class="r">34 matches, 165 events</td><td>Polymarket first in <b>103</b>, Kalshi in <b>45</b> (62%), median <b>+400&thinsp;ms</b> (IQR [-200, +800])</td></tr>
+<tr><td>Gonzalo–Granger share</td><td class="r">21 cointeg. matches</td><td>Polymarket <b>~78%</b>, leads in <b>20 / 21</b></td></tr>
+<tr><td>Hasbrouck share (mid of bounds)</td><td class="r">17 contracts</td><td>Polymarket <b>~63%</b> (band 59–71%)</td></tr>
+<tr><td>Distance to sharp line (Betfair)</td><td class="r">48 teams</td><td>Polymarket <b>0.18&thinsp;pp</b> vs Kalshi <b>0.26&thinsp;pp</b>; Poly closer on <b>22 / 11</b></td></tr>
+<tr><td>OFI &rarr; own-venue price impact</td><td class="r">17 matches</td><td>strong, both venues (Kalshi t&approx;29, Poly t&approx;35)</td></tr>
+<tr><td>OFI cross-venue lead</td><td class="r">17 matches</td><td><b>null</b> &mdash; no clean asymmetry either direction</td></tr>
+</table>
+<p>All three methods point the same way: Polymarket leads. The mechanism check sharpens the interpretation &mdash; order flow
+clearly drives price <em>within</em> each venue (textbook [5]), but there is <em>no</em> cross-venue flow lead. The lead therefore
+lives in the <em>price</em>, not in observable flow: Polymarket's mid simply updates to new information first.</p>
+
+<h2>5. The anatomy of a goal</h2>
+<p>The results above are pooled over each match. Conditioning on the actual information event &mdash; a goal &mdash; turns the single ~78% into a dynamic picture, and answers the question any price leader should be asked: is the lead a tradable edge?</p>
+<table class="avoidbreak">
+<tr><th>Measure (per goal)</th><th class="r">Sample</th><th>Result</th></tr>
+<tr><td>Information share, event-conditional</td><td class="r">~20 matches</td><td>Polymarket GG <b>~86%</b> in goal windows vs <b>~53%</b> in calm play (Hasbrouck ~82% vs ~56%)</td></tr>
+<tr><td>Liquidity at the goal (top of book)</td><td class="r">~370 shocks</td><td>spread <b>~8&times;</b> (Poly) / <b>~2&times;</b> (Kalshi); best-price depth falls to <b>&lt;1%</b> of normal; refill ~3&ndash;4&thinsp;s</td></tr>
+<tr><td>Harvestability of the lead</td><td class="r">117 goals</td><td>gross stale gap ~11.4c, net <b>+10.2c on paper</b> after spread &mdash; but <b>0% harvestable</b> once gated on available depth</td></tr>
+</table>
+<p><b>Discovery concentrates at the news.</b> Away from goals the two venues are near-coequal (~53/47); the instant a goal lands, Polymarket carries ~86% of the permanent price move. The flagship lead is not a steady background hum but a <em>news-event</em> phenomenon &mdash; Polymarket leads precisely because it incorporates the goal first.</p>
+<p><b>And the same venue withdraws liquidity the hardest.</b> At the goal, makers pull their quotes: the spread blows out (~8&times; on Polymarket, ~2&times; on Kalshi) and best-price depth collapses to under 1% of normal, refilling only after a few seconds. Unlike a betting exchange &mdash; Betfair suspends and cancels resting orders on a goal (Croxson &amp; Reade 2014) &mdash; Kalshi and Polymarket never halt, so this is <em>informational</em> liquidity withdrawal, not a mechanical suspension.</p>
+<p><b>So the lead is real but untradeable.</b> A naive ledger makes the stale follower look like free money: ~11.4c of staleness, +10.2c net of the spread, on every goal. But that quote has vanished &mdash; depth at the goal is ~0.4% of normal &mdash; so once gated on what is actually resting in the book, <b>0%</b> is harvestable. "The news is in the price before you can trade it" (Croxson &amp; Reade 2014) holds here for a precise, measured reason: not slow pricing, but a book that empties in the same instant it reprices. (An earlier version of this ledger reported the +10.2c as harvestable; gating on depth corrected it, and that correction <em>is</em> the result.)</p>
+
+<h2>6. Robustness</h2>
+<p><b>Immune to the trade-direction problem.</b> [1] shows that trade direction inferred from Polymarket's public feed agrees
+with on-chain ground truth only ~59% of the time, which corrupts any signed-trade measure (effective spread, Kyle's &lambda;,
+trade-sign OFI). Every estimate here is computed on <em>mid-quote</em> moves and book changes, not signed trades, so it is
+unaffected; I verified our signed-flow code is used by none of these results.</p>
+<p><b>No spurious shares.</b> The ADF gate drops non-cointegrated pairs, so a Hasbrouck/GG number is only reported where the
+(1,&minus;1) spread is genuinely stationary.</p>
+<p><b>Significance, stated honestly.</b> Goal events cluster within matches and are not independent, so the naive binomial
+(p&approx;0.0004) and bin-level OFI t-statistics overstate significance. The unit that carries the claim is the <em>match</em>:
+20 of 21 cointegrated matches show a Polymarket lead, with a ~78% central share. A formal write-up would replace the naive
+p-value with a match-clustered bootstrap; the qualitative result is not in doubt.</p>
+
+<h2>7. What this is <em>not</em></h2>
+<p><b>Not a trade.</b> The lead is a few hundred milliseconds. Documented cross-venue arbitrage exists (~$40M, 2024–25) but is
+seconds-lived and fee-bounded; a 400&thinsp;ms head start vanishes inside the bid–ask once costs are crossed. This is
+price-discovery <em>leadership</em>, a property of market structure &mdash; not free money.</p>
+<p><b>Scope.</b> One tournament, one sport, a ~three-week window, 20 matches. Polymarket's documented wash trading (~25% of
+historical volume) is a caveat on volume-based measures, less so on mids. The Hasbrouck band is wide where the two venues'
+innovations are correlated, which is why I lead with the ordering-free Gonzalo–Granger number.</p>
+
+<h2>8. Related work &amp; contribution</h2>
+<p>The within-venue OFI&rarr;price relation reproduces Cont–Kukanov–Stoikov [5]; the microprice's edge over the mid follows
+Stoikov [6]; the information-share machinery is Hasbrouck [3] and Gonzalo–Granger [4]; an independent 2025 study finds a
+Polymarket discovery lead in other markets [2], which this corroborates &mdash; but where [2] reads that lead as
+&ldquo;economically meaningful arbitrage,&rdquo; the depth-gated ledger here qualifies it: on a clean repeated-event stream the
+lead is real, yet the book withdraws in the same instant it reprices, so the stale-quote gap is ~0% harvestable and the
+arbitrage is <em>not</em> economically meaningful net of the cost of immediacy. The contribution is, to my knowledge, the first
+<b>cross-venue Kalshi–Polymarket information-share estimate at tick resolution on a clean, repeated event stream</b> (goals),
+robust to the trade-direction problem [1], paired with a depth-gated harvestability test that separates a real price-discovery
+lead from a <em>tradable</em> one.</p>
+
+<h2>9. Conclusion</h2>
+<p>On identical World Cup outcomes, Polymarket discovers price first: it reacts ~400&thinsp;ms sooner and carries ~78% of the
+permanent price movement, in 20 of 21 cointegrated matches measured. The practical implication is narrow but real &mdash; an
+aggregator of prediction-market signals should weight Polymarket's mid as the leading indicator and Kalshi's as the lagging
+confirm &mdash; and the trading implication is honestly none, after costs. Everything is reproducible from the public
+repository; forecasts in the wider project are committed to a forward-only ledger, and the core estimation math is frozen,
+so none of this is fit after the fact.</p>
+
+<div class="foot">
+<b>References.</b>
+<ol class="refs">
+<li>"The Anatomy of a Decentralized Prediction Market: Microstructure Evidence from the Polymarket Order Book," 2026, arXiv:2604.24366.</li>
+<li>Ng, Peng, Tao, Zhou, "Price Discovery and Trading in Modern Prediction Markets," 2025 (SSRN 5331995).</li>
+<li>Hasbrouck, J. (1995), "One Security, Many Markets: Determining the Contributions to Price Discovery," <em>Journal of Finance</em>.</li>
+<li>Gonzalo, J. &amp; Granger, C. (1995), "Estimation of Common Long-Memory Components in Cointegrated Systems," <em>JBES</em>.</li>
+<li>Cont, R., Kukanov, A. &amp; Stoikov, S. (2014), "The Price Impact of Order Book Events," <em>Journal of Financial Econometrics</em>.</li>
+<li>Stoikov, S. (2017), "The Micro-Price: A High-Frequency Estimator of Future Prices," SSRN 2970694.</li>
+</ol>
+<div style="margin-top:6pt">xResidual &mdash; a live study of how prediction markets price the 2026 World Cup. Methods, data pipeline, and the live findings dashboard: github.com/Thesavagecoder7784/xResidual</div>
+</div>
+
+</body></html>

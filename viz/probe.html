@@ -1,0 +1,9 @@
+<!doctype html><html><head>
+<script src="d3.v7.min.js"></script>
+</head><body><div id="out">start</div>
+<script>
+try{
+  document.getElementById('out').textContent = 'typeof d3 = '+(typeof d3);
+  if(typeof d3!=='undefined'){ d3.select('#out').append('span').text(' | d3.select works'); }
+}catch(e){ document.getElementById('out').textContent='ERR: '+e.message; }
+</script></body></html>
