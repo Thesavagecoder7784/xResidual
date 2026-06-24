@@ -80,3 +80,25 @@ P10 record because a favourite-win has no *surprising* goal to fade).
 of modeled cost) is unchanged; only the shock-*detection* thresholds are tightened, and they are
 now frozen for the tournament. The change makes the test *more* conservative (fewer, cleaner
 events), and is logged here so the P10 record can't be accused of a post-hoc threshold tweak.
+
+---
+
+## 2026-06-24 — P2 graded INCONCLUSIVE: the prediction markets do not quote the draw
+
+**What changed.** Nothing in the rule; this records that P2's bound metric cannot be computed, per
+the Deviations clause ("grade the original rule as INCONCLUSIVE where it can't be met"). P2 compares
+the favourite-longshot bias in the bookmakers' **1X2** (win/draw/loss) prices against the prediction
+markets', using `calibration.reliability_table` *by venue*. Building the grader surfaced that Kalshi
+and Polymarket list only **two-way** per-match contracts on these World Cup games (a team-to-win
+`match`/`winner` market with no draw outcome); only the Odds-API bookmaker feed prices a three-way
+1X2. There is therefore **no PM-side 1X2 reliability curve** to put opposite the books, so the
+book-vs-PM comparison the prediction names is not defined on the captured data.
+
+**Why now.** Found on 2026-06-24 while building `scripts/grade_prereg.py`, the mechanical grader for
+this file. It is a property of what the venues *list*, not a modelling choice, and it cannot be made
+outcome-driven (the missing draw contract was never available to fit to).
+
+**Effect on the grade.** **P2 → INCONCLUSIVE**, reported as such, never quietly dropped. The
+book-side longshot reliability is still computable and may be reported *descriptively* (one venue,
+no graded comparison). P2 was a *secondary*, directional, explicitly thin prediction; the two named
+primary predictions (P1, P6) are unaffected. No other prediction's metric is touched.
