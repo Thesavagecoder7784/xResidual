@@ -42,6 +42,8 @@ MODEL_BUILDERS = [
     ("build_drawluck.py", False),
     ("build_vein.py", False),           # 8 format/advancement "vein" cards off one live-conditioned sim
     ("build_calibration.py", False),    # CORP reliability + Brier of the pre-committed forecasts (the credibility card)
+    ("build_pricediscovery.py", False), # P5: opening-vs-closing Brier (pre-reg grader input)
+    ("build_skill.py", False),          # P7b: market vs raw-model log-score (pre-reg grader input)
     ("build_elimination.py", False),    # 7-way elimination + coherence; market overlay is guarded, so offline-safe. Must precede mispricing.
     ("build_simnative.py", False),      # format-native sim families (elimination/BTTS/totals); market overlay guarded
     ("build_mispricing.py", False),     # last: reads _groupsim/_knockout/_elimination
@@ -215,6 +217,15 @@ def main() -> int:
     print(f"done · {n_ok} ok · {n_fail} failed · {total:.0f}s total")
     if n_fail:
         print("failed:", ", ".join(name for _, name, ok, _, _ in results if not ok))
+
+    # provisional July-19 pre-registration scorecard (reads the artifacts just rebuilt)
+    if not args.render_only:
+        try:
+            sc = subprocess.run([sys.executable, os.path.join("scripts", "grade_prereg.py")],
+                                cwd=ROOT, capture_output=True, text=True, timeout=120)
+            print(sc.stdout, end="")
+        except Exception as e:
+            print(f"pre-reg scorecard skipped: {type(e).__name__}: {e}")
     return 1 if n_fail else 0
 
 
