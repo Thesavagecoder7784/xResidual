@@ -31,6 +31,7 @@ import numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from xresidual import wc2026_teams as W  # noqa: E402
+from xresidual.calibration import calibration_regression  # noqa: E402  P1 binds the slope to this
 
 LEDGERS = {"v1": "paper/match_forecasts.jsonl", "v2": "paper/match_forecasts_v2.jsonl",
            "v3": "paper/match_forecasts_v3.jsonl"}
@@ -164,10 +165,14 @@ def score(forecasts: dict, outcomes: dict) -> dict | None:
     # CORP/PAV calibration error (bin-free): mean |fit - forecast|
     fit = _pav(f, o, np.ones_like(f))
     corp_mce = float(np.mean(np.abs(fit - f)))
+    # P1 calibration-regression slope b (logit fit, b=1 perfect): bound to calibration.calibration_regression,
+    # on the same pooled one-vs-rest (forecast, outcome) pairs. P1 PASS needs b in [0.70, 1.30].
+    a, b = calibration_regression(f, o)
     return {"n_games": n, "brier": round(brier, 4), "brier_baseline": round(brier_base, 4),
             "skill_vs_baseline_pct": round((1 - brier / brier_base) * 100, 1),
             "reliability": round(reliability, 4), "resolution": round(resolution, 4),
             "uncertainty": round(uncertainty, 4), "corp_mce": round(corp_mce, 4),
+            "slope": round(float(b), 4), "intercept": round(float(a), 4),
             "base_rates": {"home": round(float(base[0]), 3), "draw": round(float(base[1]), 3),
                            "away": round(float(base[2]), 3)},
             "reliability_curve": curve}
@@ -213,10 +218,10 @@ def main() -> int:
     json.dump(payload, open(RESULTS, "w"), indent=2)
 
     print(f"=== calibration of the pre-committed match forecasts ({len(outcomes)} played) ===")
-    print(f"{'ver':>4} {'n':>4} {'Brier':>7} {'baseline':>9} {'skill%':>7} {'reliab':>8} {'resol':>7} {'CORP-MCE':>9}")
+    print(f"{'ver':>4} {'n':>4} {'Brier':>7} {'baseline':>9} {'skill%':>7} {'reliab':>8} {'resol':>7} {'CORP-MCE':>9} {'slopeB':>7}")
     for v, s in versions.items():
         print(f"{v:>4} {s['n_games']:>4} {s['brier']:>7} {s['brier_baseline']:>9} "
-              f"{s['skill_vs_baseline_pct']:>6}% {s['reliability']:>8} {s['resolution']:>7} {s['corp_mce']:>9}")
+              f"{s['skill_vs_baseline_pct']:>6}% {s['reliability']:>8} {s['resolution']:>7} {s['corp_mce']:>9} {s.get('slope', '-'):>7}")
     print("  read: Brier < baseline = skill; reliability ~0 = well-calibrated; resolution high = discriminating.")
     print(f"wrote {os.path.relpath(OUT, ROOT)} + {os.path.relpath(RESULTS, ROOT)}")
     return 0
