@@ -88,13 +88,16 @@ def _spread_med(tob, lo, hi):
     return st.median(xs) if xs else None
 
 
-def process_capture(cap):
-    pairs = we.load_pairs(DATA_DIR, capture=cap)
+def process_capture(cap, pairs=None, sm_bundle=None):
+    """Standalone it streams the tape itself; under build_micro_all's single-parse driver it reuses
+    the shared `pairs` + `sm_bundle` (one tape parse feeds every pipeline)."""
+    if pairs is None:
+        pairs = we.load_pairs(DATA_DIR, capture=cap)
     path = os.path.join(DATA_DIR, f"ws-events-{cap}.jsonl")
-    if not pairs or not os.path.exists(path):
+    if not pairs or (sm_bundle is None and not os.path.exists(path)):
         print(f"  skip {cap}: no pairs/tape")
         return None
-    bundle = sm.stream_all(path, pairs)
+    bundle = sm_bundle if sm_bundle is not None else sm.stream_all(path, pairs)
     match = _match_label(cap)
     ledger = []                                          # (follower, gross, cost, net, lead_ms)
     for pr in pairs:
