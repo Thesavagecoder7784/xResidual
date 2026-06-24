@@ -28,6 +28,7 @@ import overreaction_build as ovr       # noqa: E402
 import build_ofi_leadlag as ofi        # noqa: E402
 import build_infoshare as ish          # noqa: E402
 import build_livewp as lw              # noqa: E402
+import build_harvest as hv             # noqa: E402
 
 DATA_DIR = os.path.join(ROOT, "logger", "data")
 # (module, per-game archive dir, label) — one entry per tape-consuming pipeline
@@ -35,7 +36,8 @@ PIPELINES = [(ll, ll.LEADLAG_DIR, "lead-lag"),
              (ovr, ovr.OVR_DIR, "overreaction"),
              (ofi, ofi.OFI_DIR, "OFI"),
              (ish, ish.IS_DIR, "info-share"),
-             (lw, lw.LW_DIR, "live-WP")]
+             (lw, lw.LW_DIR, "live-WP"),
+             (hv, hv.HARV_DIR, "harvest")]
 
 
 def _slug(cap: str) -> str:
