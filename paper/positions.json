@@ -610,5 +610,39 @@
     "ts_close": "2026-06-22T22:09:41.653254+00:00",
     "realized_pnl": 5.91,
     "realized_pnl_net": 5.66
+  },
+  {
+    "id": 40,
+    "ts_open": "2026-06-23T01:02:02.981535+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-team-to-advance-to-knockout-stages",
+    "outcome": "Iran",
+    "side": "no",
+    "entry_price": 0.3585,
+    "stake_usd": 25.0,
+    "shares": 69.74,
+    "status": "open",
+    "note": "FLB fade: model P(adv) 52.8 vs live mkt 63.9 (+11.1pp, biggest fresh gap). Group G: Egypt (through) + Belgium (plays weak NZ) likely take top-2; Iran (2pts, plays Egypt in finale) is a best-third hope ~2-3pts that the market overprices. Fade = robust to blend star-bias. Risk: Egypt rotation if clinched. Validated vs standings Jun22.",
+    "exit_price": null,
+    "ts_close": null,
+    "realized_pnl": null,
+    "realized_pnl_net": null
+  },
+  {
+    "id": 41,
+    "ts_open": "2026-06-23T01:02:03.297320+00:00",
+    "venue": "polymarket",
+    "market": "world-cup-team-to-advance-to-knockout-stages",
+    "outcome": "Paraguay",
+    "side": "yes",
+    "entry_price": 0.85,
+    "stake_usd": 15.0,
+    "shares": 17.65,
+    "status": "open",
+    "note": "Advance back, untouched Group D: model 89.9 vs live mkt 85.0 (+4.9). USA clinched 1st; Paraguay (3pts) plays Australia (3pts) in a straight decider for 2nd + best-third backstop. Diversifies into a group with zero book exposure. Validated vs standings Jun22.",
+    "exit_price": null,
+    "ts_close": null,
+    "realized_pnl": null,
+    "realized_pnl_net": null
   }
 ]

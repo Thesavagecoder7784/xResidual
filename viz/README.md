@@ -35,8 +35,16 @@ Data: `_groupsim.js` (`build_group_sim.py`), `_knockout.js` (`build_knockout.py`
 | `group_openness` | advancement per group — top-2 vs the third-place lottery — with a market overlay |
 | `third_place_lottery` | which group sends its third-placed team through (8 of 12 do) |
 | `third_place_cutline` | the points the last-qualifying third needs (about one win, median 3 pts) |
-| `jeopardy_gd` | **NEW** — the final R32 ticket is decided on goal difference: the last third in and the first out finish level on points 86% of the time. The data answer to the "no jeopardy" format critique |
-| `garbage_time` | **NEW (cross: GD-jeopardy × leverage)** — for a third-placed team, advancing is a goal-difference cliff: one goal dragging it from −1 to level GD is worth **+28pp** of reaching the R32, scoreable in garbage time of a settled game. The highest-leverage goal nobody watches |
+| `jeopardy_gd` | **NEW** — the final R32 ticket is decided on goal difference: the last third in and the first out finish level on points 72% of the time. The data answer to the "no jeopardy" format critique |
+| `garbage_time` | **NEW (cross: GD-jeopardy × leverage)** — for a third-placed team, advancing is a goal-difference cliff: one goal dragging it from −1 to level GD is worth **+35pp** of reaching the R32, scoreable in garbage time of a settled game. The highest-leverage goal nobody watches (note: this is the conditional `P(adv\|3rd,GD)`; `points_first` gives the points-controlled version) |
+| `points_first` | **NEW (rigorous companion to garbage_time)** — that goal only matters if you're *level on points*: ahead on points you're already in (100%), behind already out (0%), and **39%** of thirds land exactly level — where, holding points fixed, one −1→0 goal is worth a clean **+12pp** (the naive +35pp conditional double-counts the points high-GD teams also tend to have). The honest cliff |
+| `dead_rubbers` | **NEW** — 14 of the biggest teams have already clinched, so their final games are dead rubbers; the real win-and-in drama is in obscure matchups (Bosnia-Qatar swings 99pp). The format manufactured stakeless games among the giants (Csató-Gyimesi: ~92% for a top seed) |
+| `tiebreak_cascade` | **NEW** — a yellow card can end your World Cup: the last R32 spot is level on points 72–86% of sims, cascading points → GD → goals → **discipline**. Precedent: Senegal 2018, out on 6 yellows to 4 |
+| `unequal_prize` | **NEW** — winning your group can be a trap: for Brazil/Canada/Mexico, topping the group draws a *harder* R32+R16 path than finishing 2nd (the non-adjacent Annex C tree + floating thirds). 3 of 12 winners walk into a tougher draw than their runner-up |
+| `cross_group_butterfly` | **NEW** — your fate is decided by games you're not playing: the 8 best-thirds are picked jointly across all 12 groups, so a Group D result swings a Group G third's advance odds **68%→49%** (a 19pp swing from a match it isn't in). Only a joint sim sees it |
+| `clinch_first` | **NEW** — clinch first, unknown opponent: a clinched group winner (Mexico) could draw **8 different R32 teams**, the most likely only 34% — the third-pool isn't locked until every group finishes |
+| `confederation_survival` | **NEW** — the format's real winner isn't the giants: the 8-best-thirds net sends ~**6.8 African (CAF)** teams and nearly every South American side into the R32 — the expansion carried the rest of the world deeper |
+| `softest_road` | **NEW** — same achievement, unequal prize: a **180-Elo spread** between the easiest group-winner's draw (Argentina ~1801) and the hardest (Mexico ~1981) over R32+R16 |
 | `decisive_games` | Schilling match leverage — the midtable six-pointers swing qualification most, not the glamour ties |
 | `bubble` | the whole qualification fight is a handful of coin flips: most teams are already locked above 70% or below 30% to advance |
 | `r32_routes` | the likely Round-of-32 opponent and draw difficulty per group (via the Annex C feeder tree) — winning your group is an unequal prize |
@@ -116,7 +124,7 @@ Tape-derived, from the captured `ws_capture` websocket feeds. Processed by `buil
 
 | Card | What it shows |
 |---|---|
-| `leadlag_lead` | the pooled flagship — Polymarket prices a goal first across the match pool (22 matches, ~62% of repricing events, ~3.4σ) |
+| `leadlag_lead` | the pooled flagship — Polymarket prices a goal first across the match pool (34 matches, ~62% of repricing events: 103 vs 45 of 165, median +400ms) |
 | `leadlag_tape` | a single match's tape: who priced the goal first, to the millisecond |
 | `ofi_mechanism` | order-flow imbalance → price impact, the within-venue mechanism (Cont-Kukanov-Stoikov; t≈30) |
 | `live_match` | a match's in-play win-probability tape with auto-detected goal shocks |
@@ -155,8 +163,12 @@ python scripts/build_all.py --render-only   # re-render PNGs from existing _*.js
 python scripts/build_all.py --models-only / --markets-only
 ```
 
-Cards that **inline** their own data (`buildup_trajectory`, `leadlag_tape`, `draws_paradox`,
-`jeopardy_gd`, …) have no builder — they're rendered like any other card.
+Cards that **inline** their own data (`buildup_trajectory`, `leadlag_tape`, `draws_paradox`, …)
+have no builder — they're rendered like any other card. The nine format/advancement "vein"
+cards (`garbage_time`, `points_first`, `jeopardy_gd`, `dead_rubbers`, `cross_group_butterfly`,
+`confederation_survival`, `softest_road`, `unequal_prize`, `clinch_first`) used to be inline
+too; they now read `model/_vein.js` from a single live-conditioned sim (`build_vein.py`), so
+they refresh with the rest of the pipeline instead of silently going stale.
 
 ### Individual builders
 
@@ -173,6 +185,7 @@ python scripts/build_travel.py           # model/_travel.js
 python scripts/build_heat.py             # model/_heat.js
 python scripts/build_incentive.py        # model/_incentive.js  (group_incentive)
 python scripts/build_drawluck.py         # model/_drawluck.js   (draw_luck)
+python scripts/build_vein.py             # model/_vein.js       (garbage_time, points_first, jeopardy_gd, dead_rubbers, cross_group_butterfly, confederation_survival, softest_road, unequal_prize, clinch_first)
 python scripts/build_elimination.py      # model/_elimination.js (7-way stage-of-elimination vs Polymarket)
 python scripts/build_simnative.py        # model/_simnative.js  (format-native market families)
 python scripts/build_mispricing.py       # model/_mispricing.js (model_vs_market, market_efficiency; runs LAST)

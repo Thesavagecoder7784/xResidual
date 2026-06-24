@@ -88,10 +88,9 @@ results on June 11.
 ## The overreaction result: correctly, no edge
 
 P10 fades goal overreaction (enter ~2 min after a shock, exit ~6 min later, betting the
-market overshot and reverts). On this match it logged 5 fades, all small losses: Spain
--0.5 pp over 3 trades, Draw -4.0 pp over 2 trades (-4.5 pp total, net of cost). The Peru
-leg never threw a qualifying shock-to-fade, so it logged no trades. **That is the right
-answer, and it validates the surprise-conditioning rather than the edge.**
+market overshot and reverts). On this match it made small losses across every leg (Spain
+-1.5 pp over 7 trades, Draw -4.7 pp, Peru -0.9 pp). **That is the right answer, and it
+validates the surprise-conditioning rather than the edge.**
 
 The reason is in the surprise scores. Spain's goals carried surprise of only **0.05 to
 0.13**: an 84% favourite scoring is exactly what the market expected, so there was nothing

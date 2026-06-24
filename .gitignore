@@ -238,8 +238,8 @@ KICKSTART.md
 CONTENT.md
 viz/flags/*.svg
 
-# Card design kept private — the rendered PNGs + their _*.js data ARE published,
-# the analysis (scripts/build_*.py) is public; only the editorial HTML/CSS is held back.
+# Card design kept private — the rendered PNGs ARE published, the analysis
+# (scripts/build_*.py) is public; only the editorial HTML/CSS is held back.
 viz/model/*.html
 viz/market/*.html
 viz/render.sh
@@ -269,3 +269,12 @@ viz/market/infoshare
 viz/market/harvest
 viz/market/eventis
 viz/model/overreaction
+
+# Regenerable build outputs (window.* data + pooled result JSON). BOTH the laptop (build_all.py)
+# and the VM (refresh_site_vm.sh -> build_micro_all) write these, so tracking them caused the
+# recurring two-writer merge conflicts on every pull. They regenerate from scripts/build_all.py
+# (+ build_micro_all.py for the microstructure pools). The published docs/data/*.js copies and the
+# rendered .png cards stay tracked.
+viz/market/_*.js
+viz/model/_*.js
+writeups/_*_results.json
