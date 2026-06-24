@@ -113,12 +113,14 @@ def grade_p1():
 # ── SECONDARY ────────────────────────────────────────────────────────────────
 
 def grade_p2():
-    """P2 longshot bias stronger in books than PMs (directional). Needs per-venue MATCH (1X2)
-    reliability_table — _flb.js is the TITLE-market wedge, not the bound metric."""
+    """P2 longshot bias stronger in books than PMs (directional). Bound to per-venue 1X2
+    reliability_table. DATA-FORCED INCONCLUSIVE: Kalshi/Polymarket do not quote the draw on these WC
+    matches (2-way match/winner markets only), so there is no PM-side 1X2 to put on the reliability
+    diagram; the book (oddsapi) side is computable but the comparator isn't. Deviations clause."""
     return V("P2", "Favourite-longshot: books>PMs", "genuine unknown", False,
-             PEND, None, "book longshot gap > PM gap (directional)",
-             note="GAP: bound to calibration.reliability_table by venue on 1X2 prices; "
-                  "no builder emits per-venue match reliability yet (the _flb.js card is title-market)")
+             INC, "PM venues quote no draw -> no PM-side 1X2", "book longshot gap > PM gap",
+             note="DECISION: data-forced INCONCLUSIVE (PMs price 2-way only). Needs a "
+                  "PREREGISTRATION-ADDENDUM entry recording the limitation before Jul 19 (your call).")
 
 
 def grade_p3():
@@ -165,31 +167,59 @@ def grade_p4():
 
 
 def grade_p5():
-    """P5 closing beats opening: closing Brier < opening Brier, pooled. Needs pipeline.closing_line_wdl
-    on first vs last snapshot — not emitted to any artifact."""
+    """P5 closing beats opening: closing Brier < opening Brier on resolved matches, pooled."""
+    d = _load_json(os.path.join(WRITEUPS, "_pricediscovery_results.json"))
+    if not d or not d.get("n"):
+        return V("P5", "Price discovery: closing>opening", "genuine unknown", False,
+                 PEND, None, "closing Brier < opening Brier",
+                 note="run scripts/build_pricediscovery.py")
+    n = d["n"]
+    val = f"opening Brier {d['brier_open']} -> closing {d['brier_close']} (improve {d['improvement']:+})"
     return V("P5", "Price discovery: closing>opening", "genuine unknown", False,
-             PEND, None, "closing Brier < opening Brier",
-             note="GAP: pipeline.closing_line_wdl exists but no builder writes the opening-vs-closing "
-                  "Brier to an artifact — wire it before Jul 19")
+             PASS if d.get("pass") else FAIL, val, "closing Brier < opening Brier", n=n,
+             note="provisional: bookmaker h2h consensus; final pools the full tournament")
 
 
 def grade_p7():
-    """P7 (a) raw-Elo favourite prob beats market by >=5pp [observed] AND (b) market log-score <
-    raw-model log-score [unknown]. (a) from _blend.js; (b) from pipeline.skill_comparison."""
+    """P7 (a) raw-Elo favourite prob beats that team's market prob by >=5pp [observed] AND (b) market
+    mean log-score < raw-model mean log-score [unknown]. (a) from _blend.js; (b) from _skill_results.json."""
     blend = _load_js(os.path.join(VIZ, "model", "_blend.js"))
-    note = ("GAP: clause (b) market vs raw-model log-score (pipeline.skill_comparison) not emitted "
-            "to an artifact; clause (a) is the pre-tournament observed gap")
-    return V("P7", "Model top-heavy; market better skill", "part observed", False,
-             PEND, ("_blend.js present" if blend else None),
-             "(a) Elo fav - mkt >=5pp AND (b) mkt log-score < model", note=note)
+    skill = _load_json(os.path.join(WRITEUPS, "_skill_results.json"))
+    a_ok = a_val = None
+    if blend and blend.get("teams"):
+        fav = max(blend["teams"], key=lambda t: t.get("elo", 0))     # raw-Elo title favourite
+        gap = fav["elo"] - fav["market"]
+        a_ok = gap >= 5.0
+        a_val = f"(a) Elo fav {fav['team']} {fav['elo']:.1f}% vs mkt {fav['market']:.1f}%={gap:+.1f}pp"
+    b_ok = b_val = None
+    if skill and skill.get("n_matches"):
+        b_ok = skill.get("pass_b")
+        b_val = f"(b) mkt logscore {skill['market_mean_logscore']} vs model {skill['baseline_mean_logscore']}"
+    if a_ok is None or b_ok is None:
+        miss = ("run scripts/build_skill.py" if b_ok is None else "no _blend.js")
+        return V("P7", "Model top-heavy; market better skill", "part observed", False,
+                 PEND, " · ".join(x for x in (a_val, b_val) if x), "(a) Elo fav-mkt>=5pp AND (b) mkt<model",
+                 note=miss)
+    verdict = PASS if (a_ok and b_ok) else FAIL
+    return V("P7", "Model top-heavy; market better skill", "part observed", False, verdict,
+             f"{a_val} · {b_val}", "(a) Elo fav-mkt>=5pp AND (b) mkt<model logscore",
+             n=skill.get("n_matches"))
 
 
 def grade_p8():
-    """P8 sigma-sanity: biggest one-second z over the tournament <= 4sigma. Needs the committed sigma
-    routine's output — no artifact found."""
+    """P8 sigma-sanity: biggest one-second z over the tournament <= 4sigma, typical largest 2-3sigma."""
+    d = _load_json(os.path.join(WRITEUPS, "_sigma_results.json"))
+    p = d.get("pooled") if d else None
+    if not p:
+        return V("P8", "Sigma-sanity (no 12-sigma)", "genuine unknown", False,
+                 PEND, None, "max z <= 4sigma; typical 2-3sigma",
+                 note="tape-bound: build_sigma.py runs in the VM micro pipeline on the next idle cycle")
+    val = (f"tournament max z {p['tournament_max_z']} ({p['tournament_max_match']}) · "
+           f"median match-max {p['median_match_max_z']}")
     return V("P8", "Sigma-sanity (no 12-sigma)", "genuine unknown", False,
-             PEND, None, "max z <= 4sigma; typical 2-3sigma",
-             note="GAP: the per-contract one-second z routine output isn't written to any artifact yet")
+             PASS if p.get("max_z_le_4") else FAIL, val, "max z <= 4sigma", n=p.get("n_matches"),
+             note=f"nonzero-frac at the max {p.get('tournament_max_nonzero_frac')} (low => step-function "
+                  f"inflation caveat)")
 
 
 def grade_p9():
