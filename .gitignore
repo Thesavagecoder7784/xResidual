@@ -256,6 +256,7 @@ data/availability_review.md
 data/availability_review.json
 
 CONTENT-PLAYBOOK.md
+RUNBOOK.md
 
 # Probability Cup bots — the pricing logic is the competitive edge in a live comp (prize is a
 # Jump fellowship), so keep it out of the public repo. Deployed to the VM via scp, not git.
@@ -268,6 +269,7 @@ viz/market/leadlag
 viz/market/infoshare
 viz/market/harvest
 viz/market/eventis
+viz/market/livewp
 viz/model/overreaction
 
 # Regenerable build outputs (window.* data + pooled result JSON). BOTH the laptop (build_all.py)
