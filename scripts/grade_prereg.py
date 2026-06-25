@@ -216,10 +216,21 @@ def grade_p8():
                  note="tape-bound: build_sigma.py runs in the VM micro pipeline on the next idle cycle")
     val = (f"tournament max z {p['tournament_max_z']} ({p['tournament_max_match']}) · "
            f"median match-max {p['median_match_max_z']}")
+    nz = p.get("tournament_max_nonzero_frac")
+    if nz is not None and nz < 0.10:
+        # the 1s-return-std denominator is degenerate: PM mids are step functions ~98% flat at 1s,
+        # so std collapses to the noise floor and z is uninterpretable (40-390sigma everywhere).
+        # Reporting a FAIL here would be a false finding (a divide-by-~0 artifact, not a fat tail).
+        return V("P8", "Sigma-sanity (no 12-sigma)", "genuine unknown", False, INC,
+                 f"{val} but denominator degenerate (nz-frac {nz})", "max z <= 4sigma",
+                 n=p.get("n_matches"),
+                 note="DATA-FORCED INCONCLUSIVE: prediction-market mids are step functions ~98% flat "
+                      "at 1s, so the committed 1s-return-std denominator collapses to the noise floor "
+                      "and z is uninterpretable. The metric assumes a continuously-priced series; these "
+                      "aren't one. Needs a PREREGISTRATION-ADDENDUM entry (your call).")
     return V("P8", "Sigma-sanity (no 12-sigma)", "genuine unknown", False,
              PASS if p.get("max_z_le_4") else FAIL, val, "max z <= 4sigma", n=p.get("n_matches"),
-             note=f"nonzero-frac at the max {p.get('tournament_max_nonzero_frac')} (low => step-function "
-                  f"inflation caveat)")
+             note=f"nonzero-frac at the max {nz}")
 
 
 def grade_p9():

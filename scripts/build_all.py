@@ -159,6 +159,22 @@ def main() -> int:
     if args.pull and not args.render_only:
         pull_snapshots()
 
+    # ALWAYS refresh the international results from source before building, so every model rating
+    # conditions on the latest games. load_results() caches the martj42 CSV locally and only
+    # re-downloads on refresh=True — nothing else in the pipeline does, so without this the ratings
+    # silently freeze on a stale cache (the "why isn't USA updating" bug). Falls back to the cache
+    # offline or on a network error, so the build never hard-fails on it.
+    if not args.offline and not args.render_only:
+        try:
+            sys.path.insert(0, ROOT)
+            from xresidual import data as _data
+            _df = _data.load_results(refresh=True)
+            _wc = _df[_df["tournament"] == "FIFA World Cup"]
+            print(f"results refreshed from source · {len(_wc)} WC games · "
+                  f"latest {_wc['date'].max():%Y-%m-%d}")
+        except Exception as e:
+            print(f"results refresh skipped ({type(e).__name__}: {e}) — using cached CSV")
+
     results = []  # (kind, name, ok, secs, note)
 
     if not args.render_only:
