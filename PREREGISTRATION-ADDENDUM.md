@@ -102,3 +102,30 @@ outcome-driven (the missing draw contract was never available to fit to).
 book-side longshot reliability is still computable and may be reported *descriptively* (one venue,
 no graded comparison). P2 was a *secondary*, directional, explicitly thin prediction; the two named
 primary predictions (P1, P6) are unaffected. No other prediction's metric is touched.
+
+---
+
+## 2026-06-25 — P8 graded INCONCLUSIVE: the 1-second return-std denominator is degenerate
+
+**What changed.** Nothing in the rule; this records that P8's committed metric cannot be meaningfully
+evaluated on the captured data, per the Deviations clause. P8 measures z = (largest one-second mid
+move in a match) / (standard deviation of one-second mid returns over the prior 30 minutes), per
+contract, and asks whether the tournament's biggest z stays ≤ 4σ. Running the routine over the in-play
+tapes (`scripts/build_sigma.py`, 10 matches) returns z of **40 to 390σ** on every game — not a fat-tail
+finding but a divide-by-near-zero artifact.
+
+**Why.** Prediction-market mids are step functions that sit flat almost every second: at the largest
+move, the prior 30-minute window of one-second returns is **96–99.7% zeros** (nonzero fraction
+0.003–0.039). The return standard deviation therefore collapses to the noise floor (~0.04–0.2¢), so an
+ordinary goal-sized move (8–43¢) reads as hundreds of sigma. Requiring ≥5% nonzero activity does not
+rescue it (still 80–350σ, and most matches have no contract that active). The metric implicitly assumes
+a continuously-priced series (the equities setting it comes from); a sparse prediction-market mid is not
+one. Found on 2026-06-25 in a check of the σ pool, not reverse-fit.
+
+**Effect on the grade.** **P8 → INCONCLUSIVE**, reported as such, never a fabricated FAIL — reporting
+"390σ, so the markets have 12-sigma shocks" would be a false finding, the opposite of what the data
+shows. The grader (`scripts/grade_prereg.py`) now returns INCONCLUSIVE when the denominator is
+degenerate (nonzero fraction < 0.10) rather than a bogus FAIL. Note in passing: Kalshi mids are sparser
+than Polymarket's (the largest-z artifacts are mostly Kalshi), which is consistent with Polymarket
+leading price discovery (P6) — Kalshi is the thinner follower. P8 was a secondary; the two primaries
+(P1, P6) are unaffected, and no other prediction's metric is touched.
