@@ -1,0 +1,40 @@
+{
+  "match": "Ecuador vs Germany",
+  "capture": "20260625T192608Z-ecuador-vs-germany",
+  "n_contracts": 4,
+  "max_z": 216.81,
+  "max_z_venue": "poly",
+  "max_move_c": 23.95,
+  "trail_sd_c": 0.11,
+  "max_z_nonzero_frac": 0.242,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 216.81,
+      "move_c": 23.95,
+      "sd_c": 0.11,
+      "nonzero_frac": 0.242
+    },
+    {
+      "venue": "kalshi",
+      "z": 208.72,
+      "move_c": 11.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 204.69,
+      "move_c": 16.0,
+      "sd_c": 0.078,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "poly",
+      "z": 149.77,
+      "move_c": 11.45,
+      "sd_c": 0.076,
+      "nonzero_frac": 0.157
+    }
+  ]
+}
