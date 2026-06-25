@@ -1,0 +1,40 @@
+{
+  "match": "Cura\u00e7ao vs Ivory Coast",
+  "capture": "20260625T192608Z-cura\u00e7ao-vs-ivory-coast",
+  "n_contracts": 4,
+  "max_z": 180.46,
+  "max_z_venue": "poly",
+  "max_move_c": 8.35,
+  "trail_sd_c": 0.046,
+  "max_z_nonzero_frac": 0.061,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 180.46,
+      "move_c": 8.35,
+      "sd_c": 0.046,
+      "nonzero_frac": 0.061
+    },
+    {
+      "venue": "kalshi",
+      "z": 70.91,
+      "move_c": 9.0,
+      "sd_c": 0.127,
+      "nonzero_frac": 0.018
+    },
+    {
+      "venue": "poly",
+      "z": 67.29,
+      "move_c": 2.5,
+      "sd_c": 0.037,
+      "nonzero_frac": 0.063
+    },
+    {
+      "venue": "kalshi",
+      "z": 48.11,
+      "move_c": 3.0,
+      "sd_c": 0.062,
+      "nonzero_frac": 0.004
+    }
+  ]
+}
