@@ -1,0 +1,40 @@
+{
+  "match": "Panama vs Croatia",
+  "capture": "20260623T223001Z-panama-vs-croatia",
+  "n_contracts": 4,
+  "max_z": 130.66,
+  "max_z_venue": "poly",
+  "max_move_c": 17.0,
+  "trail_sd_c": 0.13,
+  "max_z_nonzero_frac": 0.016,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 130.66,
+      "move_c": 17.0,
+      "sd_c": 0.13,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "kalshi",
+      "z": 108.04,
+      "move_c": 16.5,
+      "sd_c": 0.153,
+      "nonzero_frac": 0.017
+    },
+    {
+      "venue": "poly",
+      "z": 75.02,
+      "move_c": 7.5,
+      "sd_c": 0.1,
+      "nonzero_frac": 0.01
+    },
+    {
+      "venue": "kalshi",
+      "z": 49.93,
+      "move_c": 6.0,
+      "sd_c": 0.12,
+      "nonzero_frac": 0.019
+    }
+  ]
+}

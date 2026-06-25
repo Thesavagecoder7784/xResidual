@@ -1,0 +1,40 @@
+{
+  "match": "Scotland vs Brazil",
+  "capture": "20260624T212715Z-scotland-vs-brazil",
+  "n_contracts": 4,
+  "max_z": 80.84,
+  "max_z_venue": "poly",
+  "max_move_c": 7.0,
+  "trail_sd_c": 0.087,
+  "max_z_nonzero_frac": 0.008,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 80.84,
+      "move_c": 7.0,
+      "sd_c": 0.087,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "kalshi",
+      "z": 45.01,
+      "move_c": 3.0,
+      "sd_c": 0.067,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 22.94,
+      "move_c": 5.0,
+      "sd_c": 0.218,
+      "nonzero_frac": 0.038
+    },
+    {
+      "venue": "poly",
+      "z": 18.74,
+      "move_c": 0.2,
+      "sd_c": 0.011,
+      "nonzero_frac": 0.019
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "match": "South Africa vs South Korea",
+  "capture": "20260625T003043Z-south-africa-vs-south-korea",
+  "n_contracts": 4,
+  "max_z": 296.12,
+  "max_z_venue": "kalshi",
+  "max_move_c": 43.0,
+  "trail_sd_c": 0.145,
+  "max_z_nonzero_frac": 0.023,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 296.12,
+      "move_c": 43.0,
+      "sd_c": 0.145,
+      "nonzero_frac": 0.023
+    },
+    {
+      "venue": "poly",
+      "z": 188.04,
+      "move_c": 27.5,
+      "sd_c": 0.146,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "kalshi",
+      "z": 112.26,
+      "move_c": 14.0,
+      "sd_c": 0.125,
+      "nonzero_frac": 0.014
+    },
+    {
+      "venue": "poly",
+      "z": 53.74,
+      "move_c": 9.0,
+      "sd_c": 0.167,
+      "nonzero_frac": 0.029
+    }
+  ]
+}

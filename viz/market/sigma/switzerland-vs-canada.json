@@ -1,0 +1,40 @@
+{
+  "match": "Switzerland vs Canada",
+  "capture": "20260624T183243Z-switzerland-vs-canada",
+  "n_contracts": 4,
+  "max_z": 332.08,
+  "max_z_venue": "kalshi",
+  "max_move_c": 35.0,
+  "trail_sd_c": 0.105,
+  "max_z_nonzero_frac": 0.012,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 332.08,
+      "move_c": 35.0,
+      "sd_c": 0.105,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "poly",
+      "z": 185.66,
+      "move_c": 30.0,
+      "sd_c": 0.162,
+      "nonzero_frac": 0.013
+    },
+    {
+      "venue": "kalshi",
+      "z": 167.69,
+      "move_c": 17.0,
+      "sd_c": 0.101,
+      "nonzero_frac": 0.007
+    },
+    {
+      "venue": "poly",
+      "z": 161.56,
+      "move_c": 14.5,
+      "sd_c": 0.09,
+      "nonzero_frac": 0.009
+    }
+  ]
+}

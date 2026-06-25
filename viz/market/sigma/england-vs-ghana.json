@@ -1,0 +1,40 @@
+{
+  "match": "England vs Ghana",
+  "capture": "20260623T192521Z-england-vs-ghana",
+  "n_contracts": 4,
+  "max_z": 96.02,
+  "max_z_venue": "poly",
+  "max_move_c": 8.0,
+  "trail_sd_c": 0.083,
+  "max_z_nonzero_frac": 0.008,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 96.02,
+      "move_c": 8.0,
+      "sd_c": 0.083,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "kalshi",
+      "z": 75.63,
+      "move_c": 33.5,
+      "sd_c": 0.443,
+      "nonzero_frac": 0.184
+    },
+    {
+      "venue": "kalshi",
+      "z": 34.65,
+      "move_c": 2.0,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 18.97,
+      "move_c": 1.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
