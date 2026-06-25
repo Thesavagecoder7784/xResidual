@@ -1,0 +1,33 @@
+{
+  "match": "Portugal vs Uzbekistan",
+  "capture": "20260623T163005Z-portugal-vs-uzbekistan",
+  "n_contracts": 3,
+  "max_z": 40.04,
+  "max_z_venue": "poly",
+  "max_move_c": 1.45,
+  "trail_sd_c": 0.036,
+  "max_z_nonzero_frac": 0.022,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 40.04,
+      "move_c": 1.45,
+      "sd_c": 0.036,
+      "nonzero_frac": 0.022
+    },
+    {
+      "venue": "poly",
+      "z": 34.67,
+      "move_c": 2.0,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 10.62,
+      "move_c": 1.0,
+      "sd_c": 0.094,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
