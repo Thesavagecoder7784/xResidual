@@ -1,0 +1,40 @@
+{
+  "match": "Bosnia Herzegovina vs Qatar",
+  "capture": "20260624T183243Z-bosnia-herzegovina-vs-qatar",
+  "n_contracts": 4,
+  "max_z": 389.71,
+  "max_z_venue": "kalshi",
+  "max_move_c": 22.5,
+  "trail_sd_c": 0.058,
+  "max_z_nonzero_frac": 0.003,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 389.71,
+      "move_c": 22.5,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 353.67,
+      "move_c": 19.2,
+      "sd_c": 0.054,
+      "nonzero_frac": 0.099
+    },
+    {
+      "venue": "poly",
+      "z": 52.92,
+      "move_c": 7.0,
+      "sd_c": 0.132,
+      "nonzero_frac": 0.018
+    },
+    {
+      "venue": "kalshi",
+      "z": 34.64,
+      "move_c": 2.0,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.005
+    }
+  ]
+}

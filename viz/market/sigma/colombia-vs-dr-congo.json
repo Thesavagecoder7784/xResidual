@@ -1,0 +1,40 @@
+{
+  "match": "Colombia vs Dr Congo",
+  "capture": "20260624T013522Z-colombia-vs-dr-congo",
+  "n_contracts": 4,
+  "max_z": 160.83,
+  "max_z_venue": "poly",
+  "max_move_c": 33.0,
+  "trail_sd_c": 0.205,
+  "max_z_nonzero_frac": 0.039,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 160.83,
+      "move_c": 33.0,
+      "sd_c": 0.205,
+      "nonzero_frac": 0.039
+    },
+    {
+      "venue": "kalshi",
+      "z": 83.65,
+      "move_c": 18.5,
+      "sd_c": 0.221,
+      "nonzero_frac": 0.06
+    },
+    {
+      "venue": "poly",
+      "z": 30.0,
+      "move_c": 4.5,
+      "sd_c": 0.15,
+      "nonzero_frac": 0.007
+    },
+    {
+      "venue": "kalshi",
+      "z": 28.09,
+      "move_c": 4.0,
+      "sd_c": 0.142,
+      "nonzero_frac": 0.02
+    }
+  ]
+}

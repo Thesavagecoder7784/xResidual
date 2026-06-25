@@ -1,0 +1,40 @@
+{
+  "match": "Jordan vs Algeria",
+  "capture": "20260623T022922Z-jordan-vs-algeria",
+  "n_contracts": 4,
+  "max_z": 183.05,
+  "max_z_venue": "kalshi",
+  "max_move_c": 22.0,
+  "trail_sd_c": 0.12,
+  "max_z_nonzero_frac": 0.018,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 183.05,
+      "move_c": 22.0,
+      "sd_c": 0.12,
+      "nonzero_frac": 0.018
+    },
+    {
+      "venue": "poly",
+      "z": 160.01,
+      "move_c": 21.5,
+      "sd_c": 0.134,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "kalshi",
+      "z": 132.99,
+      "move_c": 18.0,
+      "sd_c": 0.135,
+      "nonzero_frac": 0.015
+    },
+    {
+      "venue": "poly",
+      "z": 117.8,
+      "move_c": 17.0,
+      "sd_c": 0.144,
+      "nonzero_frac": 0.012
+    }
+  ]
+}
