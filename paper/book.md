@@ -1,4 +1,4 @@
-# Paper book — 2026-06-24 21:36Z
+# Paper book — 2026-06-25 14:03Z
 
 **Money in:** $1305  ·  **Open:** 16  ·  **Closed:** 22
 
@@ -7,23 +7,23 @@
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
 | 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.675 | 46.9 | -3.1 |
-| 8 | NO | team-to-advance-to-knockout-stages / Saudi Arabia | 30 | 0.640 | 0.690 | 32.3 | +2.3 |
-| 12 | YES | team-to-advance-to-knockout-stages / Algeria | 40 | 0.655 | 0.805 | 49.2 | +9.2 |
+| 8 | NO | team-to-advance-to-knockout-stages / Saudi Arabia | 30 | 0.640 | 0.675 | 31.6 | +1.6 |
+| 12 | YES | team-to-advance-to-knockout-stages / Algeria | 40 | 0.655 | 0.755 | 46.1 | +6.1 |
 | 14 | NO | team-to-advance-to-knockout-stages / Jordan | 30 | 0.790 | 1.000 | 38.0 | +8.0 |
-| 17 | YES | fifwc-egy-irn-2026-06-26-more-markets / Both Teams to Score | 25 | 0.445 | 0.440 | 24.7 | -0.3 |
-| 18 | NO | fifwc-nzl-bel-2026-06-26-more-markets / Both Teams to Score | 15 | 0.560 | 0.600 | 16.1 | +1.1 |
-| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.390 | 24.4 | -0.6 |
-| 24 | NO | group-c-winner / Brazil | 30 | 0.415 | 0.315 | 22.8 | -7.2 |
-| 25 | NO | group-b-winner / Switzerland | 20 | 0.555 | 0.001 | 0.0 | -20.0 |
-| 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.725 | 31.3 | +1.3 |
-| 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.515 | 16.0 | -4.0 |
-| 28 | NO | nation-to-reach-quarterfinals / Brazil | 15 | 0.525 | 0.555 | 15.9 | +0.9 |
-| 30 | YES | team-to-advance-to-knockout-stages / Bosnia and Herzegovina | 20 | 0.665 | 0.989 | 29.7 | +9.7 |
-| 33 | YES | team-to-advance-to-knockout-stages / Senegal | 30 | 0.705 | 0.665 | 28.3 | -1.7 |
-| 40 | NO | team-to-advance-to-knockout-stages / Iran | 25 | 0.358 | 0.403 | 28.1 | +3.1 |
-| 41 | YES | team-to-advance-to-knockout-stages / Paraguay | 15 | 0.850 | 0.860 | 15.2 | +0.2 |
+| 17 | YES | fifwc-egy-irn-2026-06-26-more-markets / Both Teams to Score | 25 | 0.445 | 0.445 | 25.0 | +0.0 |
+| 18 | NO | fifwc-nzl-bel-2026-06-26-more-markets / Both Teams to Score | 15 | 0.560 | 0.575 | 15.4 | +0.4 |
+| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.355 | 22.2 | -2.8 |
+| 24 | NO | group-c-winner / Brazil | 30 | 0.415 | 0.000 | 0.0 | -30.0 |
+| 25 | NO | group-b-winner / Switzerland | 20 | 0.555 | 0.000 | 0.0 | -20.0 |
+| 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.695 | 30.0 | +0.0 |
+| 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.485 | 15.0 | -5.0 |
+| 28 | NO | nation-to-reach-quarterfinals / Brazil | 15 | 0.525 | 0.540 | 15.4 | +0.4 |
+| 30 | YES | team-to-advance-to-knockout-stages / Bosnia and Herzegovina | 20 | 0.665 | 1.000 | 30.1 | +10.1 |
+| 33 | YES | team-to-advance-to-knockout-stages / Senegal | 30 | 0.705 | 0.685 | 29.1 | -0.9 |
+| 40 | NO | team-to-advance-to-knockout-stages / Iran | 25 | 0.358 | 0.427 | 29.8 | +4.8 |
+| 41 | YES | team-to-advance-to-knockout-stages / Paraguay | 15 | 0.850 | 0.855 | 15.1 | +0.1 |
 
-**Unrealized P&L:** -1.3  (on $420 open)
+**Unrealized P&L:** -30.2  (on $420 open)
 
 ## Closed positions
 
@@ -56,4 +56,4 @@
 
 ## Total
 
-money in **$1305**  ·  unrealized **-1.3**  ·  realized **+58.2**  ·  **combined +57.0**
+money in **$1305**  ·  unrealized **-30.2**  ·  realized **+58.2**  ·  **combined +28.0**
