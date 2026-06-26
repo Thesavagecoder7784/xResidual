@@ -1,0 +1,40 @@
+{
+  "match": "Japan vs Sweden",
+  "capture": "20260625T223022Z-japan-vs-sweden",
+  "n_contracts": 4,
+  "max_z": 127.2,
+  "max_z_venue": "poly",
+  "max_move_c": 20.4,
+  "trail_sd_c": 0.16,
+  "max_z_nonzero_frac": 0.182,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 127.2,
+      "move_c": 20.4,
+      "sd_c": 0.16,
+      "nonzero_frac": 0.182
+    },
+    {
+      "venue": "poly",
+      "z": 97.26,
+      "move_c": 10.05,
+      "sd_c": 0.103,
+      "nonzero_frac": 0.154
+    },
+    {
+      "venue": "kalshi",
+      "z": 96.46,
+      "move_c": 7.0,
+      "sd_c": 0.073,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "kalshi",
+      "z": 82.51,
+      "move_c": 11.0,
+      "sd_c": 0.133,
+      "nonzero_frac": 0.018
+    }
+  ]
+}

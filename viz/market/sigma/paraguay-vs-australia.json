@@ -1,0 +1,40 @@
+{
+  "match": "Paraguay vs Australia",
+  "capture": "20260626T013443Z-paraguay-vs-australia",
+  "n_contracts": 4,
+  "max_z": 124.49,
+  "max_z_venue": "kalshi",
+  "max_move_c": 7.5,
+  "trail_sd_c": 0.06,
+  "max_z_nonzero_frac": 0.004,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 124.49,
+      "move_c": 7.5,
+      "sd_c": 0.06,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "poly",
+      "z": 55.68,
+      "move_c": 3.0,
+      "sd_c": 0.054,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 44.02,
+      "move_c": 3.0,
+      "sd_c": 0.068,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.74,
+      "move_c": 2.0,
+      "sd_c": 0.107,
+      "nonzero_frac": 0.013
+    }
+  ]
+}
