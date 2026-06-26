@@ -497,7 +497,7 @@ Stoikov (2014)** from **order-book level changes** — the signed change in dept
 quotes as the book updates. It is **book-derived, not trade-signed**, so like the §16 mids it is
 **immune to the ≈59% trade-direction-classification problem** (arXiv:2604.24366): nothing is
 inferred about whether a trade was buyer- or seller-initiated. Regressing contemporaneous mid
-changes on OFI gives the within-venue impact channel, **strongly significant (t ≈ 30)** — the
+changes on OFI gives the within-venue impact channel, **strongly significant, both venues** (bin-level t overstates significance; judged across matches) — the
 mechanism linking flow to price impact that sits underneath the cross-venue lead. Where the book
 detail supports it, the **microprice (Stoikov 2017)** — the size-weighted fair value between bid
 and ask — is the natural companion estimate of where the next mid is headed, refining the plain

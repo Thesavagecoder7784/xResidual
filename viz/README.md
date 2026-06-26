@@ -126,7 +126,7 @@ Tape-derived, from the captured `ws_capture` websocket feeds. Processed by `buil
 |---|---|
 | `leadlag_lead` | the pooled flagship — Polymarket prices a goal first across the match pool (34 matches, ~62% of repricing events: 103 vs 45 of 165, median +400ms) |
 | `leadlag_tape` | a single match's tape: who priced the goal first, to the millisecond |
-| `ofi_mechanism` | order-flow imbalance → price impact, the within-venue mechanism (Cont-Kukanov-Stoikov; t≈30) |
+| `ofi_mechanism` | order-flow imbalance → price impact, the within-venue mechanism (Cont-Kukanov-Stoikov; strong within-venue, no cross-venue lead) |
 | `live_match` | a match's in-play win-probability tape with auto-detected goal shocks |
 | `livewp_underreaction` | our in-play win-probability model vs the live market — the market under-reacts to goals (~5pp) |
 | `book_vanishes` | **NEW (anatomy of a goal)** — at a goal the order book evaporates: Polymarket spread ~8×, best-price depth →<1%; Kalshi 2×, →~1%; refill ~3–4s. The price leader withdraws hardest |
