@@ -31,7 +31,7 @@ import numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from xresidual import wc2026_teams as W  # noqa: E402
-from xresidual.calibration import calibration_regression  # noqa: E402  P1 binds the slope to this
+from xresidual.calibration import calibration_regression, corp as corp_band, flatten_wdl  # noqa: E402  P1: slope + the registered consistency-band test
 
 LEDGERS = {"v1": "paper/match_forecasts.jsonl", "v2": "paper/match_forecasts_v2.jsonl",
            "v3": "paper/match_forecasts_v3.jsonl"}
@@ -168,7 +168,18 @@ def score(forecasts: dict, outcomes: dict) -> dict | None:
     # P1 calibration-regression slope b (logit fit, b=1 perfect): bound to calibration.calibration_regression,
     # on the same pooled one-vs-rest (forecast, outcome) pairs. P1 PASS needs b in [0.70, 1.30].
     a, b = calibration_regression(f, o)
+    # P1 clause (a), the REGISTERED test: does the CORP recalibration curve stay within the
+    # Dimitriadis-Gneiting-Jordan consistency band (null of calibration, the MATCH as resampling
+    # unit) across the bulk of forecast support? This replaces the bin-MCB proxy the grader used.
+    oc_str = np.array(["home", "draw", "away"])[O]
+    pc, yc = flatten_wdl(P[:, 0], P[:, 1], P[:, 2], oc_str)
+    cr = corp_band(pc, yc, wdl_n=n, n_boot=300)
+    lo, hi = float(np.percentile(f, 2.5)), float(np.percentile(f, 97.5))
+    supp = (cr.grid >= lo) & (cr.grid <= hi)
+    within = (cr.recal >= cr.band_lo - 1e-9) & (cr.recal <= cr.band_hi + 1e-9)
+    in_band_frac = float(within[supp].mean()) if supp.any() else 1.0
     return {"n_games": n, "brier": round(brier, 4), "brier_baseline": round(brier_base, 4),
+            "corp_in_band": bool(in_band_frac >= 0.95), "corp_in_band_frac": round(in_band_frac, 3),
             "skill_vs_baseline_pct": round((1 - brier / brier_base) * 100, 1),
             "reliability": round(reliability, 4), "resolution": round(resolution, 4),
             "uncertainty": round(uncertainty, 4), "corp_mce": round(corp_mce, 4),
