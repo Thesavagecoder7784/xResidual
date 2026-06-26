@@ -1,0 +1,40 @@
+{
+  "match": "Senegal vs Iraq",
+  "capture": "20260626T183323Z-senegal-vs-iraq",
+  "n_contracts": 4,
+  "max_z": 69.29,
+  "max_z_venue": "kalshi",
+  "max_move_c": 4.0,
+  "trail_sd_c": 0.058,
+  "max_z_nonzero_frac": 0.003,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 69.29,
+      "move_c": 4.0,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 40.1,
+      "move_c": 2.8,
+      "sd_c": 0.07,
+      "nonzero_frac": 0.167
+    },
+    {
+      "venue": "poly",
+      "z": 36.22,
+      "move_c": 1.45,
+      "sd_c": 0.04,
+      "nonzero_frac": 0.13
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.97,
+      "move_c": 1.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    }
+  ]
+}

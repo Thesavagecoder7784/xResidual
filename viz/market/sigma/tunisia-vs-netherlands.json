@@ -1,0 +1,40 @@
+{
+  "match": "Tunisia vs Netherlands",
+  "capture": "20260625T223023Z-tunisia-vs-netherlands",
+  "n_contracts": 4,
+  "max_z": 281.02,
+  "max_z_venue": "poly",
+  "max_move_c": 19.4,
+  "trail_sd_c": 0.069,
+  "max_z_nonzero_frac": 0.128,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 281.02,
+      "move_c": 19.4,
+      "sd_c": 0.069,
+      "nonzero_frac": 0.128
+    },
+    {
+      "venue": "poly",
+      "z": 98.75,
+      "move_c": 2.5,
+      "sd_c": 0.025,
+      "nonzero_frac": 0.047
+    },
+    {
+      "venue": "kalshi",
+      "z": 76.0,
+      "move_c": 4.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.97,
+      "move_c": 1.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
