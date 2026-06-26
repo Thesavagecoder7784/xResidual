@@ -96,14 +96,16 @@ def grade_p1():
         return V("P1", "Markets well-calibrated", "genuine unknown", True,
                  PEND, None, "market & v1 Brier", n=n, note="market/v1 block missing from artifact")
     c_brier = mkt["brier"] < v1["brier"]                       # clause (c)
-    a_calib = mkt.get("reliability", 1) < 0.02                 # clause (a) proxy: low MCB/reliability
+    a_calib = mkt.get("corp_in_band")                          # clause (a): REGISTERED band test
+    if a_calib is None:                                        # fallback if artifact predates the band test
+        a_calib = mkt.get("reliability", 1) < 0.02
     slope = mkt.get("slope") or mkt.get("slope_b") or mkt.get("calib_slope")  # clause (b)
-    val = f"mkt Brier {mkt['brier']:.4f} vs v1 {v1['brier']:.4f} · mkt MCB {mkt.get('reliability')}"
+    band = f"in-band {mkt.get('corp_in_band_frac')}" if mkt.get("corp_in_band_frac") is not None else f"MCB {mkt.get('reliability')}"
+    val = f"mkt Brier {mkt['brier']:.4f} vs v1 {v1['brier']:.4f} · {band}"
     if slope is None:
         return V("P1", "Markets well-calibrated", "genuine unknown", True,
                  PEND, val, "(b) slope b in [0.70,1.30]", n=n,
-                 note="GAP: build_calibration.py does not emit the calibration-regression slope b "
-                      "that P1's PASS rule requires — add it before Jul 19")
+                 note="slope b missing from artifact — re-run scripts/build_calibration.py")
     b_slope = 0.70 <= slope <= 1.30
     verdict = PASS if (a_calib and b_slope and c_brier) else FAIL
     return V("P1", "Markets well-calibrated", "genuine unknown", True, verdict,
