@@ -397,10 +397,12 @@ value corroborates the strong outliers rather than the blunt offset over-penaliz
 
 Validation (`scripts/calibrate_confed_offsets.py`): a time-split, cross- vs within-
 confederation stratified backtest. The shrinkage improves out-of-sample cross-confederation
-RPS by **~+4.6%** (vs ~+3.9% for a flat per-confederation offset) and leaves the within-
-confederation slice essentially unchanged (the placebo). The gain over the flat offset is
-**significant after accounting for match dependence** (Diebold–Mariano with HAC SE, p ≈ 0.009;
-team-cluster bootstrap 95% CI excludes 0) — and method b adds exactly one fitted parameter
+RPS by **~+5.2%** (vs ~+3.8% for a flat per-confederation offset) and leaves the within-
+confederation slice essentially unchanged (the placebo, ~+0.1%). The gain over the flat offset is
+**significant after accounting for match dependence** (Diebold–Mariano with HAC SE, p ≈ 0.003;
+b strictly better in 59% of matches) — these figures regenerate from the script and drift slightly
+as the results dataset grows (the pre-registration addendum's commit-time figure, June 2026, was
++4.6% / p≈0.009; the direction has only strengthened) — and method b adds exactly one fitted parameter
 (`K`) over method a, chosen on a held-out validation slice. Adjudicated against the
 independent bookmaker, the corrected model agrees with the de-vigged outright consensus at
 **0.95 rank correlation and a median 0.2pp** title-probability gap; the residual disagreements
