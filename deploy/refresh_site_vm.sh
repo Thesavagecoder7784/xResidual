@@ -25,13 +25,11 @@ flock -w 1500 9 || { echo "  another site refresh holds the lock; skipping this 
 echo "===== site refresh $(date -u +%FT%TZ) ====="
 # Pull results first so the sim + calibration see matches played since the last run.
 "$PY" -c "from xresidual import data; df=data.load_results(refresh=True); print('  results ->', df['date'].max(), len(df))" || echo "  results refresh failed (cache)"
-# Fast-result overlay: merge final scores from The Odds API ahead of the martj42 feed (1-2d lag),
-# so the model conditions same-day. Cadence-guarded (SCORES_EVERY_H, default 6h); off-cadence
-# cycles re-apply the cached overlay for free. Must run after the refresh (which wipes it) and
-# before every build below. martj42 stays canonical — once it carries a game, this defers.
-# FORCE_SCORES=1 (set by the matchday-end trigger) bypasses the cadence guard so the final
-# scores land immediately after the last whistle — worth the 2 API credits once per matchday.
-"$PY" scripts/fetch_scores.py ${FORCE_SCORES:+--force} || echo "  scores overlay failed (cache)"
+# Fast-result overlay: merge final scores from ESPN's free scoreboard ahead of the martj42 feed
+# (1-2d lag), so the model conditions same-day. No key, no quota — fetched fresh every cycle.
+# Must run after the martj42 refresh and before every build below. martj42 stays canonical:
+# once it carries a game, this defers to it.
+"$PY" scripts/fetch_scores.py || echo "  scores overlay failed (cache)"
 "$PY" scripts/prediction_board.py             || echo "  board log failed"
 "$PY" scripts/prediction_board.py --score     || echo "  CLV failed"
 "$PY" scripts/prediction_board.py --calibrate || echo "  calibrate failed"
