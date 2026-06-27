@@ -1,0 +1,40 @@
+{
+  "match": "Egypt vs Iran",
+  "capture": "20260627T022522Z-egypt-vs-iran",
+  "n_contracts": 4,
+  "max_z": 176.4,
+  "max_z_venue": "kalshi",
+  "max_move_c": 11.0,
+  "trail_sd_c": 0.062,
+  "max_z_nonzero_frac": 0.004,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 176.4,
+      "move_c": 11.0,
+      "sd_c": 0.062,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "kalshi",
+      "z": 144.5,
+      "move_c": 20.0,
+      "sd_c": 0.138,
+      "nonzero_frac": 0.018
+    },
+    {
+      "venue": "poly",
+      "z": 141.76,
+      "move_c": 25.0,
+      "sd_c": 0.176,
+      "nonzero_frac": 0.019
+    },
+    {
+      "venue": "poly",
+      "z": 123.22,
+      "move_c": 36.5,
+      "sd_c": 0.296,
+      "nonzero_frac": 0.054
+    }
+  ]
+}
