@@ -18,10 +18,15 @@ else
   git -C "$PUB" pull --rebase --autostash
 fi
 
-echo "-- install + start the site timer"
-sudo cp "$REPO/deploy/systemd/xresidual-site.service" "$REPO/deploy/systemd/xresidual-site.timer" /etc/systemd/system/
+echo "-- install + start the site timer (30-min cadence backstop) and the matchday-end trigger"
+sudo cp "$REPO/deploy/systemd/xresidual-site.service" "$REPO/deploy/systemd/xresidual-site.timer" \
+        "$REPO/deploy/systemd/xresidual-matchday.service" "$REPO/deploy/systemd/xresidual-matchday.timer" \
+        /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now xresidual-site.timer
+# Matchday-end trigger: forces a fresh-scores publish within minutes of a matchday's last whistle,
+# instead of waiting up to 30 min for the next cadence tick. Seeds quietly on first run.
+sudo systemctl enable --now xresidual-matchday.timer
 
 echo "-- one immediate refresh to verify end-to-end"
 bash "$REPO/deploy/refresh_site_vm.sh"
