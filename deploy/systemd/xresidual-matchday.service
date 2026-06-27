@@ -1,0 +1,12 @@
+[Unit]
+Description=xResidual matchday-end site refresh (publish results right after the last whistle)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=azureuser
+WorkingDirectory=/home/azureuser/xResidual
+ExecStart=/home/azureuser/xResidual/.venv/bin/python scripts/matchday_refresh.py --target vm
+StandardOutput=append:/home/azureuser/xResidual/logger/data/matchday-refresh.log
+StandardError=append:/home/azureuser/xResidual/logger/data/matchday-refresh.log

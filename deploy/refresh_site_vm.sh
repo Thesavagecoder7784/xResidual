@@ -16,6 +16,12 @@ PY="$REPO/.venv/bin/python"
 export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/xres_deploy -o IdentitiesOnly=yes"
 cd "$REPO" || exit 1
 
+# Serialize all runs: the 30-min cadence timer (xresidual-site) AND the matchday-end trigger
+# (xresidual-matchday) both call this. A blocking lock lets a triggered run wait out an in-flight
+# cadence run rather than racing it on the git push into $PUB. -w caps the wait so we never wedge.
+exec 9>"/tmp/xres-site-refresh.lock"
+flock -w 1500 9 || { echo "  another site refresh holds the lock; skipping this run"; exit 0; }
+
 echo "===== site refresh $(date -u +%FT%TZ) ====="
 # Pull results first so the sim + calibration see matches played since the last run.
 "$PY" -c "from xresidual import data; df=data.load_results(refresh=True); print('  results ->', df['date'].max(), len(df))" || echo "  results refresh failed (cache)"
@@ -23,7 +29,9 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 # so the model conditions same-day. Cadence-guarded (SCORES_EVERY_H, default 6h); off-cadence
 # cycles re-apply the cached overlay for free. Must run after the refresh (which wipes it) and
 # before every build below. martj42 stays canonical — once it carries a game, this defers.
-"$PY" scripts/fetch_scores.py                 || echo "  scores overlay failed (cache)"
+# FORCE_SCORES=1 (set by the matchday-end trigger) bypasses the cadence guard so the final
+# scores land immediately after the last whistle — worth the 2 API credits once per matchday.
+"$PY" scripts/fetch_scores.py ${FORCE_SCORES:+--force} || echo "  scores overlay failed (cache)"
 "$PY" scripts/prediction_board.py             || echo "  board log failed"
 "$PY" scripts/prediction_board.py --score     || echo "  CLV failed"
 "$PY" scripts/prediction_board.py --calibrate || echo "  calibrate failed"
