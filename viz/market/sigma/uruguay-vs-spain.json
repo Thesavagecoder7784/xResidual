@@ -1,0 +1,40 @@
+{
+  "match": "Uruguay vs Spain",
+  "capture": "20260626T232753Z-uruguay-vs-spain",
+  "n_contracts": 4,
+  "max_z": 124.29,
+  "max_z_venue": "poly",
+  "max_move_c": 20.5,
+  "trail_sd_c": 0.165,
+  "max_z_nonzero_frac": 0.029,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 124.29,
+      "move_c": 20.5,
+      "sd_c": 0.165,
+      "nonzero_frac": 0.029
+    },
+    {
+      "venue": "kalshi",
+      "z": 67.41,
+      "move_c": 11.0,
+      "sd_c": 0.163,
+      "nonzero_frac": 0.028
+    },
+    {
+      "venue": "poly",
+      "z": 62.46,
+      "move_c": 6.5,
+      "sd_c": 0.104,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "kalshi",
+      "z": 34.88,
+      "move_c": 5.0,
+      "sd_c": 0.143,
+      "nonzero_frac": 0.024
+    }
+  ]
+}
