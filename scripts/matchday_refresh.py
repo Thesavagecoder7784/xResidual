@@ -11,10 +11,9 @@ target refresh once that day's games are done (last kickoff + BUFFER_H). State i
 logger/data/last-refresh-<target>.json makes it fire once per matchday and restart-safe.
 
 Targets:
-  vm     -> deploy/refresh_site_vm.sh with FORCE_SCORES=1, so the Odds-API overlay bypasses its
-            6h cost guard and pulls the finals immediately (worth the 2 credits once per matchday).
-            No heartbeat: the 30-min xresidual-site timer is the backstop, so the gate only ever
-            adds a prompt, force-fetched build at the moment the last whistle goes.
+  vm     -> deploy/refresh_site_vm.sh: the ESPN scores overlay (free, no quota) pulls the finals
+            and the site republishes. No heartbeat: the 30-min xresidual-site timer is the backstop,
+            so the gate only ever adds a prompt build at the moment the last whistle goes.
   laptop -> scripts/refresh_daily.sh (re-render cards, re-mark the paper book) once the matchday
             is done, plus a HEARTBEAT_H safety run so late-landing results still get rendered.
 
@@ -41,7 +40,7 @@ HEARTBEAT_H = 12.0    # laptop only: refresh at least this often (catch late-lan
 
 TARGETS = {
     # name: (refresh script, extra env, heartbeat?)
-    "vm": (os.path.join(ROOT, "deploy", "refresh_site_vm.sh"), {"FORCE_SCORES": "1"}, False),
+    "vm": (os.path.join(ROOT, "deploy", "refresh_site_vm.sh"), {}, False),
     "laptop": (os.path.join(ROOT, "scripts", "refresh_daily.sh"), {}, True),
 }
 

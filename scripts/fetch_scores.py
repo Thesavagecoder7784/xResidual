@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
-"""Fast WC-result overlay: pull final scores from The Odds API and merge any games the
-martj42/international_results feed doesn't carry yet into the local results cache.
+"""Fast WC-result overlay: pull final scores from ESPN's free scoreboard API and merge any games
+the martj42/international_results feed doesn't carry yet into the local results cache.
 
-    python scripts/fetch_scores.py            # cadence-guarded (>= SCORES_EVERY_H since last call)
-    python scripts/fetch_scores.py --force    # fetch now regardless of cadence
+    python scripts/fetch_scores.py            # fetch + merge (free, no key, every cycle)
+    python scripts/fetch_scores.py --days 5   # widen the lookback window
 
-The Odds API posts a final scoreline within minutes of full time; the martj42 feed lags 1-2
-days. This overlay lets the model condition on a result the day it is played. martj42 stays
-canonical: once it carries a game, the overlay defers to it (the merge skips any pair already
-in the cache), and the overlay rows are written in martj42's own naming so a later backfill is
-a no-op. It runs in the VM refresh right after the martj42 refresh and before every build step,
-so all downstream consumers (matches, group sim, bracket, board) read one merged cache.
+ESPN's public scoreboard endpoint (https://site.api.espn.com/.../soccer/fifa.world/scoreboard)
+posts a final scoreline within minutes of full time; the martj42 feed lags 1-2 days. This overlay
+lets the model condition on a result the day it is played. martj42 stays canonical: once it carries
+a game, the overlay defers to it (the merge skips any pair already in the cache), and overlay rows
+are written in martj42's own naming so a later backfill is a no-op. It runs in the VM refresh right
+after the martj42 refresh and before every build step, so all downstream consumers (matches, group
+sim, bracket, board) read one merged cache.
 
-Cost control: one scores call returns all 72 games and bills 2 credits. A cadence guard
-(SCORES_EVERY_H, default 6h) caps that at ~8 credits/day even though the refresh runs every
-30 min; off-cadence cycles re-apply the cached overlay for free.
+Why ESPN (replaces The Odds API, Jun 2026): it needs NO API key and has no credit quota, so there
+is nothing to expire or exhaust (the Odds-API key 401'd mid-tournament and silently froze results)
+and no cost guard to throttle it — we just fetch fresh every cycle. martj42 remains the canonical
+backstop, so if ESPN's unofficial endpoint ever changes, results still self-heal in 1-2 days.
 """
 from __future__ import annotations
 
@@ -22,7 +24,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pandas as pd
 import requests
@@ -31,31 +33,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from xresidual import data, wc2026_teams  # noqa: E402
 
-SCORES_URL = "https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/scores"
+SCORES_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
 CACHE_DIR = os.path.join(ROOT, "data", "cache")
 OVERLAY = os.path.join(CACHE_DIR, "wc_scores_overlay.json")   # last fetched completed games
-META = os.path.join(CACHE_DIR, "wc_scores_meta.json")          # last-fetch time + credit log
+META = os.path.join(CACHE_DIR, "wc_scores_meta.json")          # last-fetch time (informational)
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 WC_START = pd.Timestamp("2026-06-11")
 HOSTS = {"United States", "Canada", "Mexico"}
-SCORES_EVERY_H = float(os.environ.get("SCORES_EVERY_H", "6"))
 
 
 def _key(name: str) -> str:
-    """Odds API / fixture / martj42 name -> common martj42-convention key."""
+    """ESPN / fixture / martj42 name -> common martj42-convention key."""
     return wc2026_teams.elo_name(wc2026_teams.canonical(str(name).strip()))
-
-
-def _load_env_key() -> str | None:
-    if os.environ.get("ODDSAPI_KEY"):
-        return os.environ["ODDSAPI_KEY"]
-    envp = os.path.join(ROOT, ".env")
-    if os.path.exists(envp):
-        for line in open(envp, encoding="utf-8"):
-            line = line.strip()
-            if line.startswith("ODDSAPI_KEY=") and not line.startswith("#"):
-                return line.split("=", 1)[1]
-    return None
 
 
 def _read_json(path):
@@ -65,37 +54,48 @@ def _read_json(path):
         return None
 
 
-def _age_h(meta) -> float:
-    if not meta or not meta.get("last_fetch"):
-        return float("inf")
+def _score(competitor) -> int | None:
+    """ESPN competitor score: a bare string ('5') or {'value': 5, 'displayValue': '5'}."""
+    s = competitor.get("score")
+    if isinstance(s, dict):
+        s = s.get("value", s.get("displayValue"))
     try:
-        last = datetime.fromisoformat(meta["last_fetch"])
-        return (datetime.now(timezone.utc) - last).total_seconds() / 3600.0
-    except ValueError:
-        return float("inf")
+        return int(s)
+    except (TypeError, ValueError):
+        return None
 
 
-def fetch_completed(api_key: str, days: int):
-    """Return (records, credits_used). records: list of completed games in martj42 naming."""
-    r = requests.get(SCORES_URL, params={"apiKey": api_key, "daysFrom": days}, timeout=30)
+def fetch_completed(days: int):
+    """Return (records, n). records: completed games in martj42 naming, from ESPN's scoreboard.
+
+    ESPN takes a YYYYMMDD-YYYYMMDD date window; we look back `days` and one day forward so a game
+    that finished just after UTC midnight is still in range. The fifa.world league is the World Cup
+    finals, so every event in window is a WC2026 match."""
+    today = datetime.now(timezone.utc).date()
+    window = f"{(today - timedelta(days=days)):%Y%m%d}-{(today + timedelta(days=1)):%Y%m%d}"
+    r = requests.get(SCORES_URL, params={"dates": window, "limit": 200}, timeout=30)
     r.raise_for_status()
-    credits = r.headers.get("x-requests-last")
     records = []
-    for g in r.json():
-        if not g.get("completed") or not g.get("scores"):
+    for ev in r.json().get("events", []):
+        comp = (ev.get("competitions") or [{}])[0]
+        status = (comp.get("status") or ev.get("status") or {}).get("type", {})
+        if not status.get("completed"):
             continue
-        score = {s["name"]: s["score"] for s in g["scores"]}
-        h, a = g["home_team"], g["away_team"]
-        if h not in score or a not in score:
+        cs = comp.get("competitors") or []
+        if len(cs) != 2:
             continue
-        try:
-            hs, as_ = int(score[h]), int(score[a])
-        except (TypeError, ValueError):
+        home = next((c for c in cs if c.get("homeAway") == "home"), cs[0])
+        away = next((c for c in cs if c.get("homeAway") == "away"), cs[1])
+        hs, as_ = _score(home), _score(away)
+        if hs is None or as_ is None:
             continue
-        records.append({"home_team": _key(h), "away_team": _key(a),
-                        "home_score": hs, "away_score": as_,
-                        "commence_time": g.get("commence_time", "")})
-    return records, credits
+        records.append({
+            "home_team": _key(home.get("team", {}).get("displayName", "")),
+            "away_team": _key(away.get("team", {}).get("displayName", "")),
+            "home_score": hs, "away_score": as_,
+            "commence_time": ev.get("date", ""),
+        })
+    return records, len(records)
 
 
 def merge_into_cache(records) -> int:
@@ -105,7 +105,7 @@ def merge_into_cache(records) -> int:
     have = {frozenset((_key(r.home_team), _key(r.away_team))) for r in wc.itertuples(index=False)}
 
     fx = pd.read_csv(FIXTURES)
-    fxmap = {}  # pair-key -> (date, ground)
+    fxmap = {}  # pair-key -> (date, ground); also bounds the overlay to real WC2026 fixtures
     for row in fx.itertuples(index=False):
         fxmap[frozenset((_key(row.team1), _key(row.team2)))] = (str(row.date), str(row.ground))
 
@@ -114,7 +114,9 @@ def merge_into_cache(records) -> int:
         pair = frozenset((rec["home_team"], rec["away_team"]))
         if pair in have:                  # martj42 already has it -> it is canonical
             continue
-        date, ground = fxmap.get(pair, (rec["commence_time"][:10], ""))
+        if pair not in fxmap:             # not a known WC2026 fixture -> ignore (don't pollute)
+            continue
+        date, ground = fxmap[pair]
         rows.append({"date": date, "home_team": rec["home_team"], "away_team": rec["away_team"],
                      "home_score": rec["home_score"], "away_score": rec["away_score"],
                      "tournament": "FIFA World Cup", "city": ground, "country": "",
@@ -130,31 +132,21 @@ def merge_into_cache(records) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--force", action="store_true", help="fetch regardless of cadence")
-    ap.add_argument("--days", type=int, default=3, help="Odds API daysFrom window")
+    ap.add_argument("--force", action="store_true",
+                    help="(deprecated no-op; ESPN is free so every run fetches)")
+    ap.add_argument("--days", type=int, default=3, help="ESPN lookback window in days")
     args = ap.parse_args()
 
     os.makedirs(CACHE_DIR, exist_ok=True)
-    meta = _read_json(META) or {}
     overlay = _read_json(OVERLAY) or []
-
-    should_fetch = args.force or _age_h(meta) >= SCORES_EVERY_H or not os.path.exists(OVERLAY)
-    if should_fetch:
-        key = _load_env_key()
-        if not key:
-            print("  fetch_scores: no ODDSAPI_KEY; reusing cached overlay")
-        else:
-            try:
-                overlay, credits = fetch_completed(key, args.days)
-                json.dump(overlay, open(OVERLAY, "w", encoding="utf-8"))
-                meta = {"last_fetch": datetime.now(timezone.utc).isoformat(),
-                        "last_credits": credits, "n_completed": len(overlay)}
-                json.dump(meta, open(META, "w", encoding="utf-8"))
-                print(f"  fetch_scores: Odds API -> {len(overlay)} completed (cost {credits} credits)")
-            except requests.RequestException as e:
-                print(f"  fetch_scores: API call failed ({e}); reusing cached overlay")
-    else:
-        print(f"  fetch_scores: cadence guard ({_age_h(meta):.1f}h < {SCORES_EVERY_H}h); reusing cached overlay")
+    try:
+        overlay, n = fetch_completed(args.days)
+        json.dump(overlay, open(OVERLAY, "w", encoding="utf-8"))
+        json.dump({"last_fetch": datetime.now(timezone.utc).isoformat(), "n_completed": n},
+                  open(META, "w", encoding="utf-8"))
+        print(f"  fetch_scores: ESPN -> {n} completed games")
+    except requests.RequestException as e:
+        print(f"  fetch_scores: ESPN call failed ({e}); reusing cached overlay")
 
     added = merge_into_cache(overlay)
     print(f"  fetch_scores: merged {added} game(s) ahead of martj42" if added
