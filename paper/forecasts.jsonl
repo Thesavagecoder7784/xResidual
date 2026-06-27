@@ -4831,3 +4831,189 @@
 {"batch": "2026-06-26T17:53:21.794396+00:00", "ts_ms": 1782496401809, "market": "reach_final", "team": "Algeria", "model": 0.01, "mkt_at_forecast": 0.0025, "edge_pp": 0.75}
 {"batch": "2026-06-26T17:53:21.794396+00:00", "ts_ms": 1782496401809, "market": "reach_final", "team": "Portugal", "model": 0.143, "mkt_at_forecast": 0.175, "edge_pp": -3.2}
 {"batch": "2026-06-26T17:53:21.794396+00:00", "ts_ms": 1782496401809, "market": "reach_final", "team": "England", "model": 0.207, "mkt_at_forecast": 0.205, "edge_pp": 0.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Spain", "model": 0.163, "mkt_at_forecast": 0.1195, "edge_pp": 4.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Switzerland", "model": 0.011, "mkt_at_forecast": 0.0095, "edge_pp": 0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "England", "model": 0.114, "mkt_at_forecast": 0.1025, "edge_pp": 1.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "France", "model": 0.173, "mkt_at_forecast": 0.2215, "edge_pp": -4.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Brazil", "model": 0.063, "mkt_at_forecast": 0.0565, "edge_pp": 0.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Argentina", "model": 0.143, "mkt_at_forecast": 0.1865, "edge_pp": -4.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Germany", "model": 0.047, "mkt_at_forecast": 0.0425, "edge_pp": 0.45}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Colombia", "model": 0.021, "mkt_at_forecast": 0.0125, "edge_pp": 0.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Portugal", "model": 0.069, "mkt_at_forecast": 0.0805, "edge_pp": -1.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Ghana", "model": 0.001, "mkt_at_forecast": 0.0015, "edge_pp": -0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Netherlands", "model": 0.053, "mkt_at_forecast": 0.0425, "edge_pp": 1.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Bosnia & Herzegovina", "model": 0.001, "mkt_at_forecast": 0.0015, "edge_pp": -0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "USA", "model": 0.008, "mkt_at_forecast": 0.0235, "edge_pp": -1.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Canada", "model": 0.002, "mkt_at_forecast": 0.0025, "edge_pp": -0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Mexico", "model": 0.004, "mkt_at_forecast": 0.0125, "edge_pp": -0.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Japan", "model": 0.006, "mkt_at_forecast": 0.0145, "edge_pp": -0.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Norway", "model": 0.024, "mkt_at_forecast": 0.0245, "edge_pp": -0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Ecuador", "model": 0.015, "mkt_at_forecast": 0.0055, "edge_pp": 0.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Morocco", "model": 0.021, "mkt_at_forecast": 0.0145, "edge_pp": 0.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Senegal", "model": 0.01, "mkt_at_forecast": 0.0045, "edge_pp": 0.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Ivory Coast", "model": 0.008, "mkt_at_forecast": 0.0025, "edge_pp": 0.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Cape Verde", "model": 0.0, "mkt_at_forecast": 0.0015, "edge_pp": -0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Belgium", "model": 0.019, "mkt_at_forecast": 0.0135, "edge_pp": 0.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Australia", "model": 0.0, "mkt_at_forecast": 0.0015, "edge_pp": -0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Austria", "model": 0.003, "mkt_at_forecast": 0.0015, "edge_pp": 0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Croatia", "model": 0.009, "mkt_at_forecast": 0.0045, "edge_pp": 0.45}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Egypt", "model": 0.002, "mkt_at_forecast": 0.0015, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "champion", "team": "Sweden", "model": 0.005, "mkt_at_forecast": 0.0015, "edge_pp": 0.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "South Korea", "model": 0.6223, "mkt_at_forecast": 0.175, "edge_pp": 44.73}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Switzerland", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Bosnia & Herzegovina", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Morocco", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Australia", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Ecuador", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Japan", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Sweden", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Iran", "model": 0.4401, "mkt_at_forecast": 0.7505, "edge_pp": -31.04}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Cape Verde", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Senegal", "model": 0.9797, "mkt_at_forecast": 0.9995, "edge_pp": -1.98}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Austria", "model": 0.8518, "mkt_at_forecast": 0.8525, "edge_pp": -0.07}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Colombia", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Mexico", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "South Africa", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Canada", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Brazil", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Scotland", "model": 0.0642, "mkt_at_forecast": 0.0025, "edge_pp": 6.17}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "USA", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103356, "market": "advance", "team": "Paraguay", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Germany", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Ivory Coast", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Netherlands", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Belgium", "model": 0.9718, "mkt_at_forecast": 0.9995, "edge_pp": -2.77}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Egypt", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Spain", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "France", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Norway", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Argentina", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Algeria", "model": 0.6687, "mkt_at_forecast": 0.675, "edge_pp": -0.63}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Portugal", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Uzbekistan", "model": 0.0035, "mkt_at_forecast": 0.0025, "edge_pp": 0.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "England", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "DR Congo", "model": 0.4779, "mkt_at_forecast": 0.61, "edge_pp": -13.21}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Croatia", "model": 0.8972, "mkt_at_forecast": 0.845, "edge_pp": 5.22}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "advance", "team": "Ghana", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Mexico", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Switzerland", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Brazil", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "USA", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Germany", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Netherlands", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Belgium", "model": 0.2225, "mkt_at_forecast": 0.9995, "edge_pp": -77.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Spain", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "France", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Argentina", "model": 1.0, "mkt_at_forecast": 0.9995, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Colombia", "model": 0.502, "mkt_at_forecast": 0.505, "edge_pp": -0.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Portugal", "model": 0.498, "mkt_at_forecast": 0.485, "edge_pp": 1.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "England", "model": 0.9205, "mkt_at_forecast": 0.865, "edge_pp": 5.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Ghana", "model": 0.0248, "mkt_at_forecast": 0.054, "edge_pp": -2.93}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "group_win", "team": "Croatia", "model": 0.0547, "mkt_at_forecast": 0.0755, "edge_pp": -2.08}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Cape Verde", "model": 0.02, "mkt_at_forecast": 0.0275, "edge_pp": -0.75}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Croatia", "model": 0.153, "mkt_at_forecast": 0.12, "edge_pp": 3.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Norway", "model": 0.275, "mkt_at_forecast": 0.315, "edge_pp": -4.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Algeria", "model": 0.082, "mkt_at_forecast": 0.055, "edge_pp": 2.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Argentina", "model": 0.713, "mkt_at_forecast": 0.795, "edge_pp": -8.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Austria", "model": 0.082, "mkt_at_forecast": 0.065, "edge_pp": 1.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Portugal", "model": 0.425, "mkt_at_forecast": 0.475, "edge_pp": -5.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Colombia", "model": 0.279, "mkt_at_forecast": 0.295, "edge_pp": -1.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Ghana", "model": 0.058, "mkt_at_forecast": 0.1025, "edge_pp": -4.45}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Mexico", "model": 0.141, "mkt_at_forecast": 0.28, "edge_pp": -13.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Sweden", "model": 0.166, "mkt_at_forecast": 0.055, "edge_pp": 11.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "South Korea", "model": 0.044, "mkt_at_forecast": 0.0305, "edge_pp": 1.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Ivory Coast", "model": 0.155, "mkt_at_forecast": 0.1, "edge_pp": 5.5}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "South Africa", "model": 0.034, "mkt_at_forecast": 0.05, "edge_pp": -1.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Germany", "model": 0.311, "mkt_at_forecast": 0.315, "edge_pp": -0.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Canada", "model": 0.165, "mkt_at_forecast": 0.165, "edge_pp": 0.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Spain", "model": 0.563, "mkt_at_forecast": 0.61, "edge_pp": -4.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "England", "model": 0.583, "mkt_at_forecast": 0.595, "edge_pp": -1.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Switzerland", "model": 0.231, "mkt_at_forecast": 0.255, "edge_pp": -2.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Brazil", "model": 0.445, "mkt_at_forecast": 0.5, "edge_pp": -5.5}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Senegal", "model": 0.227, "mkt_at_forecast": 0.16, "edge_pp": 6.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Bosnia & Herzegovina", "model": 0.099, "mkt_at_forecast": 0.0765, "edge_pp": 2.25}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "France", "model": 0.609, "mkt_at_forecast": 0.67, "edge_pp": -6.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Morocco", "model": 0.322, "mkt_at_forecast": 0.295, "edge_pp": 2.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Netherlands", "model": 0.479, "mkt_at_forecast": 0.505, "edge_pp": -2.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Scotland", "model": 0.006, "mkt_at_forecast": 0.0095, "edge_pp": -0.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "USA", "model": 0.337, "mkt_at_forecast": 0.45, "edge_pp": -11.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Australia", "model": 0.053, "mkt_at_forecast": 0.0695, "edge_pp": -1.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Paraguay", "model": 0.048, "mkt_at_forecast": 0.027, "edge_pp": 2.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Japan", "model": 0.125, "mkt_at_forecast": 0.155, "edge_pp": -3.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Ecuador", "model": 0.314, "mkt_at_forecast": 0.1475, "edge_pp": 16.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Egypt", "model": 0.126, "mkt_at_forecast": 0.08, "edge_pp": 4.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Belgium", "model": 0.287, "mkt_at_forecast": 0.325, "edge_pp": -3.8}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "Iran", "model": 0.017, "mkt_at_forecast": 0.0585, "edge_pp": -4.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_qf", "team": "DR Congo", "model": 0.026, "mkt_at_forecast": 0.0235, "edge_pp": 0.25}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Iran", "model": 0.003, "mkt_at_forecast": 0.009, "edge_pp": -0.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Egypt", "model": 0.027, "mkt_at_forecast": 0.0285, "edge_pp": -0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Canada", "model": 0.032, "mkt_at_forecast": 0.0435, "edge_pp": -1.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Morocco", "model": 0.116, "mkt_at_forecast": 0.11, "edge_pp": 0.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Norway", "model": 0.131, "mkt_at_forecast": 0.155, "edge_pp": -2.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Colombia", "model": 0.131, "mkt_at_forecast": 0.14, "edge_pp": -0.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Japan", "model": 0.048, "mkt_at_forecast": 0.08, "edge_pp": -3.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Bosnia & Herzegovina", "model": 0.016, "mkt_at_forecast": 0.0235, "edge_pp": -0.75}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Brazil", "model": 0.247, "mkt_at_forecast": 0.29, "edge_pp": -4.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Australia", "model": 0.013, "mkt_at_forecast": 0.0235, "edge_pp": -1.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Paraguay", "model": 0.017, "mkt_at_forecast": 0.0155, "edge_pp": 0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Netherlands", "model": 0.209, "mkt_at_forecast": 0.23, "edge_pp": -2.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Ecuador", "model": 0.114, "mkt_at_forecast": 0.07, "edge_pp": 4.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Ghana", "model": 0.015, "mkt_at_forecast": 0.029, "edge_pp": -1.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Belgium", "model": 0.131, "mkt_at_forecast": 0.1, "edge_pp": 3.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "France", "model": 0.431, "mkt_at_forecast": 0.515, "edge_pp": -8.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Argentina", "model": 0.469, "mkt_at_forecast": 0.495, "edge_pp": -2.6}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Austria", "model": 0.037, "mkt_at_forecast": 0.023, "edge_pp": 1.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Croatia", "model": 0.073, "mkt_at_forecast": 0.0525, "edge_pp": 2.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "DR Congo", "model": 0.007, "mkt_at_forecast": 0.0095, "edge_pp": -0.25}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Germany", "model": 0.182, "mkt_at_forecast": 0.19, "edge_pp": -0.8}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Algeria", "model": 0.03, "mkt_at_forecast": 0.0185, "edge_pp": 1.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Portugal", "model": 0.257, "mkt_at_forecast": 0.28, "edge_pp": -2.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Mexico", "model": 0.05, "mkt_at_forecast": 0.145, "edge_pp": -9.5}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Switzerland", "model": 0.085, "mkt_at_forecast": 0.078, "edge_pp": 0.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Sweden", "model": 0.055, "mkt_at_forecast": 0.0275, "edge_pp": 2.75}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Spain", "model": 0.45, "mkt_at_forecast": 0.455, "edge_pp": -0.5}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "South Korea", "model": 0.009, "mkt_at_forecast": 0.0055, "edge_pp": 0.35}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Ivory Coast", "model": 0.062, "mkt_at_forecast": 0.033, "edge_pp": 2.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Uzbekistan", "model": 0.0, "mkt_at_forecast": 0.0015, "edge_pp": -0.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Scotland", "model": 0.001, "mkt_at_forecast": 0.0105, "edge_pp": -0.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "USA", "model": 0.095, "mkt_at_forecast": 0.175, "edge_pp": -8.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Cape Verde", "model": 0.003, "mkt_at_forecast": 0.0245, "edge_pp": -2.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "Senegal", "model": 0.084, "mkt_at_forecast": 0.037, "edge_pp": 4.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "South Africa", "model": 0.003, "mkt_at_forecast": 0.0115, "edge_pp": -0.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_sf", "team": "England", "model": 0.366, "mkt_at_forecast": 0.375, "edge_pp": -0.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "South Korea", "model": 0.002, "mkt_at_forecast": 0.0095, "edge_pp": -0.75}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Switzerland", "model": 0.033, "mkt_at_forecast": 0.023, "edge_pp": 1.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Bosnia & Herzegovina", "model": 0.003, "mkt_at_forecast": 0.0095, "edge_pp": -0.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Morocco", "model": 0.051, "mkt_at_forecast": 0.0625, "edge_pp": -1.15}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Australia", "model": 0.003, "mkt_at_forecast": 0.0095, "edge_pp": -0.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Ecuador", "model": 0.043, "mkt_at_forecast": 0.012, "edge_pp": 3.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Mexico", "model": 0.016, "mkt_at_forecast": 0.0655, "edge_pp": -4.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "South Africa", "model": 0.0, "mkt_at_forecast": 0.0065, "edge_pp": -0.65}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Canada", "model": 0.008, "mkt_at_forecast": 0.0155, "edge_pp": -0.75}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Brazil", "model": 0.133, "mkt_at_forecast": 0.145, "edge_pp": -1.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Scotland", "model": 0.0, "mkt_at_forecast": 0.003, "edge_pp": -0.3}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "USA", "model": 0.027, "mkt_at_forecast": 0.0665, "edge_pp": -3.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Paraguay", "model": 0.004, "mkt_at_forecast": 0.014, "edge_pp": -1.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Germany", "model": 0.093, "mkt_at_forecast": 0.095, "edge_pp": -0.2}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Ivory Coast", "model": 0.024, "mkt_at_forecast": 0.0145, "edge_pp": 0.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Netherlands", "model": 0.107, "mkt_at_forecast": 0.125, "edge_pp": -1.8}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Japan", "model": 0.018, "mkt_at_forecast": 0.038, "edge_pp": -2.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Sweden", "model": 0.018, "mkt_at_forecast": 0.0175, "edge_pp": 0.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Iran", "model": 0.0, "mkt_at_forecast": 0.0085, "edge_pp": -0.85}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Cape Verde", "model": 0.0, "mkt_at_forecast": 0.008, "edge_pp": -0.8}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Senegal", "model": 0.03, "mkt_at_forecast": 0.015, "edge_pp": 1.5}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Austria", "model": 0.011, "mkt_at_forecast": 0.0155, "edge_pp": -0.45}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Colombia", "model": 0.054, "mkt_at_forecast": 0.0485, "edge_pp": 0.55}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "DR Congo", "model": 0.002, "mkt_at_forecast": 0.006, "edge_pp": -0.4}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Croatia", "model": 0.027, "mkt_at_forecast": 0.0295, "edge_pp": -0.25}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Ghana", "model": 0.003, "mkt_at_forecast": 0.0155, "edge_pp": -1.25}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Belgium", "model": 0.053, "mkt_at_forecast": 0.0335, "edge_pp": 1.95}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Egypt", "model": 0.006, "mkt_at_forecast": 0.0165, "edge_pp": -1.05}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Spain", "model": 0.264, "mkt_at_forecast": 0.255, "edge_pp": 0.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "France", "model": 0.275, "mkt_at_forecast": 0.365, "edge_pp": -9.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Norway", "model": 0.06, "mkt_at_forecast": 0.06, "edge_pp": -0.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Argentina", "model": 0.275, "mkt_at_forecast": 0.335, "edge_pp": -6.0}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Algeria", "model": 0.009, "mkt_at_forecast": 0.01, "edge_pp": -0.1}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Portugal", "model": 0.136, "mkt_at_forecast": 0.165, "edge_pp": -2.9}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "Uzbekistan", "model": 0.0, "mkt_at_forecast": 0.007, "edge_pp": -0.7}
+{"batch": "2026-06-27T14:05:03.342840+00:00", "ts_ms": 1782569103357, "market": "reach_final", "team": "England", "model": 0.212, "mkt_at_forecast": 0.225, "edge_pp": -1.3}
