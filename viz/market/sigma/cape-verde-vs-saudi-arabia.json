@@ -1,0 +1,40 @@
+{
+  "match": "Cape Verde vs Saudi Arabia",
+  "capture": "20260626T232752Z-cape-verde-vs-saudi-arabia",
+  "n_contracts": 4,
+  "max_z": 48.64,
+  "max_z_venue": "poly",
+  "max_move_c": 15.5,
+  "trail_sd_c": 0.319,
+  "max_z_nonzero_frac": 0.1,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 48.64,
+      "move_c": 15.5,
+      "sd_c": 0.319,
+      "nonzero_frac": 0.1
+    },
+    {
+      "venue": "kalshi",
+      "z": 34.6,
+      "move_c": 11.5,
+      "sd_c": 0.332,
+      "nonzero_frac": 0.135
+    },
+    {
+      "venue": "poly",
+      "z": 29.11,
+      "move_c": 2.0,
+      "sd_c": 0.069,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "kalshi",
+      "z": 23.09,
+      "move_c": 2.0,
+      "sd_c": 0.087,
+      "nonzero_frac": 0.008
+    }
+  ]
+}

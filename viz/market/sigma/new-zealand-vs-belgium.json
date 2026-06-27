@@ -1,0 +1,40 @@
+{
+  "match": "New Zealand vs Belgium",
+  "capture": "20260627T022522Z-new-zealand-vs-belgium",
+  "n_contracts": 4,
+  "max_z": 41.3,
+  "max_z_venue": "kalshi",
+  "max_move_c": 3.0,
+  "trail_sd_c": 0.073,
+  "max_z_nonzero_frac": 0.006,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 41.3,
+      "move_c": 3.0,
+      "sd_c": 0.073,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 33.21,
+      "move_c": 3.5,
+      "sd_c": 0.105,
+      "nonzero_frac": 0.009
+    },
+    {
+      "venue": "poly",
+      "z": 26.69,
+      "move_c": 0.6,
+      "sd_c": 0.022,
+      "nonzero_frac": 0.042
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.98,
+      "move_c": 1.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
