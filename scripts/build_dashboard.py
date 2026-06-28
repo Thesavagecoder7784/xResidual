@@ -75,8 +75,13 @@ def main() -> int:
                    "mean": round(sum(clv_vals) / len(clv_vals), 2) if clv_vals else None}
 
     pairs = [(f["model"] / 100, f["outcome"]) for f in forecasts if f["outcome"] is not None]
+    # Stay "pending" until a non-trivial sample resolves. Early on, the only resolved markets are
+    # ~12 already-eliminated teams' champion forecasts (p≈0, y=0 -> brier≈0), which would show a
+    # bogus "100% skill". The advance markets (the bulk) only resolve once R32 is played, so the
+    # panel goes live with a meaningful sample then.
+    MIN_CALIB = 30
     calib = {"status": "pending", "n": len(pairs)}
-    if pairs:
+    if len(pairs) >= MIN_CALIB:
         import numpy as np
         p = np.array([a for a, _ in pairs]); y = np.array([b for _, b in pairs], dtype=float)
         brier = float(np.mean((p - y) ** 2))
