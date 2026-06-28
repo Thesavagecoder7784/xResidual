@@ -170,18 +170,20 @@ td.num{font-family:var(--fm);text-align:right}
 .champ-banner .cv .flag{width:27px;height:27px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
 .champ-banner .cp{font-family:var(--fm);font-size:13px;color:var(--muted);margin-left:auto;align-self:flex-end}
 .bwrap{overflow-x:auto;padding:4px 0 18px}
-.bcols{display:flex;gap:38px;min-width:960px;align-items:stretch;position:relative}
-.bcol{flex:1;min-width:160px;display:flex;flex-direction:column}
+.bcols{display:flex;gap:30px;min-width:920px;align-items:stretch;position:relative}
+.bcol{flex:1;min-width:150px;display:flex;flex-direction:column}
 .bcol h3{font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:center;padding-bottom:9px;margin-bottom:6px;border-bottom:1px solid var(--rule)}
 /* matches fill the column below the (pinned) header and distribute evenly, so each round's ties
    centre between the two that feed them — the bracket-tree geometry the JS connectors then trace. */
-.bmatches{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:9px}
+/* sparse later rounds (SF/Final) get a tighter ceiling so they don't float in a tall void; the
+   dense R32 column still sets the bracket height and the live JS connectors re-measure either way. */
+.bmatches{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:7px}
 .blines{position:absolute;top:0;left:0;pointer-events:none;z-index:0}
 .bmatch{position:relative;z-index:1;border:1px solid var(--rule);border-radius:9px;background:var(--card);overflow:hidden;
   box-shadow:0 1px 3px rgba(27,24,19,.05);transition:box-shadow .14s,transform .14s}
 .bmatch:hover{box-shadow:0 4px 14px rgba(27,24,19,.10);transform:translateY(-1px);z-index:2}
 .bmatch.final{border-color:var(--accent);box-shadow:0 2px 16px rgba(179,18,42,.13)}
-.bteam{display:flex;justify-content:space-between;align-items:center;padding:9px 12px 9px 13px;font-size:12.5px;gap:8px;position:relative}
+.bteam{display:flex;justify-content:space-between;align-items:center;padding:7px 12px 7px 13px;font-size:12.5px;gap:8px;position:relative}
 .bteam+.bteam{border-top:1px solid var(--rule)}
 .bteam.win{font-weight:600;color:var(--ink);background:var(--accent-soft)}
 .bteam.win::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
