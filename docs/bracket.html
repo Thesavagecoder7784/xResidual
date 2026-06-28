@@ -85,7 +85,7 @@ function card(m){
     ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
     ${row(m.b,m.pb,m.pick===m.b,m.final,m.wp)}</div>`;}
 function gcard(L,teams){
-  const sorted=[...teams].sort((a,b)=>b.padv-a.padv||b.p1-a.p1||b.gd-a.gd);
+  const sorted=[...teams].sort((a,b)=>b.padv-a.padv||b.p1-a.p1||b.pts-a.pts||b.gd-a.gd);
   const rows=sorted.map((t,i)=>{
     const tier=t.padv>=65?'in':t.padv>=30?'bub':'out';
     const pts=t.pl?`${t.pts} pt${t.pts==1?'':'s'}`:'—';
