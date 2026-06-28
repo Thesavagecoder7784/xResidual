@@ -211,3 +211,34 @@ def simulate(detail: dict, out: dict, ratings: dict[str, float], seed: int = 11,
         # marginal reach probabilities alone cannot express.
         result["paths"] = {"w32": w32, "w16": w16, "wqf": wqf, "wsf": wsf, "champ": champ}
     return result
+
+
+def played_ko_results(detail: dict, fixtures, results_df=None) -> dict | None:
+    """Build the `results=` dict for simulate() from knockout games already played.
+
+    Maps frozenset((idxA, idxB)) -> winner index for every FIFA World Cup game after the group
+    stage with a decisive scoreline, so the knockout sim fixes settled ties to reality instead of
+    re-projecting them from group state — the same conditioning the group sim already does, one
+    round later. Bridges feed-name differences (USA/United States, Bosnia variants) to the Elo
+    convention via elo_name(canonical(.)). Returns None when no knockout game has been played yet,
+    so simulate() runs unconditioned. Centralised here so every card builder conditions identically
+    (was inline in build_bracket.py only; the others silently went stale once the R32 was played)."""
+    import pandas as pd
+    if results_df is None:
+        from . import data
+        results_df = data.load_results()
+    gidx = detail["gidx"]
+    grp = fixtures[fixtures["group"].astype(str).str.startswith("Group")]
+    group_end = pd.to_datetime(grp["date"]).max()
+    d = results_df[results_df["tournament"] == "FIFA World Cup"].copy()
+    d["date"] = pd.to_datetime(d["date"])
+    d = d[d["date"] > group_end]
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
+    gidx_b = {bridge(k): v for k, v in gidx.items()}
+    ko_res = {}
+    for r in d.itertuples(index=False):
+        h, a = bridge(r.home_team), bridge(r.away_team)
+        if h in gidx_b and a in gidx_b and r.home_score != r.away_score:   # KO ties resolve to a winner
+            w = h if r.home_score > r.away_score else a
+            ko_res[frozenset((gidx_b[h], gidx_b[a]))] = gidx_b[w]
+    return ko_res or None

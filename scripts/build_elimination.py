@@ -99,7 +99,8 @@ def model_distribution() -> dict:
     grp_results = wc_played_results(df, fx)   # condition on games played (was UNCONDITIONED -> stale cards)
     out, det = group_sim.simulate(fx, ratings, params, return_detail=True,
                                   sigma=group_sim.MODEL_SIGMA, results=grp_results)
-    ko = knockout.simulate(det, out, ratings)["reach"]   # {team: {r16,qf,sf,final,win}}
+    ko = knockout.simulate(det, out, ratings,
+                           results=knockout.played_ko_results(det, fx))["reach"]   # {team: {r16,qf,sf,final,win}}
     dist = {}
     for team, r in ko.items():
         padv = out.get(W.elo_name(W.canonical(team)), {}).get("padv")
