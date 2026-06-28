@@ -712,5 +712,22 @@
     "ts_close": null,
     "realized_pnl": null,
     "realized_pnl_net": null
+  },
+  {
+    "id": 46,
+    "ts_open": "2026-06-28T08:56:15.450910+00:00",
+    "venue": "polymarket",
+    "market": "nation-to-reach-quarterfinals",
+    "outcome": "Belgium",
+    "side": "yes",
+    "entry_price": 0.275,
+    "stake_usd": 30.0,
+    "shares": 109.09,
+    "status": "open",
+    "note": "post bracket-fix: vs Senegal model 36% vs mkt 27.5%, +8.8 edge, CLV +10 confirming; FLB back, modest for squad-value caveat",
+    "exit_price": null,
+    "ts_close": null,
+    "realized_pnl": null,
+    "realized_pnl_net": null
   }
 ]
