@@ -93,7 +93,8 @@ def main() -> int:
     print(f"  sum P(advance) = {sum(r['padv'] for r in sim.values()):.2f} (target 32)")
     print(f"  sum P(third-place qualifier) = {sum(r['p3adv'] for r in sim.values()):.2f} (target 8)")
     print(f"  cut line median = {cut_median} pts ; top decisive game = "
-          f"{leverage[0]['t1']} v {leverage[0]['t2']} ({leverage[0]['lev']}pp)")
+          + (f"{leverage[0]['t1']} v {leverage[0]['t2']} ({leverage[0]['lev']}pp)"
+             if leverage else "none (group stage complete)"))
 
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.GROUPSIM = " + json.dumps({"groups": groups, "thirds": thirds,
