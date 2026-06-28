@@ -75,22 +75,9 @@ def main() -> int:
                                   sigma=group_sim.MODEL_SIGMA, results=grp_results)
     gidx = det["gidx"]
 
-    # knockout results so far (games after the group stage) -> {frozenset(idxA,idxB): winner_idx}
-    grp = fx[fx["group"].astype(str).str.startswith("Group")]
-    group_end = pd.to_datetime(grp["date"]).max()
-    d = df[df["tournament"] == "FIFA World Cup"].copy()
-    d["date"] = pd.to_datetime(d["date"])
-    d = d[d["date"] > group_end]
-    # Bridge result names and the gidx keys to the Elo convention so feed-name differences
-    # (USA/United States, Bosnia variants) match regardless of which convention gidx uses.
-    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
-    gidx_b = {bridge(k): v for k, v in gidx.items()}
-    ko_res = {}
-    for r in d.itertuples(index=False):
-        h, a = bridge(r.home_team), bridge(r.away_team)
-        if h in gidx_b and a in gidx_b and r.home_score != r.away_score:   # KO ties resolve to a winner
-            w = h if r.home_score > r.away_score else a
-            ko_res[frozenset((gidx_b[h], gidx_b[a]))] = gidx_b[w]
+    # knockout results so far (games after the group stage) -> {frozenset(idxA,idxB): winner_idx}.
+    # Shared helper so every builder conditions the knockout identically (see knockout.played_ko_results).
+    ko_res = knockout.played_ko_results(det, fx, df) or {}
 
     ko = knockout.simulate(det, sim, ratings, return_matchups=True, return_slots=True,
                            return_paths=True, results=ko_res or None)

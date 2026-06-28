@@ -40,7 +40,8 @@ def main() -> int:
                                   sigma=group_sim.MODEL_SIGMA, results=grp_results)
 
     print("simulating the knockouts ...")
-    ko = knockout.simulate(det, out, ratings)
+    ko = knockout.simulate(det, out, ratings,
+                           results=knockout.played_ko_results(det, fx))
     model = ko["reach"]
 
     print("pulling market reach-round + winner markets ...")

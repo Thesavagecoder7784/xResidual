@@ -168,7 +168,8 @@ def main() -> int:
     out, det = group_sim.simulate(fx, ratings, params, n=N, seed=SEED,
                                   return_detail=True, sigma=group_sim.MODEL_SIGMA, results=grp_results)
     ko = knockout.simulate(det, out, ratings, return_paths=True,
-                           return_matchups=True, return_slots=True)
+                           return_matchups=True, return_slots=True,
+                           results=knockout.played_ko_results(det, fx))
     teams = ko["teams_arr"]; gidx = det["gidx"]; rating_arr = ko["rating_arr"]
     pos = det["pos"]; adv = det["adv_mat"]; eps = det.get("eps")
     paths = ko["paths"]; n = pos.shape[0]; rows = np.arange(n)
