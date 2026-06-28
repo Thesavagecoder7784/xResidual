@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — decided by games you're not playing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#f8f5ee; --ink:#1b1813; --muted:#4a443b; --dim:#8a8175; --rule:#d8d0bf;
+         --crim:#b3122a; --teal:#1e6f6a;
+         --fd:"Fraunces",serif; --fb:"Spline Sans",sans-serif; --fm:"IBM Plex Mono",monospace; }
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 80% -10%,rgba(30,111,106,.06),transparent 55%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:50px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--teal);font-weight:600}
+  h1{font-family:var(--fd);font-weight:600;font-size:50px;line-height:1.08;letter-spacing:-.018em;margin-top:13px;max-width:1180px}
+  h1 em{font-style:italic;font-weight:500;color:var(--crim)}
+  .dek{margin-top:20px;font-size:16.5px;color:var(--muted);max-width:1010px;line-height:1.5} .dek b{color:var(--ink)}
+
+  .panel{position:absolute;left:var(--pad);top:330px;width:920px;z-index:2}
+  .ptitle{font-family:var(--fd);font-size:21px;color:var(--ink);margin-bottom:20px} .ptitle b{color:var(--ink)}
+  .scn{margin-bottom:26px}
+  .slab{font-size:16px;color:var(--muted);margin-bottom:9px} .slab b{color:var(--ink)}
+  .track{position:relative;height:46px;background:#ece5d6;border-radius:6px;overflow:hidden}
+  .fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:16px;
+    font-family:var(--fd);font-size:26px;font-weight:600;color:#fff}
+  .brace{position:absolute;left:932px;top:360px;width:120px;z-index:3;display:flex;align-items:center}
+
+  .side{position:absolute;right:var(--pad);top:340px;width:300px;z-index:4}
+  .num{font-family:var(--fd);font-size:104px;font-weight:600;color:var(--crim);line-height:.92}
+  .numl{font-family:var(--fm);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin-top:16px}
+  .why{margin-top:22px;font-family:var(--fd);font-size:19px;line-height:1.3;color:var(--ink)} .why b{color:var(--crim)}
+
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:30px;z-index:4;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--crim)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker">The cross-group butterfly · xResidual</div>
+    <h1>Your World Cup fate is decided by games you're <em>not playing.</em></h1>
+    <div class="dek">Only <b>8 of 12</b> third-placed teams advance, and they're chosen <b>jointly</b> across every group, ranked against each other. So a result in one group can knock a team out of another. A coherent simulation sees this; pricing each team on its own does not.</div></div>
+
+  <div class="panel">
+    <div class="ptitle">A team finishing third in <b>Group G</b> reaches the Round of 32…</div>
+    <div class="scn">
+      <div class="slab">…if <b>Group D's</b> third-placed team <b>misses</b> the cut</div>
+      <div class="track"><div class="fill" id="fillOut" style="width:56%;background:var(--teal)">56%</div></div>
+    </div>
+    <div class="scn">
+      <div class="slab">…if <b>Group D's</b> third <b>sneaks in</b> and takes a shared spot</div>
+      <div class="track"><div class="fill" id="fillIn" style="width:36%;background:var(--crim)">36%</div></div>
+    </div>
+  </div>
+
+  <div class="side">
+    <div class="num"><span id="swing">20</span>pp</div>
+    <div class="numl">swing · from a game it isn't in</div>
+    <div class="why">A team's knockout chances move <b><span id="swing2">20</span> points</b> on a match in a different group, on the other side of the bracket. Twelve groups, eight shared tickets, one tangled web.</div>
+  </div>
+
+  <div class="foot"><div>conditioned joint sim, 40k draws · the 8 best third-placed teams are selected together across all 12 groups (FIFA Art. 13) · third-place races across groups are negatively coupled (they compete for the same slots)</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_vein.js"></script>
+<script>
+// Grp-G third's advance odds conditioned on the Grp-D third's fate, from window.VEIN (build_vein.py)
+const V=window.VEIN.cross_group_butterfly;
+const setFill=(id,p)=>{const e=document.getElementById(id);e.style.width=p+'%';e.textContent=p+'%';};
+setFill('fillOut',V.p_if_out);
+setFill('fillIn',V.p_if_in);
+document.getElementById('swing').textContent=V.swing;
+document.getElementById('swing2').textContent=V.swing;
+</script>
+</body></html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — does winning your group pay?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;--good:#1e6f6a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:46px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:50px;line-height:.98;letter-spacing:-.018em;margin-top:12px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:10px;font-size:15px;color:var(--muted);max-width:1040px;line-height:1.45} .dek b{color:var(--ink)}
+  .dek .r{color:var(--accent);font-weight:600}
+  .axhead{position:absolute;left:calc(var(--pad) + 214px);right:var(--pad);top:226px;height:18px;z-index:3}
+  .axhead .tk{position:absolute;top:0;transform:translateX(-50%);font-family:var(--fm);font-size:10.5px;color:var(--dim)}
+  .axhead .end{position:absolute;top:0;font-family:var(--fm);font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dim)}
+  .rows{position:absolute;left:var(--pad);right:var(--pad);top:252px;bottom:60px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+  .row{display:flex;align-items:center;height:40px}
+  .nm{width:208px;display:flex;align-items:center;gap:9px;flex:none}
+  .nm .g{font-family:var(--fm);font-size:12px;color:var(--dim);width:16px}
+  .nm img{width:21px;height:21px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.10)}
+  .nm span{font-size:14.5px;font-weight:500;color:var(--ink)}
+  .track{position:relative;flex:1;height:100%}
+  .gl{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--rule);opacity:.6}
+  .lnk{position:absolute;top:50%;height:3px;transform:translateY(-50%);border-radius:2px}
+  .dot{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;transform:translate(-50%,-50%)}
+  .dot.ru{background:var(--paper);border:2.5px solid currentColor}
+  .dlab{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:12px;font-weight:600}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:24px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+  .key{position:absolute;right:var(--pad);top:58px;z-index:4;display:flex;flex-direction:column;gap:6px;align-items:flex-end;font-family:var(--fm);font-size:11.5px;color:var(--muted)}
+  .key div{display:flex;align-items:center;gap:7px}
+  .key .d{width:13px;height:13px;border-radius:50%;background:var(--ink)}
+  .key .o{width:13px;height:13px;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">25</span> Tournament Design · xResidual</div>
+    <h1>Does winning your group <em>pay?</em></h1>
+    <div class="dek">A format is "incentive incompatible" when a team is better off <b>not</b> winning (Csató et al.). The 2026 bracket is fixed, so finishing 1st vs 2nd sends you down different paths. Each dot pair is the <b>expected opponent Elo over your first two knockout rounds</b> (R32 + projected R16). Mostly winning pays, but in <span class="r">Groups C and A the runner-up draws the kinder path</span> — Brazil's group winner faces a ~48-Elo-tougher opening than finishing second.</div></div>
+  <div class="key" id="key"></div>
+  <div class="axhead" id="axhead"></div>
+  <div class="rows" id="rows"></div>
+  <div class="foot"><div>Method · expected opponent Elo over R32 + projected R16, by finishing position · 60k sims · incentive incompatibility (Csató et al.)</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_incentive.js"></script>
+<script>
+const G=window.INCENTIVE.groups, cv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const vals=G.flatMap(g=>[g.win_path,g.ru_path]);
+const lo=Math.floor((Math.min(...vals)-8)/10)*10, hi=Math.ceil((Math.max(...vals)+8)/10)*10;
+const xp=v=>((v-lo)/(hi-lo)*100);
+
+// key
+document.getElementById('key').innerHTML=
+  `<div><span class="d"></span>finish 1st (group winner)</div><div><span class="o"></span>finish 2nd (runner-up)</div>`;
+
+// axis header (ticks + a "kinder draw" arrow)
+let ah=`<div class="end" style="left:0">◂ kinder draw</div>`;
+for(let v=lo+10; v<hi; v+=20){ah+=`<div class="tk" style="left:${xp(v)}%">${v}</div>`;}
+ah+=`<div class="end" style="right:0">tougher ▸</div>`;
+document.getElementById('axhead').innerHTML=ah;
+
+const box=document.getElementById('rows');
+G.forEach((g,i)=>{
+  const easier2nd = g.delta < 0;             // runner-up path easier -> winning hurts
+  const col = easier2nd ? cv('--accent') : cv('--good');
+  const xw=xp(g.win_path), xr=xp(g.ru_path);
+  const x1=Math.min(xw,xr), x2=Math.max(xw,xr);
+  const gl=[1900,1950,2000].filter(v=>v>lo&&v<hi).map(v=>`<div class="gl" style="left:${xp(v)}%"></div>`).join('');
+  const r=document.createElement('div');r.className='row';
+  r.innerHTML=`<div class="nm"><span class="g">${g.group}</span><img src="../flags/${g.winner_iso}.svg" alt=""><span>${g.winner}</span></div>
+    <div class="track" style="color:${col}">${gl}
+      <div class="lnk" style="left:${x1}%;width:${(x2-x1).toFixed(2)}%;background:${col};opacity:.5"></div>
+      <div class="dot" style="left:${xw}%;background:${col}"></div>
+      <div class="dot ru" style="left:${xr}%;color:${col}"></div>
+      <div class="dlab" style="${easier2nd?`left:${x2}%;margin-left:13px`:`right:${(100-x1).toFixed(2)}%;margin-right:13px;text-align:right`};color:${col}">${g.delta>0?'+':''}${g.delta}</div>
+    </div>`;
+  box.appendChild(r);
+});
+</script>
+</body></html>

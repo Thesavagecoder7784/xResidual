@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — clinch first, unknown opponent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#f8f5ee; --ink:#1b1813; --muted:#4a443b; --dim:#8a8175; --rule:#d8d0bf; --crim:#b3122a; --teal:#1e6f6a;
+         --fd:"Fraunces",serif; --fb:"Spline Sans",sans-serif; --fm:"IBM Plex Mono",monospace; }
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:50px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--crim);font-weight:600}
+  h1{font-family:var(--fd);font-weight:600;font-size:53px;line-height:1.0;letter-spacing:-.018em;margin-top:13px}
+  h1 em{font-style:italic;font-weight:500;color:var(--crim)}
+  .dek{margin-top:13px;font-size:16.5px;color:var(--muted);max-width:1010px;line-height:1.5} .dek b{color:var(--ink)}
+  .rows{position:absolute;left:var(--pad);right:430px;top:320px;z-index:2}
+  .row{display:flex;align-items:center;height:50px}
+  .nm{width:210px;flex:none;display:flex;align-items:center;gap:10px}
+  .nm img{width:23px;height:23px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+  .nm span{font-size:16.5px;font-weight:500}
+  .track{flex:1;position:relative;height:24px}
+  .bar{position:absolute;left:0;top:0;height:100%;background:var(--crim);border-radius:3px;opacity:.85}
+  .val{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:14px;font-weight:600;color:var(--crim)}
+  .side{position:absolute;right:var(--pad);top:330px;width:300px;z-index:4}
+  .num{font-family:var(--fd);font-size:120px;font-weight:600;color:var(--crim);line-height:.8}
+  .numl{font-family:var(--fm);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+  .why{margin-top:22px;font-family:var(--fd);font-size:19.5px;line-height:1.3;color:var(--ink)} .why b{color:var(--crim)}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:30px;z-index:4;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--crim)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker">The mystery opponent · xResidual</div>
+    <h1>You can top your group and still not know who you'll <em>play.</em></h1>
+    <div class="dek"><b><span id="winner">Mexico</span> has clinched first place in Group A</b> — and has no idea who it meets in the Round of 32, and won't until every other group finishes. Eight floating best-third slots and a 495-scenario lookup table mean a group winner's opponent is decided by results it can't influence.</div></div>
+
+  <div class="rows" id="rows"></div>
+
+  <div class="side">
+    <div class="num"><span id="nopp">6</span>+</div>
+    <div class="numl">possible R32 opponents</div>
+    <div class="why">for a team that has <b>already qualified top of its group</b>. The single most likely one is just <b><span id="modal">31</span>%</b>. You clinch, then you wait.</div>
+  </div>
+
+  <div class="foot"><div>Group A winner's projected Round-of-32 opponent · conditioned knockout sim, 40k draws · opponent set fixed only once all 12 groups finish (FIFA Annex C lookup)</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_vein.js"></script>
+<script>
+// Group A winner's projected R32 opponent distribution from window.VEIN (build_vein.py)
+const V=window.VEIN.clinch_first;
+const D=V.opponents;
+document.getElementById('winner').textContent=V.winner;
+document.getElementById('nopp').textContent=V.n_opponents;
+document.getElementById('modal').textContent=V.modal_pct;
+const MAX=Math.max(33,...D.map(d=>d[2]));
+document.getElementById('rows').innerHTML=D.map(([t,iso,v])=>
+  `<div class="row"><div class="nm">${iso?`<img src="../flags/${iso}.svg" alt="">`:'<span style="width:23px"></span>'}<span>${t}</span></div>
+   <div class="track"><div class="bar" style="width:${v/MAX*100}%"></div>
+     <div class="val" style="left:calc(${v/MAX*100}% + 10px)">${v}%</div></div></div>`).join('');
+</script>
+</body></html>

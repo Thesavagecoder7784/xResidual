@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — the cut line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:54px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:58px;line-height:.98;letter-spacing:-.018em;margin-top:16px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:13px;font-size:16.5px;color:var(--muted);max-width:980px;line-height:1.5} .dek b{color:var(--ink)}
+  .stage{position:absolute;left:var(--pad);right:var(--pad);top:288px;bottom:118px;z-index:2;display:flex;align-items:center;gap:80px}
+  .hero{flex:none;width:430px}
+  .hero .big{font-family:var(--fd);font-weight:600;font-size:150px;line-height:.82;color:var(--accent);letter-spacing:-.02em}
+  .hero .big span{font-size:60px;color:var(--ink)}
+  .hero .sub{font-family:var(--fm);font-size:16px;color:var(--muted);margin-top:10px;letter-spacing:.02em}
+  .hero .sub b{color:var(--ink)}
+  .dist{flex:1;display:flex;flex-direction:column;gap:22px;padding-top:6px}
+  .drow{display:flex;align-items:center;gap:20px}
+  .dlab{font-family:var(--fm);font-size:15px;color:var(--ink);width:78px}
+  .dlab b{color:var(--accent)}
+  .dtrack{flex:1;height:30px;background:rgba(0,0,0,.05);border-radius:7px;overflow:hidden}
+  .dfill{height:100%;border-radius:7px;width:0;background:var(--accent);animation:grow 1.1s cubic-bezier(.5,.05,.2,1) forwards;animation-delay:var(--d)}
+  @keyframes grow{to{width:var(--w)}}
+  .dpct{width:88px;font-family:var(--fm);font-size:16px;color:var(--muted);font-weight:500}
+  .dpct b{color:var(--ink)}
+  .note{position:absolute;left:var(--pad);right:var(--pad);bottom:62px;z-index:3;font-size:14.5px;color:var(--muted);font-style:italic}
+  .note b{color:var(--ink);font-style:normal}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:26px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12.5px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">10</span> The Cut Line · xResidual</div>
+    <h1>One win, and you're <em>through</em></h1>
+    <div class="dek">Eight third-placed teams advance — but how good does a third actually need to be? We track the points of the <b>last team in</b> (the 8th-best third) across every simulation. The 48-team format is forgiving: <b>win one of your three group games</b> and the maths is almost always on your side.</div></div>
+  <div class="stage">
+    <div class="hero"><div class="big" id="big">3<span> pts</span></div>
+      <div class="sub">the typical cut line<br><b>= a single win</b></div></div>
+    <div class="dist" id="dist"></div>
+  </div>
+  <div class="note" id="note"></div>
+  <div class="foot"><div>Method · points of the 8th-best third-placed team &nbsp;•&nbsp; Elo + Poisson group-stage Monte Carlo, 40,000 sims</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_groupsim.js"></script>
+<script>
+const C=window.GROUPSIM.cutline, med=window.GROUPSIM.cut_median;
+document.getElementById('big').innerHTML = med + '<span> pts</span>';
+const maxf=Math.max(...C.map(d=>d.freq));
+const dist=document.getElementById('dist');
+C.forEach((d,i)=>{
+  const w=(d.freq/maxf*100).toFixed(1);
+  const el=document.createElement('div');el.className='drow';
+  el.innerHTML=`<div class="dlab"><b>${d.pts}</b> pts</div>
+    <div class="dtrack"><div class="dfill" style="--w:${w}%;--d:${(i*0.12).toFixed(2)}s"></div></div>
+    <div class="dpct"><b>${d.freq.toFixed(0)}%</b> of sims</div>`;
+  dist.appendChild(el);
+});
+document.getElementById('note').innerHTML =
+  `Same maths at Euro 2016 & 2024, which used the identical best-thirds mechanic — <b>one win was typically enough</b> to survive the group.`;
+</script>
+</body></html>
