@@ -1,19 +1,20 @@
-# Paper book — 2026-06-28 08:24Z
+# Paper book — 2026-06-28 08:56Z
 
-**Money in:** $1380  ·  **Open:** 6  ·  **Closed:** 36
+**Money in:** $1410  ·  **Open:** 7  ·  **Closed:** 36
 
 ## Open positions
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
-| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.665 | 46.2 | -3.8 |
-| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.320 | 20.0 | -5.0 |
+| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.635 | 44.1 | -5.9 |
+| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.325 | 20.3 | -4.7 |
 | 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.725 | 31.3 | +1.3 |
 | 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.535 | 16.6 | -3.4 |
-| 28 | NO | nation-to-reach-quarterfinals / Brazil | 15 | 0.525 | 0.500 | 14.3 | -0.7 |
+| 28 | NO | nation-to-reach-quarterfinals / Brazil | 15 | 0.525 | 0.505 | 14.4 | -0.6 |
 | 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.270 | 14.2 | -0.8 |
+| 46 | YES | nation-to-reach-quarterfinals / Belgium | 30 | 0.275 | 0.275 ⚠ | 30.0 | -0.0 |
 
-**Unrealized P&L:** -12.4  (on $155 open)
+**Unrealized P&L:** -14.1  (on $185 open)
 
 ## Closed positions
 
@@ -60,4 +61,4 @@
 
 ## Total
 
-money in **$1380**  ·  unrealized **-12.4**  ·  realized **+77.0**  ·  **combined +64.5**
+money in **$1410**  ·  unrealized **-14.1**  ·  realized **+77.0**  ·  **combined +62.9**
