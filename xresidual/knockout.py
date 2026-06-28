@@ -51,18 +51,36 @@ SF = [(101, 97, 98), (102, 99, 100)]
 FN = [(104, 101, 102)]
 
 
+# FIFA's published Annex-C third-place assignment for the ACTUAL 2026 qualifying set, verified
+# against the official Round-of-32 draw (FIFA / ESPN / Sky, Jun 2026). The allowed-set matching
+# below is NON-UNIQUE — several legal matchings exist for a given qualifying set — so the LIVE
+# bracket must follow FIFA's specific table, not an arbitrary valid one. (The arbitrary matching
+# is what put Belgium vs Algeria instead of the real Belgium vs Senegal.) Keyed by the set of
+# groups whose third qualified; value is {winner group -> the third's group}. Converted to slot
+# indices in _assign off the R32 structure, so it survives any reordering of R32.
+_FIFA_THIRD_TABLE = {
+    frozenset("BDEFIJKL"): {"E": "D", "I": "F", "A": "E", "L": "K",
+                            "D": "B", "G": "I", "B": "J", "K": "L"},
+}
+
+
 def _assign(qual: set, slots: list) -> dict:
-    """Match the eight qualifying third-place groups to the eight third slots, respecting
-    each slot's FIFA Annex-C allowed-groups set as a HARD constraint. slots: list of
+    """Match the eight qualifying third-place groups to the eight third slots. slots: list of
     (r32_index, allowed_groups). Returns {r32_index -> group letter}.
 
-    This is a bipartite perfect matching (slots <-> qualifying groups), solved by
-    augmenting paths (Kuhn's algorithm). A greedy most-constrained-first heuristic is
-    NOT correct: it can paint a later slot into a corner and then assign a group outside
-    the allowed set, which produces an illegal slot and a group-stage rematch (a group
-    winner drawn against the third from its own group). A constraint-respecting matching
-    provably exists for every qualifying set, so there is no legitimate fallback; Kuhn
-    finds it. Most-constrained ordering is kept only to seed the search deterministically."""
+    FIFA assigns the thirds from a PUBLISHED per-combination table, not a free matching — and
+    within a slot's allowed-groups set there are usually several legal matchings, so picking an
+    arbitrary one is wrong (it draws the real bracket incorrectly). So: if FIFA's table for this
+    qualifying set is known (_FIFA_THIRD_TABLE), use it. Otherwise fall back to a constraint-
+    respecting bipartite matching (Kuhn's algorithm), which at least never produces a group-stage
+    rematch — used only for hypothetical qualifying sets that didn't occur."""
+    fifa = _FIFA_THIRD_TABLE.get(frozenset(qual))
+    if fifa is not None:
+        slot_win = {idx: R32[idx][1][1] for idx, _ in slots}   # slot index -> its (W, group) winner
+        out = {idx: fifa[w] for idx, w in slot_win.items() if w in fifa}
+        if len(out) == len(slots):                              # full, valid table hit
+            return out
+
     adj = {idx: sorted(g for g in qual if g in allowed) for idx, allowed in slots}
     match: dict[str, int] = {}              # group letter -> slot index
 
