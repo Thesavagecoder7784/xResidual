@@ -1,9 +1,15 @@
+# Baseline market/dashboard publish. Results are NOT on this cadence — the matchday-end trigger
+# (xresidual-matchday) publishes finals promptly at each matchday's last whistle, so this only
+# keeps the market prices / board / micro feeds reasonably fresh between matchdays. Lengthened
+# 30min -> 90min: the per-cycle build pipeline is the real cost, and an hourly-ish dashboard is
+# plenty when results land via the trigger. (The ESPN fetch is separately gated, so idle cycles
+# are cheap regardless.)
 [Unit]
-Description=xResidual live-site refresh every 30 min
+Description=xResidual live-site refresh every 90 min (results land via the matchday trigger)
 
 [Timer]
 OnBootSec=5min
-OnUnitActiveSec=30min
+OnUnitActiveSec=90min
 Persistent=true
 
 [Install]
