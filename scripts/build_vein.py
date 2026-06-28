@@ -129,8 +129,12 @@ def main() -> int:
     # ---- cross_group_butterfly: a Grp-G third's fate vs a Grp-D third's result -----
     gi = {L: np.array([i for i, t in enumerate(teams) if tg[t] == L]) for L in "ABCDEFGHIJKL"}
     ta = {L: adv[:, gi[L]][(pos[:, gi[L]] == 2)].astype(float) for L in gi}
-    p_out = round(ta["G"][ta["D"] == 0].mean() * 100)     # Grp-D third misses
-    p_in = round(ta["G"][ta["D"] == 1].mean() * 100)      # Grp-D third sneaks in
+    # NaN-safe: once the group stage resolves, ta["D"] is deterministic so one branch is empty
+    # (.mean() -> NaN). The butterfly card is degenerate at that point; guard so the builder still
+    # runs (the live knockout-route vein cards depend on it) and the frozen live version is kept.
+    _po = ta["G"][ta["D"] == 0].mean(); _pi = ta["G"][ta["D"] == 1].mean()
+    p_out = round(_po * 100) if _po == _po else 0     # Grp-D third misses
+    p_in = round(_pi * 100) if _pi == _pi else 0      # Grp-D third sneaks in
     butterfly = {"p_if_out": p_out, "p_if_in": p_in, "swing": p_out - p_in}
 
     # ---- confederation_survival: expected number through, per confederation --------
