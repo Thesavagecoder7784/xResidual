@@ -41,6 +41,7 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/build_dashboard_v2.py || echo "  dashboard v2 failed"   # temperature-calibrated board (v2)
 "$PY" scripts/build_buildup_trajectory.py || echo "  buildup failed"   # title-race trajectory card data; INCREMENTAL (merges onto the seeded series), so the VM's limited snapshot retention never truncates the full May-onward history. Not published — kept fresh on the VM for the laptop to pull + render the card.
 "$PY" scripts/venue_calibration.py || echo "  venue calibration failed"   # pending until ~Jun 27
+"$PY" scripts/build_calibration.py || echo "  match calibration failed"   # CORP/Brier of the pre-committed forecasts -> method.html headline (publishes docs/data/calibration.js below)
 
 # Microstructure: streaming single pass (lead-lag + OFI + overreaction) now fits the VM (~0.5 GB peak,
 # was ~7 GB), so the VM processes settled tapes itself — no more laptop dependency. Then publish the
@@ -57,6 +58,7 @@ cp -f viz/market/_ofi.js docs/data/ofi.js 2>/dev/null || true
 cp -f viz/market/_infoshare.js docs/data/infoshare.js 2>/dev/null || true
 cp -f viz/market/_livewp.js docs/data/livewp.js 2>/dev/null || true
 cp -f viz/model/_overreaction.js docs/data/overreaction.js 2>/dev/null || true
+cp -f viz/model/_calibration.js docs/data/calibration.js 2>/dev/null || true   # match-calibration headline for method.html
 "$PY" - <<'PYLL' || echo "  leadlag feed extract failed"
 import json
 from datetime import datetime, timezone
