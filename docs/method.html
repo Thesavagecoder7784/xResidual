@@ -53,6 +53,8 @@
     <div class="h2">How it's graded</div>
     <p><b>Closing-Line Value (CLV).</b> The cleanest test of skill that doesn't wait for the result: did the market price drift <i>toward</i> the model after the forecast was logged? Positive CLV is a skill signal independent of who eventually wins, the same metric sharp bettors and desks live by. It needs scale to be conclusive, though: the established bar is a few hundred resolved forecasts before consistent positive CLV is more than suggestive, and the forecasts logged here are correlated across markets, so the early numbers are a signal forming, not a verdict.</p>
     <p><b>Calibration.</b> When the model says 30%, does it happen about 30% of the time? Graded with proper scoring rules (Brier, log-loss) against real outcomes as markets resolve. A model can be confident and wrong; calibration is the check that it isn't.</p>
+    <p id="calib-live" style="background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:13px 16px;font-size:14.5px;line-height:1.6">
+      <b>First read (group stage, <span data-cal="n">72</span> games).</b> Of every forecaster scored on these match outcomes, the <b>market is the best-calibrated</b>: <b><span data-cal="mkt-skill">23%</span> Brier skill</b> over the no-information baseline, with a reliability slope of <b><span data-cal="mkt-slope">1.07</span></b> (1.0 is perfect). It edges the <b>pre-committed model</b> (<span data-cal="v1-skill">21%</span> skill, slope <span data-cal="v1-slope">0.87</span>). A real-money market being better-calibrated than a transparent fundamental model is exactly the premise of this project. Grades live as the knockouts resolve.</p>
   </section>
 
   <section class="prose">
@@ -115,5 +117,13 @@
     set('ll-share',sh+'% Polymarket');
     set('ll-n',(L.n_matches||'the captured')+' matches');};
   document.body.appendChild(s);})();
+// calibration headline — keep in sync with the live grade so it can't go stale
+(function(){const s=document.createElement('script');s.src='data/calibration.js?'+Date.now();
+  s.onload=()=>{const C=window.CALIBRATION;if(!C||!C.versions)return;const m=C.versions.market,v1=C.versions.v1;
+    const set=(k,v)=>document.querySelectorAll('[data-cal="'+k+'"]').forEach(e=>e.textContent=v);
+    if(C.n_played)set('n',C.n_played);
+    if(m){set('mkt-skill',Math.round(m.skill_vs_baseline_pct)+'%');set('mkt-slope',(+m.slope).toFixed(2));}
+    if(v1){set('v1-skill',Math.round(v1.skill_vs_baseline_pct)+'%');set('v1-slope',(+v1.slope).toFixed(2));}};
+  s.onerror=()=>{};document.body.appendChild(s);})();
 </script>
 </body></html>
