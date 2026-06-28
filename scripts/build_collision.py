@@ -43,7 +43,8 @@ def main() -> int:
     print(f"simulating N={N:,} (value-blended) ...")
     out, det = group_sim.simulate(fx, ratings, params, n=N, return_detail=True,
                                   sigma=group_sim.MODEL_SIGMA, results=grp_results)
-    ko = knockout.simulate(det, out, ratings, return_matchups=True)
+    ko = knockout.simulate(det, out, ratings, return_matchups=True,
+                           results=knockout.played_ko_results(det, fx))
     gidx, M = det["gidx"], ko["matchups"]
 
     def meet(a, b):
