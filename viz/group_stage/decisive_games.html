@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — the decisive games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:50px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:54px;line-height:.98;letter-spacing:-.018em;margin-top:15px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:11px;font-size:16px;color:var(--muted);max-width:1010px;line-height:1.46} .dek b{color:var(--ink)}
+  .rows{position:absolute;left:var(--pad);right:var(--pad);top:226px;bottom:60px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+  .row{display:flex;align-items:center;height:40px;gap:16px}
+  .rk{font-family:var(--fm);font-size:14px;color:var(--dim);width:24px;text-align:right}
+  .match{display:flex;align-items:center;gap:9px;width:430px}
+  .match .s1{display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end}
+  .match .s2{display:flex;align-items:center;gap:8px;flex:1}
+  .flag{width:23px;height:23px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.10)}
+  .nm{font-weight:500;color:var(--ink);font-size:16px;white-space:nowrap}
+  .v{font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .grp{font-family:var(--fm);font-size:12px;color:var(--dim);width:54px}
+  .track{flex:1;height:13px;background:rgba(0,0,0,.05);border-radius:7px;overflow:hidden}
+  .fill{height:100%;border-radius:7px;width:0;background:var(--accent);animation:grow 1s cubic-bezier(.5,.05,.2,1) forwards;animation-delay:var(--d)}
+  @keyframes grow{to{width:var(--w)}}
+  .pct{width:96px;text-align:right;font-family:var(--fm);font-size:15px;color:var(--muted);font-weight:500}
+  .pct b{color:var(--ink)} .pct .u{color:var(--dim);font-size:11px}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:26px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12.5px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">09</span> Match Leverage · xResidual</div>
+    <h1>The games that actually <em>decide it</em></h1>
+    <div class="dek">Not the glamour ties, these are the matches whose result swings a team's fate the most. <b>Leverage</b> = how far each side's chance of advancing moves between <b>winning and losing</b> this one game. The midtable <b>six-pointers</b> top the list.</div></div>
+  <div class="rows" id="rows"></div>
+  <div class="foot"><div>Method · leverage = avg change in P(advance), win vs loss &nbsp;•&nbsp; Elo + Poisson group-stage Monte Carlo, 40,000 sims</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_groupsim.js"></script>
+<script>
+const L=window.GROUPSIM.leverage;
+const maxv=Math.max(...L.map(d=>d.lev));
+const box=document.getElementById('rows');
+L.forEach((m,i)=>{
+  const w=(m.lev/maxv*100).toFixed(1);
+  const el=document.createElement('div');el.className='row';
+  el.innerHTML=`<div class="rk">${i+1}</div>
+    <div class="match">
+      <div class="s1"><span class="nm">${m.t1}</span><img class="flag" src="../flags/${m.iso1}.svg" alt=""></div>
+      <span class="v">v</span>
+      <div class="s2"><img class="flag" src="../flags/${m.iso2}.svg" alt=""><span class="nm">${m.t2}</span></div>
+    </div>
+    <div class="grp">Grp ${m.grp}</div>
+    <div class="track"><div class="fill" style="--w:${w}%;--d:${(i*0.05).toFixed(2)}s"></div></div>
+    <div class="pct"><b>±${m.lev.toFixed(0)}</b><span class="u">pp swing</span></div>`;
+  box.appendChild(el);
+});
+</script>
+</body></html>
