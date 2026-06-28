@@ -29,6 +29,13 @@
   .cta{display:inline-flex;align-items:center;gap:7px;padding:11px 18px;border-radius:6px;font-weight:600;font-size:15px;text-decoration:none}
   .cta.solid{background:var(--accent);color:#fff} .cta.solid:hover{background:var(--accent-deep)}
   .cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule-2)} .cta.ghost:hover{border-color:var(--ink)}
+  .phasechip{display:none;align-items:center;gap:9px;margin-top:18px;padding:9px 15px;border:1px solid var(--rule-2);border-left:3px solid var(--good);border-radius:8px;background:var(--card);font-family:var(--fm);font-size:12.5px;color:var(--muted);width:max-content;max-width:100%;text-decoration:none;transition:.12s}
+  .phasechip:hover{border-color:var(--good);text-decoration:none}
+  .phasechip .dot{width:7px;height:7px;border-radius:50%;background:var(--good);flex:none;animation:pulse 2.4s infinite}
+  .phasechip b{color:var(--ink);font-weight:600}
+  .phasechip .sep{color:var(--rule-2);margin:0 2px}
+  .phasechip .arr{color:var(--good);font-weight:600;margin-left:3px}
+  @media(max-width:560px){.phasechip{font-size:11.5px;gap:7px;flex-wrap:wrap}}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:14px;margin-top:18px}
   .card{display:block;padding:17px 18px;border:1px solid var(--rule);border-radius:6px;background:var(--card);text-decoration:none;transition:.12s}
   .card:hover{border-color:var(--rule-2);transform:translateY(-2px)}
@@ -71,6 +78,7 @@
       <a class="cta solid" href="note.html">Read the research note →</a>
       <a class="cta ghost" href="bracket.html">See the live knockout bracket</a>
     </div>
+    <a class="phasechip" id="lpphase" href="bracket.html"></a>
     <div class="stats" id="lpscore" style="margin-top:26px"></div>
     <div id="lpfresh" style="font-family:var(--fm);font-size:11.5px;color:var(--dim);margin-top:10px"></div>
   </header>
@@ -115,7 +123,19 @@
 </div>
 <script>
 // live scoreboard — reads the same feeds the rest of the site does, so the landing page never goes stale
-let G=null,D=null,L=null;
+let G=null,D=null,L=null,B=null;
+const _ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
+function paintPhase(){
+  if(!B||!B.rounds||!B.group_done)return;
+  const pe=document.getElementById('lpphase'); if(!pe)return;
+  const active=B.rounds.find(r=>r.matches.some(m=>!m.final))||B.rounds[B.rounds.length-1];
+  const settled=active.matches.filter(m=>m.final).length, tot=active.matches.length;
+  const ch=B.champion, iso=ch&&_ISO[ch.team];
+  const fl=iso?`<img src="flags/${iso}.svg" alt="" style="width:15px;height:15px;border-radius:50%;vertical-align:-3px;box-shadow:0 0 0 1px rgba(0,0,0,.1)" onerror="this.style.display='none'">`:'';
+  pe.innerHTML=`<span class="dot"></span><b>${active.round}</b> · live · ${settled}/${tot} settled<span class="sep">·</span>`+
+    (ch?`projected champion ${fl} <b>${ch.team}</b> ${Math.round(ch.p)}%`:'')+`<span class="arr">see the bracket →</span>`;
+  pe.style.display='inline-flex';
+}
 function fmtAge(iso){if(!iso)return'';const h=(Date.now()-new Date(iso))/3.6e6;return h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`;}
 function paint(){
   const t=[];
@@ -133,5 +153,6 @@ function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Dat
 load('data/matches.js',()=>{G=window.GAMES;paint();});
 load('data/dashboard.js',()=>{D=window.DASH;paint();});
 load('data/leadlag.js',()=>{L=window.LEADLAG_POOLED;paint();});
+load('data/bracket.js',()=>{B=window.BRACKET;paintPhase();});
 </script>
 </body></html>
