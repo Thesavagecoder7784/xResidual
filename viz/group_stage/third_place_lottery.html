@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — the third-place lottery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:50px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:54px;line-height:.98;letter-spacing:-.018em;margin-top:15px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:11px;font-size:15.5px;color:var(--muted);max-width:1030px;line-height:1.48} .dek b{color:var(--ink)}
+  .stat{position:absolute;right:var(--pad);top:62px;z-index:4;text-align:right}
+  .stat .big{font-family:var(--fd);font-size:60px;font-weight:600;color:var(--accent);line-height:.9}
+  .stat .big span{font-size:32px;color:var(--dim)}
+  .stat .lbl{font-family:var(--fm);font-size:12px;letter-spacing:.10em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+  .rows{position:absolute;left:var(--pad);right:var(--pad);top:238px;bottom:58px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+  .row{display:flex;align-items:center;gap:16px}
+  .glab{font-family:var(--fm);font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--ink);width:64px}
+  .glab span{color:var(--dim);font-weight:500}
+  .track{flex:1;height:28px;background:rgba(0,0,0,.05);border-radius:6px;display:flex;overflow:hidden}
+  .seg{height:100%;display:flex;align-items:center;justify-content:center;width:0;box-shadow:inset -1px 0 0 rgba(248,245,238,.85);
+    animation:grow 1s cubic-bezier(.5,.05,.2,1) forwards;animation-delay:var(--d)}
+  .seg img{width:19px;height:19px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.12);opacity:0;animation:pop .01s linear forwards;animation-delay:calc(var(--d) + .9s)}
+  @keyframes grow{to{width:var(--w)}} @keyframes pop{to{opacity:1}}
+  .tot{width:150px;display:flex;align-items:baseline;gap:7px}
+  .tot b{font-family:var(--fm);font-size:18px;color:var(--ink)} .tot .s{font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:26px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12.5px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">08</span> The Third-Place Lottery · xResidual</div>
+    <h1>Which group sends its <em>third</em> through?</h1>
+    <div class="dek">New in 2026: the <b>8 best third-placed</b> teams join the 24 group qualifiers in the Round of 32. Only one team finishes third in each group — so each bar's <b>segments are the rival candidates</b> for that single slot, and its <b>length is the chance</b> that group's third is good enough to survive. Eight of the twelve will.</div></div>
+  <div class="stat"><div class="big">8<span>/12</span></div><div class="lbl">thirds advance</div></div>
+  <div class="rows" id="rows"></div>
+  <div class="foot"><div>Method · Elo + Poisson group-stage Monte Carlo, 40,000 sims &nbsp;•&nbsp; bar = P(group's 3rd ranks top-8) &nbsp;•&nbsp; segment = each team's share of that</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_groupsim.js"></script>
+<script>
+const G=window.GROUPSIM.groups;
+// One row per group: its candidate thirds (mutually exclusive) stacked; total = P(its 3rd survives).
+const rows=Object.keys(G).map(L=>{
+  const cand=G[L].map(r=>({team:r.team,iso:r.iso,color:r.color,p:r.p3adv}))
+                 .filter(c=>c.p>=0.4).sort((a,b)=>b.p-a.p);
+  return {L, cand, total:cand.reduce((s,c)=>s+c.p,0)};
+}).sort((a,b)=>b.total-a.total);
+const maxT=Math.max(...rows.map(r=>r.total));
+const box=document.getElementById('rows');
+rows.forEach((r,i)=>{
+  const el=document.createElement('div');el.className='row';
+  const segs=r.cand.map(c=>{
+    const w=(c.p/maxT*100);
+    const flag = w>=3.4 ? `<img src="../flags/${c.iso}.svg" alt="" title="${c.team}">` : '';
+    return `<div class="seg" style="--w:${w.toFixed(2)}%;--d:${(i*0.05).toFixed(2)}s;background:${c.color}">${flag}</div>`;
+  }).join('');
+  el.innerHTML=`<div class="glab">Grp <span>${r.L}</span></div>
+    <div class="track">${segs}</div>
+    <div class="tot"><b>${r.total.toFixed(0)}%</b><span class="s">its 3rd survives</span></div>`;
+  box.appendChild(el);
+});
+</script>
+</body></html>

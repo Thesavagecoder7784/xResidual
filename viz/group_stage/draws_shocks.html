@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — the shocks were draws</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#f8f5ee; --ink:#1b1813; --muted:#4a443b; --dim:#8a8175; --rule:#d8d0bf;
+         --crim:#b3122a; --teal:#1e6f6a;
+         --fd:"Fraunces",serif; --fb:"Spline Sans",sans-serif; --fm:"IBM Plex Mono",monospace; }
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 88% -8%,rgba(179,18,42,.06),transparent 55%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:48px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--crim);font-weight:600}
+  h1{font-family:var(--fd);font-weight:600;font-size:54px;line-height:.98;letter-spacing:-.018em;margin-top:13px}
+  h1 em{font-style:italic;font-weight:500;color:var(--crim)}
+  .dek{margin-top:13px;font-size:16.5px;color:var(--muted);max-width:1000px;line-height:1.5} .dek b{color:var(--ink)}
+
+  .list{position:absolute;left:var(--pad);top:300px;width:1000px;z-index:2}
+  .row{display:flex;align-items:center;gap:18px;height:69px;border-top:1px solid var(--rule)}
+  .row:last-child{border-bottom:1px solid var(--rule)}
+  .flags{flex:none;width:62px;display:flex}
+  .flags img{width:34px;height:23px;object-fit:cover;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+  .flags img:last-child{margin-left:-12px}
+  .match{flex:none;width:330px;font-family:var(--fd);font-size:21px;color:var(--ink);line-height:1.05}
+  .match .sc{font-family:var(--fm);font-weight:600;color:var(--crim);margin:0 5px}
+  .match.lit .sc{color:var(--dim)}
+  .track{position:relative;flex:1;height:18px;background:#ece6d8;border-radius:9px;overflow:hidden}
+  .fill{position:absolute;left:0;top:0;height:100%;border-radius:9px;background:var(--crim)}
+  .fill.lit{background:#b3a892}
+  .pct{flex:none;width:118px;text-align:right;font-family:var(--fm);font-size:18px;font-weight:600;color:var(--ink)}
+  .pct small{display:block;font-size:10.5px;font-weight:400;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
+  .side{position:absolute;right:var(--pad);top:300px;width:362px;z-index:4}
+  .stat{display:flex;align-items:baseline;gap:14px;padding:17px 0;border-top:1px solid var(--rule)}
+  .stat:last-of-type{border-bottom:1px solid var(--rule)}
+  .stat .n{font-family:var(--fd);font-size:56px;font-weight:600;line-height:.86;color:var(--crim);flex:none;width:150px;text-align:right}
+  .stat .t{font-size:14px;color:var(--muted);line-height:1.32} .stat .t b{color:var(--ink);font-weight:600}
+  .kick{margin-top:24px;font-family:var(--fd);font-size:19px;line-height:1.3;color:var(--ink)} .kick b{color:var(--crim)}
+
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:30px;z-index:4;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--crim)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker">The 2026 group stage, by the numbers · xResidual</div>
+    <h1>The shocks were <em>draws.</em></h1>
+    <div class="dek">In one of the highest-scoring group stages on record (<b id="d-gpg">2.94</b> goals a game), the results that most surprised our pre-match model were not upsets. They were heavy favourites being <b>held to a draw</b>. Bars show the probability the model gave the actual result — shorter is a bigger shock.</div></div>
+
+  <div class="list" id="list"></div>
+
+  <div class="side">
+    <div class="stat"><div class="n" id="s1">2.94</div><div class="t"><b>goals per game.</b> Among the highest scoring rates at any World Cup since 1970, so this was no defensive tournament.</div></div>
+    <div class="stat"><div class="n" id="s2">5 of 6</div><div class="t"><b>of the biggest shocks were draws.</b> The minnows of the expanded field competed by holding on for a point, not by winning.</div></div>
+    <div class="kick">A 48-team field rewards the draw: a team can reach the Round of 32 on draws alone, so <b>parking the bus is a plan,</b> not just damage control.</div>
+  </div>
+
+  <div class="foot"><div id="foot-src">Per-match model forecast vs result · group games played to date · neutral pre-match model, surprise = P(actual result)</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_draws_shocks.js"></script>
+<script>
+  const D = window.DRAWSHOCKS;
+  const CAP = 25;                       // bar track represents 0..25% model probability
+  document.getElementById('d-gpg').textContent = D.goals_per_game.toFixed(2);
+  document.getElementById('s1').textContent = D.goals_per_game.toFixed(2);
+  document.getElementById('s2').textContent = D.top6_draws + ' of 6';
+  document.getElementById('foot-src').textContent =
+    `Per-match model forecast vs result · ${D.n_played} of 72 group games (asof ${String(D.asof).slice(0,10)}) · surprise = P(actual result)`;
+
+  let h = '';
+  D.rows.forEach(r=>{
+    const w = Math.max(2, Math.min(100, r.p / CAP * 100));
+    const lit = r.draw ? '' : ' lit';
+    h += `<div class="row">
+      <div class="flags"><img src="../flags/${r.iso1}.svg"><img src="../flags/${r.iso2}.svg"></div>
+      <div class="match${lit}">${r.t1}<span class="sc">${r.s1}-${r.s2}</span>${r.t2}</div>
+      <div class="track"><div class="fill${lit}" style="width:${w}%"></div></div>
+      <div class="pct">${r.p}%<small>${r.draw ? 'held to a draw' : 'upset win'}</small></div>
+    </div>`;
+  });
+  document.getElementById('list').innerHTML = h;
+</script>
+</body></html>

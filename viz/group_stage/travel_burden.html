@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — the travel draw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;--mkt:#1e6f6a;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:50px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:52px;line-height:.98;letter-spacing:-.018em;margin-top:14px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:11px;font-size:15.5px;color:var(--muted);max-width:1080px;line-height:1.46} .dek b{color:var(--ink)}
+  .jetlag{position:absolute;left:var(--pad);right:var(--pad);top:250px;z-index:3;display:flex;align-items:center;gap:30px;
+    border-top:1.5px solid var(--rule);border-bottom:1.5px solid var(--rule);padding:13px 0}
+  .jetlag .lead{font-family:var(--fd);font-weight:600;font-size:19px;color:var(--ink);flex:1}
+  .jetlag .lead b{color:var(--accent)}
+  .jl{font-family:var(--fm);text-align:right} .jl .v{font-size:24px;font-weight:600;color:var(--ink)} .jl .k{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+  .rows{position:absolute;left:var(--pad);right:var(--pad);top:328px;bottom:56px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+  .row{display:flex;align-items:center;gap:14px;height:37px}
+  .gap{display:flex;align-items:center;gap:12px;height:30px;font-family:var(--fm);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .gap .line{flex:none;width:24px;border-top:1px dashed var(--rule)}
+  .gap .rest{flex:1;border-top:1px dashed var(--rule)}
+  .rk{font-family:var(--fm);font-size:12.5px;color:var(--dim);width:34px}
+  .team{display:flex;align-items:center;gap:10px;width:210px}
+  .flag{width:22px;height:22px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.10)}
+  .nm{font-weight:500;color:var(--ink);font-size:16px}
+  .star{color:var(--mkt);font-size:14px;margin-left:2px}
+  .track{flex:1;height:15px;background:rgba(0,0,0,.05);border-radius:8px;overflow:hidden}
+  .fill{height:100%;border-radius:8px;width:0;background:var(--accent);animation:grow 1s cubic-bezier(.5,.05,.2,1) forwards;animation-delay:var(--d)}
+  @keyframes grow{to{width:var(--w)}}
+  .meta{width:236px;font-family:var(--fm);font-size:13px;color:var(--muted);text-align:right}
+  .meta b{color:var(--ink)} .meta .r{color:var(--dim)} .meta .p{color:var(--mkt)}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:24px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">25</span> The Travel Draw · xResidual</div>
+    <h1>The travel is real. The <em>jet-lag edge</em> isn't.</h1>
+    <div class="dek">The first continent-spanning World Cup, and the brutal trips were <b>regressively</b> drawn — the longest routes (Bosnia 5,061 km) landed on bubble teams while the title <b style="color:var(--mkt)">favourites (★)</b> sit at the short end (Argentina 739 km, #41). But the jet-lag everyone expects to decide games? Modelled with recovery, it <b>washes out</b> — and football's cleanest study finds no effect at all.</div></div>
+  <div class="jetlag" id="jetlag"></div>
+  <div class="rows" id="rows"></div>
+  <div class="foot"><div>Method · great-circle distance between a team's 3 group-match cities · min days rest · market advance % (Polymarket) &nbsp;•&nbsp; group stage only — deep runs add far more</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script src="_travel.js"></script>
+<script>
+const T=window.TRAVEL, maxk=T.max_km;
+const box=document.getElementById('rows');
+function rowHTML(d,i){
+  const w=(d.km/maxk*100).toFixed(1);
+  const star = d.fav ? ` <span class="star" title="title favourite">★</span>` : '';
+  return `<div class="row">
+    <div class="rk">#${d.rank}</div>
+    <div class="team"><img class="flag" src="../flags/${d.iso}.svg" alt=""><span class="nm">${d.team}</span>${star}</div>
+    <div class="track"><div class="fill" style="--w:${w}%;--d:${(i*0.05).toFixed(2)}s"></div></div>
+    <div class="meta"><b>${d.km.toLocaleString()} km</b> &nbsp;·&nbsp; <span class="r">rest ${d.rest}d</span> &nbsp;·&nbsp; <span class="r">${d.east_hrs?d.east_hrs+'h E':(d.west_hrs?d.west_hrs+'h W':'0 tz')}</span> &nbsp;·&nbsp; <span class="p">${d.adv}% adv</span></div>
+  </div>`;
+}
+let html = T.worst.map(rowHTML).join('');
+html += `<div class="gap"><span class="line"></span>the title favourites <span style="color:var(--mkt)">★</span> — further down the field<span class="rest"></span></div>`;
+html += T.favs.map((d,i)=>rowHTML(d,i+T.worst.length)).join('');
+box.innerHTML = html;
+const J=T.jetlag;
+document.getElementById('jetlag').innerHTML =
+  `<div class="lead">Residual jet-lag after recovery, across every group-stage trip: <b>zero.</b> The 4–6 day gaps clear the ≤3-zone shifts — worst case all tournament ~${J.worst_case_winprob_pct}% win prob.</div>`
+  + `<div class="jl"><div class="v">${J.zero_legs} / ${J.legs}</div><div class="k">legs, no residual</div></div>`
+  + `<div class="jl"><div class="v">${J.span_hours}h</div><div class="k">max zone span</div></div>`
+  + `<div class="jl"><div class="v">~${J.worst_case_winprob_pct}%</div><div class="k">win-prob effect</div></div>`;
+</script>
+</body></html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual · six teams on the bubble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;--gold:#9a6a14;--good:#1f9d55;
+    --fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:46px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:14px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px}
+  h1{font-family:var(--fd);font-weight:600;font-size:54px;line-height:.98;letter-spacing:-.018em;margin-top:12px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:11px;font-size:15.5px;color:var(--muted);max-width:1030px;line-height:1.46} .dek b{color:var(--ink)}
+  .stat{position:absolute;right:var(--pad);top:50px;z-index:4;text-align:right}
+  .stat .big{font-family:var(--fd);font-size:62px;font-weight:600;color:var(--accent);line-height:.85}
+  .stat .lbl{font-family:var(--fm);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-top:8px;line-height:1.5}
+  .plot{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}
+  .band{position:absolute;background:rgba(179,18,42,.07);border-left:1px dashed rgba(179,18,42,.35);border-right:1px dashed rgba(179,18,42,.35);z-index:1}
+  .axis{position:absolute;height:2px;background:#bcb29e;z-index:2}
+  .tk{position:absolute;font-family:var(--fm);font-size:12px;color:var(--dim);transform:translateX(-50%)}
+  .tk::before{content:"";position:absolute;left:50%;top:-20px;width:1px;height:12px;background:var(--rule)}
+  .dot{position:absolute;border-radius:50%;transform:translate(-50%,-50%);z-index:3}
+  .dot.dec{width:27px;height:27px;background-size:cover;background-position:center;opacity:.7;box-shadow:0 0 0 2px var(--paper),0 0 0 3px rgba(0,0,0,.06)}
+  .bub{position:absolute;width:30px;height:30px;border-radius:50%;transform:translate(-50%,-50%);background-size:cover;background-position:center;z-index:5;box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--accent),0 4px 14px rgba(179,18,42,.3)}
+  .conn{position:absolute;width:1.5px;background:var(--accent);opacity:.4;z-index:2}
+  .chip{position:absolute;z-index:6;text-align:center;transform:translateX(-50%)}
+  .chip .nm{font-family:var(--fb);font-size:16px;font-weight:600;color:var(--ink);white-space:nowrap}
+  .chip .pc{font-family:var(--fd);font-size:30px;font-weight:600;color:var(--accent);line-height:1}
+  .endlab{position:absolute;font-family:var(--fm);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;z-index:4}
+  .endlab .n{font-family:var(--fd);font-size:24px;display:block}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:26px;z-index:3;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">11</span> The Bubble · xResidual</div>
+    <h1>Six teams on the <em>bubble</em>.</h1>
+    <div class="dek">A dozen games into the World Cup, the group stage already looks mostly settled. The model puts <b>42 of 48 teams</b> above 70% or below 30% to reach the knockouts. The whole qualification fight is <b>these six</b>, each closer to a coin flip than a call. Every number conditions on the results so far.</div></div>
+  <div class="stat"><div class="big">6<span style="font-size:30px">/48</span></div><div class="lbl">still a coin flip<br>to advance</div></div>
+  <div class="plot" id="plot"></div>
+  <div class="foot"><div>Method · joint Monte-Carlo group-stage sim, conditioned on every result so far · 32 of 48 advance (top 2 per group + 8 best thirds) · "bubble" = 30 to 70% to reach the last 32 · snapshot</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script>
+const DATA=[{"t":"Germany","iso":"de","p":99.9},{"t":"Spain","iso":"es","p":99.8},{"t":"Mexico","iso":"mx","p":98.8},{"t":"Argentina","iso":"ar","p":98.6},{"t":"England","iso":"gb-eng","p":98.6},{"t":"France","iso":"fr","p":98.4},{"t":"USA","iso":"us","p":98.3},{"t":"Belgium","iso":"be","p":98.0},{"t":"Brazil","iso":"br","p":97.2},{"t":"Portugal","iso":"pt","p":96.8},{"t":"S. Korea","iso":"kr","p":94.0},{"t":"Morocco","iso":"ma","p":94.0},{"t":"Netherlands","iso":"nl","p":93.8},{"t":"Uruguay","iso":"uy","p":93.2},{"t":"Ecuador","iso":"ec","p":92.2},{"t":"Canada","iso":"ca","p":91.6},{"t":"Norway","iso":"no","p":90.5},{"t":"Croatia","iso":"hr","p":88.7},{"t":"Colombia","iso":"co","p":87.4},{"t":"Ivory Coast","iso":"ci","p":85.9},{"t":"Australia","iso":"au","p":84.5},{"t":"Scotland","iso":"gb-sct","p":82.6},{"t":"Senegal","iso":"sn","p":82.5},{"t":"Egypt","iso":"eg","p":82.1},{"t":"Austria","iso":"at","p":80.9},{"t":"Switzerland","iso":"ch","p":80.4},{"t":"Algeria","iso":"dz","p":78.8},{"t":"Japan","iso":"jp","p":78.6},{"t":"Bosnia","iso":"ba","p":76.2},{"t":"Sweden","iso":"se","p":71.4},{"t":"Czechia","iso":"cz","p":59.0},{"t":"Iran","iso":"ir","p":58.1},{"t":"Turkey","iso":"tr","p":53.8},{"t":"Ghana","iso":"gh","p":47.5},{"t":"DR Congo","iso":"cd","p":47.0},{"t":"Paraguay","iso":"py","p":36.4},{"t":"C. Verde","iso":"cv","p":29.3},{"t":"Uzbekistan","iso":"uz","p":29.1},{"t":"Tunisia","iso":"tn","p":24.1},{"t":"N. Zealand","iso":"nz","p":22.6},{"t":"Saudi","iso":"sa","p":22.4},{"t":"Panama","iso":"pa","p":21.3},{"t":"S. Africa","iso":"za","p":19.2},{"t":"Qatar","iso":"qa","p":19.0},{"t":"Jordan","iso":"jo","p":9.4},{"t":"Iraq","iso":"iq","p":3.6},{"t":"Haiti","iso":"ht","p":2.9},{"t":"Curaçao","iso":"cw","p":1.5}];
+const PAD=74, W=1600, plotW=W-2*PAD, axisY=648;
+const xp=p=>PAD+p/100*plotW;
+const plot=document.getElementById('plot');
+const flag=iso=>`../flags/${iso}.svg`;
+let h='';
+// contested band 30-70
+h+=`<div class="band" style="left:${xp(30)}px;width:${xp(70)-xp(30)}px;top:300px;height:${axisY-300+34}px"></div>`;
+// axis + ticks
+h+=`<div class="axis" style="left:${PAD}px;width:${plotW}px;top:${axisY}px"></div>`;
+[0,30,50,70,100].forEach(v=>{h+=`<div class="tk" style="left:${xp(v)}px;top:${axisY+18}px">${v}%</div>`;});
+h+=`<div class="tk" style="left:${xp(50)}px;top:${axisY+40}px;color:var(--accent);font-weight:600">advance probability →</div>`;
+// decided teams: beeswarm so no flag overlaps, while keeping each at its TRUE x (probability)
+const dec=DATA.filter(d=>d.p>=70||d.p<=30).sort((a,b)=>xp(a.p)-xp(b.p));
+const bub=DATA.filter(d=>d.p>30&&d.p<70).sort((a,b)=>a.p-b.p);
+const STEP=31, placedD=[];                        // 27px flag + gap
+dec.forEach(d=>{
+  const x=xp(d.p); let off=0,k=0,y=axisY;
+  while(true){
+    const cand=axisY+off;
+    if(placedD.every(p=>Math.abs(p.x-x)>=STEP||Math.abs(p.y-cand)>=STEP)){y=cand;break;}
+    k++; off=(k%2?1:-1)*Math.ceil(k/2)*STEP;
+    if(Math.ceil(k/2)*STEP>150){y=cand;break;}    // cap vertical spread
+  }
+  placedD.push({x,y});
+  h+=`<div class="dot dec" style="left:${x}px;top:${y}px;background-image:url('${flag(d.iso)}')"></div>`;
+});
+// zone labels (probability buckets, NOT slot counts: 32 of 48 actually advance)
+const nIn=DATA.filter(d=>d.p>=70).length, nOut=DATA.filter(d=>d.p<=30).length;
+h+=`<div class="endlab" style="left:${xp(86)}px;top:474px;transform:translateX(-50%);text-align:center;color:var(--good)"><span class="n">${nIn}</span>already 70%+ to advance</div>`;
+h+=`<div class="endlab" style="left:${xp(14)}px;top:474px;transform:translateX(-50%);text-align:center;color:var(--dim)"><span class="n">${nOut}</span>already under 30%</div>`;
+// bubble: labels stack vertically (chip levels) AND the flag dots nudge vertically so near-tied
+// pairs (DR Congo/Ghana, Iran/Czechia) don't sit on top of each other. Connector runs chip -> dot.
+const yLevels=[392,318,244], placed=[[],[],[]], STEPB=34, placedB=[];
+bub.forEach(d=>{
+  const x=xp(d.p);
+  let L=0; for(;L<yLevels.length;L++){ if(placed[L].every(px=>Math.abs(px-x)>120)) break; }
+  if(L>=yLevels.length) L=yLevels.length-1;
+  placed[L].push(x);
+  const cy=yLevels[L];
+  let off=0,k=0,dy=axisY;                          // de-collide the dot vertically, preferring UP
+  while(true){ const cand=axisY+off;
+    if(placedB.every(p=>Math.abs(p.x-x)>=STEPB||Math.abs(p.y-cand)>=STEPB)){dy=cand;break;}
+    k++; off=(k%2?-1:1)*Math.ceil(k/2)*STEPB;
+    if(Math.ceil(k/2)*STEPB>72){dy=cand;break;}
+  }
+  placedB.push({x,y:dy});
+  h+=`<div class="conn" style="left:${x}px;top:${cy+54}px;height:${Math.max(0,dy-(cy+54))}px"></div>`;
+  h+=`<div class="bub" style="left:${x}px;top:${dy}px;background-image:url('${flag(d.iso)}')"></div>`;
+  h+=`<div class="chip" style="left:${x}px;top:${cy}px"><div class="pc">${Math.round(d.p)}%</div><div class="nm">${d.t}</div></div>`;
+});
+plot.innerHTML=h;
+</script>
+</body></html>

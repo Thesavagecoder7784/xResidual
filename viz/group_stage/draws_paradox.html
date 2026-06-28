@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual — goals up, draws up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#f8f5ee; --ink:#1b1813; --muted:#4a443b; --dim:#8a8175; --rule:#d8d0bf;
+         --crim:#b3122a; --teal:#1e6f6a;
+         --fd:"Fraunces",serif; --fb:"Spline Sans",sans-serif; --fm:"IBM Plex Mono",monospace; }
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:74px;
+    background:radial-gradient(120% 80% at 88% -8%,rgba(179,18,42,.06),transparent 55%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:48px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:14px;letter-spacing:.30em;text-transform:uppercase;color:var(--crim);font-weight:600}
+  h1{font-family:var(--fd);font-weight:600;font-size:54px;line-height:.98;letter-spacing:-.018em;margin-top:13px}
+  h1 em{font-style:italic;font-weight:500;color:var(--crim)}
+  .dek{margin-top:13px;font-size:16.5px;color:var(--muted);max-width:1020px;line-height:1.5} .dek b{color:var(--ink)}
+
+  .plot{position:absolute;left:64px;top:286px;width:986px;height:486px;z-index:2}
+  .ax{position:absolute;background:var(--rule)}
+  .axlab{position:absolute;font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.02em}
+  .grid{position:absolute;background:repeating-linear-gradient(transparent,transparent 0)}
+  .tick{position:absolute;font-family:var(--fm);font-size:11.5px;color:var(--dim)}
+  .gl{position:absolute;background:#e4ddcd}
+  .wedge{position:absolute;border-radius:18px 0 0 0;
+    background:linear-gradient(135deg,rgba(179,18,42,.10),rgba(179,18,42,0) 70%);pointer-events:none}
+  .dot{position:absolute;width:12px;height:12px;border-radius:50%;background:#a99e88;transform:translate(-50%,-50%);
+    box-shadow:0 0 0 3px var(--paper)}
+  .dot.hl{width:26px;height:26px;background:var(--crim);box-shadow:0 0 0 5px var(--paper),0 4px 16px rgba(179,18,42,.34);z-index:5}
+  .dot.lit{background:#8a8175}
+  .yr{position:absolute;font-family:var(--fm);font-size:11.5px;color:var(--dim);white-space:nowrap}
+  .yr.big{font-size:15px;color:var(--crim);font-weight:600}
+  .note{position:absolute;font-family:var(--fd);font-style:italic;font-size:14px;color:var(--muted);max-width:188px;line-height:1.3}
+
+  .side{position:absolute;right:var(--pad);top:300px;width:404px;z-index:4}
+  .stat{display:flex;align-items:baseline;gap:14px;padding:18px 0;border-top:1px solid var(--rule)}
+  .stat:last-of-type{border-bottom:1px solid var(--rule)}
+  .stat .n{font-family:var(--fd);font-size:62px;font-weight:600;line-height:.86;color:var(--crim);flex:none;width:150px;text-align:right}
+  .stat .t{font-size:14.5px;color:var(--muted);line-height:1.32} .stat .t b{color:var(--ink);font-weight:600}
+  .kick{margin-top:26px;font-family:var(--fd);font-size:20px;line-height:1.28;color:var(--ink)} .kick b{color:var(--crim)}
+
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:30px;z-index:4;display:flex;justify-content:space-between;font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--crim)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker">The format, by the numbers · xResidual</div>
+    <h1>More goals. And <em>more draws.</em></h1>
+    <div class="dek">Through 33 group games, the 2026 World Cup is scoring <b>3.09 goals a game</b> — more than any World Cup since 1970 — while <b>30% of those games end level</b>. Every modern tournament picked a lane: high-scoring <i>or</i> draw-heavy. <b>This one is doing both</b>, in a corner of the map no World Cup has reached.</div></div>
+
+  <div class="plot" id="plot"></div>
+
+  <div class="side">
+    <div class="stat"><div class="n" id="s1">3.09</div><div class="t"><b>goals per game.</b> The highest scoring rate at a World Cup since 1970 (2.97) — and well clear of 2022's 2.69.</div></div>
+    <div class="stat"><div class="n" id="s2">30%</div><div class="t"><b>of games drawn.</b> A top-tier draw rate — the company is 1982 and 1998, tournaments that scored far less.</div></div>
+    <div class="kick">Scoring usually <i>buys</i> decisive results. In 2026 the new minnows ship goals in blowouts while the mid-tier games tighten into draws — so <b>both rise at once.</b></div>
+  </div>
+
+  <div class="foot"><div>Goals + draws per World Cup, all stages · history re-summed from RSSSF · 2026 = 33 of 72 group games (asof Jun 20); both rates typically ease in the knockouts</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div></div>
+</div>
+<script>
+// goals/game vs draw% per World Cup. History (1970-2022) re-summed from RSSSF, draws = level at 90'.
+// 2026 = our own results cache (docs/data/matches.js): 33 group games, 10 draws, 102 goals.
+const D=[
+ {y:1970,g:2.97,d:25.0},{y:1974,g:2.55,d:26.3},{y:1978,g:2.68,d:26.3},{y:1982,g:2.81,d:32.7},
+ {y:1986,g:2.54,d:30.8},{y:1990,g:2.21,d:28.8},{y:1994,g:2.71,d:23.1},{y:1998,g:2.67,d:31.3},
+ {y:2002,g:2.52,d:29.7},{y:2006,g:2.30,d:23.4},{y:2010,g:2.27,d:26.6},{y:2014,g:2.67,d:26.6},
+ {y:2018,g:2.64,d:21.9},{y:2022,g:2.69,d:23.4},{y:2026,g:3.09,d:30.3,hl:1},
+];
+const GX0=2.15,GX1=3.20, DY0=20.5,DY1=33.5;            // axis ranges
+const PW=986,PH=486, L=92,R=22,T=20,B=58;              // plot + insets (axis gutters)
+const ix0=L, ix1=PW-R, iy0=T, iy1=PH-B;                // inner plot rect
+const fx=g=>ix0+(g-GX0)/(GX1-GX0)*(ix1-ix0);
+const fy=d=>iy1-(d-DY0)/(DY1-DY0)*(iy1-iy0);
+const plot=document.getElementById('plot');
+let h='';
+// empty top-right "no World Cup has been here" wedge, behind the dots
+h+=`<div class="wedge" style="left:${fx(2.86)}px;top:${iy0}px;width:${ix1-fx(2.86)}px;height:${fy(28.5)-iy0}px"></div>`;
+// gridlines + x ticks (goals) and y ticks (draw%)
+[2.2,2.4,2.6,2.8,3.0].forEach(g=>{h+=`<div class="gl" style="left:${fx(g)}px;top:${iy0}px;width:1px;height:${iy1-iy0}px"></div>`+
+  `<div class="tick" style="left:${fx(g)}px;top:${iy1+10}px;transform:translateX(-50%)">${g.toFixed(1)}</div>`;});
+[22,26,30,34].forEach(d=>{h+=`<div class="gl" style="left:${ix0}px;top:${fy(d)}px;width:${ix1-ix0}px;height:1px"></div>`+
+  `<div class="tick" style="left:${ix0-12}px;top:${fy(d)}px;transform:translate(-100%,-50%)">${d}%</div>`;});
+// axes
+h+=`<div class="ax" style="left:${ix0}px;top:${iy1}px;width:${ix1-ix0}px;height:1.5px"></div>`;
+h+=`<div class="ax" style="left:${ix0}px;top:${iy0}px;width:1.5px;height:${iy1-iy0}px"></div>`;
+h+=`<div class="axlab" style="left:${ix1}px;top:${iy1+30}px;transform:translateX(-100%)">goals per game →</div>`;
+h+=`<div class="axlab" style="left:${ix0-12}px;top:${iy0-4}px;transform:translate(-100%,-100%)">↑ share of games drawn</div>`;
+// label only the storyline points to keep it clean
+const LAB={1970:["last time scoring ran this hot","up"],1982:["the draw record — but it barely scored","up"],
+           2022:["Qatar 2022","down"],2026:["2026","big"]};
+D.forEach(p=>{
+  const x=fx(p.g),yv=fy(p.d);
+  h+=`<div class="dot ${p.hl?'hl':(LAB[p.y]?'lit':'')}" style="left:${x}px;top:${yv}px"></div>`;
+  const L0=LAB[p.y];
+  if(L0&&L0[1]==="big"){h+=`<div class="yr big" style="left:${x}px;top:${yv-34}px;transform:translateX(-50%)">2026</div>`+
+    `<div class="note" style="left:${x-200}px;top:${yv-8}px;text-align:right">no World Cup has paired this much scoring with this many draws</div>`;}
+  else if(L0){const up=L0[1]==="up"; h+=`<div class="yr" style="left:${x+13}px;top:${yv-7}px">${p.y}</div>`+
+    `<div class="note" style="left:${x+13}px;top:${up?yv+8:yv-46}px">${L0[0]}</div>`;}
+  else h+=`<div class="yr" style="left:${x}px;top:${yv+12}px;transform:translateX(-50%)">'${String(p.y).slice(2)}</div>`;
+});
+plot.innerHTML=h;
+</script>
+</body></html>
