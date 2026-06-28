@@ -27,6 +27,14 @@
   .grow .gpos{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--dim);width:15px;flex:none;text-align:center}
   .grow.in .gpos{color:var(--good)} .grow.bub .gpos{color:var(--gold)}
   .gcard .gcut{border-top:1px dashed var(--rule);margin:2px 0 0;height:0}
+  /* live round-progress strip */
+  .bprog{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:-12px 0 20px;padding:11px 16px;
+    border:1px solid var(--rule-2);border-left:3px solid var(--good);border-radius:9px;background:var(--card);
+    font-family:var(--fm);font-size:12px;color:var(--muted)}
+  .bprog .live{color:var(--good)} .bprog b{color:var(--ink);font-weight:600}
+  .bprog .pbar{flex:1;min-width:120px;height:6px;border-radius:99px;background:var(--rule);overflow:hidden;max-width:240px}
+  .bprog .pbar i{display:block;height:100%;background:var(--good);border-radius:99px;transition:width .5s}
+  .bprog .note{color:var(--dim)}
 </style>
 </head>
 <body>
@@ -55,6 +63,7 @@
 
   <section style="border-top:none;padding-top:10px">
     <div class="champ-banner" id="champ"></div>
+    <div class="bprog" id="bprog" style="display:none"></div>
     <div class="bwrap"><div class="bcols" id="bracket"><div class="loading">loading…</div></div></div>
     <div class="legend" style="margin-top:14px"><span class="a">●</span> model's pick to advance · faint % = how likely that team is to reach the slot (projected) · ✓ = result in</div>
   </section>
@@ -95,6 +104,19 @@ function gcard(L,teams){
   }).join('');
   return `<div class="gcard"><h4>Group ${L}<span class="qn">finish · P(adv)</span></h4>${rows}</div>`;
 }
+function renderProgress(){
+  const el=document.getElementById('bprog'); if(!el||!D.group_done||!D.rounds)return;
+  const total=D.rounds.reduce((s,r)=>s+r.matches.length,0);
+  const done=D.rounds.reduce((s,r)=>s+r.matches.filter(m=>m.final).length,0);
+  const active=D.rounds.find(r=>r.matches.some(m=>!m.final))||D.rounds[D.rounds.length-1];
+  const rs=active.matches.filter(m=>m.final).length, rt=active.matches.length;
+  const pct=Math.round(done/total*100);
+  el.innerHTML=`<span class="live">● <b style="color:var(--good)">${active.round}</b> · live</span>`+
+    `<span><b>${rs}/${rt}</b> ties settled this round</span>`+
+    `<span class="pbar"><i style="width:${pct}%"></i></span>`+
+    `<span class="note"><b>${done}</b>/${total} knockout games in · the sim re-forecasts after each</span>`;
+  el.style.display='flex';
+}
 function renderGroups(){
   if(!D.groups){document.getElementById('groups-sec').style.display='none';return;}
   const order="ABCDEFGHIJKL".split('').filter(L=>D.groups[L]);
@@ -105,6 +127,7 @@ function render(){
   const c=D.champion;
   document.getElementById('champ').innerHTML=
     `<span class="medal">★</span><div class="ctext"><span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${flag(c.team)}${c.team}</span></div><span class="cp">${c.final?'lifted it ✓':c.p+'% to lift it'}</span>`;
+  renderProgress();
   document.getElementById('bracket').innerHTML=D.rounds.map(r=>
     `<div class="bcol"><h3>${r.round}</h3><div class="bmatches">${r.matches.map(card).join('')}</div></div>`).join('')
     + '<svg class="blines" id="blines"></svg>';
