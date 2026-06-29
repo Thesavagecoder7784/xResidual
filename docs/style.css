@@ -173,6 +173,8 @@ td.num{font-family:var(--fm);text-align:right}
 .bcols{display:flex;gap:30px;min-width:920px;align-items:stretch;position:relative}
 .bcol{flex:1;min-width:150px;display:flex;flex-direction:column}
 .bcol h3{font-family:var(--fm);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:center;padding-bottom:9px;margin-bottom:6px;border-bottom:1px solid var(--rule)}
+.bcol h3 .rdate{display:block;margin-top:3px;font-size:9px;letter-spacing:.04em;text-transform:none;color:var(--rule-2);font-weight:400}
+.bcol h3.now{color:var(--good)}.bcol h3.now .rdate{color:var(--good)}
 /* matches fill the column below the (pinned) header and distribute evenly, so each round's ties
    centre between the two that feed them — the bracket-tree geometry the JS connectors then trace. */
 /* sparse later rounds (SF/Final) get a tighter ceiling so they don't float in a tall void; the
