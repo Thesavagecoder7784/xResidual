@@ -1,0 +1,40 @@
+{
+  "match": "Dr Congo vs Uzbekistan",
+  "capture": "20260627T230032Z-dr-congo-vs-uzbekistan",
+  "n_contracts": 4,
+  "max_z": 75.09,
+  "max_z_venue": "poly",
+  "max_move_c": 6.0,
+  "trail_sd_c": 0.08,
+  "max_z_nonzero_frac": 0.007,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 75.09,
+      "move_c": 6.0,
+      "sd_c": 0.08,
+      "nonzero_frac": 0.007
+    },
+    {
+      "venue": "kalshi",
+      "z": 71.22,
+      "move_c": 10.0,
+      "sd_c": 0.14,
+      "nonzero_frac": 0.019
+    },
+    {
+      "venue": "kalshi",
+      "z": 65.97,
+      "move_c": 14.5,
+      "sd_c": 0.22,
+      "nonzero_frac": 0.033
+    },
+    {
+      "venue": "poly",
+      "z": 52.5,
+      "move_c": 7.0,
+      "sd_c": 0.133,
+      "nonzero_frac": 0.016
+    }
+  ]
+}

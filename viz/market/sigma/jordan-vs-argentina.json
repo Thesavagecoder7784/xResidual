@@ -1,0 +1,40 @@
+{
+  "match": "Jordan vs Argentina",
+  "capture": "20260628T013349Z-jordan-vs-argentina",
+  "n_contracts": 4,
+  "max_z": 94.66,
+  "max_z_venue": "poly",
+  "max_move_c": 1.85,
+  "trail_sd_c": 0.02,
+  "max_z_nonzero_frac": 0.043,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 94.66,
+      "move_c": 1.85,
+      "sd_c": 0.02,
+      "nonzero_frac": 0.043
+    },
+    {
+      "venue": "poly",
+      "z": 87.81,
+      "move_c": 1.1,
+      "sd_c": 0.013,
+      "nonzero_frac": 0.025
+    },
+    {
+      "venue": "kalshi",
+      "z": 29.78,
+      "move_c": 4.0,
+      "sd_c": 0.134,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.09,
+      "move_c": 1.0,
+      "sd_c": 0.055,
+      "nonzero_frac": 0.004
+    }
+  ]
+}

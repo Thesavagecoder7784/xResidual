@@ -1,0 +1,40 @@
+{
+  "match": "Colombia vs Portugal",
+  "capture": "20260627T230032Z-colombia-vs-portugal",
+  "n_contracts": 4,
+  "max_z": 134.85,
+  "max_z_venue": "poly",
+  "max_move_c": 39.5,
+  "trail_sd_c": 0.293,
+  "max_z_nonzero_frac": 0.08,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 134.85,
+      "move_c": 39.5,
+      "sd_c": 0.293,
+      "nonzero_frac": 0.08
+    },
+    {
+      "venue": "kalshi",
+      "z": 101.87,
+      "move_c": 37.5,
+      "sd_c": 0.368,
+      "nonzero_frac": 0.111
+    },
+    {
+      "venue": "kalshi",
+      "z": 60.0,
+      "move_c": 6.0,
+      "sd_c": 0.1,
+      "nonzero_frac": 0.017
+    },
+    {
+      "venue": "poly",
+      "z": 37.35,
+      "move_c": 7.0,
+      "sd_c": 0.187,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
