@@ -18,7 +18,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 
-KEY = os.environ.get("KEY", "/Users/prabhatm/Downloads/Sportslogging_key.pem")
+KEY = os.environ.get("KEY", "/Users/prabhatm/Documents/GitHub/xResidual/Sportslogging_key.pem")
 VM = os.environ.get("VM", "azureuser@57.154.16.193")
 DATA = "/home/azureuser/xResidual/logger/data"
 
