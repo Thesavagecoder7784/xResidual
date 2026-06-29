@@ -8,7 +8,7 @@
 # The per-game JSON is the durable artifact; the raw tape is disposable once processed.
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-KEY="${LEADLAG_KEY:-$HOME/Downloads/Sportslogging_key.pem}"
+KEY="${LEADLAG_KEY:-$ROOT/Sportslogging_key.pem}"
 VM="${LEADLAG_VM:-azureuser@57.154.16.193}"
 RD=/home/azureuser/xResidual/logger/data
 LD="$ROOT/logger/data"; LL="$ROOT/viz/market/leadlag"; OV="$ROOT/viz/model/overreaction"; OFI="$ROOT/viz/market/ofi"
