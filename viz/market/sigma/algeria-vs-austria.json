@@ -1,0 +1,40 @@
+{
+  "match": "Algeria vs Austria",
+  "capture": "20260628T013349Z-algeria-vs-austria",
+  "n_contracts": 4,
+  "max_z": 355.64,
+  "max_z_venue": "kalshi",
+  "max_move_c": 79.0,
+  "trail_sd_c": 0.222,
+  "max_z_nonzero_frac": 0.048,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 355.64,
+      "move_c": 79.0,
+      "sd_c": 0.222,
+      "nonzero_frac": 0.048
+    },
+    {
+      "venue": "poly",
+      "z": 334.03,
+      "move_c": 79.0,
+      "sd_c": 0.237,
+      "nonzero_frac": 0.072
+    },
+    {
+      "venue": "kalshi",
+      "z": 277.78,
+      "move_c": 30.0,
+      "sd_c": 0.108,
+      "nonzero_frac": 0.01
+    },
+    {
+      "venue": "poly",
+      "z": 196.95,
+      "move_c": 22.5,
+      "sd_c": 0.114,
+      "nonzero_frac": 0.014
+    }
+  ]
+}

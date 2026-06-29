@@ -1,0 +1,40 @@
+{
+  "match": "Croatia vs Ghana",
+  "capture": "20260627T202735Z-croatia-vs-ghana",
+  "n_contracts": 4,
+  "max_z": 187.53,
+  "max_z_venue": "kalshi",
+  "max_move_c": 12.5,
+  "trail_sd_c": 0.067,
+  "max_z_nonzero_frac": 0.004,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 187.53,
+      "move_c": 12.5,
+      "sd_c": 0.067,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "poly",
+      "z": 127.47,
+      "move_c": 9.5,
+      "sd_c": 0.075,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 114.37,
+      "move_c": 7.55,
+      "sd_c": 0.066,
+      "nonzero_frac": 0.137
+    },
+    {
+      "venue": "kalshi",
+      "z": 82.16,
+      "move_c": 7.5,
+      "sd_c": 0.091,
+      "nonzero_frac": 0.008
+    }
+  ]
+}

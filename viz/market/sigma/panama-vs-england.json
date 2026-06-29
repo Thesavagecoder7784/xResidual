@@ -1,0 +1,40 @@
+{
+  "match": "Panama vs England",
+  "capture": "20260627T202735Z-panama-vs-england",
+  "n_contracts": 4,
+  "max_z": 82.55,
+  "max_z_venue": "kalshi",
+  "max_move_c": 11.0,
+  "trail_sd_c": 0.133,
+  "max_z_nonzero_frac": 0.016,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 82.55,
+      "move_c": 11.0,
+      "sd_c": 0.133,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "poly",
+      "z": 80.25,
+      "move_c": 20.5,
+      "sd_c": 0.255,
+      "nonzero_frac": 0.018
+    },
+    {
+      "venue": "poly",
+      "z": 47.02,
+      "move_c": 3.55,
+      "sd_c": 0.076,
+      "nonzero_frac": 0.177
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.97,
+      "move_c": 1.0,
+      "sd_c": 0.053,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
