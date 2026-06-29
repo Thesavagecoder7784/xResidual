@@ -182,11 +182,39 @@ where information arrives: Polymarket's information share is **~86% inside goal 
 first on the shock. Each match's events and tape are archived per game so the sample is
 auditable, not overwritten.
 
-### 5.3 Goal-shock event study ⟦PENDING in-play sample⟧
-> Per goal (target ~260 over the tournament): surprise classification, overshoot, and
-> mean-reversion half-life, with abnormal-return windows, benchmarked against Croxson-Reade
-> (efficient, near-instant updating, no drift). Framework validated on the first live tape
-> (5.6); the sample is the tournament itself.
+### 5.3 Goal-shock event study: the market under-reacts to goals (preliminary, clean sample)
+A first in-play result, on the subset of matches with a **fully reconstructed goal timeline**
+(curated goal minutes, and the final score reconstructs from the goal sequence — 8 group-stage
+matches, 29 goals; the wider shock-inferred sample is reported but not relied on, below). For each
+goal we compare two updates to the home win probability: the market's actual move (settled ~30s
+after the goal) and an independent reference — a calibrated clock-and-Poisson in-play model whose
+pre-goal probability is anchored to our pre-match forecast, so the goal's *fair* probability jump
+is well defined. Both moves are taken in **log-odds**, so a 50→60% and a 10→20% update are
+comparable and the result is not an artifact of the logistic curve being steepest at one-half.
+
+The market's post-goal update is a median **0.55x** the model's fair update, and the market
+under-shoots the fair move in **7 of 8 matches** (20 of 22 goals). The move is not given back —
+the 60-second reversion is ~0 — so this is a *persistent* under-reaction, not a transient
+overshoot. We guard against the obvious confound, that the *model* over-reacts rather than the
+market under-reacting, with an **outcome test**: the model's larger post-goal probability is the
+**better forecast of the eventual result** (log-loss 0.235 vs the market's 0.361; Brier 0.073 vs
+0.113), so the larger jump was warranted. The under-reaction sits in the market, not in an
+over-eager benchmark.
+
+We report this as **suggestive, not firm.** The cluster-honest unit is the match, and 7 of 8 is a
+sign-test *p* ≈ 0.07; the goal-level count (20 of 22, *p* < 0.001) overstates significance because
+goals within a match share an outcome. On the full sample that also includes shock-inferred goal
+times (27 matches) the direction is the same (market under-shoots in 24 of 27 matches) but the
+outcome test is mixed — mislabeled shock-goals corrupt the model's fair jump, which is exactly why
+the clean-reconstruction subset is the one we trust. Two cuts that looked striking at first — that
+"underdog goals move the market twice as far," and a "value-of-a-goal" curve peaking for even
+matchups — did **not** survive the log-odds correction: they were the logistic geometry, not
+behaviour, and are not claimed. The finding should sharpen as the knockout sample (now capturing
+cross-venue, Section 2) adds cleanly-timed goals.
+
+> The full graded study (target ~260 goals: surprise classification, abnormal-return windows,
+> mean-reversion half-life, benchmarked against Croxson-Reade efficient updating) fills in over the
+> tournament; the framework is validated on the live tapes (5.6).
 
 ### 5.4 Calibration and the favorite-longshot bias (FLB in; calibration grade PENDING Jul 19)
 The favorite-longshot bias is visible pre-tournament in the 1-cent tick structure of longshot
