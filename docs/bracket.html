@@ -80,6 +80,10 @@
 
 <script>
 let D=null;
+// Fixed 2026 FIFA knockout schedule (date windows per round, from data/wc2026_fixtures.csv).
+// Per-round, not per-match: the bracket-tree order here doesn't map 1:1 to the schedule order, and a
+// wrong kickoff date is worse than none. The active round is tinted green to match the live strip.
+const RDATES={"Round of 32":"Jun 28 – Jul 3","Round of 16":"Jul 4 – 7","Quarter-finals":"Jul 9 – 11","Semi-finals":"Jul 14 – 15","Final":"Jul 19 · NY/NJ"};
 const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argentina":"ar","Brazil":"br","Germany":"de","Netherlands":"nl","Belgium":"be","Croatia":"hr","Uruguay":"uy","Mexico":"mx","USA":"us","Colombia":"co","Morocco":"ma","Japan":"jp","Senegal":"sn","Switzerland":"ch","Norway":"no","Ecuador":"ec","Ivory Coast":"ci","Austria":"at","Sweden":"se","Turkey":"tr","Scotland":"gb-sct","Canada":"ca","Paraguay":"py","Czech Republic":"cz","Bosnia & Herzegovina":"ba","Algeria":"dz","Ghana":"gh","Egypt":"eg","South Korea":"kr","Australia":"au","Iran":"ir","South Africa":"za","Tunisia":"tn","DR Congo":"cd","Qatar":"qa","Saudi Arabia":"sa","Panama":"pa","New Zealand":"nz","Iraq":"iq","Cape Verde":"cv","Uzbekistan":"uz","Jordan":"jo","Haiti":"ht","Curaçao":"cw"};
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/New_York',hour12:false})+' ET';}
@@ -128,8 +132,10 @@ function render(){
   document.getElementById('champ').innerHTML=
     `<span class="medal">★</span><div class="ctext"><span class="ck">${c.final?'World Champion':"Model's pick to win"}</span><span class="cv">${flag(c.team)}${c.team}</span></div><span class="cp">${c.final?'lifted it ✓':c.p+'% to lift it'}</span>`;
   renderProgress();
-  document.getElementById('bracket').innerHTML=D.rounds.map(r=>
-    `<div class="bcol"><h3>${r.round}</h3><div class="bmatches">${r.matches.map(card).join('')}</div></div>`).join('')
+  const active=(D.rounds.find(r=>r.matches.some(m=>!m.final))||{}).round;
+  document.getElementById('bracket').innerHTML=D.rounds.map(r=>{
+    const dt=RDATES[r.round]?`<span class="rdate">${RDATES[r.round]}</span>`:'';
+    return `<div class="bcol"><h3 class="${r.round===active?'now':''}">${r.round}${dt}</h3><div class="bmatches">${r.matches.map(card).join('')}</div></div>`;}).join('')
     + '<svg class="blines" id="blines"></svg>';
   requestAnimationFrame(drawConnectors);   // measure after layout settles
   renderGroups();
