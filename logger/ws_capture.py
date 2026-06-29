@@ -303,6 +303,16 @@ def _title_has(title_alnum: str, name: str) -> bool:
     return any(sp and sp in title_alnum for sp in _spellings(name))
 
 
+def _ko_outcome(norm_name: str) -> str:
+    """Knockout match-winner outcomes are titled 'Reg Time <team>' / 'Reg Time Tie' (a knockout
+    can go to ET/penalties, so the moneyline is on the REGULATION result), normalizing to
+    'regtime<team>' — whereas group games use the bare team name. Strip the 'regtime' prefix so
+    knockout outcomes key by the bare team name, exactly like group games and like Polymarket's
+    groupItemTitle. Without this, KXWCGAME knockout games matched 0 outcomes and captured
+    Polymarket-only (South Africa-Canada, the first R32 game, Jun 28 2026)."""
+    return norm_name[len("regtime"):] if norm_name.startswith("regtime") else norm_name
+
+
 def discover_match_markets(env: dict, team_a: str, team_b: str):
     """Resolve the Kalshi tickers and Polymarket token ids for one match.
 
@@ -316,7 +326,7 @@ def discover_match_markets(env: dict, team_a: str, team_b: str):
     by_prefix: dict[str, dict] = {}
     for m in mk:
         pre = m["ticker"].rsplit("-", 1)[0]
-        by_prefix.setdefault(pre, {})[_norm(m.get("yes_sub_title", ""))] = m["ticker"]
+        by_prefix.setdefault(pre, {})[_ko_outcome(_norm(m.get("yes_sub_title", "")))] = m["ticker"]
     kalshi, k_by_name = [], {}
     for pre, names in by_prefix.items():
         if a in names and b in names:
