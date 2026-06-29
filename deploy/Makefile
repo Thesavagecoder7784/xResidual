@@ -2,7 +2,7 @@
 # (or symlink:  ln -s deploy/Makefile Makefile  then just  make pull )
 
 VM    := azureuser@57.154.16.193
-KEY   := /Users/prabhatm/Downloads/Sportslogging_key.pem
+KEY   := /Users/prabhatm/Documents/GitHub/xResidual/Sportslogging_key.pem
 REPO  := /home/azureuser/xResidual
 SSH   := ssh -i $(KEY)
 RSYNC := rsync -avz -e "ssh -i $(KEY)"

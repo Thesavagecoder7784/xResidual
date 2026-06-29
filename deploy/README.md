@@ -32,7 +32,7 @@ are built.
 | Size | Standard **B2ats v2** — 2 vCPU, ~900 MB RAM, **+ 2 GB swap file** |
 | OS | Ubuntu Server 22.04 LTS (Gen2) |
 | Address | `azureuser@57.154.16.193` |
-| SSH key | `~/Downloads/Sportslogging_key.pem` (chmod 600) |
+| SSH key | `Sportslogging_key.pem` in the repo root (chmod 600); override with `XRES_KEY`/`KEY`/`LEADLAG_KEY` |
 | Repo path | `/home/azureuser/xResidual` |
 | venv | `/home/azureuser/xResidual/.venv` |
 | Inbound | SSH (22) only |
