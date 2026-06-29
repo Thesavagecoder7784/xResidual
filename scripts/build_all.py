@@ -109,7 +109,12 @@ def pull_snapshots() -> None:
     Snapshots + cache only — fast, no tapes. Override the host/key with XRES_VM / XRES_KEY."""
     import subprocess
     vm = os.environ.get("XRES_VM", "azureuser@57.154.16.193")
-    key = os.environ.get("XRES_KEY", os.path.expanduser("~/Downloads/Sportslogging_key.pem"))
+    # Default to the repo-folder key; resolve a relative XRES_KEY (e.g. .env's bare filename)
+    # against the repo root so it works regardless of CWD or whether .env was sourced.
+    key = os.environ.get("XRES_KEY") or "Sportslogging_key.pem"
+    key = os.path.expanduser(key)
+    if not os.path.isabs(key):
+        key = os.path.join(ROOT, key)
     ssh = f"ssh -i {key} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=20"
     print("── pulling fresh data from the VM " + "─" * 31)
     mkt = os.path.join(ROOT, "viz", "market") + os.sep
