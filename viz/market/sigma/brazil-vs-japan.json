@@ -1,0 +1,40 @@
+{
+  "match": "Brazil vs Japan",
+  "capture": "20260629T162753Z-brazil-vs-japan",
+  "n_contracts": 4,
+  "max_z": 183.63,
+  "max_z_venue": "kalshi",
+  "max_move_c": 60.0,
+  "trail_sd_c": 0.327,
+  "max_z_nonzero_frac": 0.106,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 183.63,
+      "move_c": 60.0,
+      "sd_c": 0.327,
+      "nonzero_frac": 0.106
+    },
+    {
+      "venue": "kalshi",
+      "z": 169.8,
+      "move_c": 15.5,
+      "sd_c": 0.091,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "poly",
+      "z": 98.49,
+      "move_c": 12.5,
+      "sd_c": 0.127,
+      "nonzero_frac": 0.014
+    },
+    {
+      "venue": "poly",
+      "z": 96.74,
+      "move_c": 15.5,
+      "sd_c": 0.16,
+      "nonzero_frac": 0.021
+    }
+  ]
+}
