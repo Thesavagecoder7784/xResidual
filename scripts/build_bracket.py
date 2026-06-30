@@ -55,6 +55,49 @@ def live_results():
             r["played"] += 1; r["gd"] += gf - ga
             r["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
     return results, st
+
+
+def overlay_ko_results(det, fx):
+    """Decisive knockout results from the live scores overlay (data/cache/wc_scores_overlay.json),
+    which runs ~2 days ahead of the martj42 Elo feed on knockout games. Same
+    {frozenset(idxA, idxB): winner_idx} format and elo_name(canonical(.)) bridge as
+    knockout.played_ko_results, but sourced from the faster ESPN overlay so a knockout result settles
+    within a refresh instead of waiting on the lagging feed. Uses ESPN's `advancer` flag, so a tie
+    that finished level in regulation and went to a penalty shootout still settles to the side that
+    actually went through (the bare scoreline cannot); falls back to the decisive regulation score for
+    older overlays that predate the advancer flag."""
+    path = os.path.join(ROOT, "data", "cache", "wc_scores_overlay.json")
+    if not os.path.exists(path):
+        return {}
+    try:
+        games = json.loads(open(path, encoding="utf-8").read())
+    except Exception:
+        return {}
+    grp = fx[fx["group"].astype(str).str.startswith("Group")]
+    group_end = pd.to_datetime(grp["date"]).max().date()
+    bridge = lambda t: wc2026_teams.elo_name(wc2026_teams.canonical(t))
+    gidx_b = {bridge(k): v for k, v in det["gidx"].items()}
+    out = {}
+    for g in games:
+        ct = g.get("commence_time")
+        try:
+            if not ct or pd.to_datetime(ct).date() <= group_end:
+                continue
+        except Exception:
+            continue
+        h, a = bridge(g.get("home_team", "")), bridge(g.get("away_team", ""))
+        if h not in gidx_b or a not in gidx_b:
+            continue
+        adv = g.get("advancer")
+        if adv:                                    # ESPN advancer flag — settles penalty/ET ties too
+            wb = bridge(adv)
+            if wb in gidx_b:
+                out[frozenset((gidx_b[h], gidx_b[a]))] = gidx_b[wb]
+        else:                                      # fallback: decisive regulation score
+            hs, as_ = g.get("home_score"), g.get("away_score")
+            if hs is not None and as_ is not None and hs != as_:
+                out[frozenset((gidx_b[h], gidx_b[a]))] = gidx_b[h if hs > as_ else a]
+    return out
 ROUNDS = [("Round of 32", "R32"), ("Round of 16", "R16"), ("Quarter-finals", "QF"),
           ("Semi-finals", "SF"), ("Final", "Final")]
 
@@ -77,7 +120,10 @@ def main() -> int:
 
     # knockout results so far (games after the group stage) -> {frozenset(idxA,idxB): winner_idx}.
     # Shared helper so every builder conditions the knockout identically (see knockout.played_ko_results).
-    ko_res = knockout.played_ko_results(det, fx, df) or {}
+    # The Elo feed lags ~2 days on knockout games, so merge in the faster ESPN scores overlay, which
+    # carries an `advancer` flag and so settles penalty/ET ties too (not just decisive scorelines).
+    # The feed overrides on conflict for the games it has; the overlay fills the lag and the shootouts.
+    ko_res = {**overlay_ko_results(det, fx), **(knockout.played_ko_results(det, fx, df) or {})}
 
     ko = knockout.simulate(det, sim, ratings, return_matchups=True, return_slots=True,
                            return_paths=True, results=ko_res or None)
