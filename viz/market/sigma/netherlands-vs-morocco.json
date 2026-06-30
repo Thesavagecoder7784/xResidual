@@ -1,0 +1,40 @@
+{
+  "match": "Netherlands vs Morocco",
+  "capture": "20260630T002931Z-netherlands-vs-morocco",
+  "n_contracts": 4,
+  "max_z": 232.54,
+  "max_z_venue": "kalshi",
+  "max_move_c": 45.0,
+  "trail_sd_c": 0.194,
+  "max_z_nonzero_frac": 0.027,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 232.54,
+      "move_c": 45.0,
+      "sd_c": 0.194,
+      "nonzero_frac": 0.027
+    },
+    {
+      "venue": "poly",
+      "z": 206.98,
+      "move_c": 40.5,
+      "sd_c": 0.196,
+      "nonzero_frac": 0.032
+    },
+    {
+      "venue": "poly",
+      "z": 153.37,
+      "move_c": 14.0,
+      "sd_c": 0.091,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "kalshi",
+      "z": 93.69,
+      "move_c": 16.0,
+      "sd_c": 0.171,
+      "nonzero_frac": 0.032
+    }
+  ]
+}
