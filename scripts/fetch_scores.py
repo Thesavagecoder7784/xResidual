@@ -119,11 +119,18 @@ def fetch_completed(days: int):
         hs, as_ = _score(home), _score(away)
         if hs is None or as_ is None:
             continue
+        ht = _key(home.get("team", {}).get("displayName", ""))
+        at = _key(away.get("team", {}).get("displayName", ""))
+        # ESPN flags the advancer on the winning competitor (incl. extra time / penalties) and carries
+        # the shootout score. Capture it so a knockout tie level in regulation (a shootout) still
+        # records who went through — which the bare scoreline alone cannot.
+        adv = ht if home.get("winner") else (at if away.get("winner") else None)
         records.append({
-            "home_team": _key(home.get("team", {}).get("displayName", "")),
-            "away_team": _key(away.get("team", {}).get("displayName", "")),
+            "home_team": ht, "away_team": at,
             "home_score": hs, "away_score": as_,
             "commence_time": ev.get("date", ""),
+            "advancer": adv,
+            "home_shootout": home.get("shootoutScore"), "away_shootout": away.get("shootoutScore"),
         })
     return records, len(records)
 
