@@ -303,14 +303,19 @@ def _title_has(title_alnum: str, name: str) -> bool:
     return any(sp and sp in title_alnum for sp in _spellings(name))
 
 
-def _ko_outcome(norm_name: str) -> str:
-    """Knockout match-winner outcomes are titled 'Reg Time <team>' / 'Reg Time Tie' (a knockout
-    can go to ET/penalties, so the moneyline is on the REGULATION result), normalizing to
-    'regtime<team>' — whereas group games use the bare team name. Strip the 'regtime' prefix so
-    knockout outcomes key by the bare team name, exactly like group games and like Polymarket's
-    groupItemTitle. Without this, KXWCGAME knockout games matched 0 outcomes and captured
-    Polymarket-only (South Africa-Canada, the first R32 game, Jun 28 2026)."""
-    return norm_name[len("regtime"):] if norm_name.startswith("regtime") else norm_name
+def _ko_outcome(title: str) -> str:
+    """Knockout match-winner outcomes are titled 'Reg Time <team>' / 'Reg Time Tie' (a knockout can
+    go to ET/penalties, so the moneyline is on the REGULATION result) — whereas group games use the
+    bare team name. Strip the 'Reg Time ' prefix from the RAW title so the bare team name then flows
+    through _norm's canonicalization, exactly like group games and Polymarket's groupItemTitle. Doing
+    the strip AFTER _norm was wrong: 'Reg Time Congo DR' -> 'regtimecongodr' -> 'congodr', which the
+    canonical input ('Congo DR' -> 'drcongo') never matched, so England-DR Congo (Jul 1) discovered 0
+    Kalshi markets. (Without any strip at all, KXWCGAME knockout games matched 0 outcomes entirely —
+    South Africa-Canada, the first R32 game.)"""
+    s = str(title).lstrip()
+    if s.lower().startswith("reg time"):
+        s = s[len("reg time"):]        # 'Reg Time: Congo DR' -> ': Congo DR' (Kalshi uses a colon)
+    return s.lstrip(": ").strip()      # drop the leading colon/space so _norm can canonicalize the team
 
 
 def discover_match_markets(env: dict, team_a: str, team_b: str):
@@ -326,7 +331,7 @@ def discover_match_markets(env: dict, team_a: str, team_b: str):
     by_prefix: dict[str, dict] = {}
     for m in mk:
         pre = m["ticker"].rsplit("-", 1)[0]
-        by_prefix.setdefault(pre, {})[_ko_outcome(_norm(m.get("yes_sub_title", "")))] = m["ticker"]
+        by_prefix.setdefault(pre, {})[_norm(_ko_outcome(m.get("yes_sub_title", "")))] = m["ticker"]
     kalshi, k_by_name = [], {}
     for pre, names in by_prefix.items():
         if a in names and b in names:
