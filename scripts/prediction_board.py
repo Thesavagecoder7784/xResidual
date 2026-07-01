@@ -84,7 +84,11 @@ def model_probs():
     results = wc_played_results(df, fx)                    # condition on games already played
     sim, det = group_sim.simulate(fx, ratings, params, return_detail=True,
                                   sigma=group_sim.MODEL_SIGMA, results=results)
-    reach = knockout.simulate(det, sim, ratings)["reach"]
+    # Condition the knockout sim on games already played too (same as build_bracket.py) — otherwise
+    # the champion/reach forecasts stay frozen at their group-stage projection and ignore the actual
+    # R32+ results (e.g. France stuck at ~16% instead of the ~25% its cleared path warrants).
+    ko_res = knockout.played_ko_results(det, fx, df) or {}
+    reach = knockout.simulate(det, sim, ratings, results=ko_res or None)["reach"]
     return sim, reach
 
 

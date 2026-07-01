@@ -61,7 +61,9 @@ def load_fixtures() -> list[dict]:
         ko = kickoff_utc(r.date, r.time)
         if ko is None:
             continue
-        key = f"{r.date}_{r.team1}_{r.team2}".replace(" ", "")
+        # sanitize: placeholder slots carry '/' (e.g. 3C/E/F/H/I), which would break the
+        # capture-<key>.log path in launch(). Replace it so the dedup key is filesystem-safe.
+        key = f"{r.date}_{r.team1}_{r.team2}".replace(" ", "").replace("/", "-")
         out.append({"key": key, "team1": r.team1, "team2": r.team2,
                     "kickoff": ko, "ground": getattr(r, "ground", ""),
                     "group": str(getattr(r, "group", ""))})
@@ -140,14 +142,16 @@ def resolve_fixture(f: dict) -> dict:
     expects. Overwrites the names in place but PRESERVES f['key'] (built from the placeholder), so
     the launch-dedup state stays stable across ticks. No-op when names are already real or no ESPN
     event matches (then the existing wait/miss path applies, unchanged)."""
-    if _is_placeholder(f["team1"]) or _is_placeholder(f["team2"]):
-        best, best_d = None, 95 * 60    # match the scheduled kickoff within ~95 min
-        for hn, an, ko in _espn_events(f["kickoff"]):
-            d = abs((ko - f["kickoff"]).total_seconds())
-            if d < best_d:
-                best, best_d = (hn, an), d
-        if best:
-            f["team1"], f["team2"] = best
+    best, best_d = None, 95 * 60        # match the scheduled kickoff within ~95 min
+    for hn, an, ko in _espn_events(f["kickoff"]):
+        d = abs((ko - f["kickoff"]).total_seconds())
+        if d < best_d:
+            best, best_d = (hn, an, ko), d
+    if best:
+        hn, an, ko = best
+        if _is_placeholder(f["team1"]) or _is_placeholder(f["team2"]):
+            f["team1"], f["team2"] = hn, an           # fill placeholder slots with the real teams
+        f["kickoff"] = ko                             # correct any drift between CSV and actual KO
     # always normalize to the market-title convention — the knockout Kalshi spellings differ from
     # the fixtures' group spelling for DR Congo / Bosnia even when the fixture already names them.
     f["team1"], f["team2"] = _market_name(f["team1"]), _market_name(f["team2"])
@@ -225,10 +229,14 @@ def main() -> int:
     for f in fixtures:
         if f["key"] in state:
             continue                                   # already handled
-        dt = (f["kickoff"] - now).total_seconds()
+        # Resolve names AND correct the kickoff from ESPN for near-term fixtures (ESPN is cached per
+        # day, so this is ~1 call/tick) BEFORE the window test — otherwise a placeholder name or a
+        # drifted CSV time (Mexico's CSV said 01:00Z, actual KO 02:00Z) misaligns the whole window.
+        if (f["kickoff"] - now).total_seconds() <= args.lead + 3 * 3600:
+            resolve_fixture(f)
+        dt = (f["kickoff"] - now).total_seconds()      # recompute with the corrected kickoff
         if not (-GRACE_S < dt <= args.lead):           # outside the launch window
             continue
-        resolve_fixture(f)                              # knockout slot code (W74, 2I) -> real teams
         ready = markets_ready(f["team1"], f["team2"])  # (kalshi, poly) or None
         both = bool(ready) and ready[0] > 0 and ready[1] > 0
         any_mkt = bool(ready) and (ready[0] > 0 or ready[1] > 0)
