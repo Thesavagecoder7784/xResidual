@@ -1,0 +1,40 @@
+{
+  "match": "England vs Congo Dr",
+  "capture": "20260701T162435Z-england-vs-congo-dr",
+  "n_contracts": 4,
+  "max_z": 109.36,
+  "max_z_venue": "kalshi",
+  "max_move_c": 52.0,
+  "trail_sd_c": 0.476,
+  "max_z_nonzero_frac": 0.054,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 109.36,
+      "move_c": 52.0,
+      "sd_c": 0.476,
+      "nonzero_frac": 0.054
+    },
+    {
+      "venue": "kalshi",
+      "z": 105.68,
+      "move_c": 24.0,
+      "sd_c": 0.227,
+      "nonzero_frac": 0.048
+    },
+    {
+      "venue": "poly",
+      "z": 97.91,
+      "move_c": 21.0,
+      "sd_c": 0.214,
+      "nonzero_frac": 0.044
+    },
+    {
+      "venue": "poly",
+      "z": 83.54,
+      "move_c": 17.5,
+      "sd_c": 0.209,
+      "nonzero_frac": 0.032
+    }
+  ]
+}
