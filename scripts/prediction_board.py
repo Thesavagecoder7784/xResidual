@@ -34,6 +34,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from xresidual import baseline, data, elo, group_sim, knockout, wc2026_teams  # noqa: E402
 from blend import blended_ratings  # noqa: E402
+from ko_overlay import overlay_ko_results  # noqa: E402
 from venue_prices import poly_quotes  # noqa: E402
 
 LEDGER = os.path.join(ROOT, "paper", "forecasts.jsonl")
@@ -87,7 +88,7 @@ def model_probs():
     # Condition the knockout sim on games already played too (same as build_bracket.py) — otherwise
     # the champion/reach forecasts stay frozen at their group-stage projection and ignore the actual
     # R32+ results (e.g. France stuck at ~16% instead of the ~25% its cleared path warrants).
-    ko_res = knockout.played_ko_results(det, fx, df) or {}
+    ko_res = {**overlay_ko_results(det, fx, ROOT), **(knockout.played_ko_results(det, fx, df) or {})}
     reach = knockout.simulate(det, sim, ratings, results=ko_res or None)["reach"]
     return sim, reach
 
