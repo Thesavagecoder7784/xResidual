@@ -1,0 +1,9 @@
+[Unit]
+Description=Run the xResidual capture pre-flight every 30 min (catch a discovery break before kickoff)
+
+[Timer]
+OnCalendar=*:0/30
+Persistent=true
+
+[Install]
+WantedBy=timers.target
