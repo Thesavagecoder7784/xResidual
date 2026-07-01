@@ -1,1 +1,1 @@
-window.VENUECAL = {"asof":"2026-07-01T01:58:22.328569+00:00","venues":[{"venue":"polymarket","n":96,"brier":0.2409,"logloss":3.1413},{"venue":"kalshi","n":96,"brier":0.2784,"logloss":0.9082}],"sharpest":"polymarket"};
+window.VENUECAL = {"asof":"2026-07-01T04:05:56.093741+00:00","venues":[{"venue":"polymarket","n":96,"brier":0.2409,"logloss":3.1413},{"venue":"kalshi","n":96,"brier":0.2784,"logloss":0.9082}],"sharpest":"polymarket"};
