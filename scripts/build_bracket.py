@@ -52,8 +52,8 @@ def live_results():
         results[(t1, t2)] = (s1, s2); results[(t2, t1)] = (s2, s1)
         grp = str(m.get("group", "")).replace("Group ", "")
         for tm, gf, ga in ((t1, s1, s2), (t2, s2, s1)):
-            r = st.setdefault(tm, {"played": 0, "pts": 0, "gd": 0, "group": grp})
-            r["played"] += 1; r["gd"] += gf - ga
+            r = st.setdefault(tm, {"played": 0, "pts": 0, "gd": 0, "gf": 0, "group": grp})
+            r["played"] += 1; r["gd"] += gf - ga; r["gf"] += gf   # gf = goals for (3rd tiebreaker)
             r["pts"] += 3 if gf > ga else (1 if gf == ga else 0)
     return results, st
 
@@ -198,7 +198,8 @@ def main() -> int:
         groups.setdefault(r["group"], []).append({
             "team": t, "iso": ISO.get(t, ""),
             "p1": round(r["p1"] * 100), "padv": round(r["padv"] * 100),
-            "pts": s.get("pts", 0), "pl": s.get("played", 0), "gd": s.get("gd", 0)})
+            "pts": s.get("pts", 0), "pl": s.get("played", 0), "gd": s.get("gd", 0),
+            "gf": s.get("gf", 0)})
     for g in groups:
         groups[g].sort(key=lambda x: (-x["padv"], -x["pts"], -x["gd"]))
 
