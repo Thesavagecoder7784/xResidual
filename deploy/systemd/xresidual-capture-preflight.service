@@ -1,0 +1,10 @@
+[Unit]
+Description=xResidual capture pre-flight (verify upcoming matches will capture cross-venue, before KO)
+
+[Service]
+Type=oneshot
+# Forward-looking complement to capture-audit: checks that every upcoming game's Kalshi+Polymarket
+# markets are discoverable, and exits non-zero (-> `systemctl --failed`) when a game inside its
+# window is missing markets — so a discovery break is caught with hours to spare, not at kickoff.
+ExecStart=/bin/bash -c '/home/azureuser/xResidual/.venv/bin/python /home/azureuser/xResidual/scripts/capture_preflight.py >> /home/azureuser/xResidual/logger/data/capture_preflight.log 2>&1'
+Nice=15
