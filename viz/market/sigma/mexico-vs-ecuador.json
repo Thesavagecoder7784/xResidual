@@ -1,0 +1,33 @@
+{
+  "match": "Mexico vs Ecuador",
+  "capture": "20260701T024637Z-mexico-vs-ecuador",
+  "n_contracts": 3,
+  "max_z": 25.42,
+  "max_z_venue": "poly",
+  "max_move_c": 1.25,
+  "trail_sd_c": 0.049,
+  "max_z_nonzero_frac": 0.111,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 25.42,
+      "move_c": 1.25,
+      "sd_c": 0.049,
+      "nonzero_frac": 0.111
+    },
+    {
+      "venue": "poly",
+      "z": 18.29,
+      "move_c": 2.0,
+      "sd_c": 0.109,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "kalshi",
+      "z": 18.2,
+      "move_c": 1.0,
+      "sd_c": 0.055,
+      "nonzero_frac": 0.003
+    }
+  ]
+}
