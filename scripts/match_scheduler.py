@@ -68,6 +68,92 @@ def load_fixtures() -> list[dict]:
     return sorted(out, key=lambda f: f["kickoff"])
 
 
+ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
+
+
+def _is_placeholder(name: str) -> bool:
+    """Knockout fixtures carry slot codes until the feeding games resolve: winner-of-match (W74),
+    group position (1I, 2K), best-third (3A/B/C/D/F), loser (L101). No real WC team name contains a
+    digit or slash, so that is a clean discriminator."""
+    return bool(re.search(r"[0-9/]", str(name)))
+
+
+_espn_cache: dict[str, list] = {}
+
+
+def _espn_events(ko_utc: datetime) -> list[tuple[str, str, datetime]]:
+    """ESPN scoreboard events in a +-1 day window around `ko_utc` -> [(home, away, kickoff_utc)].
+    ESPN fills the knockout bracket with real team names as soon as the feeding game settles, so by
+    the time a fixture enters the lead window its teams are named here even when our fixtures CSV
+    still shows the slot code. Cached per window; failures degrade to []."""
+    d0 = (ko_utc - timedelta(days=1)).strftime("%Y%m%d")
+    d1 = (ko_utc + timedelta(days=1)).strftime("%Y%m%d")
+    if d0 in _espn_cache:
+        return _espn_cache[d0]
+    out: list[tuple[str, str, datetime]] = []
+    try:
+        import requests
+        r = requests.get(ESPN_URL, params={"dates": f"{d0}-{d1}", "limit": 200}, timeout=20)
+        r.raise_for_status()
+        for ev in r.json().get("events", []):
+            comp = (ev.get("competitions") or [{}])[0]
+            cs = comp.get("competitors") or []
+            if len(cs) != 2:
+                continue
+            home = next((c for c in cs if c.get("homeAway") == "home"), cs[0])
+            away = next((c for c in cs if c.get("homeAway") == "away"), cs[1])
+            hn = home.get("team", {}).get("displayName", "")
+            an = away.get("team", {}).get("displayName", "")
+            try:
+                ko = datetime.fromisoformat(str(ev.get("date", "")).replace("Z", "+00:00"))
+            except Exception:
+                ko = None
+            if hn and an and ko and not (_is_placeholder(hn) or _is_placeholder(an)):
+                out.append((hn, an, ko))
+    except Exception:
+        out = []
+    _espn_cache[d0] = out
+    return out
+
+
+# Map any team name (ESPN's OR the fixtures' group-stage spelling) to the convention the Kalshi/
+# Polymarket KNOCKOUT market titles use, which differs for a handful: Kalshi keys are usa / congodr
+# / bosniaandherzegovina, so "United States", "DR Congo" and "Bosnia & Herzegovina" all miss raw.
+# Applied to EVERY fixture (group stage is over, so only knockouts remain) — names not listed here
+# already match and pass through unchanged.
+_MARKET_NAME = {
+    "united states": "USA",
+    "dr congo": "Congo DR", "democratic republic of congo": "Congo DR",
+    "bosnia-herzegovina": "Bosnia and Herzegovina", "bosnia & herzegovina": "Bosnia and Herzegovina",
+    "korea republic": "South Korea", "ir iran": "Iran", "czechia": "Czech Republic",
+    "côte d'ivoire": "Ivory Coast", "cote d'ivoire": "Ivory Coast",
+}
+
+
+def _market_name(name: str) -> str:
+    return _MARKET_NAME.get(str(name).strip().lower(), name)
+
+
+def resolve_fixture(f: dict) -> dict:
+    """If a fixture carries placeholder slot names, replace team1/team2 with the real teams from
+    ESPN (matched by kickoff time), mapped to the market-title convention discover_match_markets
+    expects. Overwrites the names in place but PRESERVES f['key'] (built from the placeholder), so
+    the launch-dedup state stays stable across ticks. No-op when names are already real or no ESPN
+    event matches (then the existing wait/miss path applies, unchanged)."""
+    if _is_placeholder(f["team1"]) or _is_placeholder(f["team2"]):
+        best, best_d = None, 95 * 60    # match the scheduled kickoff within ~95 min
+        for hn, an, ko in _espn_events(f["kickoff"]):
+            d = abs((ko - f["kickoff"]).total_seconds())
+            if d < best_d:
+                best, best_d = (hn, an), d
+        if best:
+            f["team1"], f["team2"] = best
+    # always normalize to the market-title convention — the knockout Kalshi spellings differ from
+    # the fixtures' group spelling for DR Congo / Bosnia even when the fixture already names them.
+    f["team1"], f["team2"] = _market_name(f["team1"]), _market_name(f["team2"])
+    return f
+
+
 def _load_state() -> dict:
     if os.path.exists(STATE):
         try:
@@ -142,6 +228,7 @@ def main() -> int:
         dt = (f["kickoff"] - now).total_seconds()
         if not (-GRACE_S < dt <= args.lead):           # outside the launch window
             continue
+        resolve_fixture(f)                              # knockout slot code (W74, 2I) -> real teams
         ready = markets_ready(f["team1"], f["team2"])  # (kalshi, poly) or None
         both = bool(ready) and ready[0] > 0 and ready[1] > 0
         any_mkt = bool(ready) and (ready[0] > 0 or ready[1] > 0)
