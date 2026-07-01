@@ -35,6 +35,20 @@
   .bprog .pbar{flex:1;min-width:120px;height:6px;border-radius:99px;background:var(--rule);overflow:hidden;max-width:240px}
   .bprog .pbar i{display:block;height:100%;background:var(--good);border-radius:99px;transition:width .5s}
   .bprog .note{color:var(--dim)}
+  /* best third-place race */
+  .tbody{border:1px solid var(--rule);border-radius:11px;background:var(--card);overflow:hidden;max-width:540px}
+  .trow{display:grid;grid-template-columns:26px 21px 1fr 42px 46px 40px;align-items:center;gap:9px;padding:8px 15px;border-top:1px solid var(--rule)}
+  .trow:first-child{border-top:none}
+  .trow.thead{font-family:var(--fm);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:var(--paper-2);padding:9px 15px}
+  .trow .tpos{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--dim);text-align:center}
+  .trow.tin .tpos{color:var(--good)}
+  .trow.tout{color:var(--muted)} .trow.tout .tnm{color:var(--muted)} .trow.tout .tflag{filter:grayscale(.6);opacity:.75}
+  .trow .tflag{width:20px;height:20px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .trow .tnm{font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+  .trow .tnm .tgrp{font-family:var(--fm);font-size:10.5px;color:var(--dim);font-weight:400;margin-left:6px}
+  .trow .tstat{font-family:var(--fm);font-size:12.5px;text-align:right;color:var(--muted)}
+  .trow.tin .tstat{color:var(--ink)}
+  .tcut{border-top:2px dashed var(--rule-2);margin:0;height:0}
 </style>
 </head>
 <body>
@@ -74,6 +88,12 @@
     <div class="ggrid" id="groups"></div>
   </section>
 
+  <section class="gsec" id="thirds-sec" style="display:none">
+    <h2>The best <em>third-place</em> race</h2>
+    <div class="lede">The 48-team format advances the top two of every group <b>plus the eight best third-placed teams</b>. The twelve group-thirds are ranked by <b>points</b>, then <b>goal difference</b>, then <b>goals scored</b> — the eight above the dashed line reach the Round of 32; the bottom four go out. <span style="color:var(--good);font-weight:600">green</span> = through · <span style="color:var(--muted)">grey</span> = eliminated.</div>
+    <div class="tbody" id="thirds"></div>
+  </section>
+
   <footer><div id="foot"></div>
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
 </div>
@@ -108,6 +128,25 @@ function gcard(L,teams){
   }).join('');
   return `<div class="gcard"><h4>Group ${L}<span class="qn">finish · P(adv)</span></h4>${rows}</div>`;
 }
+function renderThirds(){
+  const el=document.getElementById('thirds'); if(!el||!D.groups)return;
+  const order="ABCDEFGHIJKL".split('').filter(L=>D.groups[L]);
+  const tb=(a,b)=>b.pts-a.pts||b.gd-a.gd||(b.gf||0)-(a.gf||0);   // FIFA: pts, then GD, then goals for
+  // the third-placed team in each group (final standings by the same tiebreakers)
+  const thirds=order.map(L=>{const s=[...D.groups[L]].sort(tb)[2]; return s?{...s,group:L}:null;}).filter(Boolean);
+  thirds.sort(tb);
+  const head=`<div class="trow thead"><span class="tpos">#</span><span></span><span class="tnm">Third place</span><span class="tstat">Pts</span><span class="tstat">GD</span><span class="tstat">GF</span></div>`;
+  const rows=thirds.map((t,i)=>{
+    const fl=t.iso?`<img class="tflag" src="flags/${t.iso}.svg" alt="" onerror="this.style.visibility='hidden'">`:`<span class="tflag"></span>`;
+    const gd=(t.gd>0?'+':'')+t.gd;
+    return `<div class="trow ${i<8?'tin':'tout'}"><span class="tpos">${i+1}</span>${fl}`
+      + `<span class="tnm">${t.team}<span class="tgrp">Grp ${t.group}</span></span>`
+      + `<span class="tstat">${t.pts}</span><span class="tstat">${gd}</span><span class="tstat">${t.gf||0}</span></div>`
+      + (i===7?'<div class="tcut" title="top 8 thirds advance"></div>':'');
+  }).join('');
+  el.innerHTML=head+rows;
+  document.getElementById('thirds-sec').style.display='';
+}
 function renderProgress(){
   const el=document.getElementById('bprog'); if(!el||!D.group_done||!D.rounds)return;
   const total=D.rounds.reduce((s,r)=>s+r.matches.length,0);
@@ -139,6 +178,7 @@ function render(){
     + '<svg class="blines" id="blines"></svg>';
   requestAnimationFrame(drawConnectors);   // measure after layout settles
   renderGroups();
+  renderThirds();
 }
 // trace the bracket: each match feeds round r+1 match floor(i/2); draw an elbow from each feeder to its child.
 function drawConnectors(){
