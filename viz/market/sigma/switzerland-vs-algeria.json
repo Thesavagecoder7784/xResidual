@@ -1,0 +1,40 @@
+{
+  "match": "Switzerland vs Algeria",
+  "capture": "20260703T023333Z-switzerland-vs-algeria",
+  "n_contracts": 4,
+  "max_z": 297.44,
+  "max_z_venue": "kalshi",
+  "max_move_c": 21.0,
+  "trail_sd_c": 0.071,
+  "max_z_nonzero_frac": 0.003,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 297.44,
+      "move_c": 21.0,
+      "sd_c": 0.071,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 259.73,
+      "move_c": 12.25,
+      "sd_c": 0.047,
+      "nonzero_frac": 0.025
+    },
+    {
+      "venue": "kalshi",
+      "z": 123.62,
+      "move_c": 10.5,
+      "sd_c": 0.085,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 116.08,
+      "move_c": 6.88,
+      "sd_c": 0.059,
+      "nonzero_frac": 0.027
+    }
+  ]
+}

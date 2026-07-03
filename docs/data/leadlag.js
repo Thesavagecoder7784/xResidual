@@ -1,1 +1,1 @@
-window.LEADLAG_POOLED = {"pooled": {"n": 319, "median_lead_ms": 400.0, "iqr_ms": [0.0, 800.0], "leader": "polymarket", "leader_share": 0.661, "poly_leads": 211, "kalshi_leads": 78}, "n_matches": 68, "min_jump": 0.04, "asof": "2026-07-03T06:39:33.952263+00:00"};
+window.LEADLAG_POOLED = {"pooled": {"n": 140, "median_lead_ms": 200.0, "iqr_ms": [-200.0, 800.0], "leader": "polymarket", "leader_share": 0.586, "poly_leads": 82, "kalshi_leads": 42}, "n_matches": 33, "min_jump": 0.04, "asof": "2026-07-03T07:28:02.650097+00:00"};
