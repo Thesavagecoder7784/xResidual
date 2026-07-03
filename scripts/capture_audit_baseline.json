@@ -1,0 +1,9 @@
+{
+  "_comment": "Acknowledged, unrecoverable capture misses. capture_audit.py stays GREEN (exit 0) for these and goes RED (exit 1) only on a NEW miss it hasn't seen. Keyed by kickoff in UTC minute precision (the match names carry unstable bracket placeholders, the kickoff time does not). To acknowledge a fresh miss you've reviewed and cannot recover: run `python scripts/capture_audit.py --ack`, then commit + deploy this file. All four below are casualties of the Jun 29 - Jul 1 placeholder-resolution crash, since fixed.",
+  "acknowledged": {
+    "2026-06-29T20:30": "Germany vs Paraguay - placeholder-resolution crash (pre-fix), never launched, unrecoverable",
+    "2026-06-30T17:00": "Ivory Coast vs Norway - placeholder-resolution crash (pre-fix), never launched, unrecoverable",
+    "2026-06-30T21:00": "1I vs 3C/D/F/G/H - placeholder-resolution crash (pre-fix), never launched, unrecoverable",
+    "2026-07-01T01:00": "Mexico vs Ecuador - placeholder crash; salvaged manually, so absent from the scheduler state file"
+  }
+}
