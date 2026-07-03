@@ -1,0 +1,40 @@
+{
+  "match": "Spain vs Austria",
+  "capture": "20260702T183222Z-spain-vs-austria",
+  "n_contracts": 4,
+  "max_z": 97.22,
+  "max_z_venue": "poly",
+  "max_move_c": 14.13,
+  "trail_sd_c": 0.145,
+  "max_z_nonzero_frac": 0.096,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 97.22,
+      "move_c": 14.13,
+      "sd_c": 0.145,
+      "nonzero_frac": 0.096
+    },
+    {
+      "venue": "kalshi",
+      "z": 89.01,
+      "move_c": 12.5,
+      "sd_c": 0.14,
+      "nonzero_frac": 0.017
+    },
+    {
+      "venue": "poly",
+      "z": 56.17,
+      "move_c": 4.62,
+      "sd_c": 0.082,
+      "nonzero_frac": 0.071
+    },
+    {
+      "venue": "kalshi",
+      "z": 38.03,
+      "move_c": 3.5,
+      "sd_c": 0.092,
+      "nonzero_frac": 0.011
+    }
+  ]
+}
