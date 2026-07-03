@@ -1,0 +1,26 @@
+{
+  "match": "Portugal vs Croatia",
+  "capture": "20260702T222647Z-portugal-vs-croatia",
+  "n_contracts": 2,
+  "max_z": 90.09,
+  "max_z_venue": "kalshi",
+  "max_move_c": 9.0,
+  "trail_sd_c": 0.1,
+  "max_z_nonzero_frac": 0.008,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 90.09,
+      "move_c": 9.0,
+      "sd_c": 0.1,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "kalshi",
+      "z": 81.14,
+      "move_c": 8.0,
+      "sd_c": 0.099,
+      "nonzero_frac": 0.011
+    }
+  ]
+}
