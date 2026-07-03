@@ -1,0 +1,40 @@
+{
+  "match": "Australia vs Egypt",
+  "capture": "20260703T172753Z-australia-vs-egypt",
+  "n_contracts": 4,
+  "max_z": 191.71,
+  "max_z_venue": "poly",
+  "max_move_c": 17.5,
+  "trail_sd_c": 0.091,
+  "max_z_nonzero_frac": 0.008,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 191.71,
+      "move_c": 17.5,
+      "sd_c": 0.091,
+      "nonzero_frac": 0.008
+    },
+    {
+      "venue": "kalshi",
+      "z": 169.25,
+      "move_c": 48.0,
+      "sd_c": 0.284,
+      "nonzero_frac": 0.073
+    },
+    {
+      "venue": "poly",
+      "z": 118.8,
+      "move_c": 14.0,
+      "sd_c": 0.118,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "kalshi",
+      "z": 107.33,
+      "move_c": 8.0,
+      "sd_c": 0.075,
+      "nonzero_frac": 0.006
+    }
+  ]
+}
