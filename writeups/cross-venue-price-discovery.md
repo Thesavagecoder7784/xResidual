@@ -309,10 +309,11 @@ deeper venue leads) and **P1** (the markets are well-calibrated). Graded publicl
 
 The unifying finding is a discipline for telling real edges from mirages. The cross-venue gap was
 probed three ways. The pre-match convergence trade is a cost illusion (6.1, a clean null). The
-in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 64% of 195 events at
-a +400ms median, and a ~79% information share leading 27 of 28 cointegrated matches (5.2) — that
-is nonetheless **un-harvestable net of the cost of immediacy** (6.2: a +10.2¢ paper gap over 117
-goals that 0% of is capturable because best-price depth collapses to ~0.4% at the event). The
+in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 73% of 259 decisive events
+at a +400ms median (41 of 48 matches lean Polymarket, sign-test p = 6×10⁻⁷), and a ~78% information
+share leading 41 of 42 cointegrated matches (5.2) — that is nonetheless **un-harvestable net of the
+cost of immediacy** (6.2: a +10.8¢ paper gap over 277 goals that 0% of is capturable because best-price
+depth collapses to ~0.5% at the event). The
 favorite-longshot wedge (5.4) is a real but modest systematic tilt, the lone position the project
 takes. The lead is genuine; the gap is a liquidity-withdrawal artifact, not slow pricing; the
 methods that separate real from harvestable — de-vigging before calling any gap, crossing the
