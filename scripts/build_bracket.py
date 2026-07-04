@@ -170,17 +170,24 @@ def main() -> int:
         for j in range(nm):
             ta, pa = slots[2 * j]
             tb, pb = slots[2 * j + 1]
+            # the model's OWN call for this tie (rating head-to-head), computed independent of any
+            # result and kept alongside the actual advancer so the bracket can flag the calls the model
+            # missed once a game is played (an upset).
+            ra, rb = rate.get(ta, 1500.0), rate.get(tb, 1500.0)
+            mpick, mwp = (ta, 1 / (1 + 10 ** ((rb - ra) / 400))) if ra >= rb else (tb, 1 / (1 + 10 ** ((ra - rb) / 400)))
             wt, wp = mode(win[:, j])                            # sim advancer
             # Use the sim's advancer ONLY when a real knockout result has decided this tie (the
             # winner is one of the two shown teams AND near-certain). Otherwise it's a marginal mode
             # of the slot — which can name a team at 21% even though it's the "pick" — so fall back to
             # the model head-to-head of the TWO TEAMS ACTUALLY SHOWN, giving a coherent >50% pick.
             if wt not in (ta, tb) or wp < 0.95:
-                ra, rb = rate.get(ta, 1500.0), rate.get(tb, 1500.0)
-                wt, wp = (ta, 1 / (1 + 10 ** ((rb - ra) / 400))) if ra >= rb else (tb, 1 / (1 + 10 ** ((ra - rb) / 400)))
+                wt, wp = mpick, mwp
+            final = bool(pa > 0.999 and pb > 0.999 and wp > 0.999)
             matches.append({"a": ta, "pa": int(round(pa * 100)), "b": tb, "pb": int(round(pb * 100)),
                             "pick": wt, "wp": int(round(wp * 100)),
-                            "final": bool(pa > 0.999 and pb > 0.999 and wp > 0.999)})
+                            "model_pick": mpick, "model_wp": int(round(mwp * 100)),
+                            "miss": bool(final and wt != mpick),
+                            "final": final})
             winners.append(wt)
         rounds.append({"round": label, "matches": matches})
         prev_winners = winners
