@@ -108,15 +108,22 @@ const ISO={"Spain":"es","France":"fr","England":"gb-eng","Portugal":"pt","Argent
 const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror="this.style.display='none'">`:'';
 function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/New_York',hour12:false})+' ET';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
-function row(name,pp,isPick,isFinal,wp){
-  const cls=isPick?"bteam win":"bteam out";
-  const occ=(pp<99&&!isFinal)?`<span class="pp">${pp}%</span>`:"";
-  const right=isPick?`<span class="wp">${isFinal?'✓':wp+'%'}</span>`:"";
+function row(m,name,pp){
+  const isPick=m.pick===name;                 // advances: actual result if final, else model favourite
+  const isModel=m.model_pick===name;          // the model's own pre-game call
+  const miss=m.final&&m.miss;                  // model got this tie wrong (an upset)
+  let cls="bteam "+(isPick?"win":"out");
+  if(miss&&isPick)cls+=" upset";              // the surprise winner
+  else if(miss&&isModel)cls+=" modelmiss";    // the model's busted favourite
+  const occ=(pp<99&&!m.final)?`<span class="pp">${pp}%</span>`:"";
+  let right="";
+  if(isPick)right=`<span class="wp">${m.final?'✓':m.wp+'%'}</span>`;
+  else if(miss&&isModel)right=`<span class="mp" title="the model's pick — didn't advance">model ${m.model_wp}%</span>`;
   return `<div class="${cls}"><span class="bn">${flag(name)}${name}${occ}</span>${right}</div>`;}
 function card(m){
-  return `<div class="bmatch ${m.final?'final':''}">
-    ${row(m.a,m.pa,m.pick===m.a,m.final,m.wp)}
-    ${row(m.b,m.pb,m.pick===m.b,m.final,m.wp)}</div>`;}
+  return `<div class="bmatch ${m.final?'final':''} ${m.final&&m.miss?'miss':''}">
+    ${row(m,m.a,m.pa)}
+    ${row(m,m.b,m.pb)}</div>`;}
 function gcard(L,teams){
   const sorted=[...teams].sort((a,b)=>b.padv-a.padv||b.p1-a.p1||b.pts-a.pts||b.gd-a.gd);
   const rows=sorted.map((t,i)=>{
