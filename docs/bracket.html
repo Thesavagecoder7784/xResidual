@@ -79,7 +79,7 @@
     <div class="champ-banner" id="champ"></div>
     <div class="bprog" id="bprog" style="display:none"></div>
     <div class="bwrap"><div class="bcols" id="bracket"><div class="loading">loading…</div></div></div>
-    <div class="legend" style="margin-top:14px"><span class="a">●</span> model's pick to advance · faint % = how likely that team is to reach the slot (projected) · ✓ = result in</div>
+    <div class="legend" style="margin-top:14px"><span class="a">●</span> model's pick to advance · faint % = how likely that team is to reach the slot (projected) · ✓ = result in · <span style="color:var(--gold);font-weight:600">gold box = upset</span> the model missed, with its ✗ pick and the % it gave</div>
   </section>
 
   <section class="gsec" id="groups-sec" style="display:none">
@@ -118,7 +118,7 @@ function row(m,name,pp){
   const occ=(pp<99&&!m.final)?`<span class="pp">${pp}%</span>`:"";
   let right="";
   if(isPick)right=`<span class="wp">${m.final?'✓':m.wp+'%'}</span>`;
-  else if(miss&&isModel)right=`<span class="mp" title="the model's pick — didn't advance">model ${m.model_wp}%</span>`;
+  else if(miss&&isModel)right=`<span class="mp" title="the model's pick — didn't advance">✗ ${m.model_wp}%</span>`;
   return `<div class="${cls}"><span class="bn">${flag(name)}${name}${occ}</span>${right}</div>`;}
 function card(m){
   return `<div class="bmatch ${m.final?'final':''} ${m.final&&m.miss?'miss':''}">
