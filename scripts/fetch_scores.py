@@ -39,7 +39,8 @@ from match_scheduler import kickoff_utc    # reuse the '13:00 UTC-6' -> UTC pars
 
 SCORES_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
 CACHE_DIR = os.path.join(ROOT, "data", "cache")
-OVERLAY = os.path.join(CACHE_DIR, "wc_scores_overlay.json")   # last fetched completed games
+OVERLAY = os.path.join(CACHE_DIR, "wc_scores_overlay.json")   # last fetched completed games (rolling window)
+KO_LEDGER = os.path.join(CACHE_DIR, "ko_advancers.json")       # PERSISTENT knockout advancers (never pruned)
 META = os.path.join(CACHE_DIR, "wc_scores_meta.json")          # last-fetch time (informational)
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 WC_START = pd.Timestamp("2026-06-11")
@@ -135,6 +136,26 @@ def fetch_completed(days: int):
     return records, len(records)
 
 
+def update_ledger(records) -> int:
+    """Persist knockout advancers forever, keyed by team pair. The overlay is a rolling window and martj42
+    carries only the bare scoreline, so a penalty/ET tie becomes unresolvable once it ages out of the overlay
+    (a 1-1 can't name a winner and the advancer is gone). This append-only ledger keeps every advancer ESPN
+    ever reported, so the bracket settles shootouts for the whole tournament. Upsert-only; rows are never
+    dropped. Returns the count of newly-seen pairs."""
+    ledger = _read_json(KO_LEDGER) or {}
+    added = 0
+    for rec in records or []:
+        if not rec.get("advancer"):
+            continue
+        key = "|".join(sorted((rec["home_team"], rec["away_team"])))
+        if key not in ledger:
+            added += 1
+        ledger[key] = {k: rec.get(k) for k in ("home_team", "away_team", "home_score", "away_score",
+                                               "commence_time", "advancer", "home_shootout", "away_shootout")}
+    json.dump(ledger, open(KO_LEDGER, "w", encoding="utf-8"), indent=1)
+    return added
+
+
 def merge_into_cache(records, have: set, fixtures: list) -> int:
     """Append any overlay game the cache doesn't already carry. Returns rows added."""
     fxmap = {pair: (date, ground) for pair, _ko, date, ground in fixtures}  # bounds overlay to real fixtures
@@ -177,7 +198,9 @@ def main() -> int:
             overlay, n = fetch_completed(args.days)
             json.dump(overlay, open(OVERLAY, "w", encoding="utf-8"))
             json.dump({"last_fetch": now.isoformat(), "n_completed": n}, open(META, "w", encoding="utf-8"))
-            print(f"  fetch_scores: ESPN call ({reason}) -> {n} completed games")
+            new_adv = update_ledger(overlay)          # persist advancers so shootouts never age out
+            print(f"  fetch_scores: ESPN call ({reason}) -> {n} completed games"
+                  + (f", +{new_adv} new knockout advancer(s) to ledger" if new_adv else ""))
         except requests.RequestException as e:
             print(f"  fetch_scores: ESPN call failed ({e}); reusing cached overlay")
     else:
