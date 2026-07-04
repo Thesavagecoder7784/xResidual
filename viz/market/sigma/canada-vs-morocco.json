@@ -1,0 +1,40 @@
+{
+  "match": "Canada vs Morocco",
+  "capture": "20260704T162910Z-canada-vs-morocco",
+  "n_contracts": 4,
+  "max_z": 199.33,
+  "max_z_venue": "poly",
+  "max_move_c": 11.5,
+  "trail_sd_c": 0.058,
+  "max_z_nonzero_frac": 0.003,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 199.33,
+      "move_c": 11.5,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 140.11,
+      "move_c": 17.0,
+      "sd_c": 0.121,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "kalshi",
+      "z": 102.08,
+      "move_c": 9.0,
+      "sd_c": 0.088,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 82.49,
+      "move_c": 11.5,
+      "sd_c": 0.139,
+      "nonzero_frac": 0.016
+    }
+  ]
+}
