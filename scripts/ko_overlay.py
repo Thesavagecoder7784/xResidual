@@ -14,14 +14,28 @@ import os
 from xresidual import wc2026_teams
 
 
+def _load_games(root: str) -> list:
+    """Combine the rolling ESPN overlay (recent games) with the persistent advancer ledger (every
+    shootout ever seen). The overlay ages games out after ~36h and martj42 drops the advancer, so the
+    ledger is what keeps a penalty/ET tie resolvable for the rest of the tournament. Ledger is a
+    {pair_key: record} dict; overlay is a list — both carry the same fields, so we flatten to one list."""
+    games = []
+    for fname in ("wc_scores_overlay.json", "ko_advancers.json"):
+        path = os.path.join(root, "data", "cache", fname)
+        if not os.path.exists(path):
+            continue
+        try:
+            obj = json.loads(open(path, encoding="utf-8").read())
+        except Exception:
+            continue
+        games += list(obj.values()) if isinstance(obj, dict) else obj
+    return games
+
+
 def overlay_ko_results(det: dict, fx, root: str) -> dict:
     import pandas as pd
-    path = os.path.join(root, "data", "cache", "wc_scores_overlay.json")
-    if not os.path.exists(path):
-        return {}
-    try:
-        games = json.loads(open(path, encoding="utf-8").read())
-    except Exception:
+    games = _load_games(root)
+    if not games:
         return {}
     grp = fx[fx["group"].astype(str).str.startswith("Group")]
     group_end = pd.to_datetime(grp["date"]).max().date()
