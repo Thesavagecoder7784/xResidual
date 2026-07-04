@@ -193,6 +193,14 @@ td.num{font-family:var(--fm);text-align:right}
 .bteam.out{color:var(--dim)}
 .bteam .bn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:7px;min-width:0}
 .bteam .pp{font-family:var(--fm);font-size:9.5px;color:var(--dim);margin-left:5px;font-weight:400}
+/* upset: the model's knockout call was wrong. Flag it in amber instead of hiding it — the surprise
+   winner goes gold, the model's busted favourite is struck through with the % it had. */
+.bmatch.miss.final{border-color:var(--gold);box-shadow:0 2px 16px rgba(154,106,20,.15)}
+.bteam.win.upset{background:rgba(154,106,20,.10)}
+.bteam.win.upset::before{background:var(--gold)}
+.bteam.win.upset .wp{color:var(--gold)}
+.bteam.modelmiss .bn{text-decoration:line-through;text-decoration-color:var(--gold);text-decoration-thickness:1.5px;opacity:.72}
+.bteam.modelmiss .mp{font-family:var(--fm);font-size:9.5px;font-weight:600;color:var(--gold);white-space:nowrap}
 .bmatch .flag{width:17px;height:17px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
 @media(max-width:560px){.bcols{gap:20px;min-width:720px}}
 footer{padding:32px 0 54px;border-top:1px solid var(--rule);font-family:var(--fm);font-size:11.5px;color:var(--dim);display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;margin-top:16px}
