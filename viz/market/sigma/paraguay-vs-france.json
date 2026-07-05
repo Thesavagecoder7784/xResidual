@@ -1,0 +1,40 @@
+{
+  "match": "Paraguay vs France",
+  "capture": "20260704T202622Z-paraguay-vs-france",
+  "n_contracts": 4,
+  "max_z": 256.27,
+  "max_z_venue": "poly",
+  "max_move_c": 21.8,
+  "trail_sd_c": 0.085,
+  "max_z_nonzero_frac": 0.241,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 256.27,
+      "move_c": 21.8,
+      "sd_c": 0.085,
+      "nonzero_frac": 0.241
+    },
+    {
+      "venue": "kalshi",
+      "z": 33.13,
+      "move_c": 10.0,
+      "sd_c": 0.302,
+      "nonzero_frac": 0.035
+    },
+    {
+      "venue": "kalshi",
+      "z": 30.99,
+      "move_c": 2.0,
+      "sd_c": 0.065,
+      "nonzero_frac": 0.007
+    },
+    {
+      "venue": "poly",
+      "z": 25.65,
+      "move_c": 6.0,
+      "sd_c": 0.234,
+      "nonzero_frac": 0.035
+    }
+  ]
+}
