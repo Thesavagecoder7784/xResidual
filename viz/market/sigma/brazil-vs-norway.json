@@ -1,0 +1,40 @@
+{
+  "match": "Brazil vs Norway",
+  "capture": "20260705T192723Z-brazil-vs-norway",
+  "n_contracts": 4,
+  "max_z": 192.73,
+  "max_z_venue": "poly",
+  "max_move_c": 14.0,
+  "trail_sd_c": 0.073,
+  "max_z_nonzero_frac": 0.006,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 192.73,
+      "move_c": 14.0,
+      "sd_c": 0.073,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 172.6,
+      "move_c": 11.5,
+      "sd_c": 0.067,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 161.95,
+      "move_c": 32.5,
+      "sd_c": 0.201,
+      "nonzero_frac": 0.029
+    },
+    {
+      "venue": "kalshi",
+      "z": 101.8,
+      "move_c": 11.5,
+      "sd_c": 0.113,
+      "nonzero_frac": 0.012
+    }
+  ]
+}
