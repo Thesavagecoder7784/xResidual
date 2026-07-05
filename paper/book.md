@@ -1,4 +1,4 @@
-# Paper book — 2026-07-02 18:32Z
+# Paper book — 2026-07-05 00:01Z
 
 **Money in:** $1452  ·  **Open:** 9  ·  **Closed:** 37
 
@@ -7,16 +7,16 @@
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
 | 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.455 | 31.6 | -18.4 |
-| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.295 | 18.4 | -6.6 |
-| 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.540 | 23.3 | -6.7 |
-| 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.485 | 15.0 | -5.0 |
-| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.215 | 11.3 | -3.7 |
+| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.000 | 0.0 | -25.0 |
+| 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.535 | 23.1 | -6.9 |
+| 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.505 | 15.7 | -4.3 |
+| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.180 | 9.5 | -5.5 |
 | 46 | YES | nation-to-reach-quarterfinals / Belgium | 30 | 0.275 | 0.275 ⚠ | 30.0 | -0.0 |
-| 47 | YES | nation-to-reach-quarterfinals / Brazil | 18 | 0.655 | 0.655 | 18.0 | -0.0 |
-| 48 | YES | nation-to-reach-quarterfinals / Morocco | 15 | 0.715 | 0.715 | 15.0 | +0.0 |
-| 49 | YES | nation-to-reach-quarterfinals / England | 9 | 0.535 | 0.545 | 9.2 | +0.2 |
+| 47 | YES | nation-to-reach-quarterfinals / Brazil | 18 | 0.655 | 0.675 | 18.5 | +0.5 |
+| 48 | YES | nation-to-reach-quarterfinals / Morocco | 15 | 0.715 | 1.000 | 21.0 | +6.0 |
+| 49 | YES | nation-to-reach-quarterfinals / England | 9 | 0.535 | 0.535 | 9.0 | -0.0 |
 
-**Unrealized P&L:** -40.1  (on $212 open)
+**Unrealized P&L:** -53.6  (on $212 open)
 
 ## Closed positions
 
@@ -64,4 +64,4 @@
 
 ## Total
 
-money in **$1452**  ·  unrealized **-40.1**  ·  realized **+71.7**  ·  **combined +31.5**
+money in **$1452**  ·  unrealized **-53.6**  ·  realized **+71.7**  ·  **combined +18.0**
