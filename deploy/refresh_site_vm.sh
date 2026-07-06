@@ -39,7 +39,7 @@ echo "===== site refresh $(date -u +%FT%TZ) ====="
 "$PY" scripts/build_bracket.py    || echo "  bracket failed"
 "$PY" scripts/build_dashboard.py  || echo "  dashboard failed"
 "$PY" scripts/build_dashboard_v2.py || echo "  dashboard v2 failed"   # temperature-calibrated board (v2)
-"$PY" scripts/build_buildup_trajectory.py || echo "  buildup failed"   # title-race trajectory card data; INCREMENTAL (merges onto the seeded series), so the VM's limited snapshot retention never truncates the full May-onward history. Not published — kept fresh on the VM for the laptop to pull + render the card.
+"$PY" scripts/build_buildup_trajectory.py || echo "  buildup failed"   # title-race trajectory card data; INCREMENTAL (merges onto the seeded series), so the VM's limited snapshot retention never truncates the full May-onward history. Published to docs/data/buildup.js below (portfolio hotlinks it); the laptop still pulls + renders the annotated card.
 "$PY" scripts/venue_calibration.py || echo "  venue calibration failed"   # pending until ~Jun 27
 "$PY" scripts/build_calibration.py || echo "  match calibration failed"   # CORP/Brier of the pre-committed forecasts -> method.html headline (publishes docs/data/calibration.js below)
 
@@ -54,6 +54,7 @@ if pgrep -f "[w]s_capture.py" >/dev/null 2>&1; then
 else
   "$PY" scripts/build_micro_all.py || echo "  micro_all failed"
 fi
+cp -f viz/market/_buildup.js docs/data/buildup.js 2>/dev/null || true   # title-race series -> live chart on the portfolio homepage
 cp -f viz/market/_ofi.js docs/data/ofi.js 2>/dev/null || true
 cp -f viz/market/_infoshare.js docs/data/infoshare.js 2>/dev/null || true
 cp -f viz/market/_livewp.js docs/data/livewp.js 2>/dev/null || true
