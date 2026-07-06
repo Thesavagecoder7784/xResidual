@@ -1,0 +1,40 @@
+{
+  "match": "Mexico vs England",
+  "capture": "20260706T003451Z-mexico-vs-england",
+  "n_contracts": 4,
+  "max_z": 268.36,
+  "max_z_venue": "poly",
+  "max_move_c": 20.0,
+  "trail_sd_c": 0.075,
+  "max_z_nonzero_frac": 0.006,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 268.36,
+      "move_c": 20.0,
+      "sd_c": 0.075,
+      "nonzero_frac": 0.006
+    },
+    {
+      "venue": "poly",
+      "z": 180.0,
+      "move_c": 12.0,
+      "sd_c": 0.067,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "kalshi",
+      "z": 164.54,
+      "move_c": 9.5,
+      "sd_c": 0.058,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 155.61,
+      "move_c": 11.0,
+      "sd_c": 0.071,
+      "nonzero_frac": 0.005
+    }
+  ]
+}
