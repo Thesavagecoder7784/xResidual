@@ -129,3 +129,29 @@ degenerate (nonzero fraction < 0.10) rather than a bogus FAIL. Note in passing: 
 than Polymarket's (the largest-z artifacts are mostly Kalshi), which is consistent with Polymarket
 leading price discovery (P6) — Kalshi is the thinner follower. P8 was a secondary; the two primaries
 (P1, P6) are unaffected, and no other prediction's metric is touched.
+
+## 2026-07-06 — P9 graded INCONCLUSIVE: underpowered by construction, and the in-play half is not retro-computable
+
+**What changed.** Nothing in the rule; this records that P9 resolves INCONCLUSIVE, exactly as its own
+committed text pre-flagged. P9 (heat slows the second half) is a *secondary* test whose registered rule
+already says: "**INCONCLUSIVE if fewer than 8 extreme-heat afternoon games are captured with clean in-play
+data — likely, since there are only ~9 such games**," with an explicit power flag that it "will most likely
+resolve INCONCLUSIVE." This entry puts the resolution on the record before the July-19 grade so it reads as
+the disclosed limitation it always was, not a late dodge.
+
+**Why.** Two independent reasons, either sufficient. (1) **Power:** the qualifying set — FIFPRO
+extreme-risk city *and* afternoon kickoff — is only ~9 games for the whole tournament, below the committed
+n≥8-with-clean-data threshold once the clean-in-play-data requirement is applied. (2) **Data:** the second
+sub-metric, second-half drift of the de-vigged in-play total, needs the raw tick tapes, but those are pruned
+at 48h to fit the VM's disk (only a trailing window survives — 13 tapes at grading time, none of them the
+extreme-heat afternoon games, which were played earlier). So the in-play-drift half cannot be evaluated
+retroactively at all, and PASS requires *both* halves to point the predicted way. The late-goal-rate half
+(goals after the 75th minute, from goal timelines) is computable, but one half of a two-part conjunctive
+test, on ~9 games, is not a gradeable result. This is the same data-forced posture as P8, disclosed in
+advance rather than discovered.
+
+**Effect on the grade.** **P9 → INCONCLUSIVE**, per its own registered power/data clause — reported as
+such, not stretched into a PASS or FAIL off an underpowered half-metric. P9 was a secondary and a
+deliberately-flagged genuine unknown; the primaries (P1, P6) and the scored FAIL/PASS results are
+unaffected. All three inconclusives (P2, P8, P9) are now documented data-forced or underpowered
+limitations, so the July-19 scorecard carries no undocumented gap.
