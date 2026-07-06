@@ -250,6 +250,9 @@ writeups/lead-lag.md
 # Application material (résumé / cover-letter) — private, not for the public repo
 writeups/packaging.md
 
+# Interview prep — private, not for the public repo
+prep/
+
 # Downloaded source cache + transient availability review (regenerate via fetch_squad_data.py)
 data/cache/
 data/availability_review.md
