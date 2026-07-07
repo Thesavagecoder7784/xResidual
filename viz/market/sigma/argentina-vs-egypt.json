@@ -1,0 +1,40 @@
+{
+  "match": "Argentina vs Egypt",
+  "capture": "20260707T152909Z-argentina-vs-egypt",
+  "n_contracts": 4,
+  "max_z": 159.14,
+  "max_z_venue": "kalshi",
+  "max_move_c": 15.0,
+  "trail_sd_c": 0.094,
+  "max_z_nonzero_frac": 0.004,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 159.14,
+      "move_c": 15.0,
+      "sd_c": 0.094,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "kalshi",
+      "z": 140.32,
+      "move_c": 15.5,
+      "sd_c": 0.11,
+      "nonzero_frac": 0.016
+    },
+    {
+      "venue": "poly",
+      "z": 129.61,
+      "move_c": 17.0,
+      "sd_c": 0.131,
+      "nonzero_frac": 0.017
+    },
+    {
+      "venue": "poly",
+      "z": 116.45,
+      "move_c": 9.5,
+      "sd_c": 0.082,
+      "nonzero_frac": 0.007
+    }
+  ]
+}
