@@ -184,7 +184,7 @@ The same machinery, sliced:
   tails (the least-data, most-caveated region).
 - **Group vs. knockout efficiency**: calibration metrics computed within each stage.
 - **Cross-venue update speed**: using the logged price time series (§5, §6),
-  price discovery between Kalshi / Polymarket / Betfair on shared markets — matured
+  price discovery between Kalshi and Polymarket on shared markets — matured
   into the §16 information-share machinery (the project's flagship).
 
 ## 5. Recovering implied probabilities from prices
