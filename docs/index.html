@@ -2,17 +2,17 @@
 <html lang="en"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>xResidual · cross-venue price discovery in World Cup prediction markets</title>
-<meta name="description" content="A live study of how prediction markets price the 2026 World Cup: cross-venue price discovery across Kalshi, Polymarket, and Betfair, on a millisecond capture pipeline. Pre-registered and graded in the open." />
+<meta name="description" content="A live study of how prediction markets price the 2026 World Cup: cross-venue price discovery between Kalshi and Polymarket, on a millisecond capture pipeline, against the sharp bookmaker line. Pre-registered and graded in the open." />
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="xResidual">
 <meta property="og:title" content="xResidual:Cross-Venue Price Discovery in World Cup Prediction Markets">
-<meta property="og:description" content="A live study of how Kalshi, Polymarket, and Betfair price the 2026 World Cup: which venue discovers price first. Pre-registered and graded in the open.">
+<meta property="og:description" content="A live study of how Kalshi and Polymarket price the 2026 World Cup: which venue discovers price first. Pre-registered and graded in the open.">
 <meta property="og:url" content="https://thesavagecoder7784.github.io/xResidual/">
 <meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="xResidual:Cross-Venue Price Discovery">
-<meta name="twitter:description" content="When a goal hits, which market knows first? Cross-venue price discovery across Kalshi, Polymarket, and Betfair. Pre-registered, graded in the open.">
+<meta name="twitter:description" content="When a goal hits, which market knows first? Cross-venue price discovery between Kalshi and Polymarket. Pre-registered, graded in the open.">
 <meta name="twitter:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@
   <header class="hero lphero">
     <div class="kicker">2026 World Cup · prediction-market microstructure</div>
     <h1>When a goal hits, <em>which market knows first?</em></h1>
-    <div class="lplede">xResidual is a live study of how three real-money markets, <b>Kalshi, Polymarket, and the Betfair exchange</b>, price the 2026 World Cup. The headline question is one the literature names but hasn't measured: <b>cross-venue price discovery</b>, which venue moves first when information arrives, and whether that leadership flips between the quiet pre-match window and the high-information in-play window. Everything runs on a millisecond capture pipeline with an on-chain trade-flow layer, and every prediction is pre-committed and graded in the open.</div>
+    <div class="lplede">xResidual is a live study of how two large real-money prediction markets, <b>Kalshi and Polymarket</b>, price the 2026 World Cup — benchmarked against the sharp bookmaker line. The headline question is one the literature names but hasn't measured: <b>cross-venue price discovery</b>, which venue moves first when information arrives, and whether that leadership flips between the quiet pre-match window and the high-information in-play window. Everything runs on a millisecond capture pipeline with an on-chain trade-flow layer, and every prediction is pre-committed and graded in the open.</div>
     <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative research.</div>
     <div class="ctarow">
       <a class="cta solid" href="note.html">Read the research note →</a>
@@ -109,7 +109,7 @@
       <div class="finding"><div class="fstat">0.4pp<small>model vs sharp price</small></div>
         <div class="ftext"><b>The market is hard to beat wherever it's liquid.</b> Across 238 contracts, the deepest market (the title) agrees with the model to ~0.4pp; where the model disagreed most, an independent bookmaker sided with the market — the error was a confederation bias in our model, fixed with empirical-Bayes shrinkage (+4.6% out-of-sample RPS, DM p≈0.009).</div></div>
       <div class="finding"><div class="fstat">~6ms<small>between events</small></div>
-        <div class="ftext"><b>The infrastructure is real.</b> A 24/7 capture pipeline across three venues plus an on-chain layer reading signed flow from Polymarket's CTF Exchange; running live across <span style="color:var(--accent);font-weight:600" id="f-nmatches">multiple</span> matches captured tick-by-tick on both venues, at millisecond resolution.</div></div>
+        <div class="ftext"><b>The infrastructure is real.</b> A 24/7 capture pipeline across both venues plus an on-chain layer reading signed flow from Polymarket's CTF Exchange; running live across <span style="color:var(--accent);font-weight:600" id="f-nmatches">multiple</span> matches captured tick-by-tick on both venues, at millisecond resolution.</div></div>
     </div>
   </section>
 
