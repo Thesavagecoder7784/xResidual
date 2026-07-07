@@ -28,7 +28,7 @@ The second is how well the markets work. How calibrated are they on a chaotic, e
 
 ## Why this one exists
 
-I'd already built [QuantF1](https://thesavagecoder7784.github.io/), a hierarchical Bayesian, risk-adjusted performance model for Formula 1. xResidual is its live, public counterpart: lighter, faster, and running in real time during the tournament instead of as a retrospective. The edge here is timeliness (this can only happen in June–July 2026) and prediction-market microstructure, comparing three venues as a global event unfolds.
+I'd already built [QuantF1](https://thesavagecoder7784.github.io/), a hierarchical Bayesian, risk-adjusted performance model for Formula 1. xResidual is its live, public counterpart: lighter, faster, and running in real time during the tournament instead of as a retrospective. The edge here is timeliness (this can only happen in June–July 2026) and prediction-market microstructure, comparing two venues as a global event unfolds.
 
 It is not a betting model, and it is not an attempt to out-predict the markets. The premise is the opposite: these markets are very hard to beat, so instead of competing with them I treat them as the best lens on the tournament and ask how they work. Analysis travels because it's analysis; predictions only travel when they're right.
 
