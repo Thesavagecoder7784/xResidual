@@ -1,0 +1,26 @@
+{
+  "match": "Portugal vs Spain",
+  "capture": "20260706T183056Z-portugal-vs-spain",
+  "n_contracts": 2,
+  "max_z": 296.77,
+  "max_z_venue": "kalshi",
+  "max_move_c": 18.5,
+  "trail_sd_c": 0.062,
+  "max_z_nonzero_frac": 0.004,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 296.77,
+      "move_c": 18.5,
+      "sd_c": 0.062,
+      "nonzero_frac": 0.004
+    },
+    {
+      "venue": "kalshi",
+      "z": 109.14,
+      "move_c": 15.0,
+      "sd_c": 0.137,
+      "nonzero_frac": 0.014
+    }
+  ]
+}
