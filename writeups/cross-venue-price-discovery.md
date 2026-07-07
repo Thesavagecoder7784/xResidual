@@ -16,9 +16,9 @@
 ## Abstract
 
 Two large real-money prediction markets, Kalshi (US, regulated) and Polymarket (global,
-on-chain), priced every 2026 World Cup outcome continuously alongside the Betfair Exchange and
-the global bookmaker consensus. Using millisecond-resolution order-book and trade captures
-across all three venues, plus an on-chain trade-flow layer reconstructed from Polymarket's CTF
+on-chain), priced every 2026 World Cup outcome continuously, tracked against the global bookmaker
+consensus. Using millisecond-resolution order-book and trade captures
+across both venues, plus an on-chain trade-flow layer reconstructed from Polymarket's CTF
 Exchange, we study **where price is discovered**: which venue moves first when information
 arrives, and whether that leadership flips between the quiet pre-match regime and the
 high-information in-play regime. We decompose each cross-venue quote into belief and margin and
@@ -60,8 +60,8 @@ Section 4.3, and the on-chain trade-direction layer, Section 3.2).
 
 Real-money prediction markets aggregate dispersed information into a single live probability.
 The 2026 World Cup is a natural experiment: a 39-day, 104-match global event priced
-simultaneously by a US-regulated venue (Kalshi), a global on-chain venue (Polymarket), and a
-mature betting exchange (Betfair), with a dense, exogenous, and precisely-timed information
+simultaneously by a US-regulated venue (Kalshi) and a global on-chain venue (Polymarket), against
+the global bookmaker consensus, with a dense, exogenous, and precisely-timed information
 stream (goals). The recent literature (Hawkes et al., 2026; the prediction-market SoK, 2026)
 maps the field and names a gap: **cross-venue price discovery has not been measured**, in
 particular whether discovery leadership differs between the low-information pre-match window and
@@ -153,8 +153,8 @@ placebo).
 De-vigged, Polymarket and Kalshi title prices agree to **~0.15pp on average** across the 48-team
 field; the largest standing gap is England (~1pp). The "5 to 8 cent" gap the press quotes is
 **mostly the house margin**: Kalshi's overround runs ~5.4% vs Polymarket's ~3.0% (~1.8x), so the
-durable venue difference is *cost, not price*. Anchored to the Betfair Exchange (the sharpest
-soccer market we log), Polymarket sits marginally closer to the sharp line (mean abs error
+durable venue difference is *cost, not price*. Anchored to the sharp bookmaker consensus,
+Polymarket sits marginally closer to the sharp line (mean abs error
 ~0.18pp vs ~0.26pp). The small surviving belief gap is **structured by audience**: the American
 book is richer on USA, Mexico, Netherlands; the global book on England, Portugal, Japan, Brazil,
 a home-crowd tilt.
