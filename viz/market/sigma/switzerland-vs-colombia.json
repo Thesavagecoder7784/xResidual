@@ -1,0 +1,40 @@
+{
+  "match": "Switzerland vs Colombia",
+  "capture": "20260707T192646Z-switzerland-vs-colombia",
+  "n_contracts": 4,
+  "max_z": 147.27,
+  "max_z_venue": "poly",
+  "max_move_c": 16.0,
+  "trail_sd_c": 0.109,
+  "max_z_nonzero_frac": 0.012,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 147.27,
+      "move_c": 16.0,
+      "sd_c": 0.109,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "kalshi",
+      "z": 138.63,
+      "move_c": 16.5,
+      "sd_c": 0.119,
+      "nonzero_frac": 0.012
+    },
+    {
+      "venue": "poly",
+      "z": 74.11,
+      "move_c": 8.0,
+      "sd_c": 0.108,
+      "nonzero_frac": 0.013
+    },
+    {
+      "venue": "kalshi",
+      "z": 69.02,
+      "move_c": 6.5,
+      "sd_c": 0.094,
+      "nonzero_frac": 0.009
+    }
+  ]
+}
