@@ -281,12 +281,12 @@
     "entry_price": 0.4,
     "stake_usd": 25.0,
     "shares": 62.5,
-    "status": "open",
+    "status": "closed",
     "note": "Reach R16 YES: model 47.6% vs vig-adj market 38.1% (+9.5pp). Croatia dominated qualifying (7/8, 26-4 GD), 2018 finalists + 2022 3rd, soft Group L (only England above). Reach-R16 market efficient (5% vig). Validated via research. New layer/team, diversifies book.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.0,
+    "ts_close": "2026-07-07T15:28:36.674817+00:00",
+    "realized_pnl": -25.0,
+    "realized_pnl_net": -25.25
   },
   {
     "id": 20,
@@ -400,12 +400,12 @@
     "entry_price": 0.695,
     "stake_usd": 30.0,
     "shares": 43.17,
-    "status": "open",
+    "status": "closed",
     "note": "Deep-run/co-host overpricing: model P(reach QF) 16.5 vs mkt 30.5 (-14.0, biggest gap on the board). Corroborated independently by the cross-venue basis finding (US book pays a premium for Mexico, home-crowd tilt). Full size.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-07T15:28:37.005760+00:00",
+    "realized_pnl": 13.17,
+    "realized_pnl_net": 12.87
   },
   {
     "id": 27,
@@ -417,12 +417,12 @@
     "entry_price": 0.645,
     "stake_usd": 20.0,
     "shares": 31.01,
-    "status": "open",
+    "status": "closed",
     "note": "Deep-run/co-host overpricing: model 22.5 vs mkt 35.5 (-13.0); same home-crowd-tilt mechanism as the Mexico fade. Correlated with the Mexico reach-QF NO (co-host basket) so sized as the add, not a second full bet.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-07T15:28:37.636392+00:00",
+    "realized_pnl": 11.01,
+    "realized_pnl_net": 10.81
   },
   {
     "id": 28,
@@ -723,12 +723,12 @@
     "entry_price": 0.275,
     "stake_usd": 30.0,
     "shares": 109.09,
-    "status": "open",
+    "status": "closed",
     "note": "post bracket-fix: vs Senegal model 36% vs mkt 27.5%, +8.8 edge, CLV +10 confirming; FLB back, modest for squad-value caveat",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-07T15:28:37.923447+00:00",
+    "realized_pnl": 79.09,
+    "realized_pnl_net": 78.79
   },
   {
     "id": 47,
@@ -740,12 +740,12 @@
     "entry_price": 0.655,
     "stake_usd": 18.0,
     "shares": 27.48,
-    "status": "open",
+    "status": "closed",
     "note": "FLB back: Poly 65.5% vs sharp adv 69% (vs Norway); flips #28",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.0,
+    "ts_close": "2026-07-07T15:28:39.602941+00:00",
+    "realized_pnl": -18.0,
+    "realized_pnl_net": -18.18
   },
   {
     "id": 48,
@@ -757,12 +757,12 @@
     "entry_price": 0.715,
     "stake_usd": 15.0,
     "shares": 20.98,
-    "status": "open",
+    "status": "closed",
     "note": "FLB back: Poly 71.5% vs sharp adv 73.9% (vs Canada)",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-07T15:28:40.263782+00:00",
+    "realized_pnl": 5.98,
+    "realized_pnl_net": 5.83
   },
   {
     "id": 49,
@@ -774,11 +774,11 @@
     "entry_price": 0.535,
     "stake_usd": 9.0,
     "shares": 16.82,
-    "status": "open",
+    "status": "closed",
     "note": "FLB back: Poly 53.5% vs sharp adv 55.9% (vs Mexico)",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-07T15:28:40.564711+00:00",
+    "realized_pnl": 7.82,
+    "realized_pnl_net": 7.73
   }
 ]

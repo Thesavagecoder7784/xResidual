@@ -1,22 +1,15 @@
-# Paper book — 2026-07-05 00:01Z
+# Paper book — 2026-07-07 15:36Z
 
-**Money in:** $1452  ·  **Open:** 9  ·  **Closed:** 37
+**Money in:** $1452  ·  **Open:** 2  ·  **Closed:** 44
 
 ## Open positions
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
-| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.455 | 31.6 | -18.4 |
-| 19 | YES | nation-to-reach-round-of-16 / Croatia | 25 | 0.400 | 0.000 | 0.0 | -25.0 |
-| 26 | NO | nation-to-reach-quarterfinals / Mexico | 30 | 0.695 | 0.535 | 23.1 | -6.9 |
-| 27 | NO | nation-to-reach-quarterfinals / USA | 20 | 0.645 | 0.505 | 15.7 | -4.3 |
-| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.180 | 9.5 | -5.5 |
-| 46 | YES | nation-to-reach-quarterfinals / Belgium | 30 | 0.275 | 0.275 ⚠ | 30.0 | -0.0 |
-| 47 | YES | nation-to-reach-quarterfinals / Brazil | 18 | 0.655 | 0.675 | 18.5 | +0.5 |
-| 48 | YES | nation-to-reach-quarterfinals / Morocco | 15 | 0.715 | 1.000 | 21.0 | +6.0 |
-| 49 | YES | nation-to-reach-quarterfinals / England | 9 | 0.535 | 0.535 | 9.0 | -0.0 |
+| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.475 | 33.0 | -17.0 |
+| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.150 | 7.9 | -7.1 |
 
-**Unrealized P&L:** -53.6  (on $212 open)
+**Unrealized P&L:** -24.1  (on $65 open)
 
 ## Closed positions
 
@@ -37,12 +30,15 @@
 | 15 | YES | team-to-advance-to-knockout-stages / Egypt | 0.720 → 0.997 | +7.5 |
 | 17 | YES | fifwc-egy-irn-2026-06-26-more-markets / Both Teams to Score | 0.445 → 1.000 | +30.9 |
 | 18 | NO | fifwc-nzl-bel-2026-06-26-more-markets / Both Teams to Score | 0.560 → 0.000 | -15.2 |
+| 19 | YES | nation-to-reach-round-of-16 / Croatia | 0.400 → 0.000 | -25.2 |
 | 20 | YES | team-to-advance-to-knockout-stages / Ivory Coast | 0.780 → 0.775 | -0.4 |
 | 21 | NO | team-to-advance-to-knockout-stages / New Zealand | 0.680 → 0.680 | -0.2 |
 | 22 | NO | team-to-advance-to-knockout-stages / Iraq | 0.860 → 0.870 | +0.0 |
 | 23 | YES | team-to-advance-to-knockout-stages / Canada | 0.825 → 0.998 | +6.0 |
 | 24 | NO | group-c-winner / Brazil | 0.415 → 0.000 | -30.3 |
 | 25 | NO | group-b-winner / Switzerland | 0.555 → 0.000 | -20.2 |
+| 26 | NO | nation-to-reach-quarterfinals / Mexico | 0.695 → 1.000 | +12.9 |
+| 27 | NO | nation-to-reach-quarterfinals / USA | 0.645 → 1.000 | +10.8 |
 | 28 | NO | nation-to-reach-quarterfinals / Brazil | 0.525 → 0.345 | -5.3 |
 | 30 | YES | team-to-advance-to-knockout-stages / Bosnia and Herzegovina | 0.665 → 1.000 | +9.9 |
 | 31 | YES | KXWCGAME-26JUN26CPVKSA-TIE / Draw (Cape Verde vs Saudi Arabia) | 0.260 → 0.260 | -0.1 |
@@ -59,9 +55,13 @@
 | 42 | YES | fifwc-col-prt-2026-06-27-more-markets / Both Teams to Score | 0.505 → 0.000 | -25.2 |
 | 43 | NO | fifwc-alg-aut-2026-06-27-more-markets / Both Teams to Score | 0.535 → 0.000 | -15.2 |
 | 44 | YES | fifwc-sen-irq-2026-06-26-more-markets / Both Teams to Score | 0.450 → 0.000 | -20.2 |
+| 46 | YES | nation-to-reach-quarterfinals / Belgium | 0.275 → 1.000 | +78.8 |
+| 47 | YES | nation-to-reach-quarterfinals / Brazil | 0.655 → 0.000 | -18.2 |
+| 48 | YES | nation-to-reach-quarterfinals / Morocco | 0.715 → 1.000 | +5.8 |
+| 49 | YES | nation-to-reach-quarterfinals / England | 0.535 → 1.000 | +7.7 |
 
-**Realized P&L (net of 100bps):** +71.7
+**Realized P&L (net of 100bps):** +144.3
 
 ## Total
 
-money in **$1452**  ·  unrealized **-53.6**  ·  realized **+71.7**  ·  **combined +18.0**
+money in **$1452**  ·  unrealized **-24.1**  ·  realized **+144.3**  ·  **combined +120.1**
