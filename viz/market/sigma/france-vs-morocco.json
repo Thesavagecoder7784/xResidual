@@ -1,0 +1,40 @@
+{
+  "match": "France vs Morocco",
+  "capture": "20260709T193050Z-france-vs-morocco",
+  "n_contracts": 4,
+  "max_z": 274.76,
+  "max_z_venue": "poly",
+  "max_move_c": 23.37,
+  "trail_sd_c": 0.085,
+  "max_z_nonzero_frac": 0.066,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 274.76,
+      "move_c": 23.37,
+      "sd_c": 0.085,
+      "nonzero_frac": 0.066
+    },
+    {
+      "venue": "kalshi",
+      "z": 96.15,
+      "move_c": 13.5,
+      "sd_c": 0.14,
+      "nonzero_frac": 0.021
+    },
+    {
+      "venue": "poly",
+      "z": 61.65,
+      "move_c": 4.75,
+      "sd_c": 0.077,
+      "nonzero_frac": 0.062
+    },
+    {
+      "venue": "kalshi",
+      "z": 51.18,
+      "move_c": 4.0,
+      "sd_c": 0.078,
+      "nonzero_frac": 0.006
+    }
+  ]
+}
