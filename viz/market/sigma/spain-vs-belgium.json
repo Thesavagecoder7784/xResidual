@@ -1,0 +1,40 @@
+{
+  "match": "Spain vs Belgium",
+  "capture": "20260710T182641Z-spain-vs-belgium",
+  "n_contracts": 4,
+  "max_z": 229.9,
+  "max_z_venue": "kalshi",
+  "max_move_c": 60.5,
+  "trail_sd_c": 0.263,
+  "max_z_nonzero_frac": 0.065,
+  "per_contract": [
+    {
+      "venue": "kalshi",
+      "z": 229.9,
+      "move_c": 60.5,
+      "sd_c": 0.263,
+      "nonzero_frac": 0.065
+    },
+    {
+      "venue": "poly",
+      "z": 210.36,
+      "move_c": 41.88,
+      "sd_c": 0.199,
+      "nonzero_frac": 0.226
+    },
+    {
+      "venue": "poly",
+      "z": 90.62,
+      "move_c": 6.25,
+      "sd_c": 0.069,
+      "nonzero_frac": 0.048
+    },
+    {
+      "venue": "kalshi",
+      "z": 58.25,
+      "move_c": 7.0,
+      "sd_c": 0.12,
+      "nonzero_frac": 0.013
+    }
+  ]
+}
