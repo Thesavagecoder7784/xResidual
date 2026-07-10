@@ -46,10 +46,10 @@
 <div class="byline">Prabhat M · @PrabhatM27 · Math &amp; Statistics, Purdue · github.com/Thesavagecoder7784/xResidual · 25 June 2026 · working note</div>
 
 <div class="abstract">
-The headline of this note is a non-result, and that is the point. Using tick-level order-book data from 28 World
+The headline of this note is a non-result, and that is the point. Using tick-level order-book data from 72 World
 Cup matches on Kalshi and Polymarket, I find a genuine cross-venue price-discovery lead &mdash; on a goal,
 Polymarket's mid moves <b>~400&thinsp;ms</b> first and carries a <b>~79%</b> Gonzalo–Granger information share,
-leading <b>27 of 28</b> cointegrated matches (computed on mid-quotes, which sidesteps the ~59% trade-direction
+leading <b>50 of 51</b> cointegrated matches (computed on mid-quotes, which sidesteps the ~59% trade-direction
 problem documented for Polymarket). Conditioned on the news the lead is sharper still: <b>~86%</b> of price
 discovery in goal windows versus ~53% in calm play. <b>And then it is not tradeable.</b> At the goal the book
 vanishes &mdash; spread <b>~8&times;</b> wider, best-price depth under <b>1%</b> of normal &mdash; so the ~11-cent
@@ -65,7 +65,7 @@ verifiable without trusting the author.
 <ul>
 <li><b>Claim:</b> Polymarket is the price-discovery leader of the Kalshi–Polymarket pair on the same World Cup outcomes.</li>
 <li><b>Independent methods agree:</b> an event-study reaction lead, Hasbrouck / Gonzalo–Granger information shares, an order-flow mechanism check, and a cross-sectional level check against the sharp line.</li>
-<li><b>Numbers:</b> lead-lag <span class="num">125 vs 49</span> events to Polymarket (<span class="num">64%</span>, median <span class="num">+400&thinsp;ms</span>) across 43 matches; Gonzalo–Granger share <span class="num">~79%</span>, leading <span class="num">27/28</span> cointegrated matches; OFI is a within-venue mechanism (no cross-venue flow lead); mean gap to the sharp line <span class="num">0.18&thinsp;pp</span> (Poly) vs <span class="num">0.26&thinsp;pp</span> (Kalshi).</li>
+<li><b>Numbers:</b> lead-lag <span class="num">226 vs 82</span> events to Polymarket (<span class="num">73%</span>, median <span class="num">+400&thinsp;ms</span>) across 72 matches, and <span class="num">48 of 56</span> matches lean Polymarket (sign-test p&nbsp;&approx;&nbsp;5&times;10<sup>-8</sup>, cluster-robust); Gonzalo–Granger share <span class="num">~79%</span>, leading <span class="num">50/51</span> cointegrated matches; OFI is a within-venue mechanism (no cross-venue flow lead); mean gap to the sharp line <span class="num">0.18&thinsp;pp</span> (Poly) vs <span class="num">0.26&thinsp;pp</span> (Kalshi).</li>
 <li><b>Anatomy of a goal:</b> discovery concentrates at the news (Polymarket <span class="num">~86%</span> in goal windows vs <span class="num">~53%</span> calm); the book withdraws hardest where it leads (spread <span class="num">~8&times;</span>, depth <span class="num">&lt;1%</span>); so the ~11c stale-quote gap is +10c on paper but <span class="num">0%</span> harvestable once gated on the vanished depth.</li>
 <li><b>Honest caveats:</b> not tradeable after cost (sub-second + the book withdraws); one tournament, one sport; event-clustering means the formal significance unit is the match, not the event.</li>
 <li><b>The maker's view:</b> the collapse-and-refill is the quoter's defence against toxic flow &mdash; a maker who held stale quotes through the goal would be the one adversely selected. The unharvestable gap is exactly the loss the withdrawal avoids.</li>
@@ -92,8 +92,8 @@ and let the data decide.</p>
 <p>I capture both venues' full level-2 order books and every trade over WebSocket, at tick resolution, from an always-on
 collector running 24/7 through the tournament. For each match I pair contracts that reference the identical outcome (one
 Kalshi ticker and one Polymarket token per team and the draw), de-vig each venue's quotes to probabilities, and align the
-two mid-price series on a common clock. The event study runs on <b>43 matches</b>, OFI on <b>40 matches</b>, and the information-share
-estimates (below) on the <b>28 cointegrated matches</b> (47 contracts) whose cross-venue spread passes the ADF guard (all as of 25 June).</p>
+two mid-price series on a common clock. The event study runs on <b>72 matches</b>, OFI on <b>72 matches</b>, and the information-share
+estimates (below) on the <b>51 cointegrated matches</b> (83 contracts) whose cross-venue spread passes the ADF guard (all as of 3 July).</p>
 
 <h2>3. Methods</h2>
 <p>I measure the same phenomenon three ways, at increasing rigor, so the conclusion does not rest on any single technique.</p>
@@ -117,17 +117,18 @@ move. I also recompute the lead on the imbalance-weighted microprice [6] rather 
 calibrated model) to within ~0.4&thinsp;pp. There is no cross-venue mispricing in the liquid market; the effect below is
 about <em>speed of discovery</em>, not a level disagreement.</p>
 <p><b>And where they do differ, Polymarket sits closer to the sharp line.</b> Benchmarking each venue's de-vigged title
-price against the Betfair exchange (the standard sharp anchor) across 48 teams, Polymarket's mean absolute gap to the
+price against the sharp bookmaker line across 48 teams, Polymarket's mean absolute gap to the
 sharp line is <b>0.18&thinsp;pp</b> versus Kalshi's <b>0.26&thinsp;pp</b>, and Polymarket is the closer of the two on 22 teams
 to Kalshi's 11. So the venue that updates <em>first</em> is also the one sitting <em>closest</em> to the sharpest available
 consensus: here, leadership and level accuracy coincide &mdash; a mild counterpoint to the &ldquo;leadership need not mean
 efficiency&rdquo; caution raised for 2024 US-election markets.</p>
 <table class="avoidbreak">
 <tr><th>Measure</th><th class="r">Sample</th><th>Result</th></tr>
-<tr><td>Reaction lead (event study)</td><td class="r">43 matches, 195 events</td><td>Polymarket first in <b>125</b>, Kalshi in <b>49</b> (64%), median <b>+400&thinsp;ms</b> (IQR [-200, +800])</td></tr>
-<tr><td>Gonzalo–Granger share</td><td class="r">28 cointeg. matches</td><td>Polymarket <b>~79%</b>, leads in <b>27 / 28</b></td></tr>
-<tr><td>Hasbrouck share (mid of bounds)</td><td class="r">47 contracts</td><td>Polymarket <b>~83%</b> (band 76–91%)</td></tr>
-<tr><td>Distance to sharp line (Betfair)</td><td class="r">48 teams</td><td>Polymarket <b>0.18&thinsp;pp</b> vs Kalshi <b>0.26&thinsp;pp</b>; Poly closer on <b>22 / 11</b></td></tr>
+<tr><td>Reaction lead (event study)</td><td class="r">72 matches, 308 events</td><td>Polymarket first in <b>226</b>, Kalshi in <b>82</b> (73%), median <b>+400&thinsp;ms</b> (IQR [0, +800])</td></tr>
+<tr><td>Reaction lead, per match (cluster-robust)</td><td class="r">56 matches</td><td><b>48 of 56</b> lean Polymarket (sign-test p &approx; 5&times;10<sup>-8</sup>; design effect 1.21)</td></tr>
+<tr><td>Gonzalo–Granger share</td><td class="r">51 cointeg. matches</td><td>Polymarket <b>~79%</b>, leads in <b>50 / 51</b> (p &approx; 5&times;10<sup>-14</sup>)</td></tr>
+<tr><td>Hasbrouck share (band)</td><td class="r">83 contracts</td><td>Polymarket band <b>~73–90%</b></td></tr>
+<tr><td>Distance to sharp line (bookmaker)</td><td class="r">48 teams</td><td>Polymarket <b>0.18&thinsp;pp</b> vs Kalshi <b>0.26&thinsp;pp</b>; Poly closer on <b>22 / 11</b></td></tr>
 <tr><td>OFI &rarr; own-venue price impact</td><td class="r">40 matches</td><td>strong within-venue, both directions (bin-level t; see §6)</td></tr>
 <tr><td>OFI cross-venue lead</td><td class="r">40 matches</td><td><b>null</b> &mdash; no clean asymmetry either direction</td></tr>
 </table>
@@ -141,12 +142,12 @@ lives in the <em>price</em>, not in observable flow: Polymarket's mid simply upd
 <tr><th>Measure (per goal)</th><th class="r">Sample</th><th>Result</th></tr>
 <tr><td>Information share, event-conditional</td><td class="r">~20 matches</td><td>Polymarket GG <b>~86%</b> in goal windows vs <b>~53%</b> in calm play (Hasbrouck ~82% vs ~56%)</td></tr>
 <tr><td>Liquidity at the goal (top of book)</td><td class="r">~370 shocks</td><td>spread <b>~8&times;</b> (Poly) / <b>~2&times;</b> (Kalshi); best-price depth falls to <b>&lt;1%</b> of normal; refill ~3&ndash;4&thinsp;s</td></tr>
-<tr><td>Harvestability of the lead</td><td class="r">162 goals</td><td>gross stale gap ~11.5c, net <b>+10.9c on paper</b> after spread &mdash; but <b>0% harvestable</b> once gated on available depth</td></tr>
+<tr><td>Harvestability of the lead</td><td class="r">277 goals</td><td>gross stale gap ~12.0c, net <b>+10.8c on paper</b> after spread &mdash; but <b>0% harvestable</b> once gated on available depth</td></tr>
 <tr><td>Reaction size vs fair value</td><td class="r">8 clean matches</td><td>market books <b>~0.55&times;</b> the model's fair log-odds jump; under-shoots in <b>7 of 8</b> matches &mdash; an <b>under-reaction</b> (preliminary)</td></tr>
 </table>
 <p><b>Discovery concentrates at the news.</b> Away from goals the two venues are near-coequal (~53/47); the instant a goal lands, Polymarket carries ~86% of the permanent price move. The flagship lead is not a steady background hum but a <em>news-event</em> phenomenon &mdash; Polymarket leads precisely because it incorporates the goal first.</p>
 <p><b>And the same venue withdraws liquidity the hardest.</b> At the goal, makers pull their quotes: the spread blows out (~8&times; on Polymarket, ~2&times; on Kalshi) and best-price depth collapses to under 1% of normal, refilling only after a few seconds. Unlike a betting exchange &mdash; Betfair suspends and cancels resting orders on a goal (Croxson &amp; Reade 2014) &mdash; Kalshi and Polymarket never halt, so this is <em>informational</em> liquidity withdrawal, not a mechanical suspension.</p>
-<p><b>So the lead is real but untradeable.</b> A naive ledger makes the stale follower look like free money: ~11.5c of staleness, +10.9c net of the spread, on every goal. But that quote has vanished &mdash; depth at the goal is ~0.4% of normal &mdash; so once gated on what is actually resting in the book, <b>0%</b> is harvestable. "The news is in the price before you can trade it" (Croxson &amp; Reade 2014) holds here for a precise, measured reason: not slow pricing, but a book that empties in the same instant it reprices. (An earlier version of this ledger reported the +10.9c as harvestable; gating on depth corrected it, and that correction <em>is</em> the result.)</p>
+<p><b>So the lead is real but untradeable.</b> A naive ledger makes the stale follower look like free money: ~12.0c of staleness, +10.8c net of the spread, on every goal. But that quote has vanished &mdash; depth at the goal is ~0.5% of normal &mdash; so once gated on what is actually resting in the book, <b>0%</b> is harvestable. "The news is in the price before you can trade it" (Croxson &amp; Reade 2014) holds here for a precise, measured reason: not slow pricing, but a book that empties in the same instant it reprices. (An earlier version of this ledger reported the +10.8c as harvestable; gating on depth corrected it, and that correction <em>is</em> the result.)</p>
 <p><b>And it under-reacts to the goal it just priced.</b> Conditioning the same event on a fair-value benchmark &mdash; a calibrated clock-and-Poisson model anchored to the pre-match price &mdash; the market's post-goal move is a median <b>~0.55&times;</b> the model's fair jump <em>in log-odds</em> (so this is not the logistic curve flattering the result; the raw-probability "value of a goal" curve and an apparent "underdog goals move twice as far" both dissolve once that geometry is removed, and I do not claim them). The market under-shoots the fair move in <b>7 of 8</b> cleanly-reconstructed matches, and the move sticks (60-second reversion ~0), so it is a persistent under-reaction rather than an overshoot. A decisive check rules out the alternative &mdash; that my benchmark merely over-reacts: the model's larger post-goal probability is the <em>better</em> forecast of the eventual result (log-loss 0.235 vs 0.361; Brier 0.073 vs 0.113), so the larger jump was warranted. I report this as <b>suggestive, not firm</b> &mdash; the cluster-honest unit is the match, and 7 of 8 is a sign-test <i>p</i>&thinsp;&asymp;&thinsp;0.07; on the wider sample that includes shock-inferred goal times the direction holds (24 of 27 matches) but the outcome test muddies, which is why I trust only the clean-reconstruction subset. It should sharpen as the knockouts add cleanly-timed goals.</p>
 
 <h2>6. Robustness</h2>
@@ -158,14 +159,17 @@ unaffected; I verified our signed-flow code is used by none of these results.</p
 (1,&minus;1) spread is genuinely stationary.</p>
 <p><b>Significance, stated honestly.</b> Goal events cluster within matches and are not independent, so the naive binomial
 (p&approx;0.0004) and bin-level OFI t-statistics overstate significance. The unit that carries the claim is the <em>match</em>:
-27 of 28 cointegrated matches show a Polymarket lead, with a ~79% central share. A formal write-up would replace the naive
-p-value with a match-clustered bootstrap; the qualitative result is not in doubt.</p>
+50 of 51 cointegrated matches show a Polymarket lead, with a ~79% central share. That match-clustered bootstrap is now run
+(<code>scripts/harden_leadlag_stats.py</code>): the clustering is mild (ICC 0.058, design effect 1.21), the reaction-lead 95%
+CI holds at [68%, 79%], and the per-match sign-tests are decisive &mdash; <b>48 of 56</b> matches lean Polymarket on the
+reaction lead (p&approx;5&times;10<sup>-8</sup>) and <b>50 of 51</b> on the information share (p&approx;5&times;10<sup>-14</sup>).
+The qualitative result is not in doubt.</p>
 
 <h2>7. What this is <em>not</em></h2>
 <p><b>Not a trade.</b> The lead is a few hundred milliseconds. Documented cross-venue arbitrage exists (~$40M, 2024–25) but is
 seconds-lived and fee-bounded; a 400&thinsp;ms head start vanishes inside the bid–ask once costs are crossed. This is
 price-discovery <em>leadership</em>, a property of market structure &mdash; not free money.</p>
-<p><b>Scope.</b> One tournament, one sport, a ~three-week window, 28 cointegrated matches. Polymarket's documented wash trading (~25% of
+<p><b>Scope.</b> One tournament, one sport, a ~three-week window, 51 cointegrated matches. Polymarket's documented wash trading (~25% of
 historical volume) is a caveat on volume-based measures, less so on mids. The Hasbrouck band is wide where the two venues'
 innovations are correlated, which is why I lead with the ordering-free Gonzalo–Granger number.</p>
 
@@ -182,7 +186,7 @@ lead from a <em>tradable</em> one.</p>
 
 <h2>9. Conclusion</h2>
 <p>On identical World Cup outcomes, Polymarket discovers price first: it reacts ~400&thinsp;ms sooner and carries ~79% of the
-permanent price movement, in 27 of 28 cointegrated matches measured. The practical implication is narrow but real &mdash; an
+permanent price movement, in 50 of 51 cointegrated matches measured. The practical implication is narrow but real &mdash; an
 aggregator of prediction-market signals should weight Polymarket's mid as the leading indicator and Kalshi's as the lagging
 confirm &mdash; and the trading implication is honestly none, after costs. Everything is reproducible from the public
 repository; forecasts in the wider project are committed to a forward-only ledger, and the core estimation math is frozen,
