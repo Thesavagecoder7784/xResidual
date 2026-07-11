@@ -1,4 +1,4 @@
-# Paper book — 2026-07-07 15:36Z
+# Paper book — 2026-07-11 20:42Z
 
 **Money in:** $1452  ·  **Open:** 2  ·  **Closed:** 44
 
@@ -6,10 +6,10 @@
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
-| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.475 | 33.0 | -17.0 |
-| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.150 | 7.9 | -7.1 |
+| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.405 | 28.1 | -21.9 |
+| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.065 | 3.4 | -11.6 |
 
-**Unrealized P&L:** -24.1  (on $65 open)
+**Unrealized P&L:** -33.5  (on $65 open)
 
 ## Closed positions
 
@@ -64,4 +64,4 @@
 
 ## Total
 
-money in **$1452**  ·  unrealized **-24.1**  ·  realized **+144.3**  ·  **combined +120.1**
+money in **$1452**  ·  unrealized **-33.5**  ·  realized **+144.3**  ·  **combined +110.8**
