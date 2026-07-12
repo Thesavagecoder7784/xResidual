@@ -1,0 +1,40 @@
+{
+  "match": "Argentina vs Switzerland",
+  "capture": "20260712T003434Z-argentina-vs-switzerland",
+  "n_contracts": 4,
+  "max_z": 259.1,
+  "max_z_venue": "poly",
+  "max_move_c": 15.75,
+  "trail_sd_c": 0.061,
+  "max_z_nonzero_frac": 0.028,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 259.1,
+      "move_c": 15.75,
+      "sd_c": 0.061,
+      "nonzero_frac": 0.028
+    },
+    {
+      "venue": "kalshi",
+      "z": 212.14,
+      "move_c": 15.0,
+      "sd_c": 0.071,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "kalshi",
+      "z": 147.42,
+      "move_c": 6.5,
+      "sd_c": 0.044,
+      "nonzero_frac": 0.003
+    },
+    {
+      "venue": "poly",
+      "z": 130.47,
+      "move_c": 6.5,
+      "sd_c": 0.05,
+      "nonzero_frac": 0.049
+    }
+  ]
+}
