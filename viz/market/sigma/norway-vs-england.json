@@ -1,0 +1,40 @@
+{
+  "match": "Norway vs England",
+  "capture": "20260711T202725Z-norway-vs-england",
+  "n_contracts": 4,
+  "max_z": 196.22,
+  "max_z_venue": "poly",
+  "max_move_c": 14.62,
+  "trail_sd_c": 0.075,
+  "max_z_nonzero_frac": 0.061,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 196.22,
+      "move_c": 14.62,
+      "sd_c": 0.075,
+      "nonzero_frac": 0.061
+    },
+    {
+      "venue": "poly",
+      "z": 189.75,
+      "move_c": 15.5,
+      "sd_c": 0.082,
+      "nonzero_frac": 0.071
+    },
+    {
+      "venue": "kalshi",
+      "z": 108.35,
+      "move_c": 15.0,
+      "sd_c": 0.138,
+      "nonzero_frac": 0.011
+    },
+    {
+      "venue": "kalshi",
+      "z": 83.63,
+      "move_c": 13.0,
+      "sd_c": 0.155,
+      "nonzero_frac": 0.027
+    }
+  ]
+}
