@@ -1,15 +1,14 @@
-# Paper book — 2026-07-12 04:06Z
+# Paper book — 2026-07-13 18:21Z
 
-**Money in:** $1452  ·  **Open:** 2  ·  **Closed:** 44
+**Money in:** $1452  ·  **Open:** 1  ·  **Closed:** 45
 
 ## Open positions
 
 | # | side | market / outcome | in $ | entry | now | value | unrealized |
 |--:|:--|:--|--:|--:|--:|--:|--:|
 | 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.405 | 28.1 | -21.9 |
-| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 15 | 0.285 | 0.001 | 0.0 | -15.0 |
 
-**Unrealized P&L:** -36.9  (on $65 open)
+**Unrealized P&L:** -21.9  (on $50 open)
 
 ## Closed positions
 
@@ -55,13 +54,14 @@
 | 42 | YES | fifwc-col-prt-2026-06-27-more-markets / Both Teams to Score | 0.505 → 0.000 | -25.2 |
 | 43 | NO | fifwc-alg-aut-2026-06-27-more-markets / Both Teams to Score | 0.535 → 0.000 | -15.2 |
 | 44 | YES | fifwc-sen-irq-2026-06-26-more-markets / Both Teams to Score | 0.450 → 0.000 | -20.2 |
+| 45 | YES | will-a-nation-that-has-never-won-the-win-in-2026-20260605003149811 / never won the World Cup | 0.285 → 0.000 | -15.2 |
 | 46 | YES | nation-to-reach-quarterfinals / Belgium | 0.275 → 1.000 | +78.8 |
 | 47 | YES | nation-to-reach-quarterfinals / Brazil | 0.655 → 0.000 | -18.2 |
 | 48 | YES | nation-to-reach-quarterfinals / Morocco | 0.715 → 1.000 | +5.8 |
 | 49 | YES | nation-to-reach-quarterfinals / England | 0.535 → 1.000 | +7.7 |
 
-**Realized P&L (net of 100bps):** +144.3
+**Realized P&L (net of 100bps):** +129.1
 
 ## Total
 
-money in **$1452**  ·  unrealized **-36.9**  ·  realized **+144.3**  ·  **combined +107.4**
+money in **$1452**  ·  unrealized **-21.9**  ·  realized **+129.1**  ·  **combined +107.2**
