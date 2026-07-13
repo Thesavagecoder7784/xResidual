@@ -706,12 +706,12 @@
     "entry_price": 0.285,
     "stake_usd": 15.0,
     "shares": 52.63,
-    "status": "open",
+    "status": "closed",
     "note": "coherence edge: never-won YES @ 0.285 vs sum of never-won teams champ probs 0.315 (+3pp); cross-market arb on a new market type",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 0.0,
+    "ts_close": "2026-07-13T18:21:24.830834+00:00",
+    "realized_pnl": -15.0,
+    "realized_pnl_net": -15.15
   },
   {
     "id": 46,
