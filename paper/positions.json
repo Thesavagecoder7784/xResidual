@@ -94,12 +94,12 @@
     "entry_price": 0.72,
     "stake_usd": 50.0,
     "shares": 69.44,
-    "status": "open",
+    "status": "closed",
     "note": "France-fade (quarter-Kelly): hardest route in the bracket (death group I + France-Germany R16 + Netherlands QF + Spain in SF), most fractured camp, lost 06+22 finals on pens. Model P(reach final) 23.3% vs market 28.5%; NO model 76.7% vs 72.0% fill = +4.7pp. ~half is systematic deep-run overpricing, so quarter-Kelly. Low corr to book.",
-    "exit_price": null,
-    "ts_close": null,
-    "realized_pnl": null,
-    "realized_pnl_net": null
+    "exit_price": 1.0,
+    "ts_close": "2026-07-14T21:10:01.440830+00:00",
+    "realized_pnl": 19.44,
+    "realized_pnl_net": 18.94
   },
   {
     "id": 8,
