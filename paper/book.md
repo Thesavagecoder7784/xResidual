@@ -1,14 +1,12 @@
-# Paper book — 2026-07-13 18:21Z
+# Paper book — 2026-07-14 21:10Z
 
-**Money in:** $1452  ·  **Open:** 1  ·  **Closed:** 45
+**Money in:** $1452  ·  **Open:** 0  ·  **Closed:** 46
 
 ## Open positions
 
-| # | side | market / outcome | in $ | entry | now | value | unrealized |
-|--:|:--|:--|--:|--:|--:|--:|--:|
-| 7 | NO | nation-to-reach-final / France | 50 | 0.720 | 0.405 | 28.1 | -21.9 |
+_none yet_
 
-**Unrealized P&L:** -21.9  (on $50 open)
+**Unrealized P&L:** +0.0  (on $0 open)
 
 ## Closed positions
 
@@ -19,6 +17,7 @@
 | 3 | YES | team-to-advance-to-knockout-stages / Senegal | 0.720 → 0.705 | -3.1 |
 | 4 | NO | group-c-winner / Brazil | 0.280 → 0.285 | +0.8 |
 | 5 | YES | nation-to-reach-quarterfinals / Morocco | 0.220 → 0.225 | +1.3 |
+| 7 | NO | nation-to-reach-final / France | 0.720 → 1.000 | +18.9 |
 | 8 | NO | team-to-advance-to-knockout-stages / Saudi Arabia | 0.640 → 1.000 | +16.6 |
 | 9 | NO | team-to-advance-to-knockout-stages / Tunisia | 0.650 → 0.925 | +12.4 |
 | 10 | NO | team-to-advance-to-knockout-stages / Panama | 0.660 → 0.890 | +10.2 |
@@ -60,8 +59,8 @@
 | 48 | YES | nation-to-reach-quarterfinals / Morocco | 0.715 → 1.000 | +5.8 |
 | 49 | YES | nation-to-reach-quarterfinals / England | 0.535 → 1.000 | +7.7 |
 
-**Realized P&L (net of 100bps):** +129.1
+**Realized P&L (net of 100bps):** +148.1
 
 ## Total
 
-money in **$1452**  ·  unrealized **-21.9**  ·  realized **+129.1**  ·  **combined +107.2**
+money in **$1452**  ·  unrealized **+0.0**  ·  realized **+148.1**  ·  **combined +148.1**
