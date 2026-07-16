@@ -1,0 +1,40 @@
+{
+  "match": "England vs Argentina",
+  "capture": "20260715T182821Z-england-vs-argentina",
+  "n_contracts": 4,
+  "max_z": 441.03,
+  "max_z_venue": "poly",
+  "max_move_c": 30.87,
+  "trail_sd_c": 0.07,
+  "max_z_nonzero_frac": 0.053,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 441.03,
+      "move_c": 30.87,
+      "sd_c": 0.07,
+      "nonzero_frac": 0.053
+    },
+    {
+      "venue": "kalshi",
+      "z": 255.29,
+      "move_c": 33.5,
+      "sd_c": 0.131,
+      "nonzero_frac": 0.017
+    },
+    {
+      "venue": "kalshi",
+      "z": 109.1,
+      "move_c": 11.5,
+      "sd_c": 0.105,
+      "nonzero_frac": 0.009
+    },
+    {
+      "venue": "poly",
+      "z": 85.21,
+      "move_c": 6.87,
+      "sd_c": 0.081,
+      "nonzero_frac": 0.053
+    }
+  ]
+}
