@@ -287,3 +287,5 @@ viz/market/_*.js
 viz/model/_*.js
 viz/**/*.png
 writeups/_*_results.json
+
+paper/arxiv
