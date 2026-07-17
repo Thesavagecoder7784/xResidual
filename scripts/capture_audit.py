@@ -10,8 +10,11 @@ capture that died early).
     python scripts/capture_audit.py --json    # machine-readable status line
     python scripts/capture_audit.py --ack     # acknowledge current misses into the baseline, then commit+deploy
 
-Run on the VM, where captured-matches.json is authoritative. Wire to a daily timer so a miss is
-caught the next day rather than discovered months later when the pool is short a game.
+A match counts as captured if it is in the launch-state registry OR has a persistent per-match
+lead-lag artifact on disk (the registry can miss entries, or key a knockout by a bracket placeholder
+that no longer matches the resolved team names — the artifact is independent ground truth). Run on
+the VM, where both are present. Wire to a daily timer so a miss is caught the next day rather than
+discovered months later when the pool is short a game.
 
 Misses are permanent, so a plain `exit 1 if any miss` leaves the daily service RED forever after the
 first unrecoverable loss — alarm fatigue that hides the NEXT miss. So known-unrecoverable misses are
@@ -35,6 +38,7 @@ from match_scheduler import load_fixtures, _load_state, LEAD_S, GRACE_S, DATA_DI
 
 MIN_TAPE_MB = 5.0       # a real 3h capture is ~1 GB; a few MB or less = died early / degenerate
 ACK_FILE = os.path.join(ROOT, "scripts", "capture_audit_baseline.json")
+LEADLAG_DIR = os.path.join(ROOT, "viz", "market", "leadlag")  # persistent per-match cross-venue artifacts
 
 
 def _ack_key(kickoff) -> str:
@@ -67,20 +71,41 @@ def _tape_mb(team1: str, team2: str) -> float | None:
     return None
 
 
+def _tokens(s: str) -> set[str]:
+    """Order-independent word tokens (accent-stripped, lowercased), for robust team<->slug matching
+    that survives name flips like 'DR Congo' vs 'Congo DR'."""
+    s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode().lower()
+    return {t for t in "".join(c if c.isalnum() else " " for c in s).split() if t not in ("vs", "and")}
+
+
+def _leadlag_token_sets() -> list[set[str]]:
+    """Token sets of every per-match lead-lag JSON slug. These persist past the 48h tape cleanup and
+    their existence is ground-truth proof that BOTH venues were captured and paired for that match —
+    a check independent of the launch-state registry (which can miss entries or key by a bracket
+    placeholder that no longer matches the resolved team names)."""
+    return [_tokens(os.path.basename(p)[:-5]) for p in glob.glob(os.path.join(LEADLAG_DIR, "*.json"))]
+
+
 def audit() -> dict:
     now = datetime.now(timezone.utc)
     fixtures = load_fixtures()
     state = _load_state()
     acked = _load_ack()
+    ll_token_sets = _leadlag_token_sets()
     rows, missed_new, missed_ack, degraded = [], [], [], []
     counts = {"captured": 0, "missed": 0, "missed_new": 0, "missed_ack": 0, "in_window": 0, "upcoming": 0}
     for f in fixtures:
         dt = (f["kickoff"] - now).total_seconds()
         match = f"{f['team1']} vs {f['team2']}"
-        if f["key"] in state:
-            st = state[f["key"]]
-            mk = st.get("markets", {}) or {}
-            single = not (mk.get("kalshi") and mk.get("poly"))
+        tt1, tt2 = _tokens(f["team1"]), _tokens(f["team2"])
+        # a persistent lead-lag artifact = proven cross-venue capture, even if the launch registry
+        # never recorded it (or keyed it under a since-resolved bracket placeholder). Both teams'
+        # tokens must appear in the slug (order-independent), so it can't false-match a different tie.
+        has_artifact = bool(tt1 and tt2) and any(tt1 <= s and tt2 <= s for s in ll_token_sets)
+        if f["key"] in state or has_artifact:
+            mk = (state.get(f["key"], {}) or {}).get("markets", {}) or {}
+            # cross-venue artifact overrides a stale/absent single-venue registry read
+            single = (not has_artifact) and not (mk.get("kalshi") and mk.get("poly"))
             mb = _tape_mb(f["team1"], f["team2"])
             small = mb is not None and mb < MIN_TAPE_MB
             counts["captured"] += 1
