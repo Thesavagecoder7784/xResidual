@@ -72,7 +72,7 @@
   <header class="hero">
     <div class="kicker">2026 World Cup · knockouts</div>
     <h1>The knockout <em>bracket.</em></h1>
-    <div class="lede">The model's projected path through the knockouts, <b>most-likely team in each slot</b>, with the model's pick to advance. A <b>live projection</b> that fills in with the <b>real teams</b> as the groups resolve — the sim <b>conditions on every game played</b>, so a settled tie becomes final and the rest re-forecasts.</div>
+    <div class="lede">The model's projected path through the knockouts, <b>most-likely team in each slot</b>, with the model's pick to advance. A <b>live projection</b> that fills in with the <b>real teams</b> as the groups resolve, the sim <b>conditions on every game played</b>, so a settled tie becomes final and the rest re-forecasts.</div>
   </header>
 
   <section style="border-top:none;padding-top:10px">
@@ -84,13 +84,13 @@
 
   <section class="gsec" id="groups-sec" style="display:none">
     <h2>Projected <em>group finishes</em></h2>
-    <div class="lede">Each group's <b>projected final order (1–4)</b>, ranked by the model's probability of <b>reaching the knockouts</b> — top two (above the dashed line) or one of the eight best third-placed teams — conditioned on every game played so far. Points so far in mono. <span style="color:var(--good);font-weight:600">green</span> on track · <span style="color:var(--gold);font-weight:600">amber</span> on the bubble.</div>
+    <div class="lede">Each group's <b>projected final order (1–4)</b>, ranked by the model's probability of <b>reaching the knockouts</b>, top two (above the dashed line) or one of the eight best third-placed teams, conditioned on every game played so far. Points so far in mono. <span style="color:var(--good);font-weight:600">green</span> on track · <span style="color:var(--gold);font-weight:600">amber</span> on the bubble.</div>
     <div class="ggrid" id="groups"></div>
   </section>
 
   <section class="gsec" id="thirds-sec" style="display:none">
     <h2>The best <em>third-place</em> race</h2>
-    <div class="lede">The 48-team format advances the top two of every group <b>plus the eight best third-placed teams</b>. The twelve group-thirds are ranked by <b>points</b>, then <b>goal difference</b>, then <b>goals scored</b> — the eight above the dashed line reach the Round of 32; the bottom four go out. <span style="color:var(--good);font-weight:600">green</span> = through · <span style="color:var(--muted)">grey</span> = eliminated.</div>
+    <div class="lede">The 48-team format advances the top two of every group <b>plus the eight best third-placed teams</b>. The twelve group-thirds are ranked by <b>points</b>, then <b>goal difference</b>, then <b>goals scored</b>, the eight above the dashed line reach the Round of 32; the bottom four go out. <span style="color:var(--good);font-weight:600">green</span> = through · <span style="color:var(--muted)">grey</span> = eliminated.</div>
     <div class="tbody" id="thirds"></div>
   </section>
 
@@ -118,7 +118,7 @@ function row(m,name,pp){
   const occ=(pp<99&&!m.final)?`<span class="pp">${pp}%</span>`:"";
   let right="";
   if(isPick)right=`<span class="wp">${m.final?'✓':m.wp+'%'}</span>`;
-  else if(miss&&isModel)right=`<span class="mp" title="the model's pick — didn't advance">✗ ${m.model_wp}%</span>`;
+  else if(miss&&isModel)right=`<span class="mp" title="the model's pick, didn't advance">✗ ${m.model_wp}%</span>`;
   return `<div class="${cls}"><span class="bn">${flag(name)}${name}${occ}</span>${right}</div>`;}
 function card(m){
   return `<div class="bmatch ${m.final?'final':''} ${m.final&&m.miss?'miss':''}">
@@ -128,7 +128,7 @@ function gcard(L,teams){
   const sorted=[...teams].sort((a,b)=>b.padv-a.padv||b.p1-a.p1||b.pts-a.pts||b.gd-a.gd);
   const rows=sorted.map((t,i)=>{
     const tier=t.padv>=65?'in':t.padv>=30?'bub':'out';
-    const pts=t.pl?`${t.pts} pt${t.pts==1?'':'s'}`:'—';
+    const pts=t.pl?`${t.pts} pt${t.pts==1?'':'s'}`:', ';
     const gf=t.iso?`<img class="gflag" src="flags/${t.iso}.svg" alt="" onerror="this.style.visibility='hidden'">`:`<span class="gflag"></span>`;
     return `<div class="grow ${tier}"><span class="gpos">${i+1}</span>${gf}<span class="gnm">${t.team}</span><span class="gpts">${pts}</span><span class="gadv">${t.padv}%</span></div>`
       + (i===1?'<div class="gcut" title="top two auto-qualify"></div>':'');

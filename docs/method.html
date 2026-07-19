@@ -95,7 +95,7 @@
       <div class="eng-row"><span class="eng-tag lap">Laptop</span>
         <div class="eng-box"><b>Pool, render, discard</b><span>Rebuild the pooled result from the per-match summaries, render the graphic, and delete the raw tape once all three summaries exist.</span></div></div>
     </div>
-    <p style="margin-top:16px">Each analysis outputs a <b>pooled statistic with its sample size and significance</b>, not a headline. Early findings so far, reported straight: Polymarket's price leads Kalshi's by a median of <b id="ll-med">~200ms</b> on goals — but at a <b id="ll-share">near-coin-flip share</b> across <b id="ll-n">the captured matches</b>, the lead straddling zero, so it is a faint tilt and not yet a clean signal (the early four-match flash that looked like ~500ms did not hold). Order-flow imbalance moves price on both venues exactly as the microstructure literature predicts. Whether that price lead is <i>tradeable</i> once you cross the spread is a separate, disclosed forward-test, and the answer there is no. The detail lives in the <a href="note.html">research note</a>.</p>
+    <p style="margin-top:16px">Each analysis outputs a <b>pooled statistic with its sample size and significance</b>, not a headline. The final result, reported straight: Polymarket's price leads Kalshi's by a median <b>+600ms</b> on goals, first in <b>71% of decisive events</b> and carrying an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, a lead that survives a cluster-robust bootstrap. Order-flow imbalance moves price on both venues exactly as the microstructure literature predicts. Whether that price lead is <i>tradeable</i> once you cross the spread is a separate, disclosed forward-test, and the answer is no: the book collapses to ~0.5% depth at the goal. The detail lives in the <a href="note.html">research note</a>.</p>
   </section>
 
   <section class="prose">
@@ -108,16 +108,8 @@
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
 </div>
 <script>
-// keep the lead-lag sentence in sync with the live pool, so it can't go stale
-(function(){const s=document.createElement('script');s.src='data/leadlag.js?'+Date.now();
-  s.onload=()=>{const L=window.LEADLAG_POOLED;if(!L||!L.pooled)return;
-    const med=Math.round(L.pooled.median_lead_ms), sh=Math.round(L.pooled.leader_share*100);
-    const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-    set('ll-med',(med>=0?'+':'')+med+'ms');
-    set('ll-share',sh+'% Polymarket');
-    set('ll-n',(L.n_matches||'the captured')+' matches');};
-  document.body.appendChild(s);})();
-// calibration headline — keep in sync with the live grade so it can't go stale
+// lead-lag sentence is now static (final hardened result), no live-sync needed
+// calibration headline, keep in sync with the live grade so it can't go stale
 (function(){const s=document.createElement('script');s.src='data/calibration.js?'+Date.now();
   s.onload=()=>{const C=window.CALIBRATION;if(!C||!C.versions)return;const m=C.versions.market,v1=C.versions.v1;
     const set=(k,v)=>document.querySelectorAll('[data-cal="'+k+'"]').forEach(e=>e.textContent=v);
