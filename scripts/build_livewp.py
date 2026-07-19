@@ -46,6 +46,7 @@ DATA_DIR = os.path.join(ROOT, "logger", "data")
 FIXTURES = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
 MATCHES = os.path.join(ROOT, "docs", "data", "matches.js")
 GOALS_CURATED = os.path.join(ROOT, "data", "wc_goals.json")
+OVERRIDES = os.path.join(ROOT, "data", "livewp_overrides.json")  # kickoff+pregame for placeholder-keyed KO ties
 LW_DIR = os.path.join(ROOT, "viz", "market", "livewp")          # per-match JSONs
 OUT = os.path.join(ROOT, "viz", "market", "_livewp.js")          # pooled, for the site
 RESULTS = os.path.join(ROOT, "writeups", "_livewp_results.json")
@@ -135,6 +136,25 @@ def _num(x):
         return None
 
 
+def _load_overrides() -> dict:
+    """Manual {kickoff_ms, p1, pd, p2} for matches the fixtures CSV / pregame feed can't key — i.e.
+    knockout ties still stored under bracket placeholders (W101 vs W102). File maps '<Home> vs <Away>'
+    (real resolved names) -> the values; keyed here via the same name bridge as every other lookup."""
+    if not os.path.exists(OVERRIDES):
+        return {}
+    try:
+        j = json.load(open(OVERRIDES))
+    except Exception:
+        return {}
+    out = {}
+    for k, v in j.items():
+        if " vs " not in k:
+            continue
+        h, a = [s.strip() for s in k.split(" vs ", 1)]
+        out[(_cn(h), _cn(a))] = v
+    return out
+
+
 def load_pregame() -> dict:
     try:
         d = json.loads(open(MATCHES).read().split("=", 1)[1].strip().rstrip(";"))
@@ -221,6 +241,14 @@ def process_capture(cap, pairs=None, sm_bundle=None, fixtures=None, pregame=None
 
     fx = fixtures.get((_cn(home), _cn(away)))
     pg = pregame.get((_cn(home), _cn(away)))
+    if not fx or not fx.get("kickoff") or not pg:
+        # knockout ties are stored in the fixtures CSV / pregame feed under bracket placeholders
+        # (W101 vs W102), so a resolved matchup misses both lookups. Fall back to a manual override.
+        ov = _load_overrides().get((_cn(home), _cn(away)))
+        if ov:
+            fx = {"kickoff": ov["kickoff_ms"], "ground": ov.get("ground", "neutral"),
+                  "s1": ov.get("s1"), "s2": ov.get("s2")}   # s1/s2 None -> reconstruct goals from the tape
+            pg = (ov["p1"], ov["pd"], ov["p2"])
     if not fx or not fx.get("kickoff") or not pg:
         print(f"  skip {match}: missing kickoff/pre-game"); return None
     lh, la = fit_lambdas(*pg)
