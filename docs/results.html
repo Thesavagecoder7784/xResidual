@@ -53,7 +53,7 @@
   <header class="hero">
     <div class="kicker">2026 World Cup · how the model is doing</div>
     <h1>The <em>scorecard.</em></h1>
-    <div class="lede">No cherry-picking: the running grade on every pre-committed forecast. Favourite accuracy and match <b>log-loss against the uniform baseline</b>, the <b>v1→v2→v3 head-to-head</b> as the draw fixes earn (or don't earn) their keep, Closing-Line Value, and the <b>biggest surprises</b> — the residuals the model didn't see coming. The honest version is the point.</div>
+    <div class="lede">No cherry-picking: the running grade on every pre-committed forecast. Favourite accuracy and match <b>log-loss against the uniform baseline</b>, the <b>v1→v2→v3 head-to-head</b> as the draw fixes earn (or don't earn) their keep, Closing-Line Value, and the <b>biggest surprises</b>, the residuals the model didn't see coming. The honest version is the point.</div>
     <div class="stats" id="stats"></div>
   </header>
 
@@ -65,7 +65,7 @@
 
   <section>
     <div class="h2">Biggest surprises <span style="color:var(--dim);font-weight:400;font-size:15px">· the residuals</span></div>
-    <div class="rlead">Played games ranked by how much the result surprised the model — the probability it gave the <b>actual</b> outcome before kickoff. Low = the model was confident and wrong (or a true upset). This is the <em>residual</em> the project is named for; the pattern in the misses is the finding.</div>
+    <div class="rlead">Played games ranked by how much the result surprised the model, the probability it gave the <b>actual</b> outcome before kickoff. Low = the model was confident and wrong (or a true upset). This is the <em>residual</em> the project is named for; the pattern in the misses is the finding.</div>
     <div id="resid"><div class="loading">loading…</div></div>
   </section>
 
@@ -82,11 +82,11 @@ function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<
 
 function renderScore(){if(!G)return;
   const pl=G.matches.filter(m=>m.played), draws=pl.filter(m=>m.result==='draw').length;
-  const ll=G.logloss==null?'—':(+G.logloss).toFixed(3), llc=(G.logloss!=null&&G.logloss>1.099)?'':'a';
-  const clv=(D&&D.clv&&D.clv.positive_pct!=null)?D.clv.positive_pct+'%':'—';
+  const ll=G.logloss==null?', ':(+G.logloss).toFixed(3), llc=(G.logloss!=null&&G.logloss>1.099)?'':'a';
+  const clv=(D&&D.clv&&D.clv.positive_pct!=null)?D.clv.positive_pct+'%':', ';
   document.getElementById('stats').innerHTML=[
     [`${G.played}/${G.n}`,'games graded',''],
-    [`${G.accuracy==null?'—':Math.round(G.accuracy*100)+'%'}`,'favourite correct','a'],
+    [`${G.accuracy==null?', ':Math.round(G.accuracy*100)+'%'}`,'favourite correct','a'],
     [ll,'log-loss · vs 1.10 uniform','t'],
     [`${draws}/${G.played}`,'ended level',''],
     [clv,'positive CLV','a']
@@ -96,13 +96,13 @@ function renderLadder(){if(!G)return;
   const h2=V2&&V2.head_to_head, h3=V3&&V3.head_to_head;
   const rows=[];
   rows.push(['v1','','Plain Skellam goal model',
-    h2&&h2.v1?h2.v1.logloss.toFixed(3):'—', h2&&h2.v1?h2.v1.brier.toFixed(3):'—',
+    h2&&h2.v1?h2.v1.logloss.toFixed(3):', ', h2&&h2.v1?h2.v1.brier.toFixed(3):', ',
     'the original board · the baseline the forks must beat']);
   rows.push(['v2','v2','+ draw calibration (zero-inflated Skellam)',
-    h2&&h2.v2?h2.v2.logloss.toFixed(3):'—', h2&&h2.v2?h2.v2.brier.toFixed(3):'—',
+    h2&&h2.v2?h2.v2.logloss.toFixed(3):', ', h2&&h2.v2?h2.v2.brier.toFixed(3):', ',
     h2&&h2.v2&&h2.v1?(h2.v2.logloss<h2.v1.logloss?`<span class="win">beats v1</span> on ${h2.n_resolved} games`:`behind v1 on ${h2.n_resolved} games`):'pending']);
   rows.push(['v3','v3','+ format-conditional draw lift',
-    h3&&h3.v3?h3.v3.logloss.toFixed(3):'—', h3&&h3.v3?h3.v3.brier.toFixed(3):'—',
+    h3&&h3.v3?h3.v3.logloss.toFixed(3):', ', h3&&h3.v3?h3.v3.brier.toFixed(3):', ',
     h3&&h3.n_resolved?(h3.v3&&h3.v2&&h3.v3.logloss<h3.v2.logloss?`<span class="win">beats v2</span> on ${h3.n_resolved}`:`vs v2 on ${h3.n_resolved}`):'<span class="pend">pending · fills in as its games resolve</span>']);
   const head=`<thead><tr><th>Version</th><th>What changed</th><th class="n">Log-loss</th><th class="n">Brier</th><th>Head-to-head</th></tr></thead>`;
   const body=rows.map(r=>`<tr><td><span class="vtag ${r[1]}">${r[0]}</span></td><td class="ch">${r[2]}</td><td class="n">${r[3]}</td><td class="n">${r[4]}</td><td class="ch">${r[5]}</td></tr>`).join('');
@@ -118,7 +118,7 @@ function renderResiduals(){if(!G)return;
       <div class="rm">${fl(m.t1)}<span class="nm">${m.t1}</span><span class="sc">${m.s1}-${m.s2}</span><span class="nm">${m.t2}</span>${fl(m.t2)}</div>
       <div class="rsurp"><div class="rtrack"><div class="rfill" style="width:${surp}%;background:${col}"></div></div></div>
       <div class="rpct">model gave <b>${p}%</b></div></div>`;}).join('')
-    +`<div class="rlead" style="margin-top:14px">Read the misses together: the biggest surprises are <b>favourites held to draws</b> (Spain, Switzerland, Belgium) — the format effect the v2/v3 forks target — not random noise. That pattern <em>is</em> the residual finding.</div>`;}
+    +`<div class="rlead" style="margin-top:14px">Read the misses together: the biggest surprises are <b>favourites held to draws</b> (Spain, Switzerland, Belgium), the format effect the v2/v3 forks target, not random noise. That pattern <em>is</em> the residual finding.</div>`;}
 
 function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Date.now();s.onload=cb;s.onerror=()=>cb&&cb();document.body.appendChild(s);}
 load('data/matches.js',()=>{G=window.GAMES||null;
