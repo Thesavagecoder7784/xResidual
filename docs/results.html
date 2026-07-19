@@ -89,7 +89,7 @@ function renderScore(){if(!G)return;
     [`${G.accuracy==null?'—':Math.round(G.accuracy*100)+'%'}`,'favourite correct','a'],
     [ll,'log-loss · vs 1.10 uniform','t'],
     [`${draws}/${G.played}`,'ended level',''],
-    [clv,'positive CLV · forming','a']
+    [clv,'positive CLV','a']
   ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');}
 
 function renderLadder(){if(!G)return;
