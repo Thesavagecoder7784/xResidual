@@ -1,0 +1,40 @@
+{
+  "match": "France vs England",
+  "capture": "20260718T202817Z-france-vs-england",
+  "n_contracts": 4,
+  "max_z": 59.79,
+  "max_z_venue": "poly",
+  "max_move_c": 6.65,
+  "trail_sd_c": 0.111,
+  "max_z_nonzero_frac": 0.224,
+  "per_contract": [
+    {
+      "venue": "poly",
+      "z": 59.79,
+      "move_c": 6.65,
+      "sd_c": 0.111,
+      "nonzero_frac": 0.224
+    },
+    {
+      "venue": "kalshi",
+      "z": 49.97,
+      "move_c": 21.0,
+      "sd_c": 0.42,
+      "nonzero_frac": 0.023
+    },
+    {
+      "venue": "kalshi",
+      "z": 43.31,
+      "move_c": 8.0,
+      "sd_c": 0.185,
+      "nonzero_frac": 0.022
+    },
+    {
+      "venue": "poly",
+      "z": 42.04,
+      "move_c": 6.05,
+      "sd_c": 0.144,
+      "nonzero_frac": 0.269
+    }
+  ]
+}
