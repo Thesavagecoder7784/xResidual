@@ -1,0 +1,16 @@
+{
+  "France vs England": {
+    "kickoff_ms": 1784408400000,
+    "p1": 0.363,
+    "pd": 0.255,
+    "p2": 0.383,
+    "ground": "neutral"
+  },
+  "Spain vs Argentina": {
+    "kickoff_ms": 1784487600000,
+    "p1": 0.449,
+    "pd": 0.251,
+    "p2": 0.3,
+    "ground": "neutral"
+  }
+}
