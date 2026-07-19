@@ -43,7 +43,7 @@
   </header>
 
   <div class="v2banner">
-    <b>What v2 is, and why.</b> Backtesting the model on the 2018 and 2022 World Cups (out-of-sample) showed it was <b>overconfident at the extremes</b>: confident calls landed about 60% of the time when the model said ~74%, and genuine upsets were priced near 0%. The standard fix is <b>temperature scaling</b> — one parameter <span id="tval">T</span>, fit on those past tournaments by minimizing log-loss, that pulls extreme probabilities toward the centre. Applied here, it is what collapsed an apparent favourite-longshot edge (e.g. backing longshots to advance) down to about &plusmn;2pp: that gap was the model's overconfidence, not a market mispricing. The picks are unchanged; what changes is how far the model is willing to stray from the price. It is a <b>pre-committed fork run forward in parallel</b> with v1, and it never edits v1.
+    <b>What v2 is, and why.</b> Backtesting the model on the 2018 and 2022 World Cups (out-of-sample) showed it was <b>overconfident at the extremes</b>: confident calls landed about 60% of the time when the model said ~74%, and genuine upsets were priced near 0%. The standard fix is <b>temperature scaling</b>, one parameter <span id="tval">T</span>, fit on those past tournaments by minimizing log-loss, that pulls extreme probabilities toward the centre. Applied here, it is what collapsed an apparent favourite-longshot edge (e.g. backing longshots to advance) down to about &plusmn;2pp: that gap was the model's overconfidence, not a market mispricing. The picks are unchanged; what changes is how far the model is willing to stray from the price. It is a <b>pre-committed fork run forward in parallel</b> with v1, and it never edits v1.
   </div>
 
   <section>
@@ -62,7 +62,7 @@
         <div class="tablewrap"><table id="tbl"><thead></thead><tbody><tr><td class="loading">loading…</td></tr></tbody></table></div>
       </div>
       <div>
-        <div class="panel"><div class="big a" id="tbig">—</div>
+        <div class="panel"><div class="big a" id="tbig">, </div>
           <p><b>Temperature.</b> The single calibration parameter, fit out-of-sample on 2018 + 2022. <b>T &gt; 1</b> means the base model was overconfident, so v2 cools every probability toward the centre. Picks are unchanged; the edges shrink to their honest size. <span id="tsub"></span></p></div>
         <div class="panel"><div class="h2" style="font-size:18px;margin-bottom:8px">What this fixed, and what it doesn't</div>
           <p>The raw board showed a cluster of large edges on longshots to advance. The backtest says that was <b>tail-overconfidence</b>, not a priced edge: calibration pulls those toward the modest favourite-longshot bias the literature documents.</p>

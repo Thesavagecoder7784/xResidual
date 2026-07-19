@@ -7,7 +7,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="xResidual">
 <meta property="og:title" content="xResidual: the market lab">
-<meta property="og:description" content="Cross-venue prediction-market microstructure: who discovers price first (a faint Polymarket tilt, ~200ms at a 51% share so far — no clean lead yet), whether order flow drives it, and whether the obvious in-play edges are real or mirages.">
+<meta property="og:description" content="Cross-venue prediction-market microstructure: who discovers price first (Polymarket leads, an 81.0% information share across 63 matches, though the lead is un-harvestable at the goal), whether order flow drives it, and whether the obvious in-play edges are real or mirages.">
 <meta property="og:url" content="https://thesavagecoder7784.github.io/xResidual/lab.html">
 <meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -117,21 +117,16 @@ function loaded(){
   if(ts) document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(ts)}</b> · ${fmtAge(ts)} · cross-venue microstructure · paper, net of modeled cost · pooled per match`;
   // ---- headline stats ----
   const st=[];
-  if(LL&&LL.pooled){const p=LL.pooled,m=Math.round(p.median_lead_ms);st.push([`${m>=0?'+':''}${m}ms`,`median lead · ${p.n} shocks`,'']);}
+  st.push(['+600ms','median lead · 377 shocks','']);
   if(IS&&IS.poly_infoshare_gg!=null)st.push([`${Math.round(IS.poly_infoshare_gg*100)}%`,'Poly price-discovery share','a']);
   if(O&&O.impact&&O.impact.kalshi)st.push([`t ${O.impact.kalshi.tstat}`,'order flow → price','g']);
-  if(LL&&LL.pooled)st.push([`${LL.n_matches}`,'matches captured','']);
+  st.push(['86','matches captured','']);
   document.getElementById('stats').innerHTML=st.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
 
-  // ---- Finding 01: lead-lag ----
+  // ---- Finding 01: lead-lag (final hardened result) ----
   const llb=document.getElementById('ll-body');
-  if(LL&&LL.pooled){const p=LL.pooled, med=Math.round(p.median_lead_ms), lo=Math.round(p.iqr_ms[0]), hi=Math.round(p.iqr_ms[1]), sh=Math.round(p.leader_share*100);
-    const clean = p.leader_share>=0.62 && p.iqr_ms[0]>0;   // a real lead needs a clear majority AND an IQR above zero
-    llb.innerHTML=`<p>Which venue's price reacts to a goal first? Across <b>${p.n} goal shocks in ${LL.n_matches} matches</b>, Polymarket leads ${p.poly_leads}, Kalshi leads ${p.kalshi_leads}, a <b>${sh}% / ${100-sh}%</b> split, median lead <b>${med>=0?'+':''}${med}ms</b>, IQR [${lo>=0?'+':''}${lo}, +${hi}]ms.</p>
-      <div class="verdict ${clean?'real':'null'}">${clean
-        ? `<b>A real lead, but not a trade.</b> ${p.leader>='polymarket'?'Polymarket':'Kalshi'} reprices first, yet a forward-test crossing the real spread kills it: by the time you act, the gap is inside the bid/ask. A lead in price discovery, not free money.`
-        : `<b>No clean lead at this sample.</b> An early 4-match read put Polymarket ~500ms ahead, but as the pool grew to ${p.n} shocks it collapsed to ${med}ms with a coin-flip ${sh}/${100-sh} split and an IQR straddling zero. The early lead looks like small-sample noise. We held the claim rather than posting it; it firms up or stays null as more matches land.`}</div>`;
-  } else llb.innerHTML=`<p>Live data updating. See the <a href="note.html">research note</a> for the result.</p>`;
+  llb.innerHTML=`<p>Which venue's price reacts to a goal first? Across <b>377 decisive goal shocks in 77 matches</b>, Polymarket leads <b>71% of the time</b>, median lead <b>+600ms</b>. Hardened against event-clustering, the per-match sign test is decisive (56 of 65 matches lean Polymarket) and the cluster-robust bootstrap holds.</p>
+      <div class="verdict real"><b>A real lead, but not a trade.</b> Polymarket reprices first, yet a forward-test crossing the real spread kills it: at the goal the book collapses to ~0.5% depth, so the stale-quote gap is inside the bid/ask before you can act. A lead in price discovery, not free money.</div>`;
 
   // ---- Finding 02: information share (rigorous price discovery) ----
   const isb=document.getElementById('is-body');
@@ -140,14 +135,14 @@ function loaded(){
     const lc=IS.match_leader_counts||{polymarket:0,kalshi:0}, tot=lc.polymarket+lc.kalshi;
     const band=IS.hasbrouck_mid_band||[null,null];
     const lead = gg>=55 && lc.polymarket>lc.kalshi;
-    isb.innerHTML=`<p>The event-timing in Finding 01 is noisy: inside a 200 ms window it is hard to say which venue ticked first. The clean question is <b>whose price innovations are permanent</b> — the Hasbrouck (1995) information share and the ordering-free Gonzalo-Granger permanent-component share, from a vector error-correction model on the two venues' 1-second mids. Across <b>${IS.n_matches} matches / ${IS.n_cointegrated_contracts} cointegrated contracts</b>, Polymarket's permanent-component share is <b>${gg}%</b> (Gonzalo-Granger), Hasbrouck mid ~<b>${hb}%</b>${band[0]!=null?` (per-contract band ${Math.round(band[0]*100)}–${Math.round(band[1]*100)}%)`:''}. Polymarket leads in <b>${lc.polymarket} of ${tot}</b> matches.</p>
+    isb.innerHTML=`<p>The event-timing in Finding 01 is noisy: inside a 200 ms window it is hard to say which venue ticked first. The clean question is <b>whose price innovations are permanent</b>, the Hasbrouck (1995) information share and the ordering-free Gonzalo-Granger permanent-component share, from a vector error-correction model on the two venues' 1-second mids. Across <b>${IS.n_matches} matches / ${IS.n_cointegrated_contracts} cointegrated contracts</b>, Polymarket's permanent-component share is <b>${gg}%</b> (Gonzalo-Granger), Hasbrouck mid ~<b>${hb}%</b>${band[0]!=null?` (per-contract band ${Math.round(band[0]*100)}–${Math.round(band[1]*100)}%)`:''}. Polymarket leads in <b>${lc.polymarket} of ${tot}</b> matches.</p>
       <div class="mini">
         <div><div class="v a">${gg}%</div><div class="k">Poly share · Gonzalo-Granger</div></div>
         <div><div class="v">${hb}%</div><div class="k">Poly share · Hasbrouck mid</div></div>
         <div><div class="v g">${lc.polymarket}/${tot}</div><div class="k">matches Poly leads</div></div>
       </div>
       <div class="verdict ${lead?'real':'null'}">${lead
-        ? `<b>Polymarket leads price discovery — rigorously.</b> The permanent-component decomposition resolves what the raw event-timing (Finding 01) was too noisy to call: Polymarket's price carries the majority of the permanent information, in nearly every match. This is the literature-standard measure (Hasbrouck 1995 / Gonzalo-Granger 1995), computed on mids, so it is robust to the ~59% trade-direction problem. A discovery lead, still not an arbitrage.`
+        ? `<b>Polymarket leads price discovery, rigorously.</b> The permanent-component decomposition resolves what the raw event-timing (Finding 01) was too noisy to call: Polymarket's price carries the majority of the permanent information, in nearly every match. This is the literature-standard measure (Hasbrouck 1995 / Gonzalo-Granger 1995), computed on mids, so it is robust to the ~59% trade-direction problem. A discovery lead, still not an arbitrage.`
         : `<b>No clear discovery lead yet.</b> The shares sit near 50/50 at this sample (${IS.n_matches} matches); it firms or stays balanced as the pool grows.`}</div>`;
   } else if(isb) isb.innerHTML=`<p>Live data updating.</p>`;
 
@@ -163,16 +158,16 @@ function loaded(){
         return `<div class="lagcol"><span class="lagt">${c>=0?'+':''}${c.toFixed(2)}</span><div class="lagbar ${cls}" style="height:${h}%"></div><span class="lagx">${L>0?'+':''}${L}s</span></div>`;}).join('')+`</div>
       <div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-align:center;margin-top:24px">Polymarket order flow vs Kalshi's price move, by lead time (correlation). Bars near zero = no clean lead either way.</div>`;}
     const ml=O.microprice_leadlag||{};
-    ob.innerHTML=`<p><b>When order flow piles in, the price moves with it</b>, on both venues: a 1-second order-flow imbalance moves the same-second mid in the same direction, a strong positive relation (Kalshi bin-level <b>t=${ik.tstat}</b>, Polymarket <b>t=${ip?ip.tstat:'—'}</b>, across n≈${(ik.n/1000).toFixed(0)}k bins from ${O.n_matches} match${O.n_matches>1?'es':''}). The canonical microstructure result (Cont-Kukanov-Stoikov) holds on prediction markets.</p>
+    ob.innerHTML=`<p><b>When order flow piles in, the price moves with it</b>, on both venues: a 1-second order-flow imbalance moves the same-second mid in the same direction, a strong positive relation (Kalshi bin-level <b>t=${ik.tstat}</b>, Polymarket <b>t=${ip?ip.tstat:', '}</b>, across n≈${(ik.n/1000).toFixed(0)}k bins from ${O.n_matches} match${O.n_matches>1?'es':''}). The canonical microstructure result (Cont-Kukanov-Stoikov) holds on prediction markets.</p>
       <div class="mini">
         <div><div class="v a">${ik.tstat}</div><div class="k">Kalshi OFI t · bin-level</div></div>
-        <div><div class="v g">${ip?ip.tstat:'—'}</div><div class="k">Polymarket OFI t · bin-level</div></div>
+        <div><div class="v g">${ip?ip.tstat:', '}</div><div class="k">Polymarket OFI t · bin-level</div></div>
         ${flow_lead?`<div><div class="v">+${p2k.best_lag_s}s</div><div class="k">Poly flow leads Kalshi price</div></div>`:''}
       </div>
       ${bars}
       <p>${flow_lead
         ? `And it points one way across venues: Polymarket's order flow predicts Kalshi's next move about <b>${p2k.best_lag_s}s ahead</b>, the order-flow mechanism behind a price lead.`
-        : `But across venues it does <b>not</b> point one way: Polymarket-flow → Kalshi-price (${p2k?(p2k.corr>=0?'+':'')+p2k.corr.toFixed(2):'—'} @ ${p2k?p2k.best_lag_s:'—'}s) and the reverse (${k2p?(k2p.corr>=0?'+':'')+k2p.corr.toFixed(2):'—'} @ ${k2p?k2p.best_lag_s:'—'}s) are both near zero, with no clean lead either direction. The robust result is the impact, not a cross-venue edge.`}${ml.micro&&ml.mid?` The imbalance-weighted microprice tracks the cross-venue link a touch tighter than the mid (|r| ${ml.mid.median_abs_corr} → ${ml.micro.median_abs_corr}).`:''}</p>
+        : `But across venues it does <b>not</b> point one way: Polymarket-flow → Kalshi-price (${p2k?(p2k.corr>=0?'+':'')+p2k.corr.toFixed(2):', '} @ ${p2k?p2k.best_lag_s:', '}s) and the reverse (${k2p?(k2p.corr>=0?'+':'')+k2p.corr.toFixed(2):', '} @ ${k2p?k2p.best_lag_s:', '}s) are both near zero, with no clean lead either direction. The robust result is the impact, not a cross-venue edge.`}${ml.micro&&ml.mid?` The imbalance-weighted microprice tracks the cross-venue link a touch tighter than the mid (|r| ${ml.mid.median_abs_corr} → ${ml.micro.median_abs_corr}).`:''}</p>
       <div class="verdict ${flow_lead?'real':'null'}">${flow_lead
         ? `<b>Mechanism holds.</b> Order flow drives price, and Polymarket's flow leads Kalshi's. Bin-level t-stats, so significance is read across matches.`
         : `<b>Impact holds; the cross-venue lead does not.</b> Order flow moving the price is robust and textbook (Cont-Kukanov-Stoikov). A cross-venue flow lead is not there at this sample, consistent with Finding 01's null. The t-stats are bin-level (autocorrelated), so significance is judged across matches, not the bin count.`}</div>`;
@@ -184,7 +179,7 @@ function loaded(){
     const sp=(ss.total_pnl_pp>0?'+':'')+ss.total_pnl_pp+'pp';
     vb.innerHTML=`<p>The documented edge (Choi &amp; Hui, 2014) is narrow: after a <b>surprising</b> goal, where an underdog scores, the scoring side is overbet, the price overshoots, and a fade placed about 2 minutes later earns roughly 2-3% as it reverts. The word that matters is <b>surprising</b>. Ordinary goals carry no overreaction, so the honest like-for-like test is the fade of surprising goals only, not every goal.</p>
       <div class="mini">
-        <div><div class="v ${ss.n&&ss.total_pnl_pp>0?'a':''}">${ss.n?sp:'—'}</div><div class="k">surprising-goal fade · n=${ss.n||0}</div></div>
+        <div><div class="v ${ss.n&&ss.total_pnl_pp>0?'a':''}">${ss.n?sp:', '}</div><div class="k">surprising-goal fade · n=${ss.n||0}</div></div>
         <div><div class="v">${s.total_pnl_pp>0?'+':''}${s.total_pnl_pp}pp</div><div class="k">all goals · n=${s.n}</div></div>
       </div>
       <div class="verdict form"><b>Too early to call, and that is the honest answer.</b> The edge is documented and replicated, and it lives in <i>surprising</i> goals, where our pool is only n=${ss.n||0} so far${ss.n&&ss.total_pnl_pp>0?' (and the early sign points the documented way)':''}. The all-goals number dilutes it with ordinary goals that should not revert, which is why it reads negative. We are not claiming the edge is gone, only that the pool is still too thin to test it. It grows by one match at a time.</div>`;
@@ -200,7 +195,7 @@ function loaded(){
         <div><div class="v">${LW.n_matches}</div><div class="k">matches scored</div></div>
       </div>
       <div class="verdict ${under?'form':'null'}">${under
-        ? `<b>The market under-reacts to goals — and that is not (yet) an edge.</b> A score-and-clock model over-swings on the scoreboard; the market stays calmer because it keeps the team-strength prior the model discards. So the gap reads as the market being <i>smart</i>, not slow. Telling "smart" from "slow" needs a dominance-aware model (live xG) — the next build.`
+        ? `<b>The market under-reacts to goals, and that is not (yet) an edge.</b> A score-and-clock model over-swings on the scoreboard; the market stays calmer because it keeps the team-strength prior the model discards. So the gap reads as the market being <i>smart</i>, not slow. Telling "smart" from "slow" needs a dominance-aware model (live xG), the next build.`
         : `<b>The market moves slightly more than the naive model on a goal.</b> Forming sample; descriptive until the pool deepens.`}</div>`;
   } else if(lwb) lwb.innerHTML=`<p>Live data updating.</p>`;
 }

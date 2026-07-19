@@ -39,7 +39,7 @@
       <a class="v2link" href="games_v2.html" title="v2: a draw-calibrated fork (zero-inflated Skellam), pre-committed forward and graded head-to-head against this board."><span class="v2tag">v2</span> calibrated draws <span class="arr">→</span></a>
       <a class="v2link" href="games_v3.html" title="v3: v2 plus a format-conditional draw lift for the 48-team format; pre-committed forward, graded vs v2."><span class="v2tag" style="background:var(--accent)">v3</span> format lift <span class="arr">→</span></a>
     </div>
-    <div class="kicker">2026 World Cup · group stage · <span style="color:var(--good);font-weight:600">complete</span> — the knockouts are live on the <a href="bracket.html" style="color:var(--good)">bracket</a></div>
+    <div class="kicker">2026 World Cup · group stage · <span style="color:var(--good);font-weight:600">complete</span>, the knockouts are live on the <a href="bracket.html" style="color:var(--good)">bracket</a></div>
     <h1>Every group game, <em>predicted, then learned from.</em></h1>
     <div class="lede">All 72 group matches, called up front (<span class="m">model win</span> · draw · <span class="k">model win</span>). As each resolves, the model <b>conditions on the result</b>, the forecasts on the board update, and once the group stage is done the knockout simulation runs on the <b>real bracket and updated ratings</b>. The model learning from the tournament, in the open.</div>
     <div class="stats" id="stats"></div>
@@ -68,13 +68,13 @@ function renderStats(){
   document.getElementById('stats').innerHTML=[
     [`${M.played}/${M.n}`,'games played',''],
     [`${draws}/${M.played}`,'ended level','t'],
-    [`${M.accuracy==null?'—':Math.round(M.accuracy*100)+'%'}`,'favourite correct','a'],
-    [`${M.logloss==null?'—':M.logloss}`,'log-loss · 1.10 uniform','']
+    [`${M.accuracy==null?', ':Math.round(M.accuracy*100)+'%'}`,'favourite correct','a'],
+    [`${M.logloss==null?', ':M.logloss}`,'log-loss · 1.10 uniform','']
   ].map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
   const dc=document.getElementById('drawcall');
   if(dc&&M.played>=4&&draws>=2){
     const sideTxt=sidePicks===draws?`a side in all ${draws}`:`a side in ${sidePicks} of them`;
-    dc.innerHTML=`<b>${draws} of ${M.played} games ended level (${Math.round(draws/M.played*100)}%)</b> — far above the historical ~16%, and the model picked ${sideTxt}. That's why the favourite-accuracy looks low: the 48-team format rewards drawing, and a strength model rarely picks the draw. The miss is exactly what the <a href="games_v2.html">v2</a> and <a href="games_v3.html">v3</a> draw-calibration forks were built to fix.`;
+    dc.innerHTML=`<b>${draws} of ${M.played} games ended level (${Math.round(draws/M.played*100)}%)</b>, far above the historical ~16%, and the model picked ${sideTxt}. That's why the favourite-accuracy looks low: the 48-team format rewards drawing, and a strength model rarely picks the draw. The miss is exactly what the <a href="games_v2.html">v2</a> and <a href="games_v3.html">v3</a> draw-calibration forks were built to fix.`;
   } else if(dc){dc.innerHTML='';}
 }
 function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="mt",res;
