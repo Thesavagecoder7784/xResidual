@@ -50,6 +50,10 @@
   .finding .ftext{flex:1;font-size:15px;line-height:1.58;color:var(--muted)} .finding .ftext b{color:var(--ink);font-weight:600}
   @media(max-width:560px){.finding{flex-direction:column;gap:7px}.finding .fstat{flex-basis:auto}}
   .built{margin-top:14px;font-size:15.5px;line-height:1.62;color:var(--muted);max-width:840px} .built b{color:var(--ink)}
+  .resultfig{margin:20px 0 8px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--card)}
+  .resultfig img{width:100%;display:block}
+  .resultfig figcaption{padding:12px 16px;font-size:13.5px;line-height:1.5;color:var(--dim);border-top:1px solid var(--rule);font-family:var(--fm)}
+  .resultfig figcaption b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -72,7 +76,7 @@
   <header class="hero lphero">
     <div class="kicker">2026 World Cup · prediction-market microstructure</div>
     <h1>When a goal hits, <em>which market knows first?</em></h1>
-    <div class="lplede">xResidual is a live study of how two large real-money prediction markets, <b>Kalshi and Polymarket</b>, price the 2026 World Cup — benchmarked against the sharp bookmaker line. The headline question is one the literature names but hasn't measured: <b>cross-venue price discovery</b>, which venue moves first when information arrives, and whether that leadership flips between the quiet pre-match window and the high-information in-play window. Everything runs on a millisecond capture pipeline with an on-chain trade-flow layer, and every prediction is pre-committed and graded in the open.</div>
+    <div class="lplede">xResidual is a study of how two large real-money prediction markets, <b>Kalshi and Polymarket</b>, priced the 2026 World Cup — benchmarked against the sharp bookmaker line. It answers a question the literature names but hadn't measured on live in-play sports: <b>which venue discovers price first.</b> The answer, across <b>86 captured matches</b>: Polymarket leads — but the lead is <b>un-harvestable</b>, because the book vanishes at the goal. Everything ran on a millisecond capture pipeline, and every prediction was pre-committed before kickoff and <b>graded in the open</b>.</div>
     <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative research.</div>
     <div class="ctarow">
       <a class="cta solid" href="note.html">Read the research note →</a>
@@ -99,26 +103,30 @@
   </section>
 
   <section>
-    <div class="h2">Findings so far</div>
-    <div class="sub">The pre-match results are in; the in-play price-discovery result fills in as the tournament is played and the pre-registration grades on Jul 19.</div>
+    <div class="h2">The results</div>
+    <div class="sub">Six weeks of tick capture across <span style="color:var(--accent);font-weight:600" id="f-nmatches">86</span> matches. Eleven predictions committed before kickoff, graded in public after the final.</div>
+    <figure class="resultfig">
+      <img src="img/prereg_scorecard.png" alt="The pre-registration scorecard: 6 pass, 2 fail, 3 inconclusive across eleven predictions committed before kickoff." loading="lazy">
+      <figcaption><b>The pre-registration, graded.</b> Eleven falsifiable predictions, each with its decision rule fixed in a timestamped commit before a ball was kicked. 6 pass, 2 fail, 3 inconclusive — hits and misses, in public.</figcaption>
+    </figure>
     <div class="findings">
+      <div class="finding"><div class="fstat">6 / 2 / 3<small>pre-reg graded</small></div>
+        <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Six passed, two failed, three inconclusive for documented data reasons. The headline pass is the one I'd least like: <b>the market is better calibrated than my own pre-committed model</b> (Brier 0.487 vs 0.503, slope 1.07). Both failures independently reproduce what 2026 microstructure papers found.</div></div>
+      <div class="finding"><div class="fstat">80.6%<small>Polymarket info share</small></div>
+        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>71% of decisive events</b> (median +600ms) and carries an <b>80.6% Gonzalo-Granger information share</b> across 61 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.</div></div>
+      <div class="finding"><div class="fstat">0%<small>harvestable at size</small></div>
+        <div class="ftext"><b>And the lead is un-harvestable — which is the point.</b> At each goal the book collapses to ~0.5% depth, so the ~11¢ stale-quote gap can't be traded at size. A genuine price-discovery lead, not alpha; the collapse-and-refill is a market-maker's defence against toxic flow — adverse selection, observed in real time.</div></div>
       <div class="finding"><div class="fstat">0.15pp<small>venues agree</small></div>
-        <div class="ftext"><b>The cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the visible "5 to 8 cent" gap is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). The durable difference is cost, not price.</div></div>
-      <div class="finding"><div class="fstat">−2.6pp<small>convergence null</small></div>
-        <div class="ftext"><b>And there's no convergence edge to harvest.</b> Tested out-of-sample, a relative-value convergence trade returned a clean null — 6 trades, Sharpe −1.95. The "edge" is a cost illusion, exactly what law-of-one-price implies. Reported as a negative result because it is one.</div></div>
-      <div class="finding"><div class="fstat">0.4pp<small>model vs sharp price</small></div>
-        <div class="ftext"><b>The market is hard to beat wherever it's liquid.</b> Across 238 contracts, the deepest market (the title) agrees with the model to ~0.4pp; where the model disagreed most, an independent bookmaker sided with the market — the error was a confederation bias in our model, fixed with empirical-Bayes shrinkage (+4.6% out-of-sample RPS, DM p≈0.009).</div></div>
-      <div class="finding"><div class="fstat">~6ms<small>between events</small></div>
-        <div class="ftext"><b>The infrastructure is real.</b> A 24/7 capture pipeline across both venues plus an on-chain layer reading signed flow from Polymarket's CTF Exchange; running live across <span style="color:var(--accent);font-weight:600" id="f-nmatches">multiple</span> matches captured tick-by-tick on both venues, at millisecond resolution.</div></div>
+        <div class="ftext"><b>The visible cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the "5 to 8 cent" gap the press quotes is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). A relative-value convergence trade on it returned a clean null (Sharpe −1.95) — reported as the negative result it is.</div></div>
     </div>
   </section>
 
   <section>
     <div class="h2">How it's built</div>
-    <div class="built">An Elo-plus-squad-value goal model (Skellam goal-difference, Dixon-Coles correction, a format-aware Monte-Carlo sim) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who is right, checked against a third source before any "edge" is believed. Price discovery is estimated with <b>Hasbrouck information share</b> and <b>Gonzalo-Granger component share</b> on de-vigged mid-prices, separately for the pre-match and in-play windows. Everything is <b>reproducible from public data</b> and covered by <b>112 unit tests</b>; collection runs 24/7 on an always-on pipeline, so every figure regenerates from a clean clone. The stance is consistent throughout: the market is the subject, not the opponent. Analysis travels because it's analysis; predictions only travel when they're right.</div>
+    <div class="built">An Elo-plus-squad-value goal model (Skellam goal-difference, Dixon-Coles correction, a format-aware Monte-Carlo sim) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who is right, checked against a third source before any "edge" is believed. Price discovery is estimated with <b>Hasbrouck information share</b> and <b>Gonzalo-Granger component share</b> on de-vigged mid-prices, separately for the pre-match and in-play windows. Everything is <b>reproducible from public data</b> and covered by <b>115 unit tests</b>; collection ran 24/7 on an always-on pipeline, so every figure regenerates from a clean clone. The stance is consistent throughout: the market is the subject, not the opponent. Analysis travels because it's analysis; predictions only travel when they're right.</div>
   </section>
 
-  <footer><div>A live, phased project, finalised after the final on 2026-07-19.</div>
+  <footer><div>A complete, pre-registered project — committed before kickoff, graded in public after the final on 2026-07-19.</div>
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a></div></footer>
 </div>
 <script>
@@ -141,11 +149,10 @@ function paint(){
   const t=[];
   if(G)t.push([`${G.played}/${G.n}`,'games graded','']);
   if(G&&G.logloss!=null)t.push([(+G.logloss).toFixed(2),'log-loss · 1.10 base','t']);
-  if(D&&D.clv&&D.clv.positive_pct!=null)t.push([D.clv.positive_pct+'%','positive CLV · forming','a']);
-  if(L&&L.pooled)t.push([`${L.pooled.median_lead_ms>=0?'+':''}${Math.round(L.pooled.median_lead_ms)}ms`,`cross-venue lead · ${Math.round(L.pooled.leader_share*100)}% poly, forming`,'']);
-  if(L&&L.n_matches!=null)t.push([`${L.n_matches}`,'match tapes pooled','']);
+  if(D&&D.clv&&D.clv.positive_pct!=null)t.push([D.clv.positive_pct+'%','positive CLV','a']);
+  t.push(['+600ms','cross-venue lead · 71% Poly','']);
+  t.push(['86','matches captured','']);
   const el=document.getElementById('lpscore'); if(el)el.innerHTML=t.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
-  const fn=document.getElementById('f-nmatches'); if(fn&&L&&L.n_matches!=null)fn.textContent=L.n_matches;
   const asof=(G&&G.asof)||(D&&D.asof); const fr=document.getElementById('lpfresh');
   if(fr&&asof)fr.innerHTML=`live · updated ${fmtAge(asof)} · numbers read from the same feeds as the <a href="board.html" style="color:var(--dim)">board</a> and <a href="results.html" style="color:var(--dim)">scorecard</a>`;
 }
