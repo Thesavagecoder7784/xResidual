@@ -42,10 +42,9 @@ Before kickoff I locked a set of falsifiable predictions about how these markets
 
 Tournament notes (updated weekly):
 
-- Cross-venue price-discovery note — *drafted* (the flagship; a desk research note)
-- Group-stage calibration note — *in progress (group stage underway)*
-- Knockout note — *pending July 2026*
-- Retrospective, "The 2026 World Cup, in residuals" — *pending the July 19 grading*
+- Cross-venue price-discovery note — *complete* (the flagship desk research note)
+- Calibration + graded pre-registration — *complete* (6 pass, 2 fail, 3 inconclusive)
+- Retrospective, "The 2026 World Cup, in residuals" — *pending* (post-tournament long-form)
 
 ## Under the hood
 
