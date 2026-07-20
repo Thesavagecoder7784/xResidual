@@ -44,6 +44,7 @@
     <div class="lede">All 72 group matches, called up front (<span class="m">model win</span> · draw · <span class="k">model win</span>). As each resolves, the model <b>conditions on the result</b>, the forecasts on the board update, and once the group stage is done the knockout simulation runs on the <b>real bracket and updated ratings</b>. The model learning from the tournament, in the open.</div>
     <div class="stats" id="stats"></div>
     <div class="drawcall" id="drawcall"></div>
+    <div id="drawfig"></div>
   </header>
 
   <section style="border-top:none;padding-top:8px">
@@ -76,6 +77,17 @@ function renderStats(){
     const sideTxt=sidePicks===draws?`a side in all ${draws}`:`a side in ${sidePicks} of them`;
     dc.innerHTML=`<b>${draws} of ${M.played} games ended level (${Math.round(draws/M.played*100)}%)</b>, far above the historical ~16%, and the model picked ${sideTxt}. That's why the favourite-accuracy looks low: the 48-team format rewards drawing, and a strength model rarely picks the draw. The miss is exactly what the <a href="games_v2.html">v2</a> and <a href="games_v3.html">v3</a> draw-calibration forks were built to fix.`;
   } else if(dc){dc.innerHTML='';}
+  const df=document.getElementById('drawfig');
+  if(df&&M.played>=4){
+    const rate=Math.round(draws/M.played*100), hist=16, mx=Math.max(rate,hist);
+    df.innerHTML=`<figure class="fig" style="max-width:640px">
+      <div class="fhd">The 48-team format is a draw machine</div>
+      <div class="fsub">Group-stage draw rate · ${draws} of ${M.played} games ended level</div>
+      <div class="frow"><span class="flab">This World Cup</span><span class="ftrack"><span class="ffill" style="width:${(rate/mx*100).toFixed(0)}%;background:var(--accent)"></span></span><span class="fval">${rate}%</span></div>
+      <div class="frow"><span class="flab">Historical average</span><span class="ftrack"><span class="ffill" style="width:${(hist/mx*100).toFixed(0)}%;background:var(--rule-2)"></span></span><span class="fval">~${hist}%</span></div>
+      <div class="fcap">Nearly <b>double</b> the historical ~16%. With three points for a win but a guaranteed point for a draw and eight of twelve third-placed teams advancing, sides that draw often still progress — so cautious football pays. A strength model rarely picks the draw, which is why favourite-accuracy reads low and the <a href="games_v2.html">v2</a>/<a href="games_v3.html">v3</a> forks target exactly this.</div>
+    </figure>`;
+  }
 }
 function mRow(m){const p1=m.p1*100,pd=m.pd*100,p2=m.p2*100;let t1c="mt l",t2c="mt",res;
   if(m.played){if(m.result==="t1")t2c+=" lose";else if(m.result==="t2")t1c+=" lose";
