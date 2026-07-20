@@ -10,7 +10,7 @@ Two large real-money prediction markets — **Kalshi** (US, regulated) and **Pol
 
 **Which venue discovers the new price first — and if one leads, can you trade the lag?**
 
-I built a 24/7 millisecond capture pipeline for both order books and let it run for the whole tournament. This is what **84 matches** of tick data say.
+I built a 24/7 millisecond capture pipeline for both order books and let it run for the whole tournament. This is what **86 matches** of tick data say.
 
 ## Polymarket leads
 
@@ -18,18 +18,18 @@ Measuring "who's first" naively — eyeballing which book ticks — is a trap, b
 
 The answer is consistent across two independent estimators:
 
-- **Information share:** Polymarket carries **~79%** of price discovery (per-match median), and leads in **59 of 61** cointegrated matches.
-- **Reaction lead:** on a goal, Polymarket reprices first in **56 of 65** matches, a **median ~600 ms** ahead.
+- **Information share:** Polymarket carries **~79%** of price discovery (per-match median), and leads in **61 of 63** cointegrated matches.
+- **Reaction lead:** on a goal, Polymarket reprices first in **57 of 66** matches, a **median ~600 ms** ahead.
 
 It's the deeper book — Polymarket quotes roughly 27× Kalshi's size at the same spread — so this is what you'd expect: **size discovers price.** Not a surprising *direction*. The interesting part is what happens when you ask whether it's tradeable.
 
 ### Making it honest
 
-Goal events cluster within matches — they aren't independent — so a naive binomial p-value overstates significance. I hardened it: a **match-resampling cluster bootstrap** (design effect just 1.13, so the clustering is mild here), and the reviewer-proof version is the per-match sign test — **56 of 65 matches** lean Polymarket (p ≈ 5×10⁻⁸), **59 of 61** on the information share (p ≈ 5×10⁻¹⁴). The effect gets *more* significant as matches accumulate, which is what a real effect does and a spurious one doesn't.
+Goal events cluster within matches — they aren't independent — so a naive binomial p-value overstates significance. I hardened it: a **match-resampling cluster bootstrap** (design effect just 1.13, so the clustering is mild here), and the reviewer-proof version is the per-match sign test — **57 of 66 matches** lean Polymarket (p ≈ 5×10⁻⁸), **61 of 63** on the information share (p ≈ 5×10⁻¹⁴). The effect gets *more* significant as matches accumulate, which is what a real effect does and a spurious one doesn't.
 
 ## And then it isn't a trade
 
-Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **384 goals** shows a gross gap of ~12¢, ~+10.8¢ net of the spread, on *every* goal. Free money.
+Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **405 goals** shows a gross gap of ~12¢, ~+10.8¢ net of the spread, on *every* goal. Free money.
 
 Except the quote isn't there.
 
