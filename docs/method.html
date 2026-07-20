@@ -54,7 +54,15 @@
     <p><b>Closing-Line Value (CLV).</b> The cleanest test of skill that doesn't wait for the result: did the market price drift <i>toward</i> the model after the forecast was logged? Positive CLV is a skill signal independent of who eventually wins, the same metric sharp bettors and desks live by. It needs scale to be conclusive, though: the established bar is a few hundred resolved forecasts before consistent positive CLV is more than suggestive, and the forecasts logged here are correlated across markets, so the early numbers are a signal forming, not a verdict.</p>
     <p><b>Calibration.</b> When the model says 30%, does it happen about 30% of the time? Graded with proper scoring rules (Brier, log-loss) against real outcomes as markets resolve. A model can be confident and wrong; calibration is the check that it isn't.</p>
     <p id="calib-live" style="background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:13px 16px;font-size:14.5px;line-height:1.6">
-      <b>First read (group stage, <span data-cal="n">72</span> games).</b> Of every forecaster scored on these match outcomes, the <b>market is the best-calibrated</b>: <b><span data-cal="mkt-skill">23%</span> Brier skill</b> over the no-information baseline, with a reliability slope of <b><span data-cal="mkt-slope">1.07</span></b> (1.0 is perfect). It edges the <b>pre-committed model</b> (<span data-cal="v1-skill">21%</span> skill, slope <span data-cal="v1-slope">0.87</span>). A real-money market being better-calibrated than a transparent fundamental model is exactly the premise of this project. Grades live as the knockouts resolve.</p>
+      <b>First read (group stage, <span data-cal="n">72</span> games).</b> Of every forecaster scored on these match outcomes, the <b>market is the best-calibrated</b>: <b><span data-cal="mkt-skill">23%</span> Brier skill</b> over the no-information baseline, with a reliability slope of <b><span data-cal="mkt-slope">1.07</span></b> (1.0 is perfect). It edges the <b>pre-committed model</b> (<span data-cal="v1-skill">21%</span> skill, slope <span data-cal="v1-slope">0.87</span>). A real-money market being better-calibrated than a transparent fundamental model is exactly the premise of this project.</p>
+
+    <figure class="fig">
+      <div class="fhd">Reliability: predicted probability vs what happened</div>
+      <div class="fsub">72 group-stage matches · points sized by sample · closer to the dashed 45° line = better calibrated</div>
+      <div class="relwrap"><div id="rel-method"></div></div>
+      <div class="flegend"><i><span class="sw" style="background:var(--accent)"></span>pre-committed model · slope 0.87</i><i><span class="sw" style="background:var(--gold)"></span>market · slope 1.07</i><i><span class="sw" style="background:var(--rule-2)"></span>perfect calibration</i></div>
+      <div class="fcap">The market curve hugs the diagonal; the model bows below it at the high end — backing favorites a shade too hard, the favorite-longshot signature. Both are close and both skilful, but the real-money price wins the grade.</div>
+    </figure>
   </section>
 
   <section class="prose">
@@ -108,14 +116,34 @@
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a></div></footer>
 </div>
 <script>
+// reliability diagram — model vs market curves against the 45° perfect-calibration line
+function drawReliability(elId){
+  const el=document.getElementById(elId),C=window.CALIBRATION;
+  if(!el||!C||!C.versions)return;
+  const W=400,H=340,PL=46,PR=14,PT=14,PB=42,iw=W-PL-PR,ih=H-PT-PB;
+  const X=f=>PL+f*iw,Y=o=>PT+(1-o)*ih,G=[0,.25,.5,.75,1];
+  let s=`<svg viewBox="0 0 ${W} ${H}" class="relsvg" role="img" aria-label="reliability diagram">`;
+  G.forEach(g=>{s+=`<line class="grid" x1="${X(g).toFixed(1)}" y1="${PT}" x2="${X(g).toFixed(1)}" y2="${PT+ih}"/>`
+    +`<line class="grid" x1="${PL}" y1="${Y(g).toFixed(1)}" x2="${PL+iw}" y2="${Y(g).toFixed(1)}"/>`
+    +`<text class="ax" x="${X(g).toFixed(1)}" y="${H-26}" text-anchor="middle">${g*100}</text>`
+    +`<text class="ax" x="${PL-7}" y="${(Y(g)+3.5).toFixed(1)}" text-anchor="end">${g*100}</text>`;});
+  s+=`<line class="diag" x1="${X(0)}" y1="${Y(0).toFixed(1)}" x2="${X(1)}" y2="${Y(1).toFixed(1)}"/>`;
+  [['market','var(--gold)'],['v1','var(--accent)']].forEach(([k,c])=>{
+    const v=C.versions[k];if(!v||!v.reliability_curve)return;const p=v.reliability_curve;
+    s+=`<path fill="none" stroke="${c}" stroke-width="2" opacity=".85" d="${p.map((r,i)=>(i?'L':'M')+X(r.f).toFixed(1)+' '+Y(r.o).toFixed(1)).join(' ')}"/>`;
+    p.forEach(r=>{s+=`<circle cx="${X(r.f).toFixed(1)}" cy="${Y(r.o).toFixed(1)}" r="${(2.5+Math.sqrt(r.n)*0.4).toFixed(1)}" fill="${c}" opacity=".8"/>`;});});
+  s+=`<text class="axt" x="${(PL+iw/2).toFixed(0)}" y="${H-8}" text-anchor="middle">predicted probability (%)</text>`
+    +`<text class="axt" transform="translate(13 ${(PT+ih/2).toFixed(0)}) rotate(-90)" text-anchor="middle">observed frequency (%)</text></svg>`;
+  el.innerHTML=s;}
 // lead-lag sentence is now static (final hardened result), no live-sync needed
-// calibration headline, keep in sync with the live grade so it can't go stale
+// calibration headline + reliability diagram, kept in sync with the live grade so they can't go stale
 (function(){const s=document.createElement('script');s.src='data/calibration.js?'+Date.now();
   s.onload=()=>{const C=window.CALIBRATION;if(!C||!C.versions)return;const m=C.versions.market,v1=C.versions.v1;
     const set=(k,v)=>document.querySelectorAll('[data-cal="'+k+'"]').forEach(e=>e.textContent=v);
     if(C.n_played)set('n',C.n_played);
     if(m){set('mkt-skill',Math.round(m.skill_vs_baseline_pct)+'%');set('mkt-slope',(+m.slope).toFixed(2));}
-    if(v1){set('v1-skill',Math.round(v1.skill_vs_baseline_pct)+'%');set('v1-slope',(+v1.slope).toFixed(2));}};
+    if(v1){set('v1-skill',Math.round(v1.skill_vs_baseline_pct)+'%');set('v1-slope',(+v1.slope).toFixed(2));}
+    drawReliability('rel-method');};
   s.onerror=()=>{};document.body.appendChild(s);})();
 </script>
 </body></html>

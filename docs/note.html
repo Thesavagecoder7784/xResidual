@@ -98,10 +98,39 @@
   <p>De-vigged, Polymarket and Kalshi title prices agree to <b>~0.15pp on average</b> across the 48-team field; the largest standing gap is England (~1pp). The "5 to 8 cent" gap the press quotes is <b>mostly the house margin</b>: Kalshi's overround runs ~5.4% vs Polymarket's ~3.0% (~1.8x), so the durable venue difference is <b>cost, not price</b>. Anchored to the sharp bookmaker consensus, Polymarket sits marginally closer to the sharp line (mean abs error ~0.12pp vs ~0.16pp). The small surviving belief gap is <b>structured by audience</b>: the American book is richer on USA, Mexico, Netherlands; the global book on England, Portugal, Japan, Brazil, a home-crowd tilt. A liquidity asymmetry underlies this: Polymarket quotes roughly <b>27x the depth of Kalshi at the same spread</b> on the title market.</p>
   <h3>5.2 Cross-venue price discovery: Polymarket leads in-play <span style="color:var(--good);font-family:var(--fm);font-size:12px">(matured)</span></h3>
   <p>On the first marquee captures (Mexico-South Africa, Qatar-Switzerland, Brazil-Morocco, Haiti-Scotland), the in-play lead-lag is estimated by cross-correlating binned mid-changes in a window around each auto-detected goal shock. A quality gate keeps only events with genuine positive co-movement (best cross-correlation &ge; 0.5) and a plausible lag (&le; 8s), discarding spurious detections: a "16-second lead at r = -0.70" is two books moving oppositely, a stale-tick artifact, not price discovery. An early four-match read (n=8) put <b>Polymarket a median +500ms ahead</b>, leading 6 of 8 with an interquartile range entirely positive, in the pre-registered direction (P6: the deeper-liquidity venue leads; Polymarket quotes ~27x the depth), but under the pre-registration's decision rule (evaluate at n ≥ 15-20 cross-venue matches) a four-match flash stays a non-claim, so it was never posted. <b>It held.</b> As the pool grew to <b><span data-ll="n">392</span> clean goal shocks over <span data-ll="nm">86</span> matches</b>, Polymarket leads a median <b><span data-ll="med">+600ms</span></b> ahead on a <b><span data-ll="share">72%</span> share of events</b> (Polymarket leads <span data-ll="poly">281</span>, Kalshi <span data-ll="kal">111</span>; interquartile range <span data-ll="iqr">[0, +800]ms</span>). The formal decomposition agrees and sharpens it: estimating the Hasbrouck (1995) information share and the Gonzalo-Granger (1995) permanent-component share on the de-vigged mids, <b>Polymarket's component share is near <span data-is="gg">79%</span></b> across <span data-is="isn">31</span> cointegrated matches, leading in <b><span data-is="leadpoly">30</span> of <span data-is="leadtot">31</span></b>. Two independent estimators, a model-free event study and a cointegration decomposition, both name Polymarket the price leader, and because both run on mids the result sidesteps the ~59% order-direction problem (3.2). The goal-shock event study (5.3) and the formal pre-match-vs-in-play split fill in as more tapes land; each match is archived per game so the sample is auditable, not overwritten.</p>
-  <h3>5.3 Goal-shock event study</h3>
-  <div class="pending"><span class="tag">⟦ Pending in-play sample ⟧</span>Per goal (target ~260): surprise classification, overshoot, and mean-reversion half-life, with abnormal-return windows, benchmarked against Croxson-Reade (efficient, near-instant updating, no drift). Framework validated on the first live tape; the sample is the tournament itself.</div>
+
+  <figure class="fig">
+    <div class="fhd">Who prices a goal first, in-play</div>
+    <div class="fsub">Two independent estimators · both on de-vigged mids · tournament-final sample</div>
+    <div class="fgrp">Goal-shock event study — share of 392 decisive shocks</div>
+    <div class="frow"><span class="flab">Polymarket</span><span class="ftrack"><span class="ffill" style="width:71.7%;background:var(--accent)"></span></span><span class="fval">72%</span></div>
+    <div class="frow"><span class="flab">Kalshi</span><span class="ftrack"><span class="ffill" style="width:28.3%;background:var(--rule-2)"></span></span><span class="fval">28%</span></div>
+    <div class="fgrp">Gonzalo-Granger permanent-component share — 63 cointegrated matches</div>
+    <div class="frow"><span class="flab">Polymarket</span><span class="ftrack"><span class="ffill" style="width:81%;background:var(--accent)"></span></span><span class="fval">81%</span></div>
+    <div class="frow"><span class="flab">Kalshi</span><span class="ftrack"><span class="ffill" style="width:19%;background:var(--rule-2)"></span></span><span class="fval">19%</span></div>
+    <div class="fcap">Polymarket leads the repricing a median <b>+600ms</b> ahead (281 shocks to 111) and holds the majority permanent component in <b>61 of 63</b> cointegrated matches. Both estimators run on mid-prices, so the result sidesteps the ~59% order-direction problem.</div>
+  </figure>
+
+  <h3>5.3 Goal-shock event study: the market under-reacts <span style="color:var(--gold);font-family:var(--fm);font-size:12px">(suggestive)</span></h3>
+  <p>Conditioning each goal on a calibrated clock-and-Poisson fair-value benchmark anchored to the pre-match price (Croxson-Reade sets the efficiency prior: goals reprice near-instantly, no drift), the market's post-goal move is a median <b>0.55&times;</b> the model's fair jump <i>in log-odds</i>, and it under-shoots the fair move in <b>7 of 8</b> cleanly-reconstructed matches. The move sticks (60-second reversion ~0), so this is a <b>persistent under-reaction</b>, not an overshoot. A decisive check rules out the alternative that the benchmark merely over-reacts: the model's larger post-goal probability is the <b>better</b> forecast of the eventual result (Brier 0.073 vs 0.113; log-loss 0.235 vs 0.361), so the larger jump was warranted. Reported as <b>suggestive, not firm</b>: the cluster-honest unit is the match, and 7 of 8 is a sign-test <i>p</i> ≈ 0.07. The raw-probability "value of a goal" curve and an apparent "underdog goals move twice as far" both dissolve once the log-odds geometry is removed, and are not claimed.</p>
+
+  <figure class="fig">
+    <div class="fhd">The market under-reacts to the goal it just priced</div>
+    <div class="fsub">Post-goal move vs a calibrated fair-value benchmark, in log-odds · 8 clean-reconstruction matches</div>
+    <div class="frow"><span class="flab">Model fair jump</span><span class="ftrack"><span class="ffill" style="width:100%;background:var(--rule-2)"></span></span><span class="fval">1.00×</span></div>
+    <div class="frow"><span class="flab">Market move</span><span class="ftrack"><span class="ffill" style="width:55%;background:var(--accent)"></span></span><span class="fval">0.55×</span></div>
+    <div class="fcap">The market books just over half the fair repricing and stays there — a persistent under-reaction the model's larger jump was <b>right</b> to make (Brier 0.073 vs 0.113 on the eventual result). The lag is a real inefficiency; whether it is <i>tradeable</i> is §6.2's question.</div>
+  </figure>
   <h3>5.4 Calibration and the favorite-longshot bias</h3>
-  <p>The favorite-longshot bias is visible pre-tournament in the 1-cent tick structure of longshot contracts. The half-spread by probability decile and the books-vs-prediction-markets comparison are a <b>descriptive replication</b> (Snowberg-Wolfers, 2010); the <b>graded</b> calibration verdict (CORP reliability, Brier decomposition, slope) lands after the group stage and at the final, and is pre-registered (P1: the markets are well-calibrated). <span class="pending" style="margin-top:10px"><span class="tag">⟦ Calibration grade pending Jul 19 ⟧</span></span></p>
+  <p>The favorite-longshot bias is visible pre-tournament in the 1-cent tick structure of longshot contracts. The half-spread by probability decile and the books-vs-prediction-markets comparison are a <b>descriptive replication</b> (Snowberg-Wolfers, 2010). The <b>graded</b> verdict (CORP reliability, Brier decomposition, slope), pre-registered as P1 (the markets are well-calibrated), is now final over 72 group-stage matches: the <b>market is the best-calibrated forecaster</b>, a Brier skill of <b>+23.6%</b> over the no-information baseline with a near-perfect reliability slope of <b>1.07</b> (1.0 is ideal). The pre-committed model trails it, <b>+21.0%</b> skill on a slope of <b>0.87</b> — mildly over-confident at the extremes, the favorite-longshot signature — which is exactly the pro-market premise: a real-money price out-calibrates a transparent fundamental model.</p>
+
+  <figure class="fig">
+    <div class="fhd">Reliability: predicted probability vs what happened</div>
+    <div class="fsub">72 group-stage matches · points sized by sample · closer to the dashed 45° line = better calibrated</div>
+    <div class="relwrap"><div id="rel-note"></div></div>
+    <div class="flegend"><i><span class="sw" style="background:var(--accent)"></span>pre-committed model · Brier 0.503 · slope 0.87</i><i><span class="sw" style="background:var(--gold)"></span>market · Brier 0.487 · slope 1.07</i><i><span class="sw" style="background:var(--rule-2)"></span>perfect calibration</i></div>
+    <div class="fcap">The market curve tracks the diagonal; the model bows below it at the high end (backing favorites a touch too hard). Both are close — de-vigged, the two venues' beliefs agree to ~0.15pp — but the market wins the calibration grade, and that is the honest, pro-market reading.</div>
+  </figure>
   <p>The favorite-longshot bias is also the one corner where a mechanical view plausibly beats the human-driven price, and the only market-facing position the project takes. The independent baseline's advance probabilities are systematically <b>more extreme</b> than the market in both directions (favorites priced higher, longshots lower), the signature of the bias that persists even in deep prediction markets at the contract-price extremes. A model carries no psychological longshot premium, so its extremeness points the exploitable way. This underwrites a small, diversified basket in the paper track record: fade the overpriced longshots, back the underpriced favorites, sized as the modest systematic tilt it is, not single-name conviction. Whether it is a real edge or model tail-overconfidence is itself a calibration question, graded after the group stage. Notably it is the <b>advance</b> market that carries the signal (near-zero margin), whereas the reach-round ladder is 12 to 31% overround, where a model's apparent "fades" are the vig, not an edge.</p>
 
   <h2>6. Two disclosed forward-tests, two nulls</h2>
@@ -110,6 +139,16 @@
   <p>The law-of-one-price result (5.1) predicts there is no convergence arbitrage to harvest, and we tested that out-of-sample rather than asserting it. Rule: when the de-vigged Polymarket-Kalshi belief gap on a title widens past 1.0pp, go long the cheap venue and short the rich one, exit on convergence below 0.3pp or after a horizon, net of a 0.5pp modeled round-trip cost. Buildup result: <b>6 trades, -2.6pp total, 0% hit rate, per-trade Sharpe -1.95</b>. The gap is real but does not converge enough to clear costs: the visible "edge" is a cost illusion, exactly what law-of-one-price implies.</p>
   <h3>6.2 In-play lead-lag: un-harvestable after the cost of immediacy <span style="color:var(--gold);font-family:var(--fm);font-size:12px">(firm)</span></h3>
   <p>The 5.2 lead means Kalshi reprices a goal slightly behind Polymarket, so the natural follow-up is whether that lag is capturable. I answer it with a <b>cost-of-immediacy ledger over 277 goals</b>: at the instant Polymarket reprices, the gross gap to Kalshi's stale quote averages ~12&cent;, and a follower pays ~1.3&cent; to take Kalshi's posted price, leaving <b>~+10.8&cent; net on paper</b>. That paper number is a trap, and surfacing it is the point. At the goal, Kalshi's best-price depth collapses to <b>~0.5% of normal</b>, the spread blows out ~8&times; on Polymarket and ~2&times; on Kalshi, and the book takes ~3&ndash;4s to refill. There is no resting size to hit at the stale price: by the time depth returns, the quote has caught up. So of the +10.8&cent; paper gap, <b>0% is harvestable</b>. This is a <b>liquidity-withdrawal result, not slow pricing</b>: the collapse-and-refill is the market-maker pulling quotes against toxic, information-motivated flow, <b>adverse selection observed in real time</b>. Consistent with the high-frequency lead-lag literature, where the versions that <i>do</i> profit (Poutré, Dionne and Yergeau, 2024) require colocation and limit-order execution a read-only, paper-only study cannot access. A real lead, un-harvestable net of the cost of immediacy, which is to say not an edge for anyone trading across the two books.</p>
+
+  <figure class="fig">
+    <div class="fhd">A real lead, zero harvestable edge</div>
+    <div class="fsub">Cost-of-immediacy ledger at the goal · 277 goal shocks</div>
+    <div class="frow"><span class="flab">Gross stale-quote gap</span><span class="ftrack"><span class="ffill" style="width:100%;background:var(--rule-2)"></span></span><span class="fval">+12.0¢</span></div>
+    <div class="frow"><span class="flab">Cost to lift Kalshi</span><span class="ftrack"><span class="ffill" style="width:10.8%;background:var(--gold)"></span></span><span class="fval">−1.3¢</span></div>
+    <div class="frow"><span class="flab">Net on paper</span><span class="ftrack"><span class="ffill" style="width:90%;background:var(--accent)"></span></span><span class="fval">+10.8¢</span></div>
+    <div class="frow"><span class="flab" style="font-weight:600">Actually harvestable</span><span class="ftrack"><span class="ffill" style="width:0.8%;background:var(--bad)"></span></span><span class="fval">0%</span></div>
+    <div class="fcap">The +10.8¢ paper edge is the trap, and surfacing it is the point. At the goal Kalshi's best-price depth collapses to <b>~0.5% of normal</b> and the spread blows out <b>~8×</b>, refilling in 3–4s — there is no resting size to hit at the stale price, so once gated on the depth actually resting, <b>0%</b> is capturable. That is a maker pulling quotes against toxic, information-motivated flow — <b>adverse selection observed in real time</b>, not slow pricing.</div>
+  </figure>
 
   <h2>7. Pre-registration and grading</h2>
   <p>Six falsifiable, dated predictions were committed to a tagged git commit before kickoff, with binding methods, named primaries, and PASS/FAIL/INCONCLUSIVE decision states under proper scoring rules. The two primaries are <b>P6</b> (cross-venue lead-lag: the deeper venue leads) and <b>P1</b> (the markets are well-calibrated). <span class="pending" style="margin-top:10px"><span class="tag">⟦ Graded publicly 2026-07-19 ⟧</span></span></p>
@@ -144,6 +183,28 @@
   <footer style="margin-top:36px"><div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a></div></footer>
 </article></div>
 <script>
+// §5.4 reliability diagram — model vs market curves against the 45° perfect-calibration line
+function drawReliability(elId){
+  const el=document.getElementById(elId),C=window.CALIBRATION;
+  if(!el||!C||!C.versions)return;
+  const W=400,H=340,PL=46,PR=14,PT=14,PB=42,iw=W-PL-PR,ih=H-PT-PB;
+  const X=f=>PL+f*iw,Y=o=>PT+(1-o)*ih,G=[0,.25,.5,.75,1];
+  let s=`<svg viewBox="0 0 ${W} ${H}" class="relsvg" role="img" aria-label="reliability diagram">`;
+  G.forEach(g=>{s+=`<line class="grid" x1="${X(g).toFixed(1)}" y1="${PT}" x2="${X(g).toFixed(1)}" y2="${PT+ih}"/>`
+    +`<line class="grid" x1="${PL}" y1="${Y(g).toFixed(1)}" x2="${PL+iw}" y2="${Y(g).toFixed(1)}"/>`
+    +`<text class="ax" x="${X(g).toFixed(1)}" y="${H-26}" text-anchor="middle">${g*100}</text>`
+    +`<text class="ax" x="${PL-7}" y="${(Y(g)+3.5).toFixed(1)}" text-anchor="end">${g*100}</text>`;});
+  s+=`<line class="diag" x1="${X(0)}" y1="${Y(0).toFixed(1)}" x2="${X(1)}" y2="${Y(1).toFixed(1)}"/>`;
+  [['market','var(--gold)'],['v1','var(--accent)']].forEach(([k,c])=>{
+    const v=C.versions[k];if(!v||!v.reliability_curve)return;const p=v.reliability_curve;
+    s+=`<path fill="none" stroke="${c}" stroke-width="2" opacity=".85" d="${p.map((r,i)=>(i?'L':'M')+X(r.f).toFixed(1)+' '+Y(r.o).toFixed(1)).join(' ')}"/>`;
+    p.forEach(r=>{s+=`<circle cx="${X(r.f).toFixed(1)}" cy="${Y(r.o).toFixed(1)}" r="${(2.5+Math.sqrt(r.n)*0.4).toFixed(1)}" fill="${c}" opacity=".8"/>`;});});
+  s+=`<text class="axt" x="${(PL+iw/2).toFixed(0)}" y="${H-8}" text-anchor="middle">predicted probability (%)</text>`
+    +`<text class="axt" transform="translate(13 ${(PT+ih/2).toFixed(0)}) rotate(-90)" text-anchor="middle">observed frequency (%)</text></svg>`;
+  el.innerHTML=s;}
+(function(){const s=document.createElement('script');s.src='data/calibration.js?'+Date.now();
+  s.onload=()=>drawReliability('rel-note');s.onerror=()=>{};document.body.appendChild(s);})();
+
 // §5.2 lead-lag numbers are static final (hardened, cluster-robust) — tournament complete
 // §5.2's info-share numbers track the published decomposition feed, same no-drift contract
 (function(){const s=document.createElement('script');s.src='data/infoshare.js?'+Date.now();
