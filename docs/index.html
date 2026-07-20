@@ -48,6 +48,11 @@
   .finding .fstat{flex:0 0 132px;font-family:var(--fd);font-weight:600;font-size:30px;line-height:1;color:var(--accent);letter-spacing:-.012em}
   .finding .fstat small{display:block;font-family:var(--fm);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin-top:7px;font-weight:400}
   .finding .ftext{flex:1;font-size:15px;line-height:1.58;color:var(--muted)} .finding .ftext b{color:var(--ink);font-weight:600}
+  .fmini{margin-top:13px;max-width:460px}
+  .fmini .bar{height:8px;border-radius:5px;background:var(--paper-2);display:flex;overflow:hidden;box-shadow:inset 0 0 0 1px var(--rule)}
+  .fmini .seg{height:100%;min-width:4px}
+  .fmini .lbl{font-family:var(--fm);font-size:9.5px;letter-spacing:.02em;color:var(--dim);margin-top:6px;display:flex;justify-content:space-between;gap:12px}
+  .fmini .lbl b{color:var(--ink);font-weight:600}
   @media(max-width:560px){.finding{flex-direction:column;gap:7px}.finding .fstat{flex-basis:auto}}
   .built{margin-top:14px;font-size:15.5px;line-height:1.62;color:var(--muted);max-width:840px} .built b{color:var(--ink)}
   .resultfig{margin:20px 0 8px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--card)}
@@ -111,13 +116,21 @@
     </figure>
     <div class="findings">
       <div class="finding"><div class="fstat">6 / 2 / 3<small>pre-reg graded</small></div>
-        <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Six passed, two failed, three inconclusive for documented data reasons. The headline pass is the one I'd least like: <b>the market is better calibrated than my own pre-committed model</b> (Brier 0.487 vs 0.503, slope 1.07). Both failures independently reproduce what 2026 microstructure papers found.</div></div>
+        <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Six passed, two failed, three inconclusive for documented data reasons. The headline pass is the one I'd least like: <b>the market is better calibrated than my own pre-committed model</b> (Brier 0.487 vs 0.503, slope 1.07). Both failures independently reproduce what 2026 microstructure papers found.
+        <div class="fmini"><div class="bar"><span class="seg" style="width:54.5%;background:var(--good)"></span><span class="seg" style="width:18.2%;background:var(--accent)"></span><span class="seg" style="width:27.3%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>6</b> pass · <b>2</b> fail · <b>3</b> inconclusive</span><span>11 pre-registered</span></div></div></div></div>
       <div class="finding"><div class="fstat">81.0%<small>Polymarket info share</small></div>
-        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>72% of decisive events</b> (median +600ms) and carries an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.</div></div>
+        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>72% of decisive events</b> (median +600ms) and carries an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.
+        <div class="fmini"><div class="bar"><span class="seg" style="width:81%;background:var(--accent)"></span><span class="seg" style="width:19%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>Polymarket</b> 81%</span><span>Kalshi 19%</span></div></div></div></div>
       <div class="finding"><div class="fstat">0%<small>harvestable at size</small></div>
-        <div class="ftext"><b>And the lead is un-harvestable, which is the point.</b> At each goal the book collapses to ~0.5% depth, so the ~11¢ stale-quote gap can't be traded at size. A genuine price-discovery lead, not alpha; the collapse-and-refill is a market-maker's defence against toxic flow, adverse selection, observed in real time.</div></div>
+        <div class="ftext"><b>And the lead is un-harvestable, which is the point.</b> At each goal the book collapses to ~0.5% depth, so the ~11¢ stale-quote gap can't be traded at size. A genuine price-discovery lead, not alpha; the collapse-and-refill is a market-maker's defence against toxic flow, adverse selection, observed in real time.
+        <div class="fmini"><div class="bar" title="the book's best-price depth at the goal, as a share of its normal resting depth"><span class="seg" style="width:0.5%;background:var(--accent)"></span></div>
+          <div class="lbl"><span><b>Book depth at the goal</b></span><span>~0.5% of normal → 0% harvestable</span></div></div></div></div>
       <div class="finding"><div class="fstat">0.15pp<small>venues agree</small></div>
-        <div class="ftext"><b>The visible cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the "5 to 8 cent" gap the press quotes is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). A relative-value convergence trade on it returned a clean null (Sharpe −1.95), reported as the negative result it is.</div></div>
+        <div class="ftext"><b>The visible cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the "5 to 8 cent" gap the press quotes is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). A relative-value convergence trade on it returned a clean null (Sharpe −1.95), reported as the negative result it is.
+        <div class="fmini"><div class="bar" title="the visible ~6-cent cross-venue gap, split into house margin vs true belief disagreement"><span class="seg" style="width:97.5%;background:var(--rule-2)"></span><span class="seg" style="width:2.5%;background:var(--accent)"></span></div>
+          <div class="lbl"><span><b>House margin</b> (the vig)</span><span>true belief gap 0.15pp</span></div></div></div></div>
     </div>
   </section>
 
