@@ -35,6 +35,7 @@ SOURCES = {
     "O": "_ofi_results.json",      # order-flow imbalance
     "Q": "_liquidity_results.json",# spread/depth at the shock
     "C": "_calibration_results.json",
+    "P": "_livewp_results.json",   # in-play goal under-reaction
 }
 
 
@@ -149,22 +150,25 @@ GROUPS = [
         auto("ofiPolyT",   lambda D: intu(dig(D, "O", "impact.poly.tstat")), "111", "bin-level OLS t (overstates sig; use n_matches)"),
         auto("ofiKalshiT", lambda D: intu(dig(D, "O", "impact.kalshi.tstat")), "71", "bin-level OLS t"),
     ]),
-    ("Calibration (market; graded verdict pending Jul-19)", [
+    ("Goal under-reaction (in-play, preliminary; full shock-inferred sample)", [
+        auto("underReactN",       lambda D: intu(dig(D, "P", "n_matches")), "54", "goal-anchored matches"),
+        auto("underReactGoalsN",  lambda D: intu(dig(D, "P", "n_goals")), "185", "goal-anchored events"),
+        auto("underReactOvershoot", lambda D: num(abs(dig(D, "P", "mean_overshoot_home_wp")) * 100, 1) + "\\,pp", "3.1\\,pp", "mean under-shoot vs fair jump, in P(home win)"),
+    ]),
+    ("Calibration (market; graded P1 PASS)", [
         auto("calMarketBrier", lambda D: num(dig(D, "C", "versions.market.brier"), 3), "0.487", ""),
+        auto("calModelBrier",  lambda D: num(dig(D, "C", "versions.v1.brier"), 3), "0.503", "raw model (v1) Brier"),
         auto("calMarketSlope", lambda D: num(dig(D, "C", "versions.market.slope"), 2), "1.07", ""),
         auto("calMarketSkill", lambda D: rawpct(dig(D, "C", "versions.market.skill_vs_baseline_pct"), 1), "23.6\\%", "vs base-rate Brier"),
     ]),
     ("MANUAL — not yet emitted by any builder (update by hand; warned on every run)", [
         manual("devigAgree",      "0.15\\,pp", "cross-venue title agreement, de-vigged"),
+        manual("loopRawGap",      "3.98\\,pp", "P3 raw cross-venue gap — graded FAIL vs the 1pp rule"),
         manual("overroundK",      "5.4\\%", "Kalshi overround"),
         manual("overroundP",      "3.0\\%", "Polymarket overround"),
         manual("depthRatio",      "\\ensuremath{27\\times}", "Polymarket vs Kalshi title depth (group stage)"),
         manual("depthRatioLate",  "\\ensuremath{4\\times}", "compressing by the final four"),
         manual("obiFav",          "0.2", "order-book imbalance, title favorites"),
-        manual("underReactMult",  "\\ensuremath{0.55\\times}", "post-goal update vs fair — VERIFY vs _livewp (curated 8-match subset)"),
-        manual("underReactMatches","7 of 8", "clean-reconstruction subset"),
-        manual("underReactGoals", "20 of 22", "clean-reconstruction subset"),
-        manual("underReactSignP", "0.07", "per-match sign test"),
         manual("confedRPS",       "+4.6\\%", "confederation-shrinkage cross-confed RPS gain"),
         manual("confedDMp",       "0.009", "Diebold-Mariano p"),
         manual("rankCorr",        "0.95", "model vs de-vigged bookmaker consensus"),
