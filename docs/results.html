@@ -64,6 +64,12 @@
   </section>
 
   <section>
+    <div class="h2">Model vs market, on calibration</div>
+    <div class="sub">The honest headline. Brier score over the 72 group-stage matches, <b>lower is better</b>, against the no-information baseline. The pre-committed model beats the baseline comfortably, and the real-money market beats the model.</div>
+    <div id="calibfig"><div class="loading">loading…</div></div>
+  </section>
+
+  <section>
     <div class="h2">Biggest surprises <span style="color:var(--dim);font-weight:400;font-size:15px">· the residuals</span></div>
     <div class="rlead">Played games ranked by how much the result surprised the model, the probability it gave the <b>actual</b> outcome before kickoff. Low = the model was confident and wrong (or a true upset). This is the <em>residual</em> the project is named for; the pattern in the misses is the finding.</div>
     <div id="resid"><div class="loading">loading…</div></div>
@@ -120,7 +126,23 @@ function renderResiduals(){if(!G)return;
       <div class="rpct">model gave <b>${p}%</b></div></div>`;}).join('')
     +`<div class="rlead" style="margin-top:14px">Read the misses together: the biggest surprises are <b>favourites held to draws</b> (Spain, Switzerland, Belgium), the format effect the v2/v3 forks target, not random noise. That pattern <em>is</em> the residual finding.</div>`;}
 
+function renderCalib(){const el=document.getElementById('calibfig'),C=window.CALIBRATION;
+  if(!el)return;
+  if(!C||!C.versions){el.innerHTML='<div class="loading">calibration updating…</div>';return;}
+  const v1=C.versions.v1,mk=C.versions.market;
+  const base=v1&&v1.brier_baseline?v1.brier_baseline:0.6373;
+  const rows=[['No-information baseline',base,'var(--rule-2)',null],
+    ['Pre-committed model (v1)',v1?v1.brier:null,'var(--gold)',v1?v1.skill_vs_baseline_pct:null],
+    ['Real-money market',mk?mk.brier:null,'var(--accent)',mk?mk.skill_vs_baseline_pct:null]];
+  const mx=Math.max(...rows.map(r=>r[1]||0))||1;
+  el.innerHTML=`<figure class="fig" style="max-width:660px">
+    <div class="fhd">Who has the best-calibrated probabilities?</div>
+    <div class="fsub">Brier score · ${C.n_played||72} matches · shorter bar = better calibrated</div>
+    ${rows.map(([lab,br,c,sk])=>br==null?'':`<div class="frow"><span class="flab">${lab}</span><span class="ftrack"><span class="ffill" style="width:${(br/mx*100).toFixed(0)}%;background:${c}"></span></span><span class="fval">${br.toFixed(3)}</span></div>`).join('')}
+    <div class="fcap">The model clears the baseline by <b>+${v1?Math.round(v1.skill_vs_baseline_pct):21}% Brier skill</b> — real forecasting skill — but the market clears it by <b>+${mk?Math.round(mk.skill_vs_baseline_pct):24}%</b>, and beats the model head-to-head (0.487 vs 0.503, reliability slope 1.07 vs 0.87). A real-money price out-calibrating a transparent fundamental model is the premise of the whole project, reported as the loss it is.</div>
+  </figure>`;}
 function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Date.now();s.onload=cb;s.onerror=()=>cb&&cb();document.body.appendChild(s);}
+load('data/calibration.js',renderCalib);
 load('data/matches.js',()=>{G=window.GAMES||null;
   if(!G){document.getElementById('resid').innerHTML='<div class="loading">could not load data</div>';return;}
   document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(G.asof)}</b> · ${fmtAge(G.asof)} · every forecast pre-committed to an append-only ledger, graded as games resolve`;
