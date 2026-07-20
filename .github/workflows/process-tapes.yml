@@ -12,9 +12,11 @@ name: process-tapes
 # Sportslogging_key.pem that reaches azureuser@57.154.16.193).
 
 on:
-  schedule:
-    - cron: '0 */2 * * *'        # every 2h (UTC); GitHub may delay scheduled runs under load — fine for the 48h tape window
-  workflow_dispatch: {}          # manual "Run workflow" button
+  # Schedule DISABLED 2026-07-20: the 2026 World Cup is over, so there are no new tapes to
+  # pull from the VM. Re-enable by uncommenting the two lines below to resume the every-2h pull.
+  # schedule:
+  #   - cron: '0 */2 * * *'
+  workflow_dispatch: {}          # manual "Run workflow" button (kept for one-off reruns)
 
 concurrency:
   group: process-tapes
