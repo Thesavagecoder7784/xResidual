@@ -19,4 +19,4 @@ test:
 
 # TODO: generate the four publication figures into paper/arxiv/figures/.
 figures:
-	@echo "figures target not yet implemented — see REPRODUCING.md"
+	python scripts/build_paper_figures.py
