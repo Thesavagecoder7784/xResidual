@@ -4,7 +4,7 @@
 
 > Status: this is a live, phased note. The pre-match microstructure results (Sections 5.1, 6.1)
 > are final; the in-play price-discovery result (Section 5.2), its harvestability test (Section
-> 6.2), and the OFI study (5.5) are now **firm** on the full marquee-match sample (84 matches,
+> 6.2), and the OFI study (5.5) are now **firm** on the full marquee-match sample (86 matches,
 > 377 repricing events) and reported as such; the goal-shock event study (Section 5.3) now carries a
 > **preliminary** under-reaction result (suggestive, not firm); the calibration grade (Section 5.4)
 > and the pre-registration grade (Section 7) fill in as the 2026 World Cup is played. Every empirical claim here is bound to code and to a
@@ -26,13 +26,13 @@ find the widely-quoted "5 to 8 cent" inter-venue gap is **almost entirely the ho
 de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a relative-value
 convergence trade returns a documented loss net of costs. The residual belief gap is small but
 structured by audience (a home-crowd tilt). The central price-discovery result, estimated on
-mid-price moves around each goal shock, is now firm: across **84 matches and 377 decisive repricing
-events Polymarket leads Kalshi 71% of the time** (269 vs 108; 67% if the 35 synchronous same-second
+mid-price moves around each goal shock, is now firm: across **86 matches and 392 decisive repricing
+events Polymarket leads Kalshi 72% of the time** (281 vs 111; 67% if the 35 synchronous same-second
 events count against it), at a **median +600ms** (IQR [0, +800]). The lead survives the clustering of
 events within matches — a match-resampling bootstrap holds the 95% CI at [66%, 76%] (design effect just
-1.13), and, the cluster-immune cut, **56 of 65 matches lean Polymarket** (sign-test p = 5×10⁻⁸). The
-citable estimate is the formal decomposition: across **61 cointegrated matches** Polymarket carries a
-**Gonzalo-Granger ~80.6% information share** (per-match median; Hasbrouck band ~73-90%) and **leads 50 of
+1.13), and, the cluster-immune cut, **57 of 66 matches lean Polymarket** (sign-test p = 5×10⁻⁸). The
+citable estimate is the formal decomposition: across **63 cointegrated matches** Polymarket carries a
+**Gonzalo-Granger ~81.0% information share** (per-match median; Hasbrouck band ~73-90%) and **leads 50 of
 51 matches** (sign-test p = 5×10⁻¹⁴, between-match SD ~20%), rising to ~86% inside goal windows (vs ~53%
 in calm play). An early read (n=8) that flashed ~500ms and then appeared to wash out at n=24 was
 small-sample noise on the *event-timing* metric; the full sample and the information-share
@@ -171,21 +171,21 @@ cross-correlation >= 0.5) and a plausible lag (<= 8s), discarding spurious detec
 discovery. An early read on four matches (**n = 8**) put Polymarket a median +500ms ahead, then
 at **n = 24** the event-timing median appeared to wash to ~+100ms on a near-even split, which we
 flagged at the time as a possible small-sample null. **The full sample resolves it the other
-way.** Across **84 matches and 377 decisive repricing events, Polymarket moves first in 269 vs
+way.** Across **86 matches and 392 decisive repricing events, Polymarket moves first in 269 vs
 Kalshi's 108 (71%; 65% if the 35 synchronous same-second events count against it)**, at a **median
 lead of +600ms** (pooled; +600ms among Polymarket-led events, bootstrap CI [600, 800]), in the
 pre-registered direction (P6: the deeper-liquidity venue leads, and Polymarket quotes ~27x the depth,
 Section 5.1). The n=24 wobble was noise in the event-timing point estimate, not a reversal of the lead.
 
-Because the 377 events cluster within 67 lead-bearing matches, a naive event-level CI overstates precision, so we
+Because the 392 events cluster within 67 lead-bearing matches, a naive event-level CI overstates precision, so we
 harden it (`scripts/harden_leadlag_stats.py`). The clustering turns out to be mild — intra-match
 correlation in *which* venue leads is low (ICC 0.033, design effect 1.13, effective N ≈ 255 of 308) —
 so a match-resampling bootstrap barely widens the interval, from a naive Wilson [68%, 78%] to a
-cluster-robust [66%, 76%]. The cluster-immune statement is the per-match one: **56 of 65 matches lean
+cluster-robust [66%, 76%]. The cluster-immune statement is the per-match one: **57 of 66 matches lean
 Polymarket** (binomial sign-test p = 5×10⁻⁸, Wilcoxon p = 1×10⁻⁶), which no single high-event match
 can drive.
 
-The citable result is the formal decomposition (Section 4.2). Across the **61 cointegrated matches
+The citable result is the formal decomposition (Section 4.2). Across the **63 cointegrated matches
 (100 contracts)**, Polymarket carries a **Gonzalo-Granger ~79%** component share (per-match median,
 bootstrap CI [74%, 88%]) and a **Hasbrouck information-share band of ~73-90%**, and it **leads in 50 of
 the 51 matches** (sign-test p = 5×10⁻¹⁴) — a direction-stable result, not a thin majority, though with
@@ -309,10 +309,10 @@ deeper venue leads) and **P1** (the markets are well-calibrated). Graded publicl
 
 The unifying finding is a discipline for telling real edges from mirages. The cross-venue gap was
 probed three ways. The pre-match convergence trade is a cost illusion (6.1, a clean null). The
-in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 71% of 377 decisive events
-at a +600ms median (56 of 65 matches lean Polymarket, sign-test p = 5×10⁻⁸), and a ~80.6% information
-share leading 59 of 61 cointegrated matches (5.2) — that is nonetheless **un-harvestable net of the
-cost of immediacy** (6.2: a +10.8¢ paper gap over 384 goals that 0% of is capturable because best-price
+in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 72% of 392 decisive events
+at a +600ms median (57 of 66 matches lean Polymarket, sign-test p = 5×10⁻⁸), and a ~81.0% information
+share leading 61 of 63 cointegrated matches (5.2) — that is nonetheless **un-harvestable net of the
+cost of immediacy** (6.2: a +10.8¢ paper gap over 405 goals that 0% of is capturable because best-price
 depth collapses to ~0.5% at the event). The
 favorite-longshot wedge (5.4) is a real but modest systematic tilt, the lone position the project
 takes. The lead is genuine; the gap is a liquidity-withdrawal artifact, not slow pricing; the
