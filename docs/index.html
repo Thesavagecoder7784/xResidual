@@ -113,7 +113,7 @@
       <div class="finding"><div class="fstat">6 / 2 / 3<small>pre-reg graded</small></div>
         <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Six passed, two failed, three inconclusive for documented data reasons. The headline pass is the one I'd least like: <b>the market is better calibrated than my own pre-committed model</b> (Brier 0.487 vs 0.503, slope 1.07). Both failures independently reproduce what 2026 microstructure papers found.</div></div>
       <div class="finding"><div class="fstat">81.0%<small>Polymarket info share</small></div>
-        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>71% of decisive events</b> (median +600ms) and carries an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.</div></div>
+        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>72% of decisive events</b> (median +600ms) and carries an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.</div></div>
       <div class="finding"><div class="fstat">0%<small>harvestable at size</small></div>
         <div class="ftext"><b>And the lead is un-harvestable, which is the point.</b> At each goal the book collapses to ~0.5% depth, so the ~11¢ stale-quote gap can't be traded at size. A genuine price-discovery lead, not alpha; the collapse-and-refill is a market-maker's defence against toxic flow, adverse selection, observed in real time.</div></div>
       <div class="finding"><div class="fstat">0.15pp<small>venues agree</small></div>
@@ -150,7 +150,7 @@ function paint(){
   if(G)t.push([`${G.played}/${G.n}`,'games graded','']);
   if(G&&G.logloss!=null)t.push([(+G.logloss).toFixed(2),'log-loss · 1.10 base','t']);
   if(D&&D.clv&&D.clv.positive_pct!=null)t.push([D.clv.positive_pct+'%','positive CLV','a']);
-  t.push(['+600ms','cross-venue lead · 71% Poly','']);
+  t.push(['+600ms','cross-venue lead · 72% Poly','']);
   t.push(['86','matches captured','']);
   const el=document.getElementById('lpscore'); if(el)el.innerHTML=t.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
   const asof=(G&&G.asof)||(D&&D.asof); const fr=document.getElementById('lpfresh');
