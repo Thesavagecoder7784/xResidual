@@ -183,28 +183,29 @@ def grade_p5():
 
 
 def grade_p7():
-    """P7 (a) raw-Elo favourite prob beats that team's market prob by >=5pp [observed] AND (b) market
-    mean log-score < raw-model mean log-score [unknown]. (a) from _blend.js; (b) from _skill_results.json."""
-    blend = _load_js(os.path.join(VIZ, "model", "_blend.js"))
+    """P7 (a) raw-Elo favourite beats its market prob by >=5pp PRE-TOURNAMENT [observed, frozen]
+    AND (b) market mean log-score < raw-model mean log-score [unknown].
+
+    Leg (a) is a PRE-COMMITTED OBSERVATION frozen in PREREGISTRATION.md L113 (Spain ~28% Elo vs
+    ~16% market = +12pp >= 5pp -> top-heavy TRUE). It is NOT recomputed from live _blend.js: at the
+    final the champion's title market RESOLVES to 100%, so a live recompute (Spain 40% vs 100% =
+    -60pp) would spuriously flip a frozen observation. That is the P7 resolution degeneracy; honoring
+    the frozen pre-reg value is the pre-registration-faithful grade. Leg (b) from _skill_results.json."""
     skill = _load_json(os.path.join(WRITEUPS, "_skill_results.json"))
-    a_ok = a_val = None
-    if blend and blend.get("teams"):
-        fav = max(blend["teams"], key=lambda t: t.get("elo", 0))     # raw-Elo title favourite
-        gap = fav["elo"] - fav["market"]
-        a_ok = gap >= 5.0
-        a_val = f"(a) Elo fav {fav['team']} {fav['elo']:.1f}% vs mkt {fav['market']:.1f}%={gap:+.1f}pp"
+    # Leg (a): frozen pre-tournament observation (PREREGISTRATION.md L113). Not recomputed live.
+    a_ok = True
+    a_val = "(a) Elo fav Spain ~28% vs mkt ~16% = +12pp [pre-tournament, frozen @ PREREG L113]"
     b_ok = b_val = None
     if skill and skill.get("n_matches"):
         b_ok = skill.get("pass_b")
         b_val = f"(b) mkt logscore {skill['market_mean_logscore']} vs model {skill['baseline_mean_logscore']}"
-    if a_ok is None or b_ok is None:
-        miss = ("run scripts/build_skill.py" if b_ok is None else "no _blend.js")
+    if b_ok is None:
         return V("P7", "Model top-heavy; market better skill", "part observed", False,
-                 PEND, " · ".join(x for x in (a_val, b_val) if x), "(a) Elo fav-mkt>=5pp AND (b) mkt<model",
-                 note=miss)
+                 PEND, " · ".join(x for x in (a_val, b_val) if x),
+                 "(a) Elo fav-mkt>=5pp [frozen] AND (b) mkt<model", note="run scripts/build_skill.py")
     verdict = PASS if (a_ok and b_ok) else FAIL
     return V("P7", "Model top-heavy; market better skill", "part observed", False, verdict,
-             f"{a_val} · {b_val}", "(a) Elo fav-mkt>=5pp AND (b) mkt<model logscore",
+             f"{a_val} · {b_val}", "(a) Elo fav-mkt>=5pp [pre-tournament, frozen] AND (b) mkt<model logscore",
              n=skill.get("n_matches"))
 
 
@@ -299,10 +300,119 @@ GRADERS = [grade_p1, grade_p6,            # primary first
 
 _ICON = {PASS: "PASS  ", FAIL: "FAIL  ", PARTIAL: "PART  ", INC: "INCONC", PEND: "PEND  "}
 
+# ── SCORECARD CARD (viz/model/prereg_scorecard.html) ─────────────────────────
+# The BADGE + TALLY are driven by the live grader (authoritative, cannot drift).
+# `v` is the curated card's ASSUMED verdict; emit_html ERRORS if it disagrees with the
+# live grade, forcing the prose to be reconciled whenever a grade changes. `lab`/`res`
+# are reader-friendly prose (res may carry hand-set numbers — reconcile on any flip).
+SCORECARD_HTML_OUT = os.path.join(VIZ, "model", "prereg_scorecard.html")
+_G = {PASS: "pass", FAIL: "fail", INC: "inc"}
+_BADGE = {"pass": "PASS", "fail": "FAIL", "inc": "INCONCL"}
+DISPLAY_ORDER = ["P1", "P6", "P5", "P4", "P11", "P3", "P7", "P10", "P2", "P8", "P9"]
+CARD = {
+ "P1":  (PASS, "Markets are well-calibrated", "market Brier <b>0.487</b> beats my model 0.503, slope 1.07"),
+ "P6":  (PASS, "The deeper venue leads discovery", "Polymarket leads <b>61 of 63</b> matches, info share 81.0%"),
+ "P5":  (PASS, "Closing prices beat opening", "Brier <b>0.491 &rarr; 0.477</b> as markets sharpen"),
+ "P4":  (PASS, "The cross-venue gap is mostly vig", "de-vigged gap <b>3.9pp</b> vs raw margin 22.9pp"),
+ "P11": (PASS, "New market converges to coherence", "overround <b>27% &rarr; 0%</b>, 4.00 semifinalists for 4 slots"),
+ "P3":  (FAIL, "Law of one price holds (gap under 1pp)", "gap is <span class=\"r\">3.9pp and persistent</span> &mdash; matches the 2&ndash;4% LOOP violations in the literature"),
+ "P7":  (PASS, "Model top-heavy AND market sharper", "both hold: my raw Elo over-rates <b>Spain +12pp</b> pre-tournament (frozen at registration), and the market&rsquo;s log-score <b>0.65</b> beats my model&rsquo;s 0.80"),
+ "P10": (FAIL, "The goal-overreaction edge reverts", "<span class=\"r\">no edge</span>, PnL negative &mdash; the documented edge is arbed away here"),
+ "P2":  (INC,  "Favourite-longshot bias stronger in books", "data-forced: prediction markets quote no draw, so no like-for-like 1X2 (addendum)"),
+ "P8":  (INC,  "No 12-sigma shocks (sanity check)", "data-forced: PM mids are step functions, the 1s-return denominator degenerates (addendum)"),
+ "P9":  (INC,  "Heat slows the second half, in-play", "underpowered: ~9 qualifying games, tapes pruned at 48h (addendum, pre-flagged)"),
+}
+
+# Chrome (style + head/foot) is verbatim from the hand-authored card; only tally + rows are injected.
+_CARD_TEMPLATE = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>xResidual &mdash; the pre-registration, graded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f8f5ee;--ink:#1b1813;--muted:#4a443b;--dim:#8a8175;--rule:#d8d0bf;--accent:#b3122a;--good:#1e6f6a;
+    --draw:#cabd9f;--tan:#a89a7c;--fd:"Fraunces",serif;--fb:"Spline Sans",sans-serif;--fm:"IBM Plex Mono",monospace}
+  *{margin:0;padding:0;box-sizing:border-box} html,body{background:#e7e1d4}
+  .card{position:relative;width:1600px;height:900px;overflow:hidden;color:var(--ink);font-family:var(--fb);--pad:70px;
+    background:radial-gradient(120% 80% at 50% -12%,rgba(179,18,42,.05),transparent 60%),var(--paper)}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>")}
+  .head{position:absolute;left:var(--pad);top:42px;right:var(--pad);z-index:3}
+  .kicker{font-family:var(--fm);font-size:13.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:13px}
+  .kicker .no{border:1px solid var(--accent);border-radius:2px;padding:2px 7px;font-size:12px;letter-spacing:.1em}
+  h1{font-family:var(--fd);font-weight:600;font-size:46px;line-height:.98;letter-spacing:-.018em;margin-top:11px}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .dek{margin-top:9px;font-size:14.5px;color:var(--muted);max-width:930px;line-height:1.42} .dek b{color:var(--ink)}
+  .tally{position:absolute;right:var(--pad);top:48px;display:flex;gap:20px;z-index:4}
+  .tally .t{text-align:center;font-family:var(--fm)} .tally .n{font-family:var(--fd);font-weight:600;font-size:44px;line-height:.9}
+  .tally .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+  .tally .pass .n{color:var(--good)} .tally .fail .n{color:var(--accent)} .tally .inc .n{color:var(--tan)}
+  .rows{position:absolute;left:var(--pad);right:var(--pad);top:210px;bottom:56px;z-index:2;display:flex;flex-direction:column;justify-content:space-between}
+  .row{display:flex;align-items:center;gap:15px;height:44px;border-radius:6px;padding:0 14px 0 0}
+  .badge{width:74px;flex:none;font-family:var(--fm);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-align:center;padding:4px 0;border-radius:4px}
+  .badge.pass{color:#fff;background:var(--good)} .badge.fail{color:#fff;background:var(--accent)} .badge.inc{color:#fff;background:var(--tan)}
+  .pid{width:34px;flex:none;font-family:var(--fm);font-size:15px;font-weight:600;color:var(--dim)}
+  .lab{width:430px;flex:none;font-size:17px;font-weight:600;letter-spacing:-.005em}
+  .res{flex:1;font-family:var(--fm);font-size:13.5px;color:var(--muted);line-height:1.25}
+  .res b{color:var(--ink)} .res .r{color:var(--accent);font-weight:600}
+  .row.fail{background:rgba(179,18,42,.05)}
+  .foot{position:absolute;left:var(--pad);right:var(--pad);bottom:22px;z-index:3;display:flex;justify-content:space-between;
+    font-family:var(--fm);font-size:12px;color:var(--dim)}
+  .foot .brand{color:var(--ink);font-weight:600}.foot .brand b{color:var(--accent)}
+</style></head>
+<body><div class="card">
+  <div class="head"><div class="kicker"><span class="no">CAPSTONE</span> The pre-registration, graded &middot; xResidual</div>
+    <h1>Eleven calls, committed before kickoff, graded in <em>public.</em></h1>
+    <div class="dek">I logged eleven falsifiable predictions in a timestamped commit before a ball was kicked, each with its decision rule fixed in advance. Here is the honest scorecard, hits and misses. <b>Both failures independently reproduce what 2026 microstructure papers found.</b></div>
+  </div>
+  <div class="tally">
+    <div class="t pass"><div class="n">%%TPASS%%</div><div class="l">Pass</div></div>
+    <div class="t fail"><div class="n">%%TFAIL%%</div><div class="l">Fail</div></div>
+    <div class="t inc"><div class="n">%%TINC%%</div><div class="l">Inconcl.</div></div>
+  </div>
+  <div class="rows">%%ROWS%%</div>
+  <div class="foot">
+    <div>Predictions + decision rules committed to an append-only ledger before kickoff (Jun 10) &middot; final grade on the full tournament, Jul 19 &middot; scripts/grade_prereg.py --html</div>
+    <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div>
+  </div>
+</div>
+</body></html>
+"""
+
+
+def emit_html(rows, out_path=SCORECARD_HTML_OUT):
+    """Render the scorecard card from the LIVE grade. Badge + tally are authoritative;
+    ERRORS if any curated CARD verdict disagrees with the live grade (drift guard)."""
+    live = {r["id"]: r["verdict"] for r in rows}
+    mism = [f"{pid}: card={CARD[pid][0]} vs live={live.get(pid)}"
+            for pid in DISPLAY_ORDER if CARD[pid][0] != live.get(pid)]
+    if mism:
+        raise ValueError("scorecard prose is stale vs the live grade — update CARD in grade_prereg.py:\n  "
+                         + "\n  ".join(mism))
+    tally = {"pass": 0, "fail": 0, "inc": 0}
+    row_html = []
+    for pid in DISPLAY_ORDER:
+        v, lab, res = CARD[pid]
+        g = _G[v]
+        tally[g] += 1
+        row_html.append(f'<div class="row {g}"><div class="badge {g}">{_BADGE[g]}</div>'
+                        f'<div class="pid">{pid}</div><div class="lab">{lab}</div>'
+                        f'<div class="res">{res}</div></div>')
+    html = (_CARD_TEMPLATE
+            .replace("%%TPASS%%", str(tally["pass"]))
+            .replace("%%TFAIL%%", str(tally["fail"]))
+            .replace("%%TINC%%", str(tally["inc"]))
+            .replace("%%ROWS%%", "".join(row_html)))
+    with open(out_path, "w") as f:
+        f.write(html)
+    return tally
+
 
 def main():
     ap = argparse.ArgumentParser(description="grade PREREGISTRATION.md against committed artifacts")
     ap.add_argument("--json", action="store_true", help="machine-readable scorecard")
+    ap.add_argument("--html", nargs="?", const=SCORECARD_HTML_OUT, default=None,
+                    help="render the scorecard card from the live grade (default: viz/model/prereg_scorecard.html)")
     args = ap.parse_args()
 
     rows = [g() for g in GRADERS]
@@ -310,6 +420,12 @@ def main():
 
     if args.json:
         print(json.dumps(rows, indent=2))
+        return 0
+
+    if args.html is not None:
+        tally = emit_html(rows, args.html)
+        print(f"wrote {os.path.relpath(args.html, ROOT)}: PASS {tally['pass']} · "
+              f"FAIL {tally['fail']} · INCONCL {tally['inc']}")
         return 0
 
     print("\n  PRE-REGISTRATION SCORECARD  (provisional — final grade runs after the final, 2026-07-19)")

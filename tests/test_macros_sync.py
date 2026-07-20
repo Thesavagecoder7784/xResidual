@@ -82,8 +82,39 @@ def test_flagship_macros_are_auto_wired():
     assert checked, "no flagship source JSONs present to check (expected the committed _hardened_stats.json)"
 
 
+def test_hardened_stats_match_raw_sources():
+    """Cross-JSON invariant: _hardened_stats.json must describe the SAME sample as the raw
+    builder outputs. Catches the failure `emit_macros --check` cannot see — a refresh that
+    re-runs the builders but not harden_leadlag_stats.py, leaving the hardened aggregate stale
+    (the Jul-19 bug: n_events 377 while the leadlag file had grown to 392). Raw sources are
+    gitignored, so this only fires where the data lives (dev/VM) and skips on a clean checkout."""
+    D = EM.load()
+    H = D.get("H")
+    if not H:
+        if pytest:
+            pytest.skip("_hardened_stats.json absent")
+        return
+    checked = []
+    L = D.get("L")
+    if L and L.get("pooled"):
+        got = L["pooled"]["poly_leads"] + L["pooled"]["kalshi_leads"]
+        assert got == H["leadlag"]["n_events"], (
+            f"STALE hardened stats: leadlag poly+kalshi={got} but _hardened n_events="
+            f"{H['leadlag']['n_events']} — rerun scripts/harden_leadlag_stats.py")
+        checked.append("leadlag")
+    I = D.get("I")
+    if I and I.get("n_matches") is not None:
+        assert I["n_matches"] == H["infoshare"]["n_matches"], (
+            f"STALE hardened stats: infoshare file n_matches={I['n_matches']} but _hardened="
+            f"{H['infoshare']['n_matches']} — rerun scripts/harden_leadlag_stats.py")
+        checked.append("infoshare")
+    if not checked and pytest:
+        pytest.skip("raw leadlag/infoshare sources absent (gitignored) — checked on dev/VM")
+
+
 if __name__ == "__main__":
     test_macros_in_sync_with_json()
     test_emit_is_deterministic()
     test_flagship_macros_are_auto_wired()
-    print("ok — macros in sync, emit deterministic, flagship numbers wired")
+    test_hardened_stats_match_raw_sources()
+    print("ok — macros in sync, emit deterministic, flagship wired, hardened matches sources")
