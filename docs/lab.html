@@ -117,7 +117,7 @@ function loaded(){
   if(ts) document.getElementById('foot').innerHTML=`<b>Updated ${fmtStamp(ts)}</b> · ${fmtAge(ts)} · cross-venue microstructure · paper, net of modeled cost · pooled per match`;
   // ---- headline stats ----
   const st=[];
-  st.push(['+600ms','median lead · 377 shocks','']);
+  st.push(['+600ms','median lead · 392 shocks','']);
   if(IS&&IS.poly_infoshare_gg!=null)st.push([`${Math.round(IS.poly_infoshare_gg*100)}%`,'Poly price-discovery share','a']);
   if(O&&O.impact&&O.impact.kalshi)st.push([`t ${O.impact.kalshi.tstat}`,'order flow → price','g']);
   st.push(['86','matches captured','']);
@@ -125,7 +125,7 @@ function loaded(){
 
   // ---- Finding 01: lead-lag (final hardened result) ----
   const llb=document.getElementById('ll-body');
-  llb.innerHTML=`<p>Which venue's price reacts to a goal first? Across <b>377 decisive goal shocks in 77 matches</b>, Polymarket leads <b>71% of the time</b>, median lead <b>+600ms</b>. Hardened against event-clustering, the per-match sign test is decisive (56 of 65 matches lean Polymarket) and the cluster-robust bootstrap holds.</p>
+  llb.innerHTML=`<p>Which venue's price reacts to a goal first? Across <b>392 decisive goal shocks in 79 matches</b>, Polymarket leads <b>72% of the time</b>, median lead <b>+600ms</b>. Hardened against event-clustering, the per-match sign test is decisive (57 of 66 matches lean Polymarket) and the cluster-robust bootstrap holds.</p>
       <div class="verdict real"><b>A real lead, but not a trade.</b> Polymarket reprices first, yet a forward-test crossing the real spread kills it: at the goal the book collapses to ~0.5% depth, so the stale-quote gap is inside the bid/ask before you can act. A lead in price discovery, not free money.</div>`;
 
   // ---- Finding 02: information share (rigorous price discovery) ----
