@@ -88,7 +88,16 @@ const flag=t=>ISO[t]?`<img class="flag" src="flags/${ISO[t]}.svg" alt="" onerror
 let DATA=null, M=null, tab="all", sortKey="edgeabs", sortDir=-1, query="";
 function fmtStamp(iso){return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/New_York',hour12:false})+' ET';}
 function fmtAge(iso){const h=(Date.now()-new Date(iso))/3.6e6,t=h<1?"<1h ago":h<24?`${Math.round(h)}h ago`:`${Math.round(h/24)}d ago`,c=h<26?'var(--good)':h<72?'var(--gold)':'var(--bad)';return `<span style="color:${c};font-weight:600">${t}</span>`;}
-function renderStats(){const c=DATA.clv,cal=DATA.calibration,live=cal.status==='live';
+// authoritative calibration comes from data/calibration.js (per-version brier + skill vs the
+// base-rate baseline). dashboard.js's embedded calibration degenerated to brier 0 / skill 100%
+// once every game resolved, so we normalise off CALIBRATION.v1 and only fall back to it.
+function calFromSource(){
+  const C=window.CALIBRATION; if(!C||!C.versions||!C.versions.v1)return null;
+  const v=C.versions.v1;
+  return {status:'live', n:v.n_games, brier:v.brier, logloss:null,
+    brier_skill:(v.skill_vs_baseline_pct||0)/100,
+    reliability:(v.reliability_curve||[]).map(r=>({bucket:Math.round(r.f*100),pred:Math.round(r.f*100),actual:Math.round(r.o*100),n:r.n}))};}
+function renderStats(){const c=DATA.clv,cal=calFromSource()||DATA.calibration,live=cal.status==='live';
   const played=M?`${M.played}/${M.n}`:', ', ll=(M&&M.logloss!=null)?(+M.logloss).toFixed(3):', ';
   // CLV + calibration stay "pending" until the group stage resolves, early CLV here is correlated
   // across ~2 batches, so a headline % would read as a verdict the sample can't support.
@@ -124,9 +133,9 @@ function renderTable(){let rows=DATA.forecasts.filter(f=>(tab==="all"||f.market=
       ||'<tr><td class="loading">no forecasts match</td></tr>';}
 function renderSide(){const c=DATA.clv;document.getElementById('clvbig').textContent=c.positive_pct==null?", ":c.positive_pct+"%";
   document.getElementById('clvsub').textContent=c.mean==null?"":`Mean CLV ${c.mean>0?'+':''}${c.mean}pp across ${c.n} forecasts.`;
-  const cal=DATA.calibration,el=document.getElementById('calib');
+  const cal=calFromSource()||DATA.calibration,el=document.getElementById('calib');
   if(cal.status!=='live')el.innerHTML=`<p>Pending, calibration grades the model's probabilities against real outcomes as markets resolve (group stage ~Jun 27, knockouts after). The forecasts are already locked, so the grade is honest when it lands.</p>`;
-  else el.innerHTML=`<div style="font-family:var(--fm);font-size:13px;margin-bottom:10px">Brier <b>${cal.brier}</b> · log-loss <b>${cal.logloss}</b> · skill <b style="color:var(--accent)">+${(cal.brier_skill*100).toFixed(0)}%</b> · n=${cal.n}</div>`
+  else el.innerHTML=`<div style="font-family:var(--fm);font-size:13px;margin-bottom:10px">Brier <b>${(+cal.brier).toFixed(3)}</b> · skill <b style="color:var(--accent)">+${(cal.brier_skill*100).toFixed(0)}%</b> vs base rate · n=${cal.n}</div>`
     +`<div style="font-family:var(--fm);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">predicted → actual</div>`
     +cal.reliability.map(r=>`<div class="relrow"><span>${r.bucket}%</span><span>${r.pred}% → <b>${r.actual}%</b> <span style="color:var(--dim)">(${r.n})</span></span></div>`).join('');}
 function renderCalls(){const el=document.getElementById('calls');if(!el||!DATA.biggest_calls)return;
@@ -155,5 +164,9 @@ document.body.appendChild(s);
 const sm=document.createElement('script');sm.src='data/matches.js?'+Date.now();
 sm.onload=()=>{M=window.GAMES||null; if(DATA) renderStats();};
 document.body.appendChild(sm);
+// authoritative per-version calibration; re-renders the stat row + side panel when it lands
+const sc=document.createElement('script');sc.src='data/calibration.js?'+Date.now();
+sc.onload=()=>{if(DATA){renderStats();renderSide();}};
+document.body.appendChild(sc);
 </script>
 </body></html>
