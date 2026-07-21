@@ -1,0 +1,12 @@
+{
+  "_note": "Microstructure snapshots MEASURED DURING the 2026 World Cup from the logged order books (build_basis.py, build_liquidity.py, calibrate_confed_offsets.py, build_blend_check.py). They are FROZEN here because the title market has since RESOLVED: re-running the builders on post-final data is degenerate (settled contracts, blown-out overrounds), so these values cannot be re-derived from the final snapshot. They are recorded point-in-time observations -- the same status as the frozen pre-tournament leg of pre-registration P7. Committing them makes every non-flagship number in the paper trace to a versioned artifact.",
+  "devig_title_agree_pp": 0.15,
+  "overround_kalshi_pct": 5.4,
+  "overround_poly_pct": 3.0,
+  "depth_ratio_group": 27,
+  "depth_ratio_final_four": 4,
+  "loop_raw_gap_pp": 3.98,
+  "confed_shrink_rps_gain_pct": 4.6,
+  "confed_shrink_dm_p": 0.009,
+  "model_vs_book_rank_corr": 0.95
+}
