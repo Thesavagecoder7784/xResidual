@@ -36,6 +36,8 @@ SOURCES = {
     "Q": "_liquidity_results.json",# spread/depth at the shock
     "C": "_calibration_results.json",
     "P": "_livewp_results.json",   # in-play goal under-reaction
+    "E": "_eventis_results.json",  # info share, goal-window vs calm
+    "F": "_frozen_observations.json",  # tournament-period snapshots (market since resolved)
 }
 
 
@@ -89,7 +91,7 @@ def refill(D):
     a = dig(D, "Q", "poly.resilience_ms_med") / 1000
     b = dig(D, "Q", "kalshi.resilience_ms_med") / 1000
     lo, hi = sorted([int(round(a)), int(round(b))])
-    return f"{lo}--{hi}\\,s" if lo != hi else f"{lo}\\,s"
+    return f"{lo}-{hi}\\,s" if lo != hi else f"{lo}\\,s"
 
 
 # ---- the spec --------------------------------------------------------------
@@ -132,8 +134,8 @@ GROUPS = [
         auto("isLead",          lambda D: f"{intu(dig(D,'H','infoshare.matches_poly_gt_50'))} of {intu(dig(D,'H','infoshare.n_matches'))}", "59 of 61", ""),
         auto("isSignP",         lambda D: pval(dig(D, "H", "infoshare.sign_p")), "1.6\\times10^{-15}", ""),
         auto("betweenSD",       lambda D: pct(dig(D, "H", "infoshare.between_match_sd")), "19\\%", ""),
-        manual("isGoalWindow", "86\\%", "info share inside goal windows — VERIFY vs _eventis_results.json"),
-        manual("isCalm",       "53\\%", "info share in calm play — VERIFY vs _eventis_results.json"),
+        auto("isGoalWindow", lambda D: pct(dig(D, "E", "goal.poly_gg_med"), 0), "86\\%", "GG info share inside goal windows"),
+        auto("isCalm",       lambda D: pct(dig(D, "E", "calm.poly_gg_med"), 0), "53\\%", "GG info share in calm play"),
     ]),
     ("Harvestability ledger", [
         auto("nGoalsHarvest", lambda D: intu(dig(D, "V", "pooled.n_goals")), "384", ""),
@@ -142,7 +144,7 @@ GROUPS = [
         auto("netCents",      lambda D: num(dig(D, "V", "pooled.net_med_c"), 1), "10.9", ""),
         auto("depthFrac",     lambda D: pct(dig(D, "V", "pooled.depth_frac_med"), 1), "0.5\\%", "best-price depth at the goal, vs normal"),
         auto("pctHarvest",    lambda D: pct(dig(D, "V", "pooled.pct_harvestable")), "0\\%", ""),
-        auto("refillSecs",    refill, "3--4\\,s", ""),
+        auto("refillSecs",    refill, "3-4\\,s", ""),
         auto("spreadPoly",    lambda D: intu(dig(D, "Q", "poly.spread_widen_med")), "8", "spread blow-out multiple, Polymarket"),
         auto("spreadKalshi",  lambda D: intu(dig(D, "Q", "kalshi.spread_widen_med")), "2", "spread blow-out multiple, Kalshi"),
     ]),
@@ -161,17 +163,19 @@ GROUPS = [
         auto("calMarketSlope", lambda D: num(dig(D, "C", "versions.market.slope"), 2), "1.07", ""),
         auto("calMarketSkill", lambda D: rawpct(dig(D, "C", "versions.market.skill_vs_baseline_pct"), 1), "23.6\\%", "vs base-rate Brier"),
     ]),
+    ("Frozen tournament observations (market resolved; see _frozen_observations.json)", [
+        auto("devigAgree",     lambda D: num(dig(D, "F", "devig_title_agree_pp"), 2) + "\\,pp", "0.15\\,pp", "de-vigged cross-venue title agreement"),
+        auto("loopRawGap",     lambda D: num(dig(D, "F", "loop_raw_gap_pp"), 2) + "\\,pp", "3.98\\,pp", "P3 raw cross-venue gap (graded FAIL vs the 1pp rule)"),
+        auto("overroundK",     lambda D: num(dig(D, "F", "overround_kalshi_pct"), 1) + "\\%", "5.4\\%", "Kalshi overround"),
+        auto("overroundP",     lambda D: num(dig(D, "F", "overround_poly_pct"), 1) + "\\%", "3.0\\%", "Polymarket overround"),
+        auto("depthRatio",     lambda D: f"\\ensuremath{{{intu(dig(D, 'F', 'depth_ratio_group'))}\\times}}", "\\ensuremath{27\\times}", "Polymarket vs Kalshi title depth (group stage)"),
+        auto("depthRatioLate", lambda D: f"\\ensuremath{{{intu(dig(D, 'F', 'depth_ratio_final_four'))}\\times}}", "\\ensuremath{4\\times}", "compressing by the final four"),
+        auto("confedRPS",      lambda D: "+" + num(dig(D, "F", "confed_shrink_rps_gain_pct"), 1) + "\\%", "+4.6\\%", "confederation-shrinkage cross-confed RPS gain"),
+        auto("confedDMp",      lambda D: num(dig(D, "F", "confed_shrink_dm_p"), 3), "0.009", "Diebold-Mariano p"),
+        auto("rankCorr",       lambda D: num(dig(D, "F", "model_vs_book_rank_corr"), 2), "0.95", "model vs de-vigged bookmaker consensus"),
+    ]),
     ("MANUAL — not yet emitted by any builder (update by hand; warned on every run)", [
-        manual("devigAgree",      "0.15\\,pp", "cross-venue title agreement, de-vigged"),
-        manual("loopRawGap",      "3.98\\,pp", "P3 raw cross-venue gap — graded FAIL vs the 1pp rule"),
-        manual("overroundK",      "5.4\\%", "Kalshi overround"),
-        manual("overroundP",      "3.0\\%", "Polymarket overround"),
-        manual("depthRatio",      "\\ensuremath{27\\times}", "Polymarket vs Kalshi title depth (group stage)"),
-        manual("depthRatioLate",  "\\ensuremath{4\\times}", "compressing by the final four"),
-        manual("obiFav",          "0.2", "order-book imbalance, title favorites"),
-        manual("confedRPS",       "+4.6\\%", "confederation-shrinkage cross-confed RPS gain"),
-        manual("confedDMp",       "0.009", "Diebold-Mariano p"),
-        manual("rankCorr",        "0.95", "model vs de-vigged bookmaker consensus"),
+        manual("obiFav",          "0.2", "order-book imbalance, title favorites (unused in paper)"),
     ]),
 ]
 
