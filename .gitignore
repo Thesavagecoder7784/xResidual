@@ -286,6 +286,25 @@ viz/model/overreaction
 viz/market/_*.js
 viz/model/_*.js
 viz/**/*.png
-writeups/_*_results.json
 
-paper/arxiv
+# writeups/_*_results.json used to be ignored here. It is NOT any more, and the distinction
+# matters: REPRODUCING.md's Tier A promises a reviewer can regenerate every paper number from
+# these files, and while they were ignored that promise was false — a clean clone silently fell
+# back to hardcoded values for 27 of 58 macros, nine of which were wrong. They are aggregated
+# DERIVED statistics (counts, per-match shares, medians), not redistributed venue market data:
+# _leadlag_results.json is written pre-redacted by build_leadlag.py, with per-event quote levels
+# and absolute timestamps stripped, so nothing here republishes Kalshi or Polymarket book data.
+# Raw tapes (logger/data/) and the per-game archives (viz/market/*/) stay out — see Tier B.
+# They are also the ONLY copy of the full-sample evidence; the tapes behind them are gone.
+
+# LaTeX build products only — the manuscript SOURCE (main.tex, sections/, macros.tex,
+# references.bib, figures/) is tracked, so the paper ships with the repo that backs it.
+paper/arxiv/main.pdf
+paper/arxiv/*.aux
+paper/arxiv/*.log
+paper/arxiv/*.out
+paper/arxiv/*.bbl
+paper/arxiv/*.blg
+paper/arxiv/*.fls
+paper/arxiv/*.fdb_latexmk
+paper/arxiv/*.synctex.gz
