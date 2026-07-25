@@ -112,9 +112,202 @@ def test_hardened_stats_match_raw_sources():
         pytest.skip("raw leadlag/infoshare sources absent (gitignored) — checked on dev/VM")
 
 
+def test_harvest_denominators_are_unambiguous():
+    """The harvest ledger must expose exactly ONE field named n_matches.
+
+    The Jul-25 reconciliation: the artifact carried a top-level `n_matches` (74 harvest FILES)
+    next to `pooled.n_matches` (66 ledger matches). Same name, different number, nothing saying
+    which one backs the published figures — so prose could quote either and look sourced. The
+    file count is now `n_match_files`; assert the ambiguity cannot come back, and that it stays
+    >= the ledger n (a match can yield a file with no qualifying goal, never the reverse)."""
+    D = EM.load()
+    V = D.get("V")
+    if not V:
+        if pytest:
+            pytest.skip("_harvest_results.json absent (gitignored) — checked on dev/VM")
+        return
+    assert "n_matches" not in V, (
+        "ambiguous denominator: top-level `n_matches` is back in _harvest_results.json. It means "
+        "harvest FILES, not ledger matches — rename to `n_match_files` (scripts/build_harvest.py)")
+    pooled = V.get("pooled")
+    if not pooled:
+        if pytest:
+            pytest.skip("no pooled harvest result yet")
+        return
+    files, ledger = V.get("n_match_files"), pooled["n_matches"]
+    assert files is not None, "_harvest_results.json missing `n_match_files` (coverage denominator)"
+    assert files >= ledger, (
+        f"impossible denominators: n_match_files={files} < pooled.n_matches={ledger} — every "
+        f"ledger match must have produced a harvest file")
+
+
+def test_harvest_medians_are_not_a_subtraction():
+    """gross/cost/net are three independent medians; asserting they subtract would be wrong.
+
+    Guards the prose claim, not the arithmetic: any writeup saying "gross X minus cost Y leaves
+    net Z" is misdescribing the estimator. Pin that gross - cost != net so the day it accidentally
+    does, nobody upgrades the prose to an implied subtraction."""
+    D = EM.load()
+    pooled = (D.get("V") or {}).get("pooled")
+    if not pooled:
+        if pytest:
+            pytest.skip("_harvest_results.json absent (gitignored) — checked on dev/VM")
+        return
+    for k in ("estimator", "arithmetic_note"):
+        assert pooled.get(k), (
+            f"_harvest_results.json lost its `{k}` provenance field — a reader can no longer tell "
+            f"a median-of-medians from a mean (scripts/build_harvest.py)")
+    assert "median" in pooled["estimator"].lower(), "estimator field no longer names the statistic"
+
+
+def test_hasbrouck_point_estimate_sits_inside_its_interval():
+    """A published point estimate must lie inside the interval published beside it.
+
+    The Jul-25 audit: `poly_infoshare_hasbrouck_mid` (75.2%) is a median across MATCHES, while the
+    old `hasbrouck_mid_band` [77.3%, 92.2%] was a median across CONTRACTS of each contract's lo/hi.
+    Different denominators, so every draft printed a point estimate BELOW its own lower bound. The
+    match-unit CI now lives in _hardened_stats.json; assert it actually brackets the mid, and that
+    the contract-unit band cannot be mistaken for a CI by its name alone."""
+    D = EM.load()
+    I, H = D.get("I"), D.get("H")
+    if not I or not H:
+        if pytest:
+            pytest.skip("infoshare sources absent (gitignored) — checked on dev/VM")
+        return
+    assert "hasbrouck_mid_band" not in I, (
+        "`hasbrouck_mid_band` is back in _infoshare_results.json. It is a per-CONTRACT "
+        "identification width, not a band around the per-MATCH mid — it must stay named "
+        "`hasbrouck_contract_band` (scripts/build_infoshare.py)")
+    mid = I.get("poly_infoshare_hasbrouck_mid")
+    ci = (H.get("infoshare") or {}).get("median_hasbrouck_ci")
+    if mid is None or not ci:
+        if pytest:
+            pytest.skip("no Hasbrouck mid/CI in this checkout")
+        return
+    assert ci[0] <= mid <= ci[1], (
+        f"incoherent interval: Hasbrouck mid {mid:.4f} is outside its own CI "
+        f"[{ci[0]:.4f}, {ci[1]:.4f}] — the two are being computed on different units again")
+
+
+def test_harvestability_cannot_be_quoted_at_the_wrong_unit():
+    """`pooled.pct_harvestable` is a MEDIAN ACROSS MATCHES, not a share of goals.
+
+    It reads 0.0 as soon as half the matches contain no harvestable goal, which is not the claim
+    "0% of goals are harvestable" — every draft before Jul-25 published exactly that conflation,
+    while the goal-weighted rate on the reconstructible subset was ~11%. Require the estimator
+    string to spell out the unit, and require the goal-weighted companion to travel with it so the
+    two denominators are always visible together."""
+    D = EM.load()
+    pooled = (D.get("V") or {}).get("pooled")
+    if not pooled:
+        if pytest:
+            pytest.skip("_harvest_results.json absent (gitignored) — checked on dev/VM")
+        return
+    est = pooled.get("estimator", "").lower()
+    assert "median match" in est and "never" in est, (
+        "the harvest estimator field no longer states that pct_harvestable is the MEDIAN MATCH's "
+        "share — restore the wording in scripts/build_harvest.py so prose cannot round it into "
+        "'X% of goals'")
+    if "pct_harvestable" in pooled and "pct_harvestable_goal_weighted" not in pooled:
+        # An older pooled artifact predates the goal-weighted field; the standalone check must
+        # then be present instead, so the goal-level rate is never simply unavailable.
+        assert D.get("U"), (
+            "pooled.pct_harvestable is published with no goal-level companion: either re-pool with "
+            "the current build_harvest.py or run scripts/harvest_unit_check.py")
+
+
+def test_goal_unit_harvest_check_declares_its_coverage():
+    """The goal-weighted rate is computed on a REDUCED archive; it must say so, every time."""
+    U = EM.load().get("U")
+    if not U:
+        if pytest:
+            pytest.skip("_harvest_unit_check.json absent — run scripts/harvest_unit_check.py")
+        return
+    assert U.get("coverage_note"), "_harvest_unit_check.json lost its coverage_note"
+    ledger = U.get("pooled_ledger_n_matches")
+    if ledger:
+        assert U["n_matches_checked"] <= ledger, (
+            f"unit check claims {U['n_matches_checked']} matches but the pooled ledger has "
+            f"{ledger} — the check cannot cover more than the ledger it is checking")
+
+
+def test_calibration_brier_gap_ships_with_its_uncertainty():
+    """The market-vs-model Brier gap must never be publishable without its paired test.
+
+    P1's frozen rule is a POINT comparison (market Brier < model Brier) and it passes — but the
+    gap is not significant (p~0.25 on 72 games), and the prose read it as a demonstrated win.
+    Require the paired block to exist so the macros can always quote the uncertainty."""
+    C = EM.load().get("C")
+    if not C:
+        if pytest:
+            pytest.skip("_calibration_results.json absent (gitignored) — checked on dev/VM")
+        return
+    if "market" not in C.get("versions", {}):
+        if pytest:
+            pytest.skip("no market calibration in this checkout")
+        return
+    paired = C.get("paired_market_vs_v1")
+    assert paired, (
+        "_calibration_results.json publishes a market Brier with no `paired_market_vs_v1` block — "
+        "rerun scripts/build_calibration.py so the gap ships with its significance")
+    for k in ("paired_t_p", "boot_ci_advantage", "n_games"):
+        assert paired.get(k) is not None, f"paired test missing `{k}`"
+    lo, hi = paired["boot_ci_advantage"]
+    assert lo <= paired["advantage_a"] <= hi, "paired advantage lies outside its own bootstrap CI"
+
+
+def test_venue_vs_sharp_claim_is_as_of_dated_and_stable():
+    """The venue-vs-sharp comparison may only be quoted at an as-of date the sweep actually covers.
+
+    Two notes published two different undated pairs (~0.12/0.16 and ~0.18/0.26) for this. The
+    magnitude drifts hard as the title field resolves — Kalshi's winner overround goes from ~6% to
+    ~2300% — so an undated read is a read of whichever day it was taken. Require the quoted date to
+    exist in the sweep, and require the direction to be stable across cutoffs before any of it is
+    published at all."""
+    B = EM.load().get("B")
+    if not B:
+        if pytest:
+            pytest.skip("_basis_asof_sweep.json absent — run scripts/basis_asof_sweep.py")
+        return
+    series = B.get("series") or {}
+    assert EM.BASIS_ASOF in series and series[EM.BASIS_ASOF], (
+        f"emit_macros quotes the sharp-line comparison at {EM.BASIS_ASOF}, which the sweep does "
+        f"not cover: {sorted(series)}")
+    assert (B.get("verdict") or "").startswith("stable"), (
+        f"the closer-to-sharp venue is not stable across as-of dates ({B.get('verdict')}) — the "
+        f"directional claim must come out of the notes and the manuscript, not just the magnitude")
+    row = series[EM.BASIS_ASOF]
+    assert row["pm_closer_on"] + row["ka_closer_on"] == row["n_teams"], "team counts do not sum"
+
+
+def test_calibration_n_is_the_scored_sample_not_the_tournament():
+    """\\calN must be the games actually scored, never the 104-match tournament size.
+
+    The forecast ledgers stop at 2026-06-27, so calibration covers the group stage only. Drafts
+    wrote "~104 matches" next to a Brier, overstating the sample by ~44%."""
+    C = EM.load().get("C")
+    if not C or "market" not in C.get("versions", {}):
+        if pytest:
+            pytest.skip("_calibration_results.json absent or has no market version")
+        return
+    n = C["versions"]["market"]["n_games"]
+    assert n <= C["n_played"], f"scored n={n} exceeds n_played={C['n_played']}"
+    assert n < 104, (
+        f"calibration n={n} claims the full 104-match tournament; the pre-committed ledger does "
+        f"not reach the knockout rounds")
+
+
 if __name__ == "__main__":
     test_macros_in_sync_with_json()
     test_emit_is_deterministic()
     test_flagship_macros_are_auto_wired()
     test_hardened_stats_match_raw_sources()
-    print("ok — macros in sync, emit deterministic, flagship wired, hardened matches sources")
+    test_harvest_denominators_are_unambiguous()
+    test_harvest_medians_are_not_a_subtraction()
+    test_hasbrouck_point_estimate_sits_inside_its_interval()
+    test_harvestability_cannot_be_quoted_at_the_wrong_unit()
+    test_goal_unit_harvest_check_declares_its_coverage()
+    test_calibration_brier_gap_ships_with_its_uncertainty()
+    test_calibration_n_is_the_scored_sample_not_the_tournament()
+    print("ok — macros in sync, emit deterministic, flagship wired, hardened matches sources, "
+          "harvest denominators unambiguous, units coherent, Brier gap carries its uncertainty")
