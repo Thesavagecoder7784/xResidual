@@ -423,7 +423,7 @@ reversion after a *surprising* goal (Choi & Hui; "Role of Surprise"), entered ~2
 held ~6 min, net of modeled cost. This is the P10 edge test, paper-only and disclosed. The
 benchmark the live price is measured against is the in-play win-probability model (§17), which
 re-prices each surprising goal to a fair value: the test reads the market as **under-reacting
-to goals by ~5pp** relative to that benchmark before the fair value is reached.
+to goals by ~3.1pp** (mean under-shoot in P(home win), 54 matches / 185 goals) relative to that benchmark before the fair value is reached.
 
 Shock detection is tuned to reject thin-market noise (learned on the Argentina–Iceland friendly,
 where the naive detector turned 3 goals into 11 "shocks"): a candidate fires only if the mid
@@ -454,12 +454,16 @@ an early "which venue reads a goal first — does Kalshi or Polymarket move firs
 pooled, population-grade statement of price discovery. A standalone desk research note writes it
 up in full (`writeups/price_discovery_note.pdf`).
 
-**Pooled lead–lag (the headline).** Across the **34 captured matches** logged through
-2026-06-20, **Polymarket leads ≈62% of goal repricings (103 vs 45 events, median +400ms)** — the venue that moves first when a goal
-hits the book, pooled over every detected shock across all matches. Under the null of no lead
-(a coin flip on which venue moves first), that lead is **≈4.8σ** naively (103 vs 45 of 148 decisive events). But the unit is the goal repricing,
-not the match, so the inferential weight comes from the pool of shocks, not from any single
-fixture; per-match leads are descriptive color.
+**Pooled lead–lag (the headline).** Across the **86 captured matches** of the full tournament,
+**Polymarket leads 72% of goal repricings (281 vs 111 of 392 decisive events, median +600ms
+among Polymarket-led events)** — the venue that moves first when a goal hits the book, pooled over
+every detected shock. A naive event-level binomial makes that look overwhelming (p ≈ 4×10⁻¹⁸), and
+it is not the number to quote: the 392 events are nested in **79 lead-bearing matches**, so the
+honest unit is the **match**, not the repricing. Cluster-corrected, the effect survives easily —
+intra-match correlation is low (ICC 0.032, design effect 1.13, effective N ≈ 348), a match-resampling
+bootstrap holds the 95% CI at **[67%, 76%]**, and the cluster-immune per-match statement is
+**57 of 66 matches lean Polymarket** (sign test p = 1.2×10⁻⁹, Wilcoxon p = 7.2×10⁻⁸). Quote the
+per-match result; the event-level count is descriptive scale, not inferential weight.
 
 **Information share (the mechanism).** The lead–lag count is corroborated by a structural
 price-discovery decomposition. For each pair of matched contracts across the two venues, I fit a
@@ -470,11 +474,17 @@ pooled, since the shares are only defined when the two mids share a common stoch
 Computing on **mids** is what makes this robust to the trade-direction-classification problem —
 Lee–Ready-style signing misclassifies ≈59% of prediction-market trades (arXiv:2604.24366), so any
 flow- or trade-signed discovery measure would inherit that error; the MID series carries no
-direction to misclassify. Result: **Polymarket's permanent-component share is ≈78.6%**, and it
-**leads in 20/21 cointegrated matches (34 contracts)** — the same venue, the same direction as the raw lead–lag
-count, which is the cross-check that makes the flagship robust. The ≈62% lead and the ≈78.6%
-information share are two independent reads of one fact: Polymarket is where this World Cup's
-price is discovered.
+direction to misclassify. Result: **Polymarket's Gonzalo–Granger permanent-component share is
+≈81.0%** (per-match median, bootstrap CI [77%, 87%]), and it **leads in 61 of 63 cointegrated
+matches (104 contracts)**, sign test p = 4.4×10⁻¹⁶ — the same venue, the same direction as the raw
+lead–lag count, which is the cross-check that makes the flagship robust. On the same per-match unit
+the Hasbrouck share is ≈75.2% (CI [68%, 87%]); the per-*contract* Cholesky identification width
+(≈77–92%) is an ordering-sensitivity diagnostic on a different denominator and is not a confidence
+interval on that figure. Gonzalo–Granger is a coefficient ratio and is unbounded when both venues
+adjust with the same sign, so 5 of the 63 matches return a share above 1 (max 1.42) — which is why
+the headline is a median, not a mean (over the 58 in-support matches it is 80.2%). The 72% lead and
+the ≈81% information share are two independent reads of one fact: Polymarket is where this World
+Cup's price is discovered.
 
 ## 17. In-play win-probability model
 
@@ -488,7 +498,7 @@ recovers the pre-kickoff market W/D/L probabilities exactly**; the rates are the
 and the distribution is re-evaluated as the clock runs. On each goal, the state **snaps** to the
 new score (a per-goal shock snap), and the model re-prices the remaining match from that new state.
 This gives a continuous fair-value track that jumps at goals, which is precisely the object the
-in-play "market under-reacts to goals (~5pp)" test fades the market against (§14): the gap between
+in-play "market under-reacts to goals (~3pp)" test fades the market against (§14): the gap between
 where the price moves and where the WP model says it should move.
 
 ## 18. Order-flow imbalance: the within-venue mechanism
