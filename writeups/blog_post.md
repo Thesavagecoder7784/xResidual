@@ -18,22 +18,22 @@ Measuring "who's first" naively — eyeballing which book ticks — is a trap, b
 
 The answer is consistent across two independent estimators:
 
-- **Information share:** Polymarket carries **~79%** of price discovery (per-match median), and leads in **61 of 63** cointegrated matches.
+- **Information share:** Polymarket carries **~81%** of price discovery (per-match median), and leads in **61 of 63** cointegrated matches.
 - **Reaction lead:** on a goal, Polymarket reprices first in **57 of 66** matches, a **median ~600 ms** ahead.
 
 It's the deeper book — Polymarket quotes roughly 27× Kalshi's size at the same spread — so this is what you'd expect: **size discovers price.** Not a surprising *direction*. The interesting part is what happens when you ask whether it's tradeable.
 
 ### Making it honest
 
-Goal events cluster within matches — they aren't independent — so a naive binomial p-value overstates significance. I hardened it: a **match-resampling cluster bootstrap** (design effect just 1.13, so the clustering is mild here), and the reviewer-proof version is the per-match sign test — **57 of 66 matches** lean Polymarket (p ≈ 5×10⁻⁸), **61 of 63** on the information share (p ≈ 5×10⁻¹⁴). The effect gets *more* significant as matches accumulate, which is what a real effect does and a spurious one doesn't.
+Goal events cluster within matches — they aren't independent — so a naive binomial p-value overstates significance. I hardened it: a **match-resampling cluster bootstrap** (design effect just 1.13, so the clustering is mild here), and the reviewer-proof version is the per-match sign test — **57 of 66 matches** lean Polymarket (p ≈ 1.2×10⁻⁹), **61 of 63** on the information share (p ≈ 4.4×10⁻¹⁶). The effect gets *more* significant as matches accumulate, which is what a real effect does and a spurious one doesn't.
 
 ## And then it isn't a trade
 
-Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **405 goals** shows a gross gap of ~12¢, ~+10.8¢ net of the spread, on *every* goal. Free money.
+Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **405 goals in 66 matches** shows a median gross gap of 12.0¢ and a median +10.8¢ net of the spread, on *every* goal. Free money.
 
 Except the quote isn't there.
 
-**At the goal, the book vanishes.** Best-price depth collapses to **~0.5% of normal**, the spread blows out **~8×** on Polymarket / ~2× on Kalshi, and the book takes **3–4 seconds to refill**. There is no resting size to hit at the stale price — by the time depth returns, the quote has caught up. Gated on the depth actually resting in the book, **0% of that +10.8¢ is harvestable.**
+**At the goal, the book vanishes.** Best-price depth collapses to **~0.5% of normal**, the spread blows out **~8×** on Polymarket / ~2× on Kalshi, and the book takes **3–4 seconds to refill**. There is usually no resting size to hit at the stale price — by the time depth returns, the quote has caught up. Gated on the depth actually resting in the book, **the median match yields no harvestable goal at all.** That's a median across matches, so be precise about it: the typical match offers a follower nothing, but harvestable goals do exist. On the 21-match subset I can still reconstruct from the archive the goal-weighted rate is ~11%, clustered in 6 of those 21 matches — a minority you can't pick out in advance, because the depth is gone the instant the signal fires.
 
 That collapse-and-refill is not a glitch. It's the **market-maker pulling quotes against toxic, information-motivated flow** — adverse selection, observed in real time. The apparent edge *is* the cost of immediacy. The lead is genuine, measurable, and **information, not alpha.**
 
