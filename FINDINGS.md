@@ -29,7 +29,7 @@ Order-book imbalance (bid share of top-of-book depth) sits at ~0.16–0.27 for *
 
 ## 3. The two prediction markets agree to ~0.15pp: law of one price holds
 
-Median cross-venue divergence (Kalshi vs Polymarket, de-vigged) on the title race is ~0.15pp; the largest standing gap is England (~1pp).
+Median cross-venue divergence (Kalshi vs Polymarket, de-vigged) on the title race is ~0.15pp; the most persistent standing gap is England — the only team quoted apart at every as-of cutoff in `scripts/basis_asof_sweep.py` (mean ~0.8pp, peaking ~1.0pp pre-kickoff).
 
 **The trader's read.** This is what an efficient, well-integrated market looks like: the same outcome is priced within a fraction of a cent across two independent venues, so there's no free lunch sitting on the screen. The standing England gap is the one worth watching. It's the most-traded contract, so a persistent gap there is more likely a real audience/fee difference than a stale quote. The open question this
 sets up, *when news breaks, which venue moves first?*, is the price-discovery
@@ -160,8 +160,10 @@ Polymarket and Kalshi agree to **~0.15pp on average** across the field. The "5�
 the press quotes is mostly the house margin, not disagreement. Kalshi's overround
 runs ~5.4% vs Polymarket's ~3.0% (~1.8×), so the durable venue difference is *cost,
 not price*. The small belief-gap that does survive is structured by audience: the
-American book (Kalshi) is richer on USA, Mexico, Netherlands; the global book
-(Polymarket) is richer on England, Portugal, Japan, Brazil. Anchored against the
+American book (Kalshi) is richer on USA, Netherlands, Mexico; the global book
+(Polymarket) is richer on England, France, Japan, Brazil — the teams whose sign holds
+at every as-of cutoff in `scripts/basis_asof_sweep.py`. (An earlier version of this entry
+put Portugal on the global side; the sweep places it on the American side, so it's dropped.) Anchored against the
 Betfair Exchange (the sharpest soccer market I log), Polymarket sits marginally
 closer to the sharp line: replaying the logged snapshots at fixed as-of dates (`scripts/basis_asof_sweep.py`), Polymarket is nearer the Betfair line at **every** cutoff through the tournament — 0.15pp vs 0.26pp at 2026-06-22, closer on 39 of 48 teams. Quote it with the date: the direction is stable, the magnitude is not, because Kalshi's winner overround runs 6.5% in the group stage and ~2300% once the field resolves.
 
@@ -236,7 +238,7 @@ The other side of #12. The de-vigged gap being mostly margin (#3, #12) predicts 
 
 ## 21. The market is sharp where it's liquid — and where we disagree, it's usually us
 
-The favourite-longshot threads (#6, #11, #19) and the reach-round check are really one question, so I scanned it systematically: our model's probability against the de-vigged market for **238 contracts across five layers**, from the deepest liquid market to the thinnest structural one. The mean |model − market| gap, by layer:
+The favourite-longshot threads (#6, #11, #19) and the reach-round check are really one question, so I scanned it systematically: our model's probability against the de-vigged market for **238 contracts across five layers**, from the deepest liquid market to the thinnest structural one. The mean |model − market| gap, by layer (a **tournament-period read**: the 238-contract denominator is recorded in the scan artifact, but the per-layer gaps were measured while the field was live and cannot be re-derived now that it has resolved — re-running the builder today returns a degenerate book):
 
 | layer | depth | mean abs gap | verdict |
 |---|---|---|---|
@@ -262,7 +264,7 @@ The fix is an empirical-Bayes confederation shrinkage (`xresidual/confed_bias.py
 
 ## 23. First live in-play tape: the pipeline works, and the overreaction edge needs a real surprise
 
-Captured the Argentina–Iceland friendly end-to-end — **172,892 millisecond-stamped order-book events**, the full chain (VM capture → pull → reconstruct mids → fade backtest) proven on live in-play data for the first time. Argentina opened a 0.84 favourite and won 3–0; the market jumped only on Barco's 8' opener and shrugged off the 72'/86' goals — a 0.91 favourite extending a lead isn't news.
+Captured the Argentina–Iceland friendly — **173,238 millisecond-stamped order-book events** (the capture log's own count; an earlier version of this entry said 172,892, which matches no run and is withdrawn). Two honest caveats the log records: the friendly had **no Kalshi market**, so this was a Polymarket-only capture and proved nothing cross-venue; and both post-capture analyses crashed on a missing `sklearn`, so the chain was proven as far as *capture*, not end-to-end. The analysis leg was exercised later, on real tournament tapes. Argentina opened a 0.84 favourite and won 3–0; the market jumped only on Barco's 8' opener and shrugged off the 72'/86' goals — a 0.91 favourite extending a lead isn't news.
 
 That makes it a clean dry-run but a deliberately *weak* test of the goal-overreaction edge (P10): the documented reversion fades **surprising** goals, and a heavy favourite scoring is the opposite of surprising, so there was nothing to fade — exactly as theory predicts. It did expose one methodology fix: the naive shock detector turned 3 goals into 11 "shocks" on a thin friendly, so it's now hardened (a ≥5pp move that *persists* 20s later, 5-min refractory) — 11 → 3. **The real test waits for a genuine surprise**: an underdog scoring, or a favourite conceding, once the tournament starts.
 
