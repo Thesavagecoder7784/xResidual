@@ -1,7 +1,8 @@
 # Cross-Venue Price Discovery in Prediction Markets: Evidence from the 2026 World Cup on Kalshi and Polymarket
 
-**Prabhat M.**
+**Prabhat Mani James Nayagam**
 Purdue University — Mathematics & Statistics
+ORCID: [0009-0002-1795-0195](https://orcid.org/0009-0002-1795-0195)
 Working paper · July 2026 · *Draft — comments welcome*
 Code & data: github.com/Thesavagecoder7784/xResidual · Contact: pmanijam@purdue.edu
 
@@ -96,4 +97,4 @@ On a clean, repeated in-play information stream, Polymarket discovers the price 
 - Ng, H., Peng, L., Tao, Y., & Zhou, D. (2026). Price discovery and trading in modern prediction markets. *SSRN 5331995*.
 - Qin, B., & Yang, R. (2026). Polymarket-v1 database. *arXiv:2606.04217*.
 
-*Author note: the on-chain signed-flow extension is to be completed before submission. Numbers current as of the tournament final; the pre-registration and its public grade are in the repository.*
+*Author note: numbers current as of the tournament final; the pre-registration and its public grade are in the repository.*

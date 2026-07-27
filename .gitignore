@@ -225,8 +225,11 @@ logger/data/
 *.pem
 .kalshi_private_key.pem
 
-# Downloaded data caches (reproducible from source)
-/data/
+# Downloaded data caches (reproducible from source). NOTE: written as `/data/*` + a re-include
+# rather than `/data/`, because git cannot re-include a file whose parent DIRECTORY is excluded —
+# and one file in here must be tracked (see data/cache/ko_advancers.json below).
+/data/*
+!/data/cache/
 
 # Generated figures
 /figures/
@@ -254,8 +257,13 @@ writeups/recruiting-ft2027.md
 # Interview prep — private, not for the public repo
 prep/
 
-# Downloaded source cache + transient availability review (regenerate via fetch_squad_data.py)
-data/cache/
+# Downloaded source cache + transient availability review (regenerate via fetch_squad_data.py).
+# EXCEPTION: ko_advancers.json is NOT regenerable — it is the persistent knockout advancer ledger
+# (penalty/ET ties; fetch_scores.py reads it as KO_LEDGER) and the feed it was built from no longer
+# carries advancers. It survived only in the VM backup. 8 KB, derived, no venue data — track it, so
+# it stops being one copy on one disk.
+data/cache/*
+!data/cache/ko_advancers.json
 data/availability_review.md
 data/availability_review.json
 
