@@ -276,13 +276,19 @@ viz/market/eventis
 viz/market/livewp
 viz/model/overreaction
 
-# Regenerable build outputs (window.* data + pooled result JSON). BOTH the laptop (build_all.py)
-# and the VM (refresh_site_vm.sh -> build_micro_all) write these, so tracking them caused the
-# recurring two-writer merge conflicts on every pull. They regenerate from scripts/build_all.py
-# (+ build_micro_all.py for the microstructure pools). The published docs/data/*.js copies stay
-# tracked. Rendered .png cards are NO LONGER tracked — re-rendering them on every build churned
-# 250+ MB of binary blobs into git history. They regenerate from viz/render.sh on demand; the lab
-# page is data-driven from the committed *.js so it stays fresh without them.
+# Regenerable build outputs (window.* data). BOTH the laptop (build_all.py) and the VM
+# (refresh_site_vm.sh -> build_micro_all) write these, so tracking them caused the recurring
+# two-writer merge conflicts on every pull. The published docs/data/*.js copies stay tracked.
+# Rendered .png cards are NO LONGER tracked — re-rendering them on every build churned 250+ MB of
+# binary blobs into git history. They regenerate from viz/render.sh on demand; the lab page is
+# data-driven from the committed *.js so it stays fresh without them.
+#
+# CAUTION, learned the hard way: "regenerable" was ALSO written here about the per-game archives
+# below (viz/market/{leadlag,harvest,...}), and it was FALSE. They regenerate only from the raw
+# tapes, which cleanup_tapes.sh deliberately deletes once pooled — so ignoring them meant the
+# layer build_leadlag.py calls "the source of truth" had neither git nor backup, and ~2/3 of it
+# died with the VM. `make pull` now brings them down (deploy/Makefile). Before adding anything
+# here, check whether its inputs still exist.
 viz/market/_*.js
 viz/model/_*.js
 viz/**/*.png
