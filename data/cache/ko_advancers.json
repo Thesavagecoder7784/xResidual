@@ -1,0 +1,362 @@
+{
+ "Croatia|Ghana": {
+  "home_team": "Croatia",
+  "away_team": "Ghana",
+  "home_score": 2,
+  "away_score": 1,
+  "commence_time": "2026-06-27T21:00Z",
+  "advancer": "Croatia",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "England|Panama": {
+  "home_team": "Panama",
+  "away_team": "England",
+  "home_score": 0,
+  "away_score": 2,
+  "commence_time": "2026-06-27T21:00Z",
+  "advancer": "England",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "DR Congo|Uzbekistan": {
+  "home_team": "DR Congo",
+  "away_team": "Uzbekistan",
+  "home_score": 3,
+  "away_score": 1,
+  "commence_time": "2026-06-27T23:30Z",
+  "advancer": "DR Congo",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Argentina|Jordan": {
+  "home_team": "Jordan",
+  "away_team": "Argentina",
+  "home_score": 1,
+  "away_score": 3,
+  "commence_time": "2026-06-28T02:00Z",
+  "advancer": "Argentina",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Canada|South Africa": {
+  "home_team": "South Africa",
+  "away_team": "Canada",
+  "home_score": 0,
+  "away_score": 1,
+  "commence_time": "2026-06-28T19:00Z",
+  "advancer": "Canada",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Brazil|Japan": {
+  "home_team": "Brazil",
+  "away_team": "Japan",
+  "home_score": 2,
+  "away_score": 1,
+  "commence_time": "2026-06-29T17:00Z",
+  "advancer": "Brazil",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Germany|Paraguay": {
+  "home_team": "Germany",
+  "away_team": "Paraguay",
+  "home_score": 1,
+  "away_score": 1,
+  "commence_time": "2026-06-29T20:30Z",
+  "advancer": "Paraguay",
+  "home_shootout": 3,
+  "away_shootout": 4
+ },
+ "Morocco|Netherlands": {
+  "home_team": "Netherlands",
+  "away_team": "Morocco",
+  "home_score": 1,
+  "away_score": 1,
+  "commence_time": "2026-06-30T01:00Z",
+  "advancer": "Morocco",
+  "home_shootout": 2,
+  "away_shootout": 3
+ },
+ "Ivory Coast|Norway": {
+  "home_team": "Ivory Coast",
+  "away_team": "Norway",
+  "home_score": 1,
+  "away_score": 2,
+  "commence_time": "2026-06-30T17:00Z",
+  "advancer": "Norway",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "France|Sweden": {
+  "home_team": "France",
+  "away_team": "Sweden",
+  "home_score": 3,
+  "away_score": 0,
+  "commence_time": "2026-06-30T21:00Z",
+  "advancer": "France",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Ecuador|Mexico": {
+  "home_team": "Mexico",
+  "away_team": "Ecuador",
+  "home_score": 2,
+  "away_score": 0,
+  "commence_time": "2026-07-01T02:00Z",
+  "advancer": "Mexico",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "DR Congo|England": {
+  "home_team": "England",
+  "away_team": "DR Congo",
+  "home_score": 2,
+  "away_score": 1,
+  "commence_time": "2026-07-01T16:00Z",
+  "advancer": "England",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Belgium|Senegal": {
+  "home_team": "Belgium",
+  "away_team": "Senegal",
+  "home_score": 3,
+  "away_score": 2,
+  "commence_time": "2026-07-01T20:00Z",
+  "advancer": "Belgium",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Bosnia and Herzegovina|United States": {
+  "home_team": "United States",
+  "away_team": "Bosnia and Herzegovina",
+  "home_score": 2,
+  "away_score": 0,
+  "commence_time": "2026-07-02T00:00Z",
+  "advancer": "United States",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Austria|Spain": {
+  "home_team": "Spain",
+  "away_team": "Austria",
+  "home_score": 3,
+  "away_score": 0,
+  "commence_time": "2026-07-02T19:00Z",
+  "advancer": "Spain",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Croatia|Portugal": {
+  "home_team": "Portugal",
+  "away_team": "Croatia",
+  "home_score": 2,
+  "away_score": 1,
+  "commence_time": "2026-07-02T23:00Z",
+  "advancer": "Portugal",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Algeria|Switzerland": {
+  "home_team": "Switzerland",
+  "away_team": "Algeria",
+  "home_score": 2,
+  "away_score": 0,
+  "commence_time": "2026-07-03T03:00Z",
+  "advancer": "Switzerland",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Australia|Egypt": {
+  "home_team": "Australia",
+  "away_team": "Egypt",
+  "home_score": 1,
+  "away_score": 1,
+  "commence_time": "2026-07-03T18:00Z",
+  "advancer": "Egypt",
+  "home_shootout": 2,
+  "away_shootout": 4
+ },
+ "Argentina|Cape Verde": {
+  "home_team": "Argentina",
+  "away_team": "Cape Verde",
+  "home_score": 3,
+  "away_score": 2,
+  "commence_time": "2026-07-03T22:00Z",
+  "advancer": "Argentina",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Colombia|Ghana": {
+  "home_team": "Colombia",
+  "away_team": "Ghana",
+  "home_score": 1,
+  "away_score": 0,
+  "commence_time": "2026-07-04T01:30Z",
+  "advancer": "Colombia",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Canada|Morocco": {
+  "home_team": "Canada",
+  "away_team": "Morocco",
+  "home_score": 0,
+  "away_score": 3,
+  "commence_time": "2026-07-04T17:00Z",
+  "advancer": "Morocco",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "France|Paraguay": {
+  "home_team": "Paraguay",
+  "away_team": "France",
+  "home_score": 0,
+  "away_score": 1,
+  "commence_time": "2026-07-04T21:00Z",
+  "advancer": "France",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Brazil|Norway": {
+  "home_team": "Brazil",
+  "away_team": "Norway",
+  "home_score": 1,
+  "away_score": 2,
+  "commence_time": "2026-07-05T20:00Z",
+  "advancer": "Norway",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "England|Mexico": {
+  "home_team": "Mexico",
+  "away_team": "England",
+  "home_score": 2,
+  "away_score": 3,
+  "commence_time": "2026-07-06T01:00Z",
+  "advancer": "England",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Portugal|Spain": {
+  "home_team": "Portugal",
+  "away_team": "Spain",
+  "home_score": 0,
+  "away_score": 1,
+  "commence_time": "2026-07-06T19:00Z",
+  "advancer": "Spain",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Belgium|United States": {
+  "home_team": "United States",
+  "away_team": "Belgium",
+  "home_score": 1,
+  "away_score": 4,
+  "commence_time": "2026-07-07T00:00Z",
+  "advancer": "Belgium",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Argentina|Egypt": {
+  "home_team": "Argentina",
+  "away_team": "Egypt",
+  "home_score": 3,
+  "away_score": 2,
+  "commence_time": "2026-07-07T16:00Z",
+  "advancer": "Argentina",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Colombia|Switzerland": {
+  "home_team": "Switzerland",
+  "away_team": "Colombia",
+  "home_score": 0,
+  "away_score": 0,
+  "commence_time": "2026-07-07T20:00Z",
+  "advancer": "Switzerland",
+  "home_shootout": 4,
+  "away_shootout": 3
+ },
+ "France|Morocco": {
+  "home_team": "France",
+  "away_team": "Morocco",
+  "home_score": 2,
+  "away_score": 0,
+  "commence_time": "2026-07-09T20:00Z",
+  "advancer": "France",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Belgium|Spain": {
+  "home_team": "Spain",
+  "away_team": "Belgium",
+  "home_score": 2,
+  "away_score": 1,
+  "commence_time": "2026-07-10T19:00Z",
+  "advancer": "Spain",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "England|Norway": {
+  "home_team": "Norway",
+  "away_team": "England",
+  "home_score": 1,
+  "away_score": 2,
+  "commence_time": "2026-07-11T21:00Z",
+  "advancer": "England",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Argentina|Switzerland": {
+  "home_team": "Argentina",
+  "away_team": "Switzerland",
+  "home_score": 3,
+  "away_score": 1,
+  "commence_time": "2026-07-12T01:00Z",
+  "advancer": "Argentina",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "France|Spain": {
+  "home_team": "France",
+  "away_team": "Spain",
+  "home_score": 0,
+  "away_score": 2,
+  "commence_time": "2026-07-14T19:00Z",
+  "advancer": "Spain",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Argentina|England": {
+  "home_team": "England",
+  "away_team": "Argentina",
+  "home_score": 1,
+  "away_score": 2,
+  "commence_time": "2026-07-15T19:00Z",
+  "advancer": "Argentina",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "England|France": {
+  "home_team": "France",
+  "away_team": "England",
+  "home_score": 4,
+  "away_score": 6,
+  "commence_time": "2026-07-18T21:00Z",
+  "advancer": "England",
+  "home_shootout": null,
+  "away_shootout": null
+ },
+ "Argentina|Spain": {
+  "home_team": "Spain",
+  "away_team": "Argentina",
+  "home_score": 1,
+  "away_score": 0,
+  "commence_time": "2026-07-19T19:00Z",
+  "advancer": "Spain",
+  "home_shootout": null,
+  "away_shootout": null
+ }
+}
