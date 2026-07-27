@@ -146,6 +146,26 @@ def process_capture(cap: str, events=None, pairs=None, sm_bundle=None) -> str | 
     return match
 
 
+REDACTION_NOTE = (
+    "Per-event venue quote levels (kalshi_reaction / poly_reaction) and absolute wall-clock "
+    "timestamps (t_ms) are stripped from this pooled artifact. What remains -- which venue led and "
+    "by how many milliseconds -- is a derived MEASUREMENT, not redistributed venue market data, so "
+    "this file can be committed under Kalshi's Data Terms and Polymarket's Terms of Use while still "
+    "regenerating every published number. The unredacted per-event detail stays in the per-game "
+    "archive under viz/market/leadlag/ (not redistributed). See REPRODUCING.md, Data availability.")
+
+# Fields the published pipeline actually consumes: harden_leadlag_stats.py needs `lead`, and
+# build_paper_figures.py needs lead.best_lag_ms / lead.leader. Nothing downstream reads the
+# quote levels, so dropping them costs no reproducibility.
+_PAIR_KEEP = ("label", "match", "kalshi", "poly", "n_events")
+
+
+def _public_pair(pair: dict) -> dict:
+    out = {k: pair[k] for k in _PAIR_KEEP if k in pair}
+    out["events"] = [{"lead": e["lead"]} for e in pair.get("events", []) if e.get("lead")]
+    return out
+
+
 def pool_from_archive() -> dict | None:
     """Rebuild the pooled aggregate from EVERY per-game JSON in the archive. Parses no tapes, so it
     is instant and scales: each match is processed once into its JSON; pooling just reads the JSONs.
@@ -163,8 +183,9 @@ def pool_from_archive() -> dict | None:
     pooled = we.pool_leads(all_results)
     os.makedirs(os.path.dirname(RESULTS_OUT), exist_ok=True)
     with open(RESULTS_OUT, "w", encoding="utf-8") as f:
-        json.dump({"pairs": all_results, "pooled": pooled,
-                   "n_matches": len(matches), "min_jump": MIN_JUMP}, f, indent=2)
+        json.dump({"pairs": [_public_pair(p) for p in all_results], "pooled": pooled,
+                   "n_matches": len(matches), "min_jump": MIN_JUMP,
+                   "redaction_note": REDACTION_NOTE}, f, indent=2)
     if pooled:
         lo, hi = pooled["iqr_ms"]
         print(f"POOLED · n={pooled['n']} across {len(matches)} matches · {pooled['leader']} leads "

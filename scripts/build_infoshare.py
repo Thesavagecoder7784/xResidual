@@ -160,6 +160,11 @@ def pool_from_archive() -> dict:
     poly_gg = _median([m["poly_gg"] for m in per_match])
     leads = {"polymarket": sum(m["leader"] == "polymarket" for m in per_match),
              "kalshi": sum(m["leader"] == "kalshi" for m in per_match)}
+    # CONTRACT-unit identification width. NOT comparable to poly_hasbrouck_mid, which is a median
+    # across MATCHES: pairing the two published a point estimate (75.2%) BELOW its own lower bound
+    # (77.3%), because they have different denominators. The name says `contract` so the mismatch
+    # cannot be re-introduced by reading the key. For a dispersion to quote NEXT TO the mid, use
+    # `infoshare.median_hasbrouck_ci` from _hardened_stats.json, which bootstraps the same match unit.
     hb_lo = _median([c.get("hasbrouck_a_lo") for c in all_coint])
     hb_hi = _median([c.get("hasbrouck_a_hi") for c in all_coint])
 
@@ -167,7 +172,7 @@ def pool_from_archive() -> dict:
         "n_matches": len(matches), "n_cointegrated_contracts": len(all_coint), "bin_ms": BIN_MS,
         "poly_infoshare_hasbrouck_mid": poly_hb,        # HEADLINE: Polymarket's % of price discovery
         "poly_infoshare_gg": poly_gg,                    # Gonzalo-Granger cross-check (ordering-free)
-        "hasbrouck_mid_band": [hb_lo, hb_hi],            # median identification width across contracts
+        "hasbrouck_contract_band": [hb_lo, hb_hi],       # per-CONTRACT identification width (see above)
         "match_leader_counts": leads,
         "per_match": sorted(per_match, key=lambda m: -(m["poly_hasbrouck_mid"] or 0)),
         "note": "Hasbrouck (1995) information share + Gonzalo-Granger (1995) permanent-component share, "

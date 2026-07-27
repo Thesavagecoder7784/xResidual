@@ -189,6 +189,47 @@ def score(forecasts: dict, outcomes: dict) -> dict | None:
             "reliability_curve": curve}
 
 
+def paired_test(fc_a: dict, fc_b: dict, outcomes: dict, seed: int = 20260725) -> dict | None:
+    """Is A's Brier edge over B real, or sampling noise? Paired, on the games BOTH forecast.
+
+    P1's PASS rule is a point comparison ("market Brier < the raw model's Brier"), which the market
+    wins — but a point win on ~70 games is not evidence of superiority, and every draft read the
+    0.016 gap as if it were. Score the SAME matches under both forecasters, difference them per
+    match, and test the differences. Nothing here can change the pre-registered grade; it supplies
+    the uncertainty the grade never asked for, so the prose can stop over-reading it.
+    """
+    keys = [k for k in outcomes if k in fc_a and k in fc_b]
+    if len(keys) < 10:
+        return None
+    O = np.array([outcomes[k] for k in keys], int)
+    onehot = np.eye(3)[O]
+    ba = np.sum((np.array([fc_a[k] for k in keys], float) - onehot) ** 2, axis=1)
+    bb = np.sum((np.array([fc_b[k] for k in keys], float) - onehot) ** 2, axis=1)
+    d = bb - ba                                    # >0 = A better on that match
+    n = len(d)
+
+    from scipy.stats import binomtest, ttest_rel, wilcoxon
+    rng = np.random.default_rng(seed)
+    boot = [float(rng.choice(d, n, replace=True).mean()) for _ in range(20000)]
+    wins = int((d > 0).sum()); losses = int((d < 0).sum())
+    return {
+        "n_games": n,
+        "brier_a": round(float(ba.mean()), 4), "brier_b": round(float(bb.mean()), 4),
+        "advantage_a": round(float(d.mean()), 4),
+        "a_better_in": wins, "b_better_in": losses,
+        "paired_t_p": round(float(ttest_rel(bb, ba).pvalue), 4),
+        "wilcoxon_p": round(float(wilcoxon(bb, ba).pvalue), 4),
+        "sign_test_p": round(float(binomtest(wins, wins + losses, 0.5).pvalue), 4),
+        "boot_ci_advantage": [round(float(np.percentile(boot, 2.5)), 4),
+                              round(float(np.percentile(boot, 97.5)), 4)],
+        "significant_at_05": bool(ttest_rel(bb, ba).pvalue < 0.05),
+        "seed": seed, "n_bootstrap": 20000,
+        "note": "paired per-match multiclass Brier, market vs the pre-committed v1 model, on the "
+                "games both forecast. A CI straddling 0 means the two are statistically "
+                "indistinguishable on this sample -- report the gap as a point estimate, not a win.",
+    }
+
+
 def main() -> int:
     outcomes = load_outcomes()
     versions = {}
@@ -205,9 +246,9 @@ def main() -> int:
             versions[v] = s
 
     # the MARKET closing line — the project's actual thesis: are the prediction markets calibrated?
+    mkt_fc = {}   # bound before the try so the paired test below degrades instead of NameError-ing
     try:
         mkt = load_market_closing()
-        mkt_fc = {}
         for key in outcomes:
             _date, t1, t2 = key.split("|")
             rec = mkt.get(frozenset({W.canonical(t1), W.canonical(t2)}))
@@ -219,7 +260,21 @@ def main() -> int:
     except Exception as e:
         print(f"  market calibration skipped ({type(e).__name__}: {e})")
 
+    # Does the market's Brier edge over the pre-committed model survive a paired test? (See
+    # paired_test: the P1 grade is a point rule; this is the uncertainty around it.)
+    paired = None
+    try:
+        v1_fc = {}
+        for line in open(os.path.join(ROOT, LEDGERS["v1"])):
+            r = json.loads(line)
+            v1_fc[f"{r['date']}|{r['t1']}|{r['t2']}"] = (r["p1"], r["pd"], r["p2"])
+        if mkt_fc:
+            paired = paired_test(mkt_fc, v1_fc, outcomes)
+    except Exception as e:  # noqa: BLE001 — a missing ledger must not break the calibration build
+        print(f"  paired market-vs-model test skipped ({type(e).__name__}: {e})")
+
     payload = {"n_played": len(outcomes), "versions": versions,
+               "paired_market_vs_v1": paired,
                "headline_version": "v3" if "v3" in versions else ("v1" if "v1" in versions else None),
                "has_market": "market" in versions}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

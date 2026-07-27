@@ -190,15 +190,40 @@ def pool_from_archive():
                   "pct_net_positive": med([s["pct_net_positive"] for s in allr]),
                   "depth_frac_med": med([s["depth_frac_med"] for s in allr if s.get("depth_frac_med") is not None]),
                   "pct_harvestable": med([s["pct_harvestable"] for s in allr]),
-                  "lead_ms_med": med([s["lead_ms_med"] for s in allr])}
-    payload = {"pooled": pooled, "n_matches": n, "min_jump": MIN_JUMP}
+                  # THE UNIT TRAP, made impossible to fall into. `pct_harvestable` above is a MEDIAN
+                  # ACROSS MATCHES, so it reads 0.0 as soon as half the matches have no harvestable
+                  # goal — which is NOT the same as "no goal was harvestable". Emit the goal-weighted
+                  # rate and the match count alongside it, so prose can never round the median-match
+                  # zero into an absolute "0% of goals" claim (it did, in every draft before Jul 25).
+                  "pct_harvestable_goal_weighted": round(
+                      sum(s["pct_harvestable"] / 100.0 * s["n"] for s in allr)
+                      / sum(s["n"] for s in allr) * 100, 2),
+                  "matches_with_any_harvestable": sum(1 for s in allr if s["pct_harvestable"] > 0),
+                  "lead_ms_med": med([s["lead_ms_med"] for s in allr]),
+                  # Provenance, so a reader of this file cannot mistake the estimator or the
+                  # denominator. `pooled.n_matches` is THE ledger n; the top-level n_match_files
+                  # is coverage, and is deliberately NOT called n_matches (they differ: matches
+                  # whose tape yielded no move >= MIN_JUMP produce a file but no ledger row).
+                  "estimator": "median across matches of each match's median per-goal value "
+                               "(median-of-medians); n_matches is the unit, not the goal. "
+                               "pct_harvestable is therefore the MEDIAN MATCH's harvestable share "
+                               "-- quote it as 'the median match has X% harvestable goals', never "
+                               "as 'X% of goals'; for the goal-level rate use "
+                               "pct_harvestable_goal_weighted",
+                  "arithmetic_note": "gross/cost/net are three independent medians over the same "
+                                     "matches, so gross_med_c - cost_med_c != net_med_c by design "
+                                     "— quote net_med_c, never a subtraction"}
+    # NOTE: distinct denominators, never conflate — n_match_files (tapes that produced a harvest
+    # file) >= pooled.n_matches (files with >=1 qualifying goal, the ledger's unit).
+    payload = {"pooled": pooled, "n_match_files": n, "min_jump": MIN_JUMP}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         f.write("window.HARVEST = " + json.dumps(payload) + ";\n")
     with open(RESULTS, "w") as f:
         json.dump(payload, f, indent=2)
     if pooled:
-        print(f"POOLED · {pooled['n_matches']} matches · {pooled['n_goals']} goals · "
+        print(f"POOLED · {pooled['n_matches']} ledger matches (of {n} match-files) · "
+              f"{pooled['n_goals']} goals · "
               f"gross {pooled['gross_med_c']}c vs cost {pooled['cost_med_c']}c -> net {pooled['net_med_c']}c · "
               f"net+ {pooled['pct_net_positive']}% BUT depth at goal {pooled['depth_frac_med']}x -> "
               f"{pooled['pct_harvestable']}% actually harvestable · lead {pooled['lead_ms_med']}ms")

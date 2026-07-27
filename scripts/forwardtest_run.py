@@ -24,6 +24,7 @@ from xresidual import forwardtest, trajectory  # noqa: E402
 LOGGER_DATA = os.path.join(ROOT, "logger", "data")
 TRADES_LOG = os.path.join(LOGGER_DATA, "paper-trades.jsonl")
 OUT = os.path.join(ROOT, "viz", "market", "_forwardtest.js")
+RESULTS = os.path.join(ROOT, "writeups", "_forwardtest_results.json")  # committed source for §6.1
 
 
 def _key(t: dict) -> str:
@@ -71,6 +72,12 @@ def main() -> int:
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("window.FORWARDTEST = " + json.dumps(payload) + ";\n")
+    # Also write the committed artifact. The viz/_*.js copy is gitignored (two writers, merge
+    # conflicts), which left the §6.1 convergence numbers with no shipped source — and the notes
+    # drifted to a stale cut (6 trades / -2.6pp) while the run had moved on to 8 / -1.66pp.
+    os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
+    with open(RESULTS, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=1)
 
     s = payload["summary"]
     print(f"persisted trades={s['n_trades']} total={s['total_pnl_pp']}pp "
