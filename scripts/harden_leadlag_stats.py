@@ -118,7 +118,7 @@ def infoshare_block():
     from scipy.stats import binomtest, wilcoxon
     boot = [np.median(RNG.choice(gg, len(gg), replace=True)) for _ in range(B)]
     hi = int((gg > 0.5).sum()); lo = int((gg < 0.5).sum())
-    return {
+    out = {
         "n_matches": len(gg), "median_gg": float(np.median(gg)),
         "median_ci": [float(x) for x in np.percentile(boot, [2.5, 97.5])],
         "mean_gg": float(gg.mean()), "between_match_sd": float(gg.std(ddof=1)),
@@ -126,6 +126,33 @@ def infoshare_block():
         "sign_p": float(binomtest(hi, hi + lo, 0.5).pvalue),
         "wilcoxon_p": float(wilcoxon(gg - 0.5).pvalue),
     }
+
+    # ---- everything below draws from RNG only AFTER `boot`, so the values above are unchanged ----
+
+    # Gonzalo-Granger support check. GG is a ratio of error-correction coefficients, so a match whose
+    # two alphas carry the same sign returns a share outside [0,1]. Those are real estimates, not
+    # bugs, but they inflate the mean and the SD, so disclose the count and report the median over
+    # the in-support subset as the robustness read. The headline median is barely moved (it is a
+    # median), which is exactly why the median is the headline.
+    in_sup = gg[(gg >= 0.0) & (gg <= 1.0)]
+    out["n_out_of_support"] = int(len(gg) - len(in_sup))
+    out["gg_max"] = float(gg.max())
+    out["median_gg_in_support"] = float(np.median(in_sup))
+    out["n_in_support"] = int(len(in_sup))
+
+    # Hasbrouck at the MATCH unit. The builder also emits `hasbrouck_mid_band`, but that is a median
+    # across CONTRACTS of each contract's lo/hi bound, while the mid is a median across MATCHES —
+    # different denominators, which is how the published mid (75.2%) ended up BELOW its own published
+    # lower bound (77.3%). Recompute the dispersion on the same unit as the point estimate, so the
+    # two can be quoted together honestly. Quote these, never the contract band next to the mid.
+    hb = np.array([m["poly_hasbrouck_mid"] for m in d["per_match"]
+                   if m.get("poly_hasbrouck_mid") is not None])
+    hb_boot = [np.median(RNG.choice(hb, len(hb), replace=True)) for _ in range(B)]
+    out["n_matches_hasbrouck"] = int(len(hb))
+    out["median_hasbrouck"] = float(np.median(hb))
+    out["median_hasbrouck_ci"] = [float(x) for x in np.percentile(hb_boot, [2.5, 97.5])]
+    out["hasbrouck_iqr"] = [float(x) for x in np.percentile(hb, [25, 75])]
+    return out
 
 
 def main():
@@ -155,6 +182,11 @@ def main():
     print(f"  matches={iso['n_matches']} · median GG {iso['median_gg']:.1%}  "
           f"cluster-boot 95% CI [{iso['median_ci'][0]:.1%}, {iso['median_ci'][1]:.1%}]")
     print(f"  between-match SD {iso['between_match_sd']:.1%} (mean {iso['mean_gg']:.1%})")
+    print(f"  Hasbrouck (same match unit) median {iso['median_hasbrouck']:.1%}  "
+          f"cluster-boot 95% CI [{iso['median_hasbrouck_ci'][0]:.1%}, {iso['median_hasbrouck_ci'][1]:.1%}]")
+    print(f"  GG support: {iso['n_out_of_support']} of {iso['n_matches']} matches outside [0,1] "
+          f"(max {iso['gg_max']:.2f}); median over the {iso['n_in_support']} in-support "
+          f"{iso['median_gg_in_support']:.1%}")
     print(f"  per-match sign test: {iso['matches_poly_gt_50']} of "
           f"{iso['matches_poly_gt_50']+iso['matches_kalshi']} matches poly>50%  "
           f"(binom p={iso['sign_p']:.2g}, wilcoxon p={iso['wilcoxon_p']:.2g})")
