@@ -10,7 +10,8 @@
 > a primarily-American book (Kalshi) prices its own region richer (USA, Mexico,
 > Netherlands), a global book (Polymarket) prices traditional and football-mad powers richer
 > (England, Portugal, Japan, Brazil). And against the Betfair Exchange as a sharp
-> benchmark, **Polymarket sits marginally closer** (mean abs error ~0.12pp vs ~0.16pp).
+> benchmark, **Polymarket sits closer at every as-of date** (0.15pp vs 0.26pp at 2026-06-22,
+> closer on 39 of 48 teams; `scripts/basis_asof_sweep.py`).
 
 ## Why this is interesting
 
@@ -27,7 +28,7 @@ study of Polymarket ([*Anatomy of a Decentralized Prediction Market*,
 2026](https://arxiv.org/html/2604.24366v1)) explicitly does not resolve whether
 Polymarket leads or follows Kalshi. Price *discovery* (who moves first) needs in-play
 shocks and is treated separately in this project (the cross-venue lead-lag study,
-forthcoming once a marquee match is captured); price
+now delivered — see writeups/cross-venue-price-discovery.md); price
 *levels* (who is richer, and by how much, once margin is removed) can be measured today,
 pre-tournament, and is the subject of this note.
 
@@ -93,7 +94,14 @@ tilt**, exactly the kind of audience-composition signal a venue-aware market mak
 skew around.
 
 **4. The global book is marginally sharper.** Anchored to the Betfair Exchange,
-Polymarket's mean absolute error is **~0.12pp** vs Kalshi's **~0.16pp**. Suggestive, not
+Polymarket's mean absolute error is **~0.15pp** vs Kalshi's **~0.26pp** at 2026-06-22, and
+Polymarket is the closer of the two at every as-of date replayed across the tournament
+(`writeups/_basis_asof_sweep.json`). An earlier draft of this note quoted ~0.12pp vs ~0.16pp
+undated, and the flagship note quoted ~0.18pp vs ~0.26pp. Neither was wrong: the as-of sweep
+reproduces **0.118pp vs 0.166pp at 2026-06-06**, so the first pair was a real pre-kickoff read,
+and the second sits on the same drifting trajectory later. They only looked contradictory because
+neither carried a date. That is exactly what the sweep exists to prevent. The
+direction is stable at all nine cutoffs; the magnitude is not. Suggestive, not
 decisive (see Robustness), but it points the same direction as (3): the global crowd is,
 if anything, a touch closer to the sharp price.
 
@@ -142,4 +150,4 @@ python scripts/build_basis.py     # reads logged JSONL -> viz/market/_basis.js
 ```
 
 See also [FINDINGS.md](../FINDINGS.md) #12; the companion price-*discovery* (lead-lag)
-study is forthcoming once a marquee match is captured. Code + methodology: the xResidual repo.
+study is delivered in writeups/cross-venue-price-discovery.md. Code + methodology: the xResidual repo.
