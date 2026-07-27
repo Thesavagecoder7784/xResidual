@@ -25,8 +25,16 @@ push-secrets:
 	$(RSYNC) .kalshi_private_key.pem $(VM):$(REPO)/.kalshi_private_key.pem
 
 ## Pull collected data DOWN — snapshots, captures, analysis outputs. Run before rendering/posting.
+##
+## BOTH lines matter. Pulling only logger/data/ is what cost us the 2026 per-game archives: the
+## tapes are deliberately transient (cleanup_tapes.sh deletes them once pooled) and the per-game
+## JSONs are what build_leadlag.py calls "the source of truth" — but they were gitignored AND never
+## pulled, so when the VM was decommissioned ~2/3 of them went with it. The whole set is ~2 MB.
+## If you add a new tape-consuming pipeline, add its archive dir to the second rsync.
 pull:
 	$(RSYNC) $(VM):$(REPO)/logger/data/ ./logger/data/
+	$(RSYNC) --include='*/' --include='*.json' --exclude='*' \
+	         $(VM):$(REPO)/viz/market/ ./viz/market/
 
 ## Open a shell on the VM.
 ssh:
