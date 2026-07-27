@@ -1,0 +1,13 @@
+{
+  "pooled": {
+    "n_matches": 53,
+    "tournament_max_z": 441.03,
+    "tournament_max_match": "England vs Argentina",
+    "tournament_max_venue": "poly",
+    "tournament_max_nonzero_frac": 0.053,
+    "median_match_max_z": 170.09,
+    "max_z_le_4": false
+  },
+  "n_matches": 53,
+  "trail_s": 1800
+}

@@ -1,0 +1,448 @@
+{
+ "source_glob": "/Users/prabhatm/Documents/GitHub/xResidual/logger/data/snapshots-*.jsonl",
+ "estimator": "build_basis.latest_winner/latest_sharp + multiplicative de-vig, replayed with an as-of cutoff; mean |venue - Betfair| across teams quoted by all three",
+ "series": {
+  "2026-06-06": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.118,
+   "ka_mae_pp": 0.166,
+   "widest_gap_team": "England",
+   "widest_gap_pp": 0.97,
+   "kalshi_richer_top": [
+    [
+     "Portugal",
+     0.703
+    ],
+    [
+     "Netherlands",
+     0.546
+    ],
+    [
+     "Mexico",
+     0.434
+    ],
+    [
+     "Iraq",
+     0.421
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "England",
+     0.97
+    ],
+    [
+     "Japan",
+     0.62
+    ],
+    [
+     "Brazil",
+     0.419
+    ],
+    [
+     "Norway",
+     0.312
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 27,
+   "ka_closer_on": 21,
+   "cross_venue_gap_pp": 0.161,
+   "overround_poly_pct": 3.5,
+   "overround_kalshi_pct": 6.6
+  },
+  "2026-06-08": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.134,
+   "ka_mae_pp": 0.15,
+   "widest_gap_team": "England",
+   "widest_gap_pp": 0.957,
+   "kalshi_richer_top": [
+    [
+     "Netherlands",
+     0.694
+    ],
+    [
+     "Germany",
+     0.479
+    ],
+    [
+     "Iraq",
+     0.429
+    ],
+    [
+     "USA",
+     0.409
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "England",
+     0.957
+    ],
+    [
+     "Brazil",
+     0.625
+    ],
+    [
+     "Japan",
+     0.516
+    ],
+    [
+     "Morocco",
+     0.416
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 28,
+   "ka_closer_on": 20,
+   "cross_venue_gap_pp": 0.152,
+   "overround_poly_pct": 2.8,
+   "overround_kalshi_pct": 4.7
+  },
+  "2026-06-10": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.097,
+   "ka_mae_pp": 0.141,
+   "widest_gap_team": "Netherlands",
+   "widest_gap_pp": 0.626,
+   "kalshi_richer_top": [
+    [
+     "Netherlands",
+     0.626
+    ],
+    [
+     "Spain",
+     0.617
+    ],
+    [
+     "Mexico",
+     0.522
+    ],
+    [
+     "USA",
+     0.434
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "France",
+     0.497
+    ],
+    [
+     "England",
+     0.43
+    ],
+    [
+     "Portugal",
+     0.421
+    ],
+    [
+     "Argentina",
+     0.365
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 37,
+   "ka_closer_on": 11,
+   "cross_venue_gap_pp": 0.157,
+   "overround_poly_pct": 3.1,
+   "overround_kalshi_pct": 6.5
+  },
+  "2026-06-15": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.123,
+   "ka_mae_pp": 0.226,
+   "widest_gap_team": "USA",
+   "widest_gap_pp": 1.316,
+   "kalshi_richer_top": [
+    [
+     "USA",
+     1.316
+    ],
+    [
+     "Mexico",
+     0.482
+    ],
+    [
+     "Iraq",
+     0.429
+    ],
+    [
+     "Czech Republic",
+     0.33
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "England",
+     0.569
+    ],
+    [
+     "Germany",
+     0.419
+    ],
+    [
+     "Norway",
+     0.375
+    ],
+    [
+     "Japan",
+     0.354
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 36,
+   "ka_closer_on": 12,
+   "cross_venue_gap_pp": 0.152,
+   "overround_poly_pct": 0.6,
+   "overround_kalshi_pct": 4.35
+  },
+  "2026-06-22": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.146,
+   "ka_mae_pp": 0.261,
+   "widest_gap_team": "France",
+   "widest_gap_pp": 1.272,
+   "kalshi_richer_top": [
+    [
+     "Netherlands",
+     1.154
+    ],
+    [
+     "USA",
+     1.052
+    ],
+    [
+     "Mexico",
+     0.551
+    ],
+    [
+     "Czech Republic",
+     0.42
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "France",
+     1.272
+    ],
+    [
+     "England",
+     0.881
+    ],
+    [
+     "Spain",
+     0.802
+    ],
+    [
+     "Germany",
+     0.552
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 39,
+   "ka_closer_on": 9,
+   "cross_venue_gap_pp": 0.196,
+   "overround_poly_pct": 1.3,
+   "overround_kalshi_pct": 6.45
+  },
+  "2026-06-29": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.529,
+   "ka_mae_pp": 3.578,
+   "widest_gap_team": "France",
+   "widest_gap_pp": 23.39,
+   "kalshi_richer_top": [
+    [
+     "Tunisia",
+     4.918
+    ],
+    [
+     "Iran",
+     4.918
+    ],
+    [
+     "Czech Republic",
+     4.918
+    ],
+    [
+     "South Korea",
+     4.918
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "France",
+     23.39
+    ],
+    [
+     "Argentina",
+     17.323
+    ],
+    [
+     "Spain",
+     10.193
+    ],
+    [
+     "England",
+     9.041
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 44,
+   "ka_closer_on": 4,
+   "cross_venue_gap_pp": 3.689,
+   "overround_poly_pct": 0.7,
+   "overround_kalshi_pct": 906.5
+  },
+  "2026-07-06": {
+   "n_teams": 48,
+   "pm_mae_pp": 0.987,
+   "ka_mae_pp": 3.172,
+   "widest_gap_team": "France",
+   "widest_gap_pp": 30.8,
+   "kalshi_richer_top": [
+    [
+     "Senegal",
+     2.515
+    ],
+    [
+     "Brazil",
+     2.515
+    ],
+    [
+     "Croatia",
+     2.515
+    ],
+    [
+     "Tunisia",
+     2.515
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "France",
+     30.8
+    ],
+    [
+     "Spain",
+     17.219
+    ],
+    [
+     "Argentina",
+     15.98
+    ],
+    [
+     "England",
+     13.671
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 43,
+   "ka_closer_on": 5,
+   "cross_venue_gap_pp": 3.878,
+   "overround_poly_pct": 1.1,
+   "overround_kalshi_pct": 1849.6
+  },
+  "2026-07-13": {
+   "n_teams": 48,
+   "pm_mae_pp": 1.358,
+   "ka_mae_pp": 2.837,
+   "widest_gap_team": "France",
+   "widest_gap_pp": 36.433,
+   "kalshi_richer_top": [
+    [
+     "Senegal",
+     2.126
+    ],
+    [
+     "Brazil",
+     2.126
+    ],
+    [
+     "Croatia",
+     2.126
+    ],
+    [
+     "Tunisia",
+     2.126
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "France",
+     36.433
+    ],
+    [
+     "England",
+     20.851
+    ],
+    [
+     "Spain",
+     19.911
+    ],
+    [
+     "Argentina",
+     16.328
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 37,
+   "ka_closer_on": 11,
+   "cross_venue_gap_pp": 3.897,
+   "overround_poly_pct": 2.1,
+   "overround_kalshi_pct": 2199.4
+  },
+  "2026-07-18": {
+   "n_teams": 48,
+   "pm_mae_pp": 2.126,
+   "ka_mae_pp": 2.868,
+   "widest_gap_team": "Spain",
+   "widest_gap_pp": 55.279,
+   "kalshi_richer_top": [
+    [
+     "Senegal",
+     2.034
+    ],
+    [
+     "Brazil",
+     2.034
+    ],
+    [
+     "Croatia",
+     2.034
+    ],
+    [
+     "Tunisia",
+     2.034
+    ]
+   ],
+   "poly_richer_top": [
+    [
+     "Spain",
+     55.279
+    ],
+    [
+     "Argentina",
+     38.282
+    ],
+    [
+     "Turkey",
+     -2.034
+    ],
+    [
+     "Norway",
+     -2.034
+    ]
+   ],
+   "closer": "Polymarket",
+   "pm_closer_on": 35,
+   "ka_closer_on": 13,
+   "cross_venue_gap_pp": 3.898,
+   "overround_poly_pct": 2.3,
+   "overround_kalshi_pct": 2300.6
+  }
+ },
+ "verdict": "stable: Polymarket"
+}

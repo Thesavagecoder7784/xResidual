@@ -39,7 +39,21 @@
   "matches_poly_gt_50": 61,
   "matches_kalshi": 2,
   "sign_p": 4.373671563806525e-16,
-  "wilcoxon_p": 7.234227350815628e-12
+  "wilcoxon_p": 7.234227350815628e-12,
+  "n_out_of_support": 5,
+  "gg_max": 1.4242,
+  "median_gg_in_support": 0.8015,
+  "n_in_support": 58,
+  "n_matches_hasbrouck": 63,
+  "median_hasbrouck": 0.7522,
+  "median_hasbrouck_ci": [
+   0.6835,
+   0.8715
+  ],
+  "hasbrouck_iqr": [
+   0.58405,
+   0.9170499999999999
+  ]
  },
  "n_bootstrap": 10000,
  "seed": 20260702

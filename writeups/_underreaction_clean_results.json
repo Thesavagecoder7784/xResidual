@@ -1,0 +1,26 @@
+{
+ "n_matches": 8,
+ "n_goals": 29,
+ "n_goals_gated": 22,
+ "n_goals_excluded": 7,
+ "excluded_no_fair_change": 2,
+ "excluded_quote_pinned": 5,
+ "median_ratio_logodds": 0.345,
+ "median_ratio_prob": 0.634,
+ "median_ratio_logodds_ungated": 0.065,
+ "undershoot_goals": 22,
+ "undershoot_matches": 8,
+ "n_matches_ratio": 8,
+ "match_sign_p": 0.0078125,
+ "outcome_test": {
+  "n_goals": 29,
+  "model_logloss": 0.235,
+  "market_logloss": 0.361,
+  "model_brier": 0.073,
+  "market_brier": 0.113,
+  "basis": "pooled over every goal in the subset, binary home-win indicator",
+  "model_better": true
+ },
+ "estimator": "log-odds ratio of the market's post-goal move to the model's fair move, per goal, on the curated-minute matches whose score reconstruction validates; gated on the market quote actually moving. Primary = median across gated goals. The outcome test pools ALL goals in the subset (gated and not), which is how the published figure was built.",
+ "supersedes": "the ad-hoc '0.55x / 20 of 22 goals / 7 of 8 matches' figures published before 2026-07-25, which shipped with no estimator; see this file's module docstring"
+}
