@@ -1,0 +1,7 @@
+{
+  "n_matches": 89,
+  "market_mean_logscore": 0.6536,
+  "baseline_mean_logscore": 0.8038,
+  "edge": 0.1502,
+  "pass_b": true
+}

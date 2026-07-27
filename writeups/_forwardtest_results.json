@@ -1,0 +1,57 @@
+{
+ "summary": {
+  "n_trades": 8,
+  "total_pnl_pp": -1.656,
+  "hit_rate": 0.25,
+  "mean_pnl_pp": -0.2071,
+  "per_trade_sharpe": null,
+  "avg_hold": 7.0
+ },
+ "equity": [
+  {
+   "ts": "2026-06-05 14:00:00+00:00",
+   "cum_pnl_pp": -0.104
+  },
+  {
+   "ts": "2026-06-05 21:00:00+00:00",
+   "cum_pnl_pp": -0.625
+  },
+  {
+   "ts": "2026-06-06 17:30:00+00:00",
+   "cum_pnl_pp": -1.262
+  },
+  {
+   "ts": "2026-06-06 23:30:00+00:00",
+   "cum_pnl_pp": -1.439
+  },
+  {
+   "ts": "2026-06-07 09:30:00+00:00",
+   "cum_pnl_pp": -2.148
+  },
+  {
+   "ts": "2026-06-08 19:00:00+00:00",
+   "cum_pnl_pp": -2.616
+  },
+  {
+   "ts": "2026-06-09 19:00:00+00:00",
+   "cum_pnl_pp": -2.006
+  },
+  {
+   "ts": "2026-06-10 15:00:00+00:00",
+   "cum_pnl_pp": -1.656
+  }
+ ],
+ "n_open": 0,
+ "params": {
+  "entry_pp": 1.0,
+  "exit_pp": 0.3,
+  "cost_pp": 0.5,
+  "max_hold": 8
+ },
+ "note": "paper / out-of-sample; long cheap venue, short rich, modeled costs",
+ "window": {
+  "from": "2026-06-05",
+  "to": "2026-06-10",
+  "note": "pre-tournament buildup only; after the group stage the title field starts resolving and a de-vigged convergence trade is degenerate (Kalshi's winner overround reaches ~2300% -- see _basis_asof_sweep.json). per_trade_sharpe is null in the run: it was never computed, so the '-1.95' quoted in pre-2026-07-25 drafts has no source and is withdrawn."
+ }
+}

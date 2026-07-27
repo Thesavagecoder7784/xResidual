@@ -1,0 +1,634 @@
+{
+  "n": 89,
+  "venue": "oddsapi",
+  "brier_open": 0.4906,
+  "brier_close": 0.4768,
+  "improvement": 0.0138,
+  "pass": true,
+  "n_moved": 87,
+  "per_match": [
+    {
+      "match": "Mexico vs South Africa",
+      "outcome": 0,
+      "brier_open": 0.16858553889337488,
+      "brier_close": 0.16823391227594636,
+      "moved": true
+    },
+    {
+      "match": "South Korea vs Czech Republic",
+      "outcome": 0,
+      "brier_open": 0.6242222411681491,
+      "brier_close": 0.6007189104173566,
+      "moved": true
+    },
+    {
+      "match": "Czech Republic vs South Africa",
+      "outcome": 1,
+      "brier_open": 0.7890895916360435,
+      "brier_close": 0.8443246861628397,
+      "moved": true
+    },
+    {
+      "match": "Mexico vs South Korea",
+      "outcome": 0,
+      "brier_open": 0.35450294391303855,
+      "brier_close": 0.42690838319401836,
+      "moved": true
+    },
+    {
+      "match": "Czech Republic vs Mexico",
+      "outcome": 2,
+      "brier_open": 0.3753929575054571,
+      "brier_close": 0.34069538965234303,
+      "moved": true
+    },
+    {
+      "match": "South Africa vs South Korea",
+      "outcome": 0,
+      "brier_open": 0.8592831236862235,
+      "brier_close": 1.0778822369687062,
+      "moved": true
+    },
+    {
+      "match": "Canada vs Bosnia & Herzegovina",
+      "outcome": 1,
+      "brier_open": 0.8535924004425762,
+      "brier_close": 0.8382689014347066,
+      "moved": true
+    },
+    {
+      "match": "Qatar vs Switzerland",
+      "outcome": 1,
+      "brier_open": 1.3084119680520137,
+      "brier_close": 1.3793718480048185,
+      "moved": true
+    },
+    {
+      "match": "Switzerland vs Bosnia & Herzegovina",
+      "outcome": 0,
+      "brier_open": 0.2491379347463047,
+      "brier_close": 0.22723383698180177,
+      "moved": true
+    },
+    {
+      "match": "Canada vs Qatar",
+      "outcome": 0,
+      "brier_open": 0.13081882772140924,
+      "brier_close": 0.10688046265941893,
+      "moved": true
+    },
+    {
+      "match": "Switzerland vs Canada",
+      "outcome": 0,
+      "brier_open": 0.45858946394341993,
+      "brier_close": 0.5642863238644884,
+      "moved": true
+    },
+    {
+      "match": "Bosnia & Herzegovina vs Qatar",
+      "outcome": 0,
+      "brier_open": 0.23843807039443676,
+      "brier_close": 0.1400696049710497,
+      "moved": true
+    },
+    {
+      "match": "Brazil vs Morocco",
+      "outcome": 1,
+      "brier_open": 0.9426609019671731,
+      "brier_close": 0.9185445894856954,
+      "moved": true
+    },
+    {
+      "match": "Haiti vs Scotland",
+      "outcome": 2,
+      "brier_open": 0.20223535185613545,
+      "brier_close": 0.20806092528358383,
+      "moved": true
+    },
+    {
+      "match": "Scotland vs Morocco",
+      "outcome": 2,
+      "brier_open": 0.4183939856603619,
+      "brier_close": 0.27103036840371064,
+      "moved": true
+    },
+    {
+      "match": "Brazil vs Haiti",
+      "outcome": 0,
+      "brier_open": 0.01907144256154565,
+      "brier_close": 0.029020079491493645,
+      "moved": true
+    },
+    {
+      "match": "Scotland vs Brazil",
+      "outcome": 2,
+      "brier_open": 0.19247088138779947,
+      "brier_close": 0.11195481621778097,
+      "moved": true
+    },
+    {
+      "match": "Morocco vs Haiti",
+      "outcome": 0,
+      "brier_open": 0.12650950092106206,
+      "brier_close": 0.05225385362296993,
+      "moved": true
+    },
+    {
+      "match": "USA vs Paraguay",
+      "outcome": 0,
+      "brier_open": 0.40372462966029377,
+      "brier_close": 0.43488695894939755,
+      "moved": true
+    },
+    {
+      "match": "Australia vs Turkey",
+      "outcome": 0,
+      "brier_open": 0.9871265450575728,
+      "brier_close": 1.0487016230694186,
+      "moved": true
+    },
+    {
+      "match": "USA vs Australia",
+      "outcome": 0,
+      "brier_open": 0.3082901111677406,
+      "brier_close": 0.2562464383776769,
+      "moved": true
+    },
+    {
+      "match": "Turkey vs Paraguay",
+      "outcome": 2,
+      "brier_open": 0.784054351704206,
+      "brier_close": 0.8615663932346398,
+      "moved": true
+    },
+    {
+      "match": "Turkey vs USA",
+      "outcome": 0,
+      "brier_open": 0.6475317572641446,
+      "brier_close": 0.9104720915691806,
+      "moved": true
+    },
+    {
+      "match": "Paraguay vs Australia",
+      "outcome": 1,
+      "brier_open": 0.7661710835564273,
+      "brier_close": 0.5215667526070036,
+      "moved": true
+    },
+    {
+      "match": "Germany vs Cura\u00e7ao",
+      "outcome": 0,
+      "brier_open": 0.008606120761425095,
+      "brier_close": 0.00896774812217585,
+      "moved": true
+    },
+    {
+      "match": "Ivory Coast vs Ecuador",
+      "outcome": 0,
+      "brier_open": 0.823840369374614,
+      "brier_close": 0.7563694515063089,
+      "moved": true
+    },
+    {
+      "match": "Germany vs Ivory Coast",
+      "outcome": 0,
+      "brier_open": 0.22596796452343984,
+      "brier_close": 0.17604133994513155,
+      "moved": true
+    },
+    {
+      "match": "Ecuador vs Cura\u00e7ao",
+      "outcome": 1,
+      "brier_open": 1.318310657596372,
+      "brier_close": 1.5319164055931855,
+      "moved": true
+    },
+    {
+      "match": "Cura\u00e7ao vs Ivory Coast",
+      "outcome": 2,
+      "brier_open": 0.09592887769753852,
+      "brier_close": 0.05018051067106808,
+      "moved": true
+    },
+    {
+      "match": "Ecuador vs Germany",
+      "outcome": 0,
+      "brier_open": 1.0326779503538637,
+      "brier_close": 1.0427071498120744,
+      "moved": true
+    },
+    {
+      "match": "Netherlands vs Japan",
+      "outcome": 1,
+      "brier_open": 0.8329575916324807,
+      "brier_close": 0.7981754756930387,
+      "moved": true
+    },
+    {
+      "match": "Sweden vs Tunisia",
+      "outcome": 0,
+      "brier_open": 0.39504065839578345,
+      "brier_close": 0.3652703901040114,
+      "moved": true
+    },
+    {
+      "match": "Netherlands vs Sweden",
+      "outcome": 0,
+      "brier_open": 0.27715484626281595,
+      "brier_close": 0.3015708187426758,
+      "moved": true
+    },
+    {
+      "match": "Tunisia vs Japan",
+      "outcome": 2,
+      "brier_open": 0.3416097928345494,
+      "brier_close": 0.18839015759964917,
+      "moved": true
+    },
+    {
+      "match": "Japan vs Sweden",
+      "outcome": 1,
+      "brier_open": 0.7987167867116,
+      "brier_close": 0.8110963453523807,
+      "moved": true
+    },
+    {
+      "match": "Tunisia vs Netherlands",
+      "outcome": 2,
+      "brier_open": 0.22705595594938224,
+      "brier_close": 0.028013137777041293,
+      "moved": true
+    },
+    {
+      "match": "Belgium vs Egypt",
+      "outcome": 1,
+      "brier_open": 0.9299138228628515,
+      "brier_close": 0.9795382546851039,
+      "moved": true
+    },
+    {
+      "match": "Iran vs New Zealand",
+      "outcome": 1,
+      "brier_open": 0.8177196269994874,
+      "brier_close": 0.8468366924441619,
+      "moved": true
+    },
+    {
+      "match": "Belgium vs Iran",
+      "outcome": 1,
+      "brier_open": 1.091222836814089,
+      "brier_close": 1.1023433172956907,
+      "moved": true
+    },
+    {
+      "match": "New Zealand vs Egypt",
+      "outcome": 2,
+      "brier_open": 0.308038299882299,
+      "brier_close": 0.24153661027590995,
+      "moved": true
+    },
+    {
+      "match": "Egypt vs Iran",
+      "outcome": 1,
+      "brier_open": 0.7239560015083161,
+      "brier_close": 0.6075301587192679,
+      "moved": true
+    },
+    {
+      "match": "New Zealand vs Belgium",
+      "outcome": 2,
+      "brier_open": 0.11564735215141059,
+      "brier_close": 0.056352508681176444,
+      "moved": true
+    },
+    {
+      "match": "Spain vs Cape Verde",
+      "outcome": 1,
+      "brier_open": 1.5825150704316506,
+      "brier_close": 1.6666376520493156,
+      "moved": true
+    },
+    {
+      "match": "Saudi Arabia vs Uruguay",
+      "outcome": 1,
+      "brier_open": 1.0385795338245725,
+      "brier_close": 1.0672364569510588,
+      "moved": true
+    },
+    {
+      "match": "Spain vs Saudi Arabia",
+      "outcome": 0,
+      "brier_open": 0.03340175557900396,
+      "brier_close": 0.02350219554673128,
+      "moved": true
+    },
+    {
+      "match": "Uruguay vs Cape Verde",
+      "outcome": 1,
+      "brier_open": 1.0573848563543136,
+      "brier_close": 1.0540522943565782,
+      "moved": true
+    },
+    {
+      "match": "Cape Verde vs Saudi Arabia",
+      "outcome": 1,
+      "brier_open": 0.7460007940090717,
+      "brier_close": 0.75601775732733,
+      "moved": true
+    },
+    {
+      "match": "Uruguay vs Spain",
+      "outcome": 2,
+      "brier_open": 0.2751506116618338,
+      "brier_close": 0.283504329840754,
+      "moved": true
+    },
+    {
+      "match": "France vs Senegal",
+      "outcome": 0,
+      "brier_open": 0.18124297251422894,
+      "brier_close": 0.18984478893292453,
+      "moved": true
+    },
+    {
+      "match": "Iraq vs Norway",
+      "outcome": 2,
+      "brier_open": 0.0755305634008599,
+      "brier_close": 0.07015148591095104,
+      "moved": true
+    },
+    {
+      "match": "France vs Iraq",
+      "outcome": 0,
+      "brier_open": 0.03817227070901602,
+      "brier_close": 0.019814886770108803,
+      "moved": true
+    },
+    {
+      "match": "Norway vs Senegal",
+      "outcome": 0,
+      "brier_open": 0.4581024930747922,
+      "brier_close": 0.4957110444393692,
+      "moved": true
+    },
+    {
+      "match": "Norway vs France",
+      "outcome": 2,
+      "brier_open": 0.34743499800016375,
+      "brier_close": 0.14947989179252485,
+      "moved": true
+    },
+    {
+      "match": "Senegal vs Iraq",
+      "outcome": 0,
+      "brier_open": 0.18529637964533288,
+      "brier_close": 0.07826262358114003,
+      "moved": true
+    },
+    {
+      "match": "Argentina vs Algeria",
+      "outcome": 0,
+      "brier_open": 0.1581885034264881,
+      "brier_close": 0.20156906351999274,
+      "moved": true
+    },
+    {
+      "match": "Austria vs Jordan",
+      "outcome": 0,
+      "brier_open": 0.12079201883480176,
+      "brier_close": 0.13292478177510916,
+      "moved": true
+    },
+    {
+      "match": "Argentina vs Austria",
+      "outcome": 0,
+      "brier_open": 0.27925540373989055,
+      "brier_close": 0.18412167429934762,
+      "moved": true
+    },
+    {
+      "match": "Jordan vs Algeria",
+      "outcome": 2,
+      "brier_open": 0.25126835444585055,
+      "brier_close": 0.21204424299890728,
+      "moved": true
+    },
+    {
+      "match": "Algeria vs Austria",
+      "outcome": 1,
+      "brier_open": 0.7666137625688486,
+      "brier_close": 0.4844258808071745,
+      "moved": true
+    },
+    {
+      "match": "Jordan vs Argentina",
+      "outcome": 2,
+      "brier_open": 0.07524153075572079,
+      "brier_close": 0.04774902641180957,
+      "moved": true
+    },
+    {
+      "match": "Portugal vs DR Congo",
+      "outcome": 1,
+      "brier_open": 1.260647022439603,
+      "brier_close": 1.233667745534495,
+      "moved": true
+    },
+    {
+      "match": "Uzbekistan vs Colombia",
+      "outcome": 2,
+      "brier_open": 0.16763756860560486,
+      "brier_close": 0.15109241910001128,
+      "moved": true
+    },
+    {
+      "match": "Portugal vs Uzbekistan",
+      "outcome": 0,
+      "brier_open": 0.08872522330626378,
+      "brier_close": 0.041990398703204874,
+      "moved": true
+    },
+    {
+      "match": "Colombia vs DR Congo",
+      "outcome": 0,
+      "brier_open": 0.2033346149779947,
+      "brier_close": 0.22182412170457244,
+      "moved": true
+    },
+    {
+      "match": "Colombia vs Portugal",
+      "outcome": 1,
+      "brier_open": 0.7730086009699257,
+      "brier_close": 0.8535881328714356,
+      "moved": true
+    },
+    {
+      "match": "DR Congo vs Uzbekistan",
+      "outcome": 0,
+      "brier_open": 0.5481378897648355,
+      "brier_close": 0.2767196710980386,
+      "moved": true
+    },
+    {
+      "match": "England vs Croatia",
+      "outcome": 0,
+      "brier_open": 0.3098860121298664,
+      "brier_close": 0.29169160167328145,
+      "moved": true
+    },
+    {
+      "match": "Ghana vs Panama",
+      "outcome": 0,
+      "brier_open": 0.4321005606927594,
+      "brier_close": 0.5222919870513707,
+      "moved": true
+    },
+    {
+      "match": "England vs Ghana",
+      "outcome": 1,
+      "brier_open": 1.177407000882812,
+      "brier_close": 1.4024339654893019,
+      "moved": true
+    },
+    {
+      "match": "Panama vs Croatia",
+      "outcome": 2,
+      "brier_open": 0.2113369524049994,
+      "brier_close": 0.18408005674110767,
+      "moved": true
+    },
+    {
+      "match": "Panama vs England",
+      "outcome": 2,
+      "brier_open": 0.10982156780172483,
+      "brier_close": 0.048210257995517994,
+      "moved": true
+    },
+    {
+      "match": "Croatia vs Ghana",
+      "outcome": 0,
+      "brier_open": 0.314046983728592,
+      "brier_close": 0.3654614783677376,
+      "moved": true
+    },
+    {
+      "match": "South Africa vs Canada",
+      "outcome": 2,
+      "brier_open": 0.2972998117378407,
+      "brier_close": 0.2928434515831875,
+      "moved": true
+    },
+    {
+      "match": "Germany vs Paraguay",
+      "outcome": 1,
+      "brier_open": 1.1128828906387986,
+      "brier_close": 1.1128828906387986,
+      "moved": false
+    },
+    {
+      "match": "Netherlands vs Morocco",
+      "outcome": 1,
+      "brier_open": 0.7845167108727008,
+      "brier_close": 0.7572377205863823,
+      "moved": true
+    },
+    {
+      "match": "Brazil vs Japan",
+      "outcome": 0,
+      "brier_open": 0.3127027051360124,
+      "brier_close": 0.2905689113107811,
+      "moved": true
+    },
+    {
+      "match": "France vs Sweden",
+      "outcome": 0,
+      "brier_open": 0.11388559754137279,
+      "brier_close": 0.11388559754137279,
+      "moved": false
+    },
+    {
+      "match": "Ivory Coast vs Norway",
+      "outcome": 2,
+      "brier_open": 0.3971557657156807,
+      "brier_close": 0.40360451216241205,
+      "moved": true
+    },
+    {
+      "match": "England vs DR Congo",
+      "outcome": 0,
+      "brier_open": 0.10355199346814171,
+      "brier_close": 0.11131450140700203,
+      "moved": true
+    },
+    {
+      "match": "USA vs Bosnia & Herzegovina",
+      "outcome": 0,
+      "brier_open": 0.31003257604007617,
+      "brier_close": 0.14284245650473654,
+      "moved": true
+    },
+    {
+      "match": "Belgium vs Senegal",
+      "outcome": 1,
+      "brier_open": 0.7674859162092694,
+      "brier_close": 0.7772660322196604,
+      "moved": true
+    },
+    {
+      "match": "Portugal vs Croatia",
+      "outcome": 0,
+      "brier_open": 0.3282577888388342,
+      "brier_close": 0.285243580369945,
+      "moved": true
+    },
+    {
+      "match": "Spain vs Austria",
+      "outcome": 0,
+      "brier_open": 0.12220135417974543,
+      "brier_close": 0.10455148338527216,
+      "moved": true
+    },
+    {
+      "match": "Switzerland vs Algeria",
+      "outcome": 0,
+      "brier_open": 0.4262557479703174,
+      "brier_close": 0.39813004547870157,
+      "moved": true
+    },
+    {
+      "match": "Argentina vs Cape Verde",
+      "outcome": 1,
+      "brier_open": 1.40725984229272,
+      "brier_close": 1.483349458506289,
+      "moved": true
+    },
+    {
+      "match": "Colombia vs Ghana",
+      "outcome": 0,
+      "brier_open": 0.21679158289895337,
+      "brier_close": 0.1675116765677635,
+      "moved": true
+    },
+    {
+      "match": "Australia vs Egypt",
+      "outcome": 1,
+      "brier_open": 0.7315081086519033,
+      "brier_close": 0.6636263468566639,
+      "moved": true
+    },
+    {
+      "match": "Paraguay vs France",
+      "outcome": 2,
+      "brier_open": 0.05957146208891252,
+      "brier_close": 0.06494210040596554,
+      "moved": true
+    },
+    {
+      "match": "Canada vs Morocco",
+      "outcome": 2,
+      "brier_open": 0.33347433761549766,
+      "brier_close": 0.32490693582303504,
+      "moved": true
+    }
+  ]
+}
