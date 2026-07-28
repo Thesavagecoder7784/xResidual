@@ -301,6 +301,17 @@ viz/market/_*.js
 viz/model/_*.js
 viz/**/*.png
 
+# EXCEPTIONS — the three pooled aggregates that scripts/grade_prereg.py reads. Ignoring these
+# made REPRODUCING.md's Tier A row for the pre-registration scorecard false: a clean clone
+# graded PASS 4 / PENDING 4 / INCONCLUSIVE 3 instead of the published 6 / 2 / 3, because P3, P4,
+# P10 and P11 had no inputs. They are small derived aggregates (7-24 KB, no `t_ms`, no quote
+# levels), so they ship under the same "measurement, not market data" rule as writeups/_*.json.
+# The original reason for ignoring them — laptop and VM both wrote them, causing merge conflicts
+# — died with the VM. Verified 2026-07-28: a fresh clone now reproduces the published tally.
+!viz/market/_basis.js
+!viz/model/_overreaction.js
+!viz/model/_elimination.js
+
 # writeups/_*_results.json used to be ignored here. It is NOT any more, and the distinction
 # matters: REPRODUCING.md's Tier A promises a reviewer can regenerate every paper number from
 # these files, and while they were ignored that promise was false — a clean clone silently fell
