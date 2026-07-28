@@ -311,6 +311,12 @@ viz/**/*.png
 # Raw tapes (logger/data/) and the per-game archives (viz/market/*/) stay out — see Tier B.
 # They are also the ONLY copy of the full-sample evidence; the tapes behind them are gone.
 
+# PRIVATE — never publish. The pre-SSRN pressure-test holds the two adversarial referee
+# reviews and the desk-interview prep (weak-vs-strong answers). It was accidentally swept
+# into d144ff1 by a bulk `git add paper/arxiv/` on 2026-07-27, public for ~1 day, then
+# scrubbed from history. The rule below is what should have existed then. Keep it.
+paper/arxiv/PRESSURE_TEST.md
+
 # LaTeX build products only — the manuscript SOURCE (main.tex, sections/, macros.tex,
 # references.bib, figures/) is tracked, so the paper ships with the repo that backs it.
 paper/arxiv/main.pdf
