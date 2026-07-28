@@ -1,0 +1,5077 @@
+{
+  "Mexico vs South Africa": {
+    "goals": [
+      {
+        "minute": 9,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Julián Quiñones",
+        "type": "Goal"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Raúl Jiménez",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Teboho Mokoena",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 23,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Brian Gutiérrez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 49,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Sphephelo Sithole",
+        "type": "Red Card"
+      },
+      {
+        "minute": 74,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Nkosinathi Sibisi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Themba Zwane",
+        "type": "Red Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Mexico",
+        "scorer": "César Montes",
+        "type": "Red Card"
+      }
+    ]
+  },
+  "South Korea vs Czechia": {
+    "goals": [
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Czechia",
+        "scorer": "Ladislav Krejcí",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "South Korea",
+        "scorer": "Hwang In-Beom",
+        "type": "Goal"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "South Korea",
+        "scorer": "Oh Hyeon-Gyu",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "South Korea",
+        "scorer": "Lee Gi-Hyuk",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Canada vs Bosnia-Herzegovina": {
+    "goals": [
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Jovo Lukic",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Cyle Larin",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 11,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Alistair Johnston",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Ermedin Demirovic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 1,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Jovo Lukic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Luc de Fougerolles",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Nikola Katic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "United States vs Paraguay": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Damián Bobadilla",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Folarin Balogun",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 5,
+        "team": "United States",
+        "scorer": "Folarin Balogun",
+        "type": "Goal"
+      },
+      {
+        "minute": 73,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Maurício",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "United States",
+        "scorer": "Giovanni Reyna",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Juan Cáceres",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Miguel Almirón",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Tyler Adams",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Diego Gómez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 88,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Alex Arce",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Paraguay",
+        "scorer": "Júnior Alonso",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Qatar vs Switzerland": {
+    "goals": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Breel Embolo",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Qatar",
+        "scorer": "Miro Muheim",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 16,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Mahmoud Abunada",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 23,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Jassem Gaber",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Denis Zakaria",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Brazil vs Morocco": {
+    "goals": [
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Ismael Saibari",
+        "type": "Goal"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Vinícius Júnior",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 37,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Casemiro",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Roger Ibañez",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Haiti vs Scotland": {
+    "goals": [
+      {
+        "minute": 28,
+        "injury": 0,
+        "team": "Scotland",
+        "scorer": "John McGinn",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Jean-Ricner Bellegarde",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "Scotland",
+        "scorer": "Aaron Hickey",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Scotland",
+        "scorer": "Findlay Curtis",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Scotland",
+        "scorer": "Kenny McLean",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Australia vs Türkiye": {
+    "goals": [
+      {
+        "minute": 27,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Nestory Irankunda",
+        "type": "Goal"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Connor Metcalfe",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Türkiye",
+        "scorer": "Yunus Akgün",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Germany vs Curaçao": {
+    "goals": [
+      {
+        "minute": 6,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Felix Nmecha",
+        "type": "Goal"
+      },
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Livano Comenencia",
+        "type": "Goal"
+      },
+      {
+        "minute": 38,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Nico Schlotterbeck",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 45,
+        "injury": 5,
+        "team": "Germany",
+        "scorer": "Kai Havertz",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 47,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Jamal Musiala",
+        "type": "Goal"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Nathaniel Brown",
+        "type": "Goal - Volley"
+      },
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Deniz Undav",
+        "type": "Goal"
+      },
+      {
+        "minute": 88,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Kai Havertz",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Netherlands vs Japan": {
+    "goals": [
+      {
+        "minute": 51,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Virgil van Dijk",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 57,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Keito Nakamura",
+        "type": "Goal"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Crysencio Summerville",
+        "type": "Goal"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Daichi Kamada",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 61,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Crysencio Summerville",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Memphis Depay",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Netherlands",
+        "scorer": "Micky van de Ven",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Ivory Coast vs Ecuador": {
+    "goals": [
+      {
+        "minute": 90,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Amad Diallo",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 28,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Seko Fofana",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 38,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Franck Kessié",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Guela Doué",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 73,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Jackson Porozo",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Sweden vs Tunisia": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Yasin Ayari",
+        "type": "Goal"
+      },
+      {
+        "minute": 30,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Alexander Isak",
+        "type": "Goal"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Tunisia",
+        "scorer": "Omar Rekik",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Viktor Gyökeres",
+        "type": "Goal"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Mattias Svanberg",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "Sweden",
+        "scorer": "Yasin Ayari",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Tunisia",
+        "scorer": "Rani Khedira",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Spain vs Cape Verde": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 16,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Sidny Lopes Cabral",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Spain",
+        "scorer": "Pedri",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Belgium vs Egypt": {
+    "goals": [
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Emam Ashour",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Mohamed Hany",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 13,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Marawan Attia",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Timothy Castagne",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 34,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Ahmed Fatouh",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Maxim De Cuyper",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Saudi Arabia vs Uruguay": {
+    "goals": [
+      {
+        "minute": 41,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Abdulelah Al-Amri",
+        "type": "Goal"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Maxi Araújo",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 44,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Abdulelah Al-Amri",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Iran vs New Zealand": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Elijah Just",
+        "type": "Goal"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Ramin Rezaeian",
+        "type": "Goal"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Elijah Just",
+        "type": "Goal"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Mohammad Mohebbi",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Ehsan Hajsafi",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs Senegal": {
+    "goals": [
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Bradley Barcola",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Senegal",
+        "scorer": "Ibrahim Mbaye",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Iraq vs Norway": {
+    "goals": [
+      {
+        "minute": 29,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      },
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Aymen Hussein",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Leo Østigard",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "Norway",
+        "scorer": "Aymen Hussein",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Zaid Tahseen",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Argentina vs Algeria": {
+    "goals": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Austria vs Jordan": {
+    "goals": [
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Romano Schmid",
+        "type": "Goal"
+      },
+      {
+        "minute": 50,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Ali Olwan",
+        "type": "Goal"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Yazan Al-Arab",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 12,
+        "team": "Austria",
+        "scorer": "Marko Arnautovic",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 77,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Marcel Sabitzer",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Portugal vs Congo DR": {
+    "goals": [
+      {
+        "minute": 6,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "João Neves",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 45,
+        "injury": 5,
+        "team": "Congo DR",
+        "scorer": "Yoane Wissa",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 13,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Bernardo Silva",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Chancel Mbemba",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 88,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Nélson Semedo",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Portugal",
+        "scorer": "Tomás Araújo",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "England vs Croatia": {
+    "goals": [
+      {
+        "minute": 12,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Martin Baturina",
+        "type": "Goal"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 45,
+        "injury": 5,
+        "team": "Croatia",
+        "scorer": "Petar Musa",
+        "type": "Goal"
+      },
+      {
+        "minute": 47,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      },
+      {
+        "minute": 85,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Marcus Rashford",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Ghana vs Panama": {
+    "goals": [
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Ghana",
+        "scorer": "Caleb Yirenkyi",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 16,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Caleb Yirenkyi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "Panama",
+        "scorer": "César Blackman",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 9,
+        "team": "Panama",
+        "scorer": "Carlos Harvey",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Uzbekistan vs Colombia": {
+    "goals": [
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Daniel Muñoz",
+        "type": "Goal"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Abbosbek Fayzullaev",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 65,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Luis Díaz",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 9,
+        "team": "Colombia",
+        "scorer": "Jáminton Campaz",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Johan Mojica",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 34,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Abdukodir Khusanov",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Czechia vs South Africa": {
+    "goals": [
+      {
+        "minute": 6,
+        "injury": 0,
+        "team": "Czechia",
+        "scorer": "Michal Sadílek",
+        "type": "Goal"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Teboho Mokoena",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 33,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Teboho Mokoena",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Thalente Mbatha",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Czechia",
+        "scorer": "Ladislav Krejcí",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Switzerland vs Bosnia-Herzegovina": {
+    "goals": [
+      {
+        "minute": 74,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Johan Manzambi",
+        "type": "Goal"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Rubén Vargas",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Johan Manzambi",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Ermin Mahmic",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 7,
+        "team": "Switzerland",
+        "scorer": "Granit Xhaka",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Amar Dedic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 61,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Edin Dzeko",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 65,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Nico Elvedi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Tarik Muharemovic",
+        "type": "Red Card"
+      }
+    ]
+  },
+  "Canada vs Qatar": {
+    "goals": [
+      {
+        "minute": 16,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Cyle Larin",
+        "type": "Goal"
+      },
+      {
+        "minute": 29,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Jonathan David",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 3,
+        "team": "Canada",
+        "scorer": "Jonathan David",
+        "type": "Goal"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Nathan Saliba",
+        "type": "Goal - Free-kick"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Mohamed Manai",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Canada",
+        "scorer": "Jonathan David",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 9,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Derek Cornelius",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 33,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Homam Ahmed",
+        "type": "Red Card"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Assim Madibo",
+        "type": "Red Card"
+      },
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Ahmed Fathy",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Mexico vs South Korea": {
+    "goals": [
+      {
+        "minute": 50,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Luis Romo",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "South Korea",
+        "scorer": "Lee Kang-In",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "South Korea",
+        "scorer": "Paik Seung-Ho",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "United States vs Australia": {
+    "goals": [
+      {
+        "minute": 11,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Cameron Burgess",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Alex Freeman",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 16,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Jordan Bos",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Alessandro Circati",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Antonee Robinson",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 88,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Harry Souttar",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Folarin Balogun",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Jacob Italiano",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "United States",
+        "scorer": "Chris Richards",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Scotland vs Morocco": {
+    "goals": [
+      {
+        "minute": 2,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Ismael Saibari",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 23,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Issa Diop",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 65,
+        "injury": 0,
+        "team": "Scotland",
+        "scorer": "Andy Robertson",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Brazil vs Haiti": {
+    "goals": [
+      {
+        "minute": 23,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Matheus Cunha",
+        "type": "Goal"
+      },
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Matheus Cunha",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 3,
+        "team": "Brazil",
+        "scorer": "Vinícius Júnior",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Carlens Arcus",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 4,
+        "team": "Haiti",
+        "scorer": "Frantzdy Pierrot",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 65,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Douglas Santos",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Danley Jean Jacques",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Türkiye vs Paraguay": {
+    "goals": [
+      {
+        "minute": 2,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Matías Galarza",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Matías Galarza",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 3,
+        "team": "Paraguay",
+        "scorer": "Miguel Almirón",
+        "type": "Red Card"
+      },
+      {
+        "minute": 63,
+        "injury": 0,
+        "team": "Türkiye",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 71,
+        "injury": 0,
+        "team": "Türkiye",
+        "scorer": "Eren Elmali",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Netherlands vs Sweden": {
+    "goals": [
+      {
+        "minute": 5,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Brian Brobbey",
+        "type": "Goal"
+      },
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Brian Brobbey",
+        "type": "Goal"
+      },
+      {
+        "minute": 47,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Cody Gakpo",
+        "type": "Goal"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Cody Gakpo",
+        "type": "Goal"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Anthony Elanga",
+        "type": "Goal"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Crysencio Summerville",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Gabriel Gudmundsson",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Yasin Ayari",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Lucas Bergvall",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Germany vs Ivory Coast": {
+    "goals": [
+      {
+        "minute": 30,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Franck Kessié",
+        "type": "Goal"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Deniz Undav",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Germany",
+        "scorer": "Deniz Undav",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Ecuador vs Curaçao": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 38,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Jordy Alcívar",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Leandro Bacuna",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Juninho Bacuna",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Livano Comenencia",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Juriën Gaari",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Curaçao",
+        "scorer": "Gervane Kastaneer",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Tunisia vs Japan": {
+    "goals": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Daichi Kamada",
+        "type": "Goal"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Ayase Ueda",
+        "type": "Goal"
+      },
+      {
+        "minute": 69,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Junya Ito",
+        "type": "Goal"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Ayase Ueda",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Spain vs Saudi Arabia": {
+    "goals": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Lamine Yamal",
+        "type": "Goal"
+      },
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Oyarzabal",
+        "type": "Goal"
+      },
+      {
+        "minute": 24,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Oyarzabal",
+        "type": "Goal"
+      },
+      {
+        "minute": 49,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Hassan Al-Tambakti",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 30,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Salem Al-Dawsari",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Mohamed Kanno",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Belgium vs Iran": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 3,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Romelu Lukaku",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 33,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Saeid Ezatolahi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Nathan Ngoy",
+        "type": "Red Card"
+      }
+    ]
+  },
+  "Uruguay vs Cape Verde": {
+    "goals": [
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Kevin Pina",
+        "type": "Goal - Free-kick"
+      },
+      {
+        "minute": 44,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Maxi Araújo",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 45,
+        "injury": 6,
+        "team": "Uruguay",
+        "scorer": "Agustín Canobbio",
+        "type": "Goal"
+      },
+      {
+        "minute": 61,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Hélio Varela",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 5,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Sidny Lopes Cabral",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Rodrigo Bentancur",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Mathías Olivera",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Cape Verde",
+        "scorer": "Diney Borges",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "New Zealand vs Egypt": {
+    "goals": [
+      {
+        "minute": 15,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Finn Surman",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mostafa Zico",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mohamed Salah",
+        "type": "Goal"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Trézéguet",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mohanad Lashin",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Sarpreet Singh",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 34,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Callum McCowatt",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Argentina vs Austria": {
+    "goals": [
+      {
+        "minute": 38,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Stefan Posch",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Facundo Medina",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Konrad Laimer",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Argentina",
+        "scorer": "Leandro Paredes",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs Iraq": {
+    "goals": [
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 6,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Amir Al-Ammari",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Norway vs Senegal": {
+    "goals": [
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Marcus Holmgren Pedersen",
+        "type": "Goal"
+      },
+      {
+        "minute": 48,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Ismaïla Sarr",
+        "type": "Goal"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Senegal",
+        "scorer": "Ismaïla Sarr",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Jordan vs Algeria": {
+    "goals": [
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Nizar Al-Rashdan",
+        "type": "Goal"
+      },
+      {
+        "minute": 69,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Nadhir Benbouali",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Amine Gouiri",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 44,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Ramiz Zerrouki",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Husam Abu Dahab",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Portugal vs Uzbekistan": {
+    "goals": [
+      {
+        "minute": 6,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Cristiano Ronaldo",
+        "type": "Goal - Volley"
+      },
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Nuno Mendes",
+        "type": "Goal - Free-kick"
+      },
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Cristiano Ronaldo",
+        "type": "Goal"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Abduvohid Nematov",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 87,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Rafael Leão",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Odiljon Xamrobekov",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Renato Veiga",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "England vs Ghana": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 41,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Declan Rice",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Iñaki Williams",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Panama vs Croatia": {
+    "goals": [
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Ante Budimir",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 61,
+        "injury": 0,
+        "team": "Panama",
+        "scorer": "Édgar Yoel Bárcenas",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Croatia",
+        "scorer": "Petar Sucic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Colombia vs Congo DR": {
+    "goals": [
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Daniel Muñoz",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Jhon Lucumí",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Congo DR",
+        "scorer": "Charles Pickel",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Colombia",
+        "scorer": "Jefferson Lerma",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Bosnia-Herzegovina vs Qatar": {
+    "goals": [
+      {
+        "minute": 29,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Kerim Alajbegovic",
+        "type": "Goal"
+      },
+      {
+        "minute": 34,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Mahmoud Abunada",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Hassan Al-Haydos",
+        "type": "Goal"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Ermin Mahmic",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Qatar",
+        "scorer": "Ahmed Fathy",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Ermin Mahmic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Switzerland vs Canada": {
+    "goals": [
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Rubén Vargas",
+        "type": "Goal"
+      },
+      {
+        "minute": 57,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Johan Manzambi",
+        "type": "Goal"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Promise David",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Cyle Larin",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Granit Xhaka",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 87,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Liam Millar",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Morocco vs Haiti": {
+    "goals": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Yassine Bounou",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Achraf Hakimi",
+        "type": "Goal"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Wilson Isidor",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 1,
+        "team": "Morocco",
+        "scorer": "Ismael Saibari",
+        "type": "Goal"
+      },
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Soufiane Rahimi",
+        "type": "Goal"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Gessime Yassine",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Johny Placide",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Haiti",
+        "scorer": "Duckens Nazon",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Haiti",
+        "scorer": "Josué Casimir",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Scotland vs Brazil": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Vinícius Júnior",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 3,
+        "team": "Brazil",
+        "scorer": "Vinícius Júnior",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Matheus Cunha",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Danilo",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Fabinho",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Scotland",
+        "scorer": "Ryan Christie",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Czechia vs Mexico": {
+    "goals": [
+      {
+        "minute": 55,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Mateo Chávez",
+        "type": "Goal"
+      },
+      {
+        "minute": 61,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Julián Quiñones",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Mexico",
+        "scorer": "Álvaro Fidalgo",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Edson Álvarez",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "South Africa vs South Korea": {
+    "goals": [
+      {
+        "minute": 63,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Thapelo Maseko",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 73,
+        "injury": 0,
+        "team": "South Africa",
+        "scorer": "Aubrey Modiba",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "South Korea",
+        "scorer": "Cho Gue-Sung",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Curaçao vs Ivory Coast": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Nicolas Pépé",
+        "type": "Goal"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Nicolas Pépé",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 35,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Nicolas Pépé",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Juninho Bacuna",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Curaçao",
+        "scorer": "Gervane Kastaneer",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Ecuador vs Germany": {
+    "goals": [
+      {
+        "minute": 2,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Leroy Sané",
+        "type": "Goal"
+      },
+      {
+        "minute": 9,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Nilson Angulo",
+        "type": "Goal"
+      },
+      {
+        "minute": 77,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Gonzalo Plata",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Piero Hincapié",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 44,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Aleksandar Pavlovic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 50,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Alan Franco",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Ecuador",
+        "scorer": "Gonzalo Plata",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Japan vs Sweden": {
+    "goals": [
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Daizen Maeda",
+        "type": "Goal"
+      },
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Anthony Elanga",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Isak Hien",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 77,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Shogo Taniguchi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 85,
+        "injury": 0,
+        "team": "Sweden",
+        "scorer": "Viktor Gyökeres",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Tunisia vs Netherlands": {
+    "goals": [
+      {
+        "minute": 3,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Ellyes Skhiri",
+        "type": "Own Goal"
+      },
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Brian Brobbey",
+        "type": "Goal"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Tunisia",
+        "scorer": "Hazem Mastouri",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Jan Paul van Hecke",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Paraguay vs Australia": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Jackson Irvine",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 77,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Diego Gómez",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Türkiye vs United States": {
+    "goals": [
+      {
+        "minute": 3,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Auston Trusty",
+        "type": "Goal"
+      },
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Türkiye",
+        "scorer": "Arda Güler",
+        "type": "Goal"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Türkiye",
+        "scorer": "Baris Alper Yilmaz",
+        "type": "Goal"
+      },
+      {
+        "minute": 49,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Sebastian Berhalter",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Türkiye",
+        "scorer": "Kaan Ayhan",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 19,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Sebastian Berhalter",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Norway vs France": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      },
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      },
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Thelo Aasgaard",
+        "type": "Goal"
+      },
+      {
+        "minute": 32,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "France",
+        "scorer": "Désiré Doué",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Patrick Berg",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 74,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Aurélien Tchouaméni",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Senegal vs Iraq": {
+    "goals": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Habib Diarra",
+        "type": "Goal"
+      },
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Ismaïla Sarr",
+        "type": "Goal"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Pape Gueye",
+        "type": "Goal"
+      },
+      {
+        "minute": 71,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Pape Gueye",
+        "type": "Goal"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Iliman Ndiaye",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 13,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Rebin Sulaka",
+        "type": "Red Card"
+      },
+      {
+        "minute": 18,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Abdoulaye Seck",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Amir Al-Ammari",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 81,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Pape Gueye",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 0,
+        "team": "Iraq",
+        "scorer": "Merchas Doski",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Cape Verde vs Saudi Arabia": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 4,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Saud Abdulhamid",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 8,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Wagner Pina",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Saudi Arabia",
+        "scorer": "Nasser Al-Dawsari",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Saudi Arabia",
+        "scorer": "Feras Al-Brikan",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Uruguay vs Spain": {
+    "goals": [
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Álex Baena",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Álex Baena",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Juan Manuel Sanabria",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "Uruguay",
+        "scorer": "Guillermo Varela",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Uruguay",
+        "scorer": "Nicolás de la Cruz",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Uruguay",
+        "scorer": "Agustín Canobbio",
+        "type": "Red Card"
+      }
+    ]
+  },
+  "Egypt vs Iran": {
+    "goals": [
+      {
+        "minute": 5,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mahmoud Saber",
+        "type": "Goal"
+      },
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Ramin Rezaeian",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 19,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Hossein Kanani",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mahmoud Saber",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Yasser Ibrahim",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Ali Nemati",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "Iran",
+        "scorer": "Saeid Ezatolahi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Egypt",
+        "scorer": "Mohanad Lashin",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Iran",
+        "scorer": "Shoja Khalilzadeh",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "New Zealand vs Belgium": {
+    "goals": [
+      {
+        "minute": 28,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Leandro Trossard",
+        "type": "Goal"
+      },
+      {
+        "minute": 50,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Leandro Trossard",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Kevin De Bruyne",
+        "type": "Goal"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Elijah Just",
+        "type": "Goal"
+      },
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Romelu Lukaku",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Belgium",
+        "scorer": "Alexis Saelemaekers",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Marko Stamenic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "New Zealand",
+        "scorer": "Elijah Just",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Croatia vs Ghana": {
+    "goals": [
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Petar Sucic",
+        "type": "Goal"
+      },
+      {
+        "minute": 73,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Derrick Luckassen",
+        "type": "Goal"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Nikola Vlasic",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Ivan Perisic",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Ghana",
+        "scorer": "Kojo Peprah Oppong",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Panama vs England": {
+    "goals": [
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Panama",
+        "scorer": "José Fajardo",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jarell Quansah",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "Panama",
+        "scorer": "Andrés Andrade",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Colombia vs Portugal": {
+    "goals": [],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Gustavo Puerta",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Congo DR vs Uzbekistan": {
+    "goals": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Eldor Shomurodov",
+        "type": "Goal - Volley"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Yoane Wissa",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Fiston Mayele",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Congo DR",
+        "scorer": "Yoane Wissa",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 21,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Noah Sadiki",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Abdukodir Khusanov",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 5,
+        "team": "Congo DR",
+        "scorer": "Nathanaël Mbuku",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 48,
+        "injury": 0,
+        "team": "Uzbekistan",
+        "scorer": "Sherzod Nasrullaev",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 62,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Samuel Moutoussamy",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Algeria vs Austria": {
+    "goals": [
+      {
+        "minute": 28,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Marko Arnautovic",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Rafik Belghali",
+        "type": "Goal"
+      },
+      {
+        "minute": 55,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Marcel Sabitzer",
+        "type": "Goal"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Riyad Mahrez",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Algeria",
+        "scorer": "Riyad Mahrez",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "Austria",
+        "scorer": "Sasa Kalajdzic",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 11,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Marko Arnautovic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Jordan vs Argentina": {
+    "goals": [
+      {
+        "minute": 19,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Giovani Lo Celso",
+        "type": "Goal - Free-kick"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lautaro Martínez",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 55,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Mousa Al-Tamari",
+        "type": "Goal"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal - Free-kick"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Mohannad Abu Taha",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Jordan",
+        "scorer": "Yazan Al-Arab",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Jordan",
+        "scorer": "Mohammed Abu Zraiq",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "South Africa vs Canada": {
+    "goals": [
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Canada",
+        "scorer": "Stephen Eustáquio",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Nathan Saliba",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Niko Sigur",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Brazil vs Japan": {
+    "goals": [
+      {
+        "minute": 29,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Kaishu Sano",
+        "type": "Goal"
+      },
+      {
+        "minute": 56,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Casemiro",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Brazil",
+        "scorer": "Gabriel Martinelli",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 12,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Kaishu Sano",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Casemiro",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Daichi Kamada",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 48,
+        "injury": 0,
+        "team": "Brazil",
+        "scorer": "Danilo",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 84,
+        "injury": 0,
+        "team": "Japan",
+        "scorer": "Junnosuke Suzuki",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Germany vs Paraguay": {
+    "goals": [
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Julio Enciso",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Kai Havertz",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Maurício",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Joshua Kimmich",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Gustavo Gómez",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Jamal Musiala",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Matías Galarza",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Nadiem Amiri",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "José Canale",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "cards": [
+      {
+        "minute": 65,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Andrés Cubas",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 105,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 105,
+        "injury": 1,
+        "team": "Germany",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 106,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Kai Havertz",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 115,
+        "injury": 0,
+        "team": "Germany",
+        "scorer": "Jamal Musiala",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 117,
+        "injury": 0,
+        "team": "Paraguay",
+        "scorer": "Matías Galarza",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Netherlands vs Morocco": {
+    "goals": [
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Cody Gakpo",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Morocco",
+        "scorer": "Issa Diop",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Teun Koopmeiners",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Soufiane Rahimi",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Netherlands",
+        "scorer": "Wout Weghorst",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Chemsdine Talbi",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Ismael Saibari",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "cards": [
+      {
+        "minute": 47,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Issa Diop",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Ivory Coast vs Norway": {
+    "goals": [
+      {
+        "minute": 39,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Antonio Nusa",
+        "type": "Goal"
+      },
+      {
+        "minute": 74,
+        "injury": 0,
+        "team": "Ivory Coast",
+        "scorer": "Amad Diallo",
+        "type": "Goal"
+      },
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 45,
+        "injury": 1,
+        "team": "Norway",
+        "scorer": "Antonio Nusa",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs Sweden": {
+    "goals": [
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Bradley Barcola",
+        "type": "Goal"
+      },
+      {
+        "minute": 74,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Mexico vs Ecuador": {
+    "goals": [
+      {
+        "minute": 22,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Julián Quiñones",
+        "type": "Goal"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Raúl Jiménez",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 45,
+        "injury": 1,
+        "team": "Ecuador",
+        "scorer": "Alan Franco",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Ecuador",
+        "scorer": "Kendry Páez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Ecuador",
+        "scorer": "Piero Hincapié",
+        "type": "Red Card"
+      },
+      {
+        "minute": 90,
+        "injury": 9,
+        "team": "Ecuador",
+        "scorer": "Moisés Caicedo",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "England vs Congo DR": {
+    "goals": [
+      {
+        "minute": 7,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Brian Cipenga",
+        "type": "Goal"
+      },
+      {
+        "minute": 75,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 19,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 28,
+        "injury": 0,
+        "team": "Congo DR",
+        "scorer": "Noah Sadiki",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Belgium vs Senegal": {
+    "goals": [
+      {
+        "minute": 24,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Habib Diarra",
+        "type": "Goal"
+      },
+      {
+        "minute": 51,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Ismaïla Sarr",
+        "type": "Goal"
+      },
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Romelu Lukaku",
+        "type": "Goal"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Youri Tielemans",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 120,
+        "injury": 5,
+        "team": "Belgium",
+        "scorer": "Youri Tielemans",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Brandon Mechele",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Senegal",
+        "scorer": "Lamine Camara",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": null,
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "United States vs Bosnia-Herzegovina": {
+    "goals": [
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Folarin Balogun",
+        "type": "Goal"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Malik Tillman",
+        "type": "Goal - Free-kick"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 64,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Folarin Balogun",
+        "type": "Red Card"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 80,
+        "injury": 0,
+        "team": "Bosnia-Herzegovina",
+        "scorer": "Stjepan Radeljic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Spain vs Austria": {
+    "goals": [
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Oyarzabal",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Pedro Porro",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Oyarzabal",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Austria",
+        "scorer": "Stefan Posch",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Portugal vs Croatia": {
+    "goals": [
+      {
+        "minute": 53,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Ivan Perisic",
+        "type": "Goal"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Cristiano Ronaldo",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Portugal",
+        "scorer": "Gonçalo Ramos",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 17,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Rúben Dias",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Croatia",
+        "scorer": "Luka Modric",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Croatia",
+        "scorer": "Ivan Perisic",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Switzerland vs Algeria": {
+    "goals": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Breel Embolo",
+        "type": "Goal"
+      },
+      {
+        "minute": 46,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Dan Ndoye",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Farès Chaïbi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "Algeria",
+        "scorer": "Hicham Boudaoui",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Australia vs Egypt": {
+    "goals": [
+      {
+        "minute": 13,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Emam Ashour",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 55,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Mohamed Hany",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mahmoud Saber",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Jackson Irvine",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Ramy Rabia",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Australia",
+        "scorer": "Awer Mabil",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mohamed Salah",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Hossam Abdelmaguid",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "cards": [
+      {
+        "minute": 105,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Haissem Hassan",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Yasser Ibrahim",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Argentina vs Cape Verde": {
+    "goals": [
+      {
+        "minute": 29,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Deroy Duarte",
+        "type": "Goal"
+      },
+      {
+        "minute": 92,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lisandro Martínez",
+        "type": "Goal"
+      },
+      {
+        "minute": 103,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Sidny Lopes Cabral",
+        "type": "Goal"
+      },
+      {
+        "minute": 111,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Diney Borges",
+        "type": "Own Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "Cape Verde",
+        "scorer": "Kevin Pina",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 115,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Gonzalo Montiel",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Colombia vs Ghana": {
+    "goals": [
+      {
+        "minute": 14,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Jhon Arias",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 12,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Jhon Arias",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 49,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Caleb Yirenkyi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Fatawu Issahaku",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 76,
+        "injury": 0,
+        "team": "Ghana",
+        "scorer": "Alidu Seidu",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 78,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Richard Ríos",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Canada vs Morocco": {
+    "goals": [
+      {
+        "minute": 50,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Azzedine Ounahi",
+        "type": "Goal"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Azzedine Ounahi",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Morocco",
+        "scorer": "Soufiane Rahimi",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 20,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Redouane Halhal",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Achraf Hakimi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 40,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Richie Laryea",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Jonathan David",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Azzedine Ounahi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 45,
+        "injury": 6,
+        "team": "Morocco",
+        "scorer": "Bilal El Khannouss",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 49,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Luc de Fougerolles",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Canada",
+        "scorer": "Cyle Larin",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Paraguay vs France": {
+    "goals": [
+      {
+        "minute": 70,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 19,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Bradley Barcola",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 81,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Manu Koné",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 7,
+        "team": "France",
+        "scorer": "Michael Olise",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Brazil vs Norway": {
+    "goals": [
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 90,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Erling Haaland",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 10,
+        "team": "Brazil",
+        "scorer": "Neymar",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "Brazil",
+        "scorer": "Neymar",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Mexico vs England": {
+    "goals": [
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 38,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Julián Quiñones",
+        "type": "Goal"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Harry Kane",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 69,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Raúl Jiménez",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 1,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Declan Rice",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jarell Quansah",
+        "type": "Red Card"
+      },
+      {
+        "minute": 68,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Marc Guéhi",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 71,
+        "injury": 0,
+        "team": "Mexico",
+        "scorer": "Jorge Sánchez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Nico O'Reilly",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Mexico",
+        "scorer": "Johan Vásquez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "England",
+        "scorer": "Jordan Henderson",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Portugal vs Spain": {
+    "goals": [
+      {
+        "minute": 90,
+        "injury": 1,
+        "team": "Spain",
+        "scorer": "Mikel Merino",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 89,
+        "injury": 0,
+        "team": "Portugal",
+        "scorer": "Bernardo Silva",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Portugal",
+        "scorer": "Renato Veiga",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Spain",
+        "scorer": "Ferran Torres",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "United States vs Belgium": {
+    "goals": [
+      {
+        "minute": 9,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Charles De Ketelaere",
+        "type": "Goal"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Malik Tillman",
+        "type": "Goal - Free-kick"
+      },
+      {
+        "minute": 33,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Charles De Ketelaere",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 57,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Hans Vanaken",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Belgium",
+        "scorer": "Romelu Lukaku",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 35,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Weston McKennie",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 69,
+        "injury": 0,
+        "team": "United States",
+        "scorer": "Malik Tillman",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Argentina vs Egypt": {
+    "goals": [
+      {
+        "minute": 15,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Yasser Ibrahim",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Egypt",
+        "scorer": "Mostafa Zico",
+        "type": "Goal"
+      },
+      {
+        "minute": 79,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Cristian Romero",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 83,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lionel Messi",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Argentina",
+        "scorer": "Enzo Fernández",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Egypt",
+        "scorer": "Mostafa Shoubir",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Egypt",
+        "scorer": "Hamdy Fathy",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "Egypt",
+        "scorer": "Marawan Attia",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 9,
+        "team": "Egypt",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 12,
+        "team": "Egypt",
+        "scorer": "Haissem Hassan",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Switzerland vs Colombia": {
+    "goals": [],
+    "shootout": [
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Juan Fernando Quintero",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Granit Xhaka",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Zeki Amdouni",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Jáminton Campaz",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Cedric Itten",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Luis Díaz",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 120,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Rubén Vargas",
+        "type": "Penalty - Scored"
+      }
+    ],
+    "cards": [
+      {
+        "minute": 51,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Granit Xhaka",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 59,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Denis Zakaria",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Luis Suárez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 95,
+        "injury": 0,
+        "team": "Colombia",
+        "scorer": "Davinson Sánchez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 105,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Miro Muheim",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs Morocco": {
+    "goals": [
+      {
+        "minute": 60,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 63,
+        "injury": 0,
+        "team": "Morocco",
+        "scorer": "Issa Diop",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Spain vs Belgium": {
+    "goals": [
+      {
+        "minute": 30,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Fabián Ruiz",
+        "type": "Goal"
+      },
+      {
+        "minute": 41,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Charles De Ketelaere",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 88,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Merino",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 43,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Pau Cubarsí",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 85,
+        "injury": 0,
+        "team": "Belgium",
+        "scorer": "Kevin De Bruyne",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Spain",
+        "scorer": "Aymeric Laporte",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 5,
+        "team": "Belgium",
+        "scorer": "Axel Witsel",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Norway vs England": {
+    "goals": [
+      {
+        "minute": 36,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Andreas Schjelderup",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 2,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      },
+      {
+        "minute": 93,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 117,
+        "injury": 0,
+        "team": "Norway",
+        "scorer": "Kristoffer Ajer",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "Argentina vs Switzerland": {
+    "goals": [
+      {
+        "minute": 10,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Alexis Mac Allister",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 67,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Dan Ndoye",
+        "type": "Goal"
+      },
+      {
+        "minute": 112,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Julián Álvarez",
+        "type": "Goal"
+      },
+      {
+        "minute": 120,
+        "injury": 1,
+        "team": "Argentina",
+        "scorer": "Lautaro Martínez",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 44,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Breel Embolo",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 72,
+        "injury": 0,
+        "team": "Switzerland",
+        "scorer": "Breel Embolo",
+        "type": "Red Card"
+      },
+      {
+        "minute": 97,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Thiago Almada",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 98,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lautaro Martínez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 114,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "José Manuel López",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs Spain": {
+    "goals": [
+      {
+        "minute": 22,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Mikel Oyarzabal",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 58,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Pedro Porro",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 9,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Adrien Rabiot",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 31,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Marc Cucurella",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 86,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "England vs Argentina": {
+    "goals": [
+      {
+        "minute": 55,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Anthony Gordon",
+        "type": "Goal"
+      },
+      {
+        "minute": 85,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Enzo Fernández",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Argentina",
+        "scorer": "Lautaro Martínez",
+        "type": "Goal - Header"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 37,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Elliot Anderson",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 42,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lisandro Martínez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 51,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Cristian Romero",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 4,
+        "team": "Argentina",
+        "scorer": "Rodrigo De Paul",
+        "type": "Yellow Card"
+      }
+    ]
+  },
+  "France vs England": {
+    "goals": [
+      {
+        "minute": 3,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Declan Rice",
+        "type": "Goal"
+      },
+      {
+        "minute": 18,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Ezri Konsa",
+        "type": "Goal - Header"
+      },
+      {
+        "minute": 37,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Bukayo Saka",
+        "type": "Goal"
+      },
+      {
+        "minute": 45,
+        "injury": 1,
+        "team": "England",
+        "scorer": "Bukayo Saka",
+        "type": "Goal"
+      },
+      {
+        "minute": 48,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 54,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Bradley Barcola",
+        "type": "Goal"
+      },
+      {
+        "minute": 66,
+        "injury": 0,
+        "team": "France",
+        "scorer": "Kylian Mbappé",
+        "type": "Goal"
+      },
+      {
+        "minute": 87,
+        "injury": 0,
+        "team": "England",
+        "scorer": "Bukayo Saka",
+        "type": "Penalty - Scored"
+      },
+      {
+        "minute": 90,
+        "injury": 6,
+        "team": "France",
+        "scorer": "Ousmane Dembélé",
+        "type": "Goal"
+      },
+      {
+        "minute": 90,
+        "injury": 8,
+        "team": "England",
+        "scorer": "Jude Bellingham",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": []
+  },
+  "Spain vs Argentina": {
+    "goals": [
+      {
+        "minute": 106,
+        "injury": 0,
+        "team": "Spain",
+        "scorer": "Ferran Torres",
+        "type": "Goal"
+      }
+    ],
+    "shootout": [],
+    "cards": [
+      {
+        "minute": 41,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Lisandro Martínez",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 52,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Leandro Paredes",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 82,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Enzo Fernández",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 2,
+        "team": "Argentina",
+        "scorer": "Cristian Romero",
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 90,
+        "injury": 3,
+        "team": "Argentina",
+        "scorer": "Enzo Fernández",
+        "type": "Red Card"
+      },
+      {
+        "minute": 104,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": null,
+        "type": "Yellow Card"
+      },
+      {
+        "minute": 111,
+        "injury": 0,
+        "team": "Argentina",
+        "scorer": "Alexis Mac Allister",
+        "type": "Yellow Card"
+      }
+    ]
+  }
+}

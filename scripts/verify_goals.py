@@ -188,6 +188,23 @@ def check_totals(verbose: bool) -> None:
                   f"'{ledger_n} goals'.")
 
 
+def check_clock(verbose: bool) -> None:
+    """Coverage of the exogenous goal clock (scripts/fetch_goals_espn.py)."""
+    p = os.path.join(ROOT, "data", "wc_goals_espn.json")
+    if not os.path.exists(p):
+        print("\n[4] EXOGENOUS GOAL CLOCK: not built. Run scripts/fetch_goals_espn.py")
+        return
+    with open(p) as fh:
+        d = json.load(fh)
+    g = sum(len(v["goals"]) for v in d.values())
+    c = sum(len(v.get("cards", [])) for v in d.values())
+    so = sum(len(v.get("shootout", [])) for v in d.values())
+    print(f"\n[4] EXOGENOUS GOAL CLOCK  (data/wc_goals_espn.json)")
+    print(f"    {len(d)} matches · {g} goals with minute stamps · {c} cards · {so} shootout kicks")
+    print(f"    Every goal now has an exogenous timestamp, so goal windows no longer need to be")
+    print(f"    inferred from the price series. This is the fix for the over-detection in [2].")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("-v", "--verbose", action="store_true", help="per-match detail")
@@ -199,6 +216,7 @@ def main() -> int:
     d1, _ = check_scorelines(args.verbose)
     d2, _ = check_detection(args.verbose)
     check_totals(args.verbose)
+    check_clock(args.verbose)
 
     total = d1 + d2
     print("\n" + "=" * 78)

@@ -230,6 +230,13 @@ logger/data/
 # and one file in here must be tracked (see data/cache/ko_advancers.json below).
 /data/*
 !/data/cache/
+# EXCEPTION: the exogenous goal clock (scripts/fetch_goals_espn.py). 104 KB of public match
+# facts -- goal minutes, scorers, cards -- from ESPN's keyless feed, verified 104/104 against
+# the scorelines. Not venue market data, so the Kalshi/Polymarket redistribution limits in
+# REPRODUCING.md do not apply. It ships because it is the fix for the goal-detection
+# circularity that 04_methods.tex discloses: with it, goal windows are anchored to an
+# exogenous clock instead of inferred from the price series being measured.
+!/data/wc_goals_espn.json
 
 # Generated figures
 /figures/
