@@ -29,7 +29,7 @@ Goal events cluster within matches — they aren't independent — so a naive bi
 
 ## And then it isn't a trade
 
-Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **405 goals in 66 matches** shows a median gross gap of 12.0¢ and a median +10.8¢ net of the spread, on *every* goal. Free money.
+Here's the part that matters. If Kalshi reprices a goal ~600 ms behind Polymarket, a follower who lifts Kalshi's stale quote the instant Polymarket moves should make money. On paper, they do: a stale-quote ledger over **405 goal-shock observations in 66 matches** (~2 per goal) shows a median gross gap of 12.0¢ and a median +10.8¢ net of the spread, on *every* goal. Free money.
 
 Except the quote isn't there.
 

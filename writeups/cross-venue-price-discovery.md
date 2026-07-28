@@ -43,7 +43,7 @@ decomposition both confirm a real, direction-stable lead in the pre-registered d
 deeper-liquidity venue leads). We then ask the question the lead invites, and answer it with
 disclosed forward-tests: the cross-venue gap is **not a harvestable edge**. The pre-match
 convergence trade is a clean null (a cost illusion); and although a stale-quote ledger over 405
-goals in 66 matches shows a median **+10.8-cent** net gap **on paper** (100% of goals net-positive), best-price depth at the
+goal-shock observations in 66 matches (one row per contract per shock, so ~2x the distinct goals) shows a median **+10.8-cent** net gap **on paper** (100% of goals net-positive), best-price depth at the
 goal collapses to ~0.5% of normal (spread ~8x on Polymarket, ~2x on Kalshi, refill ~3-4s), so **the
 median match yields zero harvestable goals** (goal-weighted, on the archive subset that survives: ~11%,
 clustered in a minority of matches a follower cannot identify in advance). The lead
@@ -330,8 +330,8 @@ what law-of-one-price implies.
 
 ### 6.2 In-play lead-lag: real lead, un-harvestable after the cost of immediacy (firm)
 The §5.2 lead means Kalshi reprices a goal slightly behind Polymarket, so the natural follow-up
-is whether that lag is capturable. We answer it with a **cost-of-immediacy ledger over 405 goals in
-66 matches**: at the instant Polymarket reprices, the median gross gap to Kalshi's stale quote is
+is whether that lag is capturable. We answer it with a **cost-of-immediacy ledger over 405 goal-shock observations in
+66 matches (~2 per goal)**: at the instant Polymarket reprices, the median gross gap to Kalshi's stale quote is
 **12.0¢**, a follower pays a median **1.4¢** to take Kalshi's posted price, and the median net is
 **+10.8¢ on paper** (100% of goals net-positive). Each of those three is a median across matches of
 that match's median goal — computed independently, so they are not meant to subtract, and the
@@ -386,7 +386,7 @@ probed three ways. The pre-match convergence trade is a cost illusion (6.1, a cl
 in-play lead-lag is a **real, direction-stable lead** — Polymarket first in 72% of 392 decisive events
 at a +600ms median (57 of 66 matches lean Polymarket, sign-test p = 1.2×10⁻⁹), and a ~81.0% information
 share leading 61 of 63 cointegrated matches (5.2) — that is nonetheless **un-harvestable net of the
-cost of immediacy** (6.2: a median +10.8¢ paper gap over 405 goals in 66 matches, of which the median
+cost of immediacy** (6.2: a median +10.8¢ paper gap over 405 goal-shock observations in 66 matches, of which the median
 match yields nothing capturable because best-price depth collapses to ~0.5% at the event). The
 favorite-longshot wedge (5.4) is a real but modest systematic tilt, the lone position the project
 takes. The lead is genuine; the gap is a liquidity-withdrawal artifact, not slow pricing; the
