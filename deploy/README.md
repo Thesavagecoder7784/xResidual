@@ -1,8 +1,18 @@
 # xResidual collector — Azure VM operations
 
-The **collection** half of xResidual runs 24/7 on an always-on Azure VM, so no match capture
-is ever lost to a sleeping laptop. The laptop keeps **analysis + rendering + posting** on data
-pulled down from the VM. This is the operational runbook: how it's wired, the daily loop,
+> **HISTORICAL — the VM was decommissioned after the tournament.** Collection ended with the
+> final on 2026-07-19; the host no longer answers, so every command below (`make pull`, the
+> health checks, the systemd timers) is inert. Nothing here is a live procedure. It is kept
+> because it documents how the capture pipeline actually ran for the 2026 World Cup, and
+> because it is the blueprint if the setup is ever rebuilt for another event.
+>
+> Two consequences worth knowing: `logger/data/` on the analysis machine is now the only copy
+> of the tick dataset, and roughly two-thirds of the per-game archives did not survive the
+> shutdown (see the note in `deploy/Makefile`).
+
+The **collection** half of xResidual ran 24/7 on an always-on Azure VM, so no match capture
+was ever lost to a sleeping laptop. The laptop kept **analysis + rendering + posting** on data
+pulled down from the VM. This is the operational runbook: how it was wired, the daily loop,
 health checks, troubleshooting, and how to rebuild it from scratch.
 
 Deployed and verified 2026-06-09, two days before the World Cup opener.

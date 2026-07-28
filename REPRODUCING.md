@@ -84,14 +84,27 @@ captures: Kalshi's Data Terms and Developer Agreement, and Polymarket's Terms of
 restrict republication of their market data. Concretely, what is withheld is:
 
 - the raw tapes (`logger/data/ws-events-*.jsonl`, `snapshots-*.jsonl`);
-- the per-game archives (`viz/market/*/`), which retain per-event quote levels;
+- the per-game archives that retain per-event quote levels or wall-clock timestamps —
+  `viz/market/leadlag/` (dual-venue tick price series, and per-event `kalshi_reaction` /
+  `poly_reaction` levels with absolute `t_ms`) and `viz/model/overreaction/` (per-trade
+  price levels with absolute `t_ms`);
 - per-event quote levels (`kalshi_reaction` / `poly_reaction`) and absolute wall-clock
   timestamps (`t_ms`) inside the pooled lead-lag artifact, stripped by
   `scripts/build_leadlag.py` before it is written.
 
+The remaining per-game archives that *do* ship — `viz/market/{harvest,infoshare,ofi,liquidity,
+eventis,livewp,sigma}/` — carry only aggregated per-match statistics (counts, medians,
+correlations, regression sufficient statistics), with no quote levels and no timestamps.
+
 What ships is measurement, not market data: counts, per-match shares, medians, regression
 statistics, and signed lead times in milliseconds. No third-party raw market data is
 redistributed with this paper.
+
+*Correction, 2026-07-28:* the first two bullets above were accurate as policy but not as
+practice until this date — `viz/market/leadlag/` (54 files) and `viz/model/overreaction/`
+(24 files) had been committed before the corresponding `.gitignore` rules existed, so they
+shipped in the public repository despite this statement. They have been removed from tracking;
+the statement is now true as written.
 
 **A limitation to state plainly:** Tier B is not re-runnable by a third party, and is not
 fully re-runnable by us either. The tapes are transient by design (`scripts/cleanup_tapes.sh`

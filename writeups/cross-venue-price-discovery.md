@@ -109,8 +109,8 @@ test that prior against a third source before claiming an edge (Section 4.3).
 ## 3. Data and infrastructure
 
 ### 3.1 Capture
-A 24/7 collector logs Kalshi and Polymarket order books and the Odds API bookmaker/exchange
-lines on a fixed cadence, and, per marquee match, a millisecond WebSocket capture records every
+A 24/7 collector logged Kalshi and Polymarket order books and the Odds API bookmaker/exchange
+lines on a fixed cadence, and, per marquee match, a millisecond WebSocket capture recorded every
 book and trade message from both prediction venues to an append-only tape with a local-clock
 timestamp on each event. A dry-run friendly capture recorded ~173k events at a 6ms median
 inter-event time (Section 5.6), so timestamp resolution is far finer than the tens-of-seconds

@@ -2,6 +2,26 @@
 
 A running scratchpad of decisions, dead ends, and things I still want to do. Less polished than the rest of the repo on purpose.
 
+## Close-out (2026-07-28)
+
+**The project is finished.** The tournament ended 2026-07-19, the pre-registration was graded in
+public (**6 pass, 2 fail, 3 inconclusive**), and collection has stopped — the Azure VM is
+decommissioned, so `deploy/README.md` and the `make pull` loop below are historical.
+
+Entries below are dated and were written as the tournament ran, so **their numbers are snapshots,
+not the final figures.** In particular the Jun-20 flagship read (34 dual-venue matches) grew by
+roughly 2.5×. The final numbers, and the only ones to quote:
+
+- **86 matches** captured cross-venue; **63** cointegrated.
+- Lead-lag: Polymarket first on **72%** of 392 decisive events, median **+600 ms**;
+  **57 of 66** matches lean Polymarket (sign-test *p* ≈ 1.2×10⁻⁹).
+- Information share: Gonzalo–Granger **81.0%**, leading **61 of 63** matches.
+- Harvestability: across 405 goals in 66 matches, **the median match yields no harvestable goal**
+  (~11% goal-weighted on the 21-match reconstructible subset).
+
+Canonical sources: `FINDINGS.md`, `writeups/price_discovery_note.pdf`, and the
+`writeups/_*_results.json` artifacts that the paper's macros are generated from.
+
 ## Group-stage close-out (2026-06-28)
 
 The group stage finished (72/72) and the R32 is set. What shipped at the close:
@@ -65,5 +85,5 @@ The group stage finished (72/72) and the R32 is set. What shipped at the close:
 
 - **Results now ingest daily.** `refresh_daily.sh` refetches the int'l results (`load_results(refresh=True)`) *before* rebuilding, so as the tournament plays out, the model sees each result and the per-match residuals + the live calibration grade actually update. Without this the whole thing would have silently frozen at the pre-tournament cache (the source — martj42 — runs ~1–2 days behind, so the residual lands the next morning, which is fine for a daily cadence). The market layer was always live via the loggers; this closes the *outcomes* half.
 - **Injuries flow automatically now.** `blended_ratings` defaults to `availability=True`, so the moment a *sourced* absence goes in `squad_values.ABSENCES` (`{"France":[{"player":"…","value":<TM £m>,"status":"out"|"doubt"}]}`) the next build reflects it on every card — verified a synthetic "Mbappé out" drops France ~12 Elo. No free live injury API, so population is **manual from news / confirmed lineups (~1h pre-match)** — accuracy over automation, and only ever a *sourced* absence, never a guess. Empty table = identical to static, so it's a no-op until I log something.
-- Capture collection lives on an always-on Azure VM (systemd timers), not the laptop — `make pull` rsyncs the data down. Resolved the old laptop-sleep-misses-kickoff risk.
+- Capture collection lived on an always-on Azure VM (systemd timers), not the laptop — `make pull` rsynced the data down. Resolved the old laptop-sleep-misses-kickoff risk. *(The VM was decommissioned after the final; `deploy/README.md` is now historical, and `logger/data/` on the analysis machine is the only surviving copy of the tapes.)*
 - `python scripts/build_all.py` rebuilds everything. Heavy AI assistance throughout; the design calls and the stats decisions are mine.
