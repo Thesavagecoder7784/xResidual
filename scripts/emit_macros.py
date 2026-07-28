@@ -52,6 +52,19 @@ BASIS_ASOF = "2026-06-22"
 
 def load():
     D = {}
+    # The exogenous goal clock lives in data/, not writeups/, because it is input data rather
+    # than a derived result. Loaded under "G" and summarised into counts below.
+    gp = os.path.join(os.path.dirname(WRITEUPS), "data", "wc_goals_espn.json")
+    try:
+        with open(gp) as f:
+            g = json.load(f)
+        D["G"] = {"n_matches": len(g),
+                  "n_goals": sum(len(v.get("goals", [])) for v in g.values()),
+                  "n_cards": sum(len(v.get("cards", [])) for v in g.values()),
+                  "n_shootout": sum(len(v.get("shootout", [])) for v in g.values())}
+    except Exception as e:  # noqa: BLE001
+        D["G"] = {}
+        print(f"  ! could not load wc_goals_espn.json: {e}", file=sys.stderr)
     for k, fn in SOURCES.items():
         p = os.path.join(WRITEUPS, fn)
         try:
@@ -112,6 +125,9 @@ def manual(name, val, note):         return ("manual", name, val, note)
 GROUPS = [
     ("Sample sizes (four distinct denominators — do not conflate)", [
         auto("nCaptured",    lambda D: intu(dig(D, "L", "n_matches")), "84", "marquee matches captured cross-venue"),
+        auto("nClockMatches", lambda D: intu(dig(D, "G", "n_matches")), "104", "matches in the exogenous goal clock"),
+        auto("nClockGoals",   lambda D: intu(dig(D, "G", "n_goals")), "308", "goals with exogenous minute stamps"),
+        auto("nClockCards",   lambda D: intu(dig(D, "G", "n_cards")), "290", "card events in the goal clock"),
         auto("nLeadBearing", lambda D: intu(dig(D, "H", "leadlag.n_matches")), "77", "matches with >=1 decisive event"),
         auto("nPerMatch",    lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "65", "matches in the per-match sign test"),
         auto("nEvents",      lambda D: intu(dig(D, "H", "leadlag.n_events")), "377", "decisive repricing events"),
