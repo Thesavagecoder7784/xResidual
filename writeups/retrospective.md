@@ -107,7 +107,12 @@ that small.
 Two format-native reads survived the tournament.
 
 **Goals and draws rose together.** The group stage finished at **2.99 goals per game with 27.8% of
-matches drawn**; across all 104 matches, **2.88 and 27.9%**. That combination is the unusual part —
+matches drawn**. That figure is convention-free, since no group game goes to extra time. Across all
+104 matches you have to say which convention you mean, because five knockout ties were level at 90
+minutes and decided later: **2.96 goals per game and 23.1% drawn counting extra time** (the usual
+basis for comparing World Cups), or 2.88 and 27.9% on regulation-time scores alone. I flag this
+because the gap is nearly five points on the draw rate, and a retrospective that quietly picked the
+flattering convention would not be worth much. That combination is the unusual part —
 scoring rates and draw rates normally move against each other, and here both sat high. An early read
 through 33 games had it at 3.09 goals per game, which is the figure the frozen group-stage card
 carries; the tournament finished cooler than it started, and I would not now call it the highest-
