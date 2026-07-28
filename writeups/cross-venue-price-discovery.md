@@ -22,7 +22,7 @@ across both venues, plus an on-chain trade-flow layer reconstructed from Polymar
 Exchange, we study **where price is discovered**: which venue moves first when information
 arrives, and whether that leadership flips between the quiet pre-match regime and the
 high-information in-play regime. We decompose each cross-venue quote into belief and margin and
-find the widely-quoted "5 to 8 cent" inter-venue gap is **almost entirely the house margin**:
+find the visible inter-venue gap — **3.98pp** on raw title prices — is **almost entirely the house margin**:
 de-vigged, the two prediction markets agree to ~0.15pp on the title race, and a relative-value
 convergence trade returns a documented loss net of costs. The residual belief gap is small but
 structured by audience (a home-crowd tilt). The central price-discovery result, estimated on
@@ -155,7 +155,7 @@ placebo).
 
 ### 5.1 Law of one price holds; the visible gap is margin (final)
 De-vigged, Polymarket and Kalshi title prices agree to **~0.15pp on average** across the 48-team
-field; the most persistent standing gap is **England**, the only team quoted apart at every as-of cutoff (mean ~0.8pp, peaking ~1.0pp pre-kickoff). The "5 to 8 cent" gap the press quotes is
+field; the most persistent standing gap is **England**, the only team quoted apart at every as-of cutoff (mean ~0.8pp, peaking ~1.0pp pre-kickoff). The visible gap on raw title prices (3.98pp) is
 **mostly the house margin**: Kalshi's overround runs ~5.4% vs Polymarket's ~3.0% (~1.8x), so the
 durable venue difference is *cost, not price*.
 
