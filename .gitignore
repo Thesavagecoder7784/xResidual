@@ -334,6 +334,7 @@ viz/**/*.png
 # into d144ff1 by a bulk `git add paper/arxiv/` on 2026-07-27, public for ~1 day, then
 # scrubbed from history. The rule below is what should have existed then. Keep it.
 paper/arxiv/PRESSURE_TEST.md
+paper/arxiv/STRESS_TEST.md
 
 # LaTeX build products only — the manuscript SOURCE (main.tex, sections/, macros.tex,
 # references.bib, figures/) is tracked, so the paper ships with the repo that backs it.
