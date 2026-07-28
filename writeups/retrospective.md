@@ -138,7 +138,7 @@ inside goal windows versus 53% in calm play.** The lead is a news-event phenomen
 hum.
 
 Then the part I care about most. A real 600 ms head start on a repeated, exogenous shock sounds like
-free money, and on a spread-only calculation it prices like it: across **405 goals in 66 matches** the
+free money, and on a spread-only calculation it prices like it: across **405 goal-shock observations in 66 matches** — the ledger books one row per contract, and a goal moves both of a match's contracts, so that is roughly 200 distinct goals — the
 lagging venue is stale by a median **12.0 cents**, netting **+10.8 cents on paper** after costs, on
 100% of goals.
 
