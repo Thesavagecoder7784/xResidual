@@ -288,14 +288,11 @@ GROUPS = [
         auto("loopDevigAtClose",     lambda D: num(dig(D, "F", "loop_raw_gap_pp"), 2) + "\\,pp", "3.98\\,pp", "P3 raw cross-venue gap (graded FAIL vs the 1pp rule)"),
         auto("overroundK",     lambda D: num(dig(D, "F", "overround_kalshi_pct"), 1) + "\\%", "5.4\\%", "Kalshi overround"),
         auto("overroundP",     lambda D: num(dig(D, "F", "overround_poly_pct"), 1) + "\\%", "3.0\\%", "Polymarket overround"),
-        auto("depthRatio",     lambda D: f"\\ensuremath{{{intu(dig(D, 'F', 'depth_ratio_group'))}\\times}}", "\\ensuremath{27\\times}", "Polymarket vs Kalshi title depth (group stage)"),
-        auto("depthRatioLate", lambda D: f"\\ensuremath{{{intu(dig(D, 'F', 'depth_ratio_final_four'))}\\times}}", "\\ensuremath{4\\times}", "compressing by the final four"),
         auto("confedRPS",      lambda D: "+" + num(dig(D, "F", "confed_shrink_rps_gain_pct"), 1) + "\\%", "+4.6\\%", "confederation-shrinkage cross-confed RPS gain"),
         auto("confedDMp",      lambda D: num(dig(D, "F", "confed_shrink_dm_p"), 3), "0.009", "Diebold-Mariano p"),
         auto("rankCorr",       lambda D: num(dig(D, "F", "model_vs_book_rank_corr"), 2), "0.95", "model vs de-vigged bookmaker consensus"),
     ]),
     ("MANUAL — not yet emitted by any builder (update by hand; warned on every run)", [
-        manual("obiFav",          "0.2", "order-book imbalance, title favorites (unused in paper)"),
     ]),
 ]
 
