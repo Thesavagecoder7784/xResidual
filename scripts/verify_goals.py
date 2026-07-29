@@ -34,6 +34,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_LAST: dict = {"rows": 0, "over": 0, "stale": 0}
 
 
 def _load_ledger() -> dict:
@@ -130,6 +131,7 @@ def check_detection(verbose: bool) -> tuple[int, list[str]]:
         if detected > true_goals:
             over.append(f"{name}: detected {detected} > actual {true_goals}")
 
+    _LAST["rows"] = len(rows); _LAST["over"] = len(over); _LAST["stale"] = len(stale)
     tg, td = sum(r[1] for r in rows), sum(r[2] for r in rows)
     print(f"\n[2] DETECTION VALIDITY  ({len(rows)} matches, ground truth = scoreline)")
     print(f"    true goals {tg} · detected shocks {td} · ratio {td/tg*100:.0f}%")
@@ -217,6 +219,17 @@ def main() -> int:
     d2, _ = check_detection(args.verbose)
     check_totals(args.verbose)
     check_clock(args.verbose)
+
+    # emit the counts so the manuscript can cite them as macros rather than literals
+    try:
+        import glob as _g
+        n_arch = len(_g.glob(os.path.join(ROOT, "viz", "model", "overreaction", "*.json")))
+        with open(os.path.join(ROOT, "writeups", "_detection_results.json"), "w") as fh:
+            json.dump({"n_matches_checked": _LAST["rows"], "n_over_detect": _LAST["over"],
+                       "n_bad_n_goals": _LAST["stale"], "n_archives": n_arch,
+                       "note": "detection validity vs scoreline ground truth; see check [2]"}, fh, indent=1)
+    except Exception:  # noqa: BLE001
+        pass
 
     total = d1 + d2
     print("\n" + "=" * 78)
