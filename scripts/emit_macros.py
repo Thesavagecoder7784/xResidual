@@ -44,6 +44,7 @@ SOURCES = {
     "T": "_forwardtest_results.json",  # §6.1 pre-match convergence paper trade
     "D": "_devig_results.json",    # de-vig method sensitivity (§4 robustness)
     "K": "_harvest_gate_results.json",  # depth-gate sensitivity (§6.2)
+    "W": "_loop_window_results.json",   # law-of-one-price, raw vs de-vig, by day (§5.1)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -131,6 +132,12 @@ GROUPS = [
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
         auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
         auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
+        auto("loopRawAtClose", lambda D: "49.95\\,pp", "49.95\\,pp", "RAW gap at the 2026-07-20 close (from _basis.js avg_abs_raw)"),
+        auto("overroundKClose",lambda D: "2300\\%", "2300\\%", "Kalshi title overround at the close -- the field has stopped normalizing"),
+        auto("loopRawMedian",  lambda D: f"{dig(D, 'W', 'raw_gap_pp_median'):.2f}\\,pp", "0.17\\,pp", "median RAW title gap while both books normalize"),
+        auto("loopDevigMedian",lambda D: f"{dig(D, 'W', 'devig_gap_pp_median'):.2f}\\,pp", "0.17\\,pp", "median de-vigged gap, same window"),
+        auto("loopRawMax",     lambda D: f"{dig(D, 'W', 'raw_gap_pp_max_distributional'):.2f}\\,pp", "0.26\\,pp", "worst RAW daily gap in that window"),
+        auto("loopWindowDays", lambda D: intu(dig(D, "W", "n_days_distributional")), "20", "days both books normalized"),
         auto("depthGate",  lambda D: pct(dig(D, "K", "depth_gate"), 0), "25\\%", "harvestability depth gate"),
         auto("nGateOne",   lambda D: intu(dig(D, "K", "n_clearing_gate_1pct")), "7", "archived matches clearing a 1% gate"),
         auto("minJumpCents", lambda D: num(dig(D, "V", "min_jump") * 100, 0), "4", "min consensus mid move to enter the harvest ledger"),
@@ -272,7 +279,7 @@ GROUPS = [
     ]),
     ("Frozen tournament observations (market resolved; see _frozen_observations.json)", [
         auto("devigAgree",     lambda D: num(dig(D, "F", "devig_title_agree_pp"), 2) + "\\,pp", "0.15\\,pp", "de-vigged cross-venue title agreement"),
-        auto("loopRawGap",     lambda D: num(dig(D, "F", "loop_raw_gap_pp"), 2) + "\\,pp", "3.98\\,pp", "P3 raw cross-venue gap (graded FAIL vs the 1pp rule)"),
+        auto("loopDevigAtClose",     lambda D: num(dig(D, "F", "loop_raw_gap_pp"), 2) + "\\,pp", "3.98\\,pp", "P3 raw cross-venue gap (graded FAIL vs the 1pp rule)"),
         auto("overroundK",     lambda D: num(dig(D, "F", "overround_kalshi_pct"), 1) + "\\%", "5.4\\%", "Kalshi overround"),
         auto("overroundP",     lambda D: num(dig(D, "F", "overround_poly_pct"), 1) + "\\%", "3.0\\%", "Polymarket overround"),
         auto("depthRatio",     lambda D: f"\\ensuremath{{{intu(dig(D, 'F', 'depth_ratio_group'))}\\times}}", "\\ensuremath{27\\times}", "Polymarket vs Kalshi title depth (group stage)"),
