@@ -9,5 +9,17 @@
  "confed_shrink_rps_gain_pct": 4.6,
  "confed_shrink_dm_p": 0.009,
  "model_vs_book_rank_corr": 0.95,
- "_overround_provenance": "overround_kalshi_pct and overround_poly_pct are PRE-TOURNAMENT BUILDUP reads (the window before the 2026-06-11 kickoff), not group-stage or late-tournament ones. This matters because Polymarket's winner-field overround compresses fast: ~2.8-3.5% across 2026-06-06..06-10, but <1.5% by mid-group-stage, so a sweep that starts at kickoff makes the 3.0% here look wrong when it is simply earlier. Corroborated by scripts/basis_asof_sweep.py -- see the buildup cutoffs in _basis_asof_sweep.json, where Kalshi runs 4.7-6.6% against the 5.4% recorded here."
+ "_overround_provenance": "overround_kalshi_pct and overround_poly_pct are PRE-TOURNAMENT BUILDUP reads (the window before the 2026-06-11 kickoff), not group-stage or late-tournament ones. This matters because Polymarket's winner-field overround compresses fast: ~2.8-3.5% across 2026-06-06..06-10, but <1.5% by mid-group-stage, so a sweep that starts at kickoff makes the 3.0% here look wrong when it is simply earlier. Corroborated by scripts/basis_asof_sweep.py -- see the buildup cutoffs in _basis_asof_sweep.json, where Kalshi runs 4.7-6.6% against the 5.4% recorded here.",
+ "_verification_2026_07_29": {
+  "method": "Each frozen value was re-derived from surviving inputs where possible, rather than trusted. logger/data/snapshots-*.jsonl and data/international_results.csv both survive locally.",
+  "devig_title_agree_pp": "VERIFIED. build_loop_window.py: median de-vigged gap 0.166pp over the 20 days both books normalize; the frozen 0.15 sits inside the daily range.",
+  "loop_raw_gap_pp": "MISLABELLED, corrected 2026-07-28. 3.98 is the DE-VIGGED gap at the 2026-07-20 close (build_basis.py:132), not raw; raw at that timestamp is 49.95. Macro renamed loopDevigAtClose.",
+  "overround_kalshi_pct": "VERIFIED. Recomputed median 5.58% (range 4.35-9.45) over the same window.",
+  "overround_poly_pct": "HIGH BUT IN RANGE. Recomputed median 2.10% (range 0.70-3.50). The frozen 3.0 sits at the top of the range, so the Kalshi/Polymarket vig RATIO is understated: measured per-day median is 2.82x, not the 1.8x implied by 5.4/3.0.",
+  "depth_ratio_group": "NOT VERIFIABLE. Kalshi rows in the surviving snapshots carry liquidity=None, and no separate order-book log survives, so Kalshi title depth cannot be recomputed. Treat as a tournament-time observation that cannot be re-derived.",
+  "depth_ratio_final_four": "NOT VERIFIABLE. Same reason.",
+  "confed_shrink_rps_gain_pct": "PRE-TOURNAMENT VALUE, KEEP. A rerun today gives +5.41% because it now includes the 2026 results, which is circular for validating a correction applied BEFORE those matches. Cite the pre-tournament figure and label it.",
+  "confed_shrink_dm_p": "PRE-TOURNAMENT VALUE, KEEP. Rerun today gives p=0.0037 for the same reason. Placebo holds either way: within-confederation gain +0.11%.",
+  "model_vs_book_rank_corr": "CONSISTENT, not exactly reproduced. Model vs PM market on the pre-kickoff champion field gives Spearman 0.934 (n=36); the frozen 0.95 is against the de-vigged BOOKMAKER consensus, a different comparator."
+ }
 }
