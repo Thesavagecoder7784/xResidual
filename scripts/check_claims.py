@@ -137,6 +137,21 @@ def main() -> int:
             print(f"       {b}")
             failures += 1
 
+    # The rendered PDF is scanned too. Source-only scanning has a real blind spot: the abstract
+    # wrote "\\nGoalsHarvest{} goals", which renders as "405 goals" but contains no such literal
+    # string, so every source-level check passed while the built paper carried the mislabel. Caught
+    # only by compiling. If main.pdf is absent this degrades quietly to source-only.
+    pdf = os.path.join(ROOT, "paper", "arxiv", "main.pdf")
+    if os.path.exists(pdf):
+        try:
+            import pypdf
+            rendered = "\n".join(pg.extract_text() or "" for pg in pypdf.PdfReader(pdf).pages)
+            text["paper/arxiv/main.pdf (rendered)"] = rendered
+            print(f"  + scanning the rendered PDF ({len(pypdf.PdfReader(pdf).pages)} pages) "
+                  f"— macros hide banned phrasings from a source-only scan")
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! could not read main.pdf ({type(e).__name__}); source-only scan")
+
     print("\n  BANNED PHRASINGS")
     for pat, why in BANNED:
         for s, body in text.items():
