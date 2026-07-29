@@ -42,6 +42,7 @@ SOURCES = {
     "B": "_basis_asof_sweep.json",     # venue-vs-sharp-line, replayed at frozen as-of dates
     "R": "_underreaction_clean_results.json",  # §5.3 clean-subset, reconstructed estimator
     "T": "_forwardtest_results.json",  # §6.1 pre-match convergence paper trade
+    "D": "_devig_results.json",    # de-vig method sensitivity (§4 robustness)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -125,6 +126,11 @@ def manual(name, val, note):         return ("manual", name, val, note)
 GROUPS = [
     ("Sample sizes (four distinct denominators — do not conflate)", [
         auto("nCaptured",    lambda D: intu(dig(D, "L", "n_matches")), "84", "marquee matches captured cross-venue"),
+        auto("devigSpreadPM", lambda D: f"{dig(D, 'D', 'venues.polymarket.median_spread_pp'):.3f}\\,pp", "0.006\\,pp", "de-vig method spread, Polymarket"),
+        auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
+        auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
+        auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
+        auto("nLeadMatchUnit", lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "66", "matches in the per-match lead unit"),
         auto("nClockMatches", lambda D: intu(dig(D, "G", "n_matches")), "104", "matches in the exogenous goal clock"),
         auto("nClockGoals",   lambda D: intu(dig(D, "G", "n_goals")), "308", "goals with exogenous minute stamps"),
         auto("nClockCards",   lambda D: intu(dig(D, "G", "n_cards")), "290", "card events in the goal clock"),
