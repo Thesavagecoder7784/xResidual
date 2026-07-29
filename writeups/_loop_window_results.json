@@ -273,5 +273,8 @@
    "devig_gap_pp": 5.7009,
    "distributional": false
   }
- ]
+ ],
+ "overround_kalshi_pct_median": 5.58,
+ "overround_poly_pct_median": 2.1,
+ "overround_ratio_median": 2.82
 }
