@@ -48,7 +48,11 @@ def canonical() -> list[dict]:
     ll, isr = hard["leadlag"], hard["infoshare"]
     harv = _j("writeups/_harvest_results.json")["pooled"]
     unit = _j("writeups/_harvest_unit_check.json")
-    cal = _j("writeups/_calibration_results.json")["versions"]["v1"]
+    calall = _j("writeups/_calibration_results.json")
+    cal = calall["versions"]["v1"]
+    # Real location, verified: versions.market.brier (also mirrored as paired_market_vs_v1.brier_a).
+    # No literal fallback -- a silent fallback would defeat the point of reading from the artifact.
+    mkt_brier = calall["versions"]["market"]["brier"]
 
     return [
         dict(name="lead-lag share of decisive events",
@@ -78,8 +82,15 @@ def canonical() -> list[dict]:
         dict(name="goal-weighted harvestable",
              value=round(unit["pct_harvestable_goal_weighted"]),
              pattern=r"~?(\d{2})%\s*goal-weighted", unit="%"),
+        # The artifact carries 4 dp (0.5033) but the manuscript macro rounds to 3 (0.503), so the
+        # comparison is made at the precision the paper prints. Demanding 4 dp matched nothing and
+        # passed silently -- the failure mode the zero-mention guard below now catches.
+        # Anchored on the MARKET Brier (also artifact-derived) because the manuscript contains a
+        # second "Brier X vs. Y" pair for the under-reaction outcome test (0.073 vs 0.113). Both
+        # numbers in the anchor come from artifacts, so nothing is hard-coded.
         dict(name="model Brier (v1)",
-             value=cal["brier"], pattern=r"model[^.]{0,40}?Brier[^.]{0,20}?(0\.\d{4})", unit=""),
+             value=round(cal["brier"], 3),
+             pattern=rf"Brier\s+{round(mkt_brier, 3)}\s+vs\.?\\?\s+(0\.\d{{3}})", unit=""),
     ]
 
 
@@ -118,25 +129,6 @@ def main() -> int:
     print("=" * 78)
     print("  CLAIM CONSISTENCY — prose surfaces vs the artifacts they came from")
     print("=" * 78)
-    print(f"  {len(claims)} headline figures · {len(text)} surfaces\n")
-
-    failures = 0
-    for c in claims:
-        want = str(c["value"])
-        hits, bad = 0, []
-        for s, body in text.items():
-            for m in re.finditer(c["pattern"], body, re.I):
-                got = re.sub(r"\s+", " ", m.group(1)).strip()
-                hits += 1
-                if got.replace(" ", "") != want.replace(" ", "") and got not in c.get("allow", set()):
-                    bad.append(f"{s}: says {got}, artifact says {want}")
-        status = "ok " if not bad else "!! "
-        if bad or args.verbose:
-            print(f"  {status}{c['name']:36} {want}{c['unit']:4} ({hits} mention(s))")
-        for b in bad:
-            print(f"       {b}")
-            failures += 1
-
     # The rendered PDF is scanned too. Source-only scanning has a real blind spot: the abstract
     # wrote "\\nGoalsHarvest{} goals", which renders as "405 goals" but contains no such literal
     # string, so every source-level check passed while the built paper carried the mislabel. Caught
@@ -151,6 +143,33 @@ def main() -> int:
                   f"— macros hide banned phrasings from a source-only scan")
         except Exception as e:  # noqa: BLE001
             print(f"  ! could not read main.pdf ({type(e).__name__}); source-only scan")
+
+    print(f"  {len(claims)} headline figures · {len(text)} surfaces\n")
+
+    failures = 0
+    for c in claims:
+        want = str(c["value"])
+        hits, bad = 0, []
+        for s, body in text.items():
+            for m in re.finditer(c["pattern"], body, re.I):
+                got = re.sub(r"\s+", " ", m.group(1)).strip()
+                hits += 1
+                if got.replace(" ", "") != want.replace(" ", "") and got not in c.get("allow", set()):
+                    bad.append(f"{s}: says {got}, artifact says {want}")
+        if hits == 0:
+            # Silent-pass guard. A pattern that matches nothing looks identical to a pattern that
+            # matches and agrees, so an unmaintained check would quietly certify a drifting number
+            # forever. Treat it as a failure of the checker itself.
+            print(f"  ?? {c['name']:36} {want}{c['unit']:4} PATTERN MATCHED NOTHING "
+                  f"-- the check is broken, not the claim")
+            failures += 1
+            continue
+        status = "ok " if not bad else "!! "
+        if bad or args.verbose:
+            print(f"  {status}{c['name']:36} {want}{c['unit']:4} ({hits} mention(s))")
+        for b in bad:
+            print(f"       {b}")
+            failures += 1
 
     print("\n  BANNED PHRASINGS")
     for pat, why in BANNED:
