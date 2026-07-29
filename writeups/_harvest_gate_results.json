@@ -1,0 +1,8 @@
+{
+ "depth_gate": 0.25,
+ "gate_source": "build_harvest.py summ(): harvestable requires depth_frac >= 0.25",
+ "n_matches_archived": 21,
+ "n_clearing_gate_1pct": 7,
+ "median_depth_frac": 0.004,
+ "note": "sensitivity of the harvestability conclusion to the depth gate, computed on the surviving per-game archives"
+}
