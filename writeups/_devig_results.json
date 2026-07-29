@@ -1,0 +1,22 @@
+{
+ "estimator": "per-outcome spread across de-vig methods, one title cross-section at a time; unit = one outcome in one snapshot",
+ "methods": [
+  "multiplicative",
+  "power"
+ ],
+ "note": "Shin is excluded from the headline spread because its solver has no root when a book sums to <= 1, which is the normal case on Polymarket.",
+ "venues": {
+  "kalshi": {
+   "n_cross_sections": 1769,
+   "book_sum_median": 12.5555,
+   "median_spread_pp": 0.083,
+   "worst_outcome_pp": 95.2
+  },
+  "polymarket": {
+   "n_cross_sections": 969,
+   "book_sum_median": 1.015,
+   "median_spread_pp": 0.006,
+   "worst_outcome_pp": 0.46
+  }
+ }
+}
