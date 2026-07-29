@@ -43,6 +43,7 @@ SOURCES = {
     "R": "_underreaction_clean_results.json",  # §5.3 clean-subset, reconstructed estimator
     "T": "_forwardtest_results.json",  # §6.1 pre-match convergence paper trade
     "D": "_devig_results.json",    # de-vig method sensitivity (§4 robustness)
+    "K": "_harvest_gate_results.json",  # depth-gate sensitivity (§6.2)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -130,6 +131,10 @@ GROUPS = [
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
         auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
         auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
+        auto("depthGate",  lambda D: pct(dig(D, "K", "depth_gate"), 0), "25\\%", "harvestability depth gate"),
+        auto("nGateOne",   lambda D: intu(dig(D, "K", "n_clearing_gate_1pct")), "7", "archived matches clearing a 1% gate"),
+        auto("minJumpCents", lambda D: num(dig(D, "V", "min_jump") * 100, 0), "4", "min consensus mid move to enter the harvest ledger"),
+        auto("nTiedMatches", lambda D: intu(dig(D, "H", "leadlag.n_matches") - dig(D, "H", "leadlag.per_match_total")), "13", "lead-bearing matches split exactly evenly (dropped from the sign test)"),
         auto("nLeadMatchUnit", lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "66", "matches in the per-match lead unit"),
         auto("nClockMatches", lambda D: intu(dig(D, "G", "n_matches")), "104", "matches in the exogenous goal clock"),
         auto("nClockGoals",   lambda D: intu(dig(D, "G", "n_goals")), "308", "goals with exogenous minute stamps"),
