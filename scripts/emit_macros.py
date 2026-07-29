@@ -284,10 +284,8 @@ GROUPS = [
         auto("basisVerdict",   lambda D: dig(D, "B", "verdict").split(":")[0], "stable", "does the closer venue flip across as-of dates?"),
     ]),
     ("Frozen tournament observations (market resolved; see _frozen_observations.json)", [
-        auto("devigAgree",     lambda D: num(dig(D, "F", "devig_title_agree_pp"), 2) + "\\,pp", "0.15\\,pp", "de-vigged cross-venue title agreement"),
         auto("loopDevigAtClose",     lambda D: num(dig(D, "F", "loop_raw_gap_pp"), 2) + "\\,pp", "3.98\\,pp", "P3 raw cross-venue gap (graded FAIL vs the 1pp rule)"),
         auto("overroundK",     lambda D: num(dig(D, "F", "overround_kalshi_pct"), 1) + "\\%", "5.4\\%", "Kalshi overround"),
-        auto("overroundP",     lambda D: num(dig(D, "F", "overround_poly_pct"), 1) + "\\%", "3.0\\%", "Polymarket overround"),
         auto("confedRPS",      lambda D: "+" + num(dig(D, "F", "confed_shrink_rps_gain_pct"), 1) + "\\%", "+4.6\\%", "confederation-shrinkage cross-confed RPS gain"),
         auto("confedDMp",      lambda D: num(dig(D, "F", "confed_shrink_dm_p"), 3), "0.009", "Diebold-Mariano p"),
         auto("rankCorr",       lambda D: num(dig(D, "F", "model_vs_book_rank_corr"), 2), "0.95", "model vs de-vigged bookmaker consensus"),
