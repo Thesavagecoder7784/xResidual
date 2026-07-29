@@ -45,6 +45,7 @@ SOURCES = {
     "D": "_devig_results.json",    # de-vig method sensitivity (§4 robustness)
     "K": "_harvest_gate_results.json",  # depth-gate sensitivity (§6.2)
     "W": "_loop_window_results.json",   # law-of-one-price, raw vs de-vig, by day (§5.1)
+    "X": "_detection_results.json",     # goal-detection validity vs scoreline (§4)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -132,6 +133,8 @@ GROUPS = [
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
         auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
         auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
+        auto("nDetectChecked", lambda D: intu(dig(D, "X", "n_matches_checked")), "29", "matches with both a detection count and a scoreline"),
+        auto("nOverDetect",    lambda D: intu(dig(D, "X", "n_over_detect")), "15", "matches where detection exceeds actual goals"),
         auto("overroundKMed",    lambda D: rawpct(dig(D, "W", "overround_kalshi_pct_median"), 1), "5.6\\%", "Kalshi title overround, median over the window"),
         auto("overroundPMed",    lambda D: rawpct(dig(D, "W", "overround_poly_pct_median"), 1), "2.1\\%", "Polymarket title overround, median"),
         auto("overroundRatioMed",lambda D: f"{dig(D, 'W', 'overround_ratio_median'):.1f}$\\times$", "2.8$\\times$", "measured Kalshi/Poly vig ratio"),
