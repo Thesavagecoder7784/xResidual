@@ -1,0 +1,277 @@
+{
+ "estimator": "per-day mean absolute cross-venue gap on the title field, raw and after multiplicative de-vig, replayed from the logged snapshots",
+ "max_book_sum_for_distributional": 1.25,
+ "n_days": 29,
+ "n_days_distributional": 20,
+ "window_distributional": [
+  "2026-06-05",
+  "2026-06-26"
+ ],
+ "raw_gap_pp_median": 0.172,
+ "devig_gap_pp_median": 0.166,
+ "raw_gap_pp_max_distributional": 0.257,
+ "note": "While both books normalize, the raw and de-vigged gaps are nearly identical, because both venues carry small overrounds on the title field. The large gaps in _basis.js come from days on which Kalshi's field stops normalizing as teams resolve.",
+ "series": [
+  {
+   "date": "2026-06-05",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0505,
+   "book_sum_poly": 1.021,
+   "raw_gap_pp": 0.1656,
+   "devig_gap_pp": 0.1602,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-06",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.066,
+   "book_sum_poly": 1.035,
+   "raw_gap_pp": 0.1729,
+   "devig_gap_pp": 0.1606,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-07",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.052,
+   "book_sum_poly": 1.027,
+   "raw_gap_pp": 0.1604,
+   "devig_gap_pp": 0.1662,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-08",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.047,
+   "book_sum_poly": 1.028,
+   "raw_gap_pp": 0.1604,
+   "devig_gap_pp": 0.1521,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-09",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0495,
+   "book_sum_poly": 1.021,
+   "raw_gap_pp": 0.1177,
+   "devig_gap_pp": 0.1211,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-10",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.065,
+   "book_sum_poly": 1.028,
+   "raw_gap_pp": 0.1396,
+   "devig_gap_pp": 0.1531,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-11",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0945,
+   "book_sum_poly": 1.03,
+   "raw_gap_pp": 0.1719,
+   "devig_gap_pp": 0.1652,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-12",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0815,
+   "book_sum_poly": 1.0175,
+   "raw_gap_pp": 0.2187,
+   "devig_gap_pp": 0.1809,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-13",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0765,
+   "book_sum_poly": 1.014,
+   "raw_gap_pp": 0.201,
+   "devig_gap_pp": 0.191,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-14",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0695,
+   "book_sum_poly": 1.012,
+   "raw_gap_pp": 0.1781,
+   "devig_gap_pp": 0.1633,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-15",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0435,
+   "book_sum_poly": 1.007,
+   "raw_gap_pp": 0.1552,
+   "devig_gap_pp": 0.1562,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-16",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.054,
+   "book_sum_poly": 1.011,
+   "raw_gap_pp": 0.1938,
+   "devig_gap_pp": 0.1786,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-17",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.053,
+   "book_sum_poly": 1.023,
+   "raw_gap_pp": 0.1583,
+   "devig_gap_pp": 0.1761,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-18",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.048,
+   "book_sum_poly": 1.024,
+   "raw_gap_pp": 0.1542,
+   "devig_gap_pp": 0.1531,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-19",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0575,
+   "book_sum_poly": 1.032,
+   "raw_gap_pp": 0.1719,
+   "devig_gap_pp": 0.163,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-20",
+   "n_teams": 48,
+   "book_sum_kalshi": 1.0535,
+   "book_sum_poly": 1.0215,
+   "raw_gap_pp": 0.2354,
+   "devig_gap_pp": 0.244,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-21",
+   "n_teams": 46,
+   "book_sum_kalshi": 1.0535,
+   "book_sum_poly": 1.007,
+   "raw_gap_pp": 0.2033,
+   "devig_gap_pp": 0.2174,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-22",
+   "n_teams": 45,
+   "book_sum_kalshi": 1.063,
+   "book_sum_poly": 1.0115,
+   "raw_gap_pp": 0.19,
+   "devig_gap_pp": 0.2091,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-23",
+   "n_teams": 45,
+   "book_sum_kalshi": 1.065,
+   "book_sum_poly": 1.0085,
+   "raw_gap_pp": 0.2567,
+   "devig_gap_pp": 0.2634,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-24",
+   "n_teams": 44,
+   "book_sum_kalshi": 1.569,
+   "book_sum_poly": 1.019,
+   "raw_gap_pp": 1.3432,
+   "devig_gap_pp": 1.4989,
+   "distributional": false
+  },
+  {
+   "date": "2026-06-25",
+   "n_teams": 42,
+   "book_sum_kalshi": 1.5755,
+   "book_sum_poly": 0.9955,
+   "raw_gap_pp": 1.519,
+   "devig_gap_pp": 1.5783,
+   "distributional": false
+  },
+  {
+   "date": "2026-06-26",
+   "n_teams": 41,
+   "book_sum_kalshi": 1.059,
+   "book_sum_poly": 1.0155,
+   "raw_gap_pp": 0.2427,
+   "devig_gap_pp": 0.2316,
+   "distributional": true
+  },
+  {
+   "date": "2026-06-27",
+   "n_teams": 40,
+   "book_sum_kalshi": 3.052,
+   "book_sum_poly": 1.018,
+   "raw_gap_pp": 5.1875,
+   "devig_gap_pp": 3.2733,
+   "distributional": false
+  },
+  {
+   "date": "2026-06-28",
+   "n_teams": 36,
+   "book_sum_kalshi": 3.5585,
+   "book_sum_poly": 1.017,
+   "raw_gap_pp": 7.2097,
+   "devig_gap_pp": 3.8944,
+   "distributional": false
+  },
+  {
+   "date": "2026-06-29",
+   "n_teams": 31,
+   "book_sum_kalshi": 1.565,
+   "book_sum_poly": 0.9995,
+   "raw_gap_pp": 1.9532,
+   "devig_gap_pp": 2.1608,
+   "distributional": false
+  },
+  {
+   "date": "2026-06-30",
+   "n_teams": 30,
+   "book_sum_kalshi": 3.049,
+   "book_sum_poly": 1.021,
+   "raw_gap_pp": 6.9033,
+   "devig_gap_pp": 4.3753,
+   "distributional": false
+  },
+  {
+   "date": "2026-07-01",
+   "n_teams": 27,
+   "book_sum_kalshi": 2.5465,
+   "book_sum_poly": 1.012,
+   "raw_gap_pp": 5.8685,
+   "devig_gap_pp": 4.3653,
+   "distributional": false
+  },
+  {
+   "date": "2026-07-02",
+   "n_teams": 24,
+   "book_sum_kalshi": 2.5485,
+   "book_sum_poly": 1.0195,
+   "raw_gap_pp": 6.4875,
+   "devig_gap_pp": 4.8942,
+   "distributional": false
+  },
+  {
+   "date": "2026-07-03",
+   "n_teams": 21,
+   "book_sum_kalshi": 2.4995,
+   "book_sum_poly": 0.9815,
+   "raw_gap_pp": 7.3714,
+   "devig_gap_pp": 5.7009,
+   "distributional": false
+  }
+ ]
+}
