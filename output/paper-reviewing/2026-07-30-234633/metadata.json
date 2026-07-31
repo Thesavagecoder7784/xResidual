@@ -1,0 +1,22 @@
+{
+  "paper_title": "Cross-Venue Price Discovery in World Cup Prediction Markets: A Real, Un-Harvestable Lead",
+  "authors": ["Prabhat Mani James Nayagam"],
+  "affiliation": "Purdue University",
+  "pdf_path": "paper/arxiv/main.pdf",
+  "pages": 16,
+  "review_date": "2026-07-30",
+  "conference_format": "generic",
+  "severity": "strict",
+  "overall_score": "6/10",
+  "recommendation": "Weak Accept",
+  "confidence": "4/5",
+  "conflict_of_interest": "NOT INDEPENDENT. The reviewing assistant co-authored the current revision of sections 1-8. Severity set to strict to partially offset familiarity bias; all findings verified against source artifacts rather than recalled. An independent review is still required.",
+  "major_issues": 6,
+  "minor_issues": 6,
+  "verified_against_source": [
+    "scripts/emit_macros.py:141-142 - two macros are hardcoded literals, contradicting the Data Availability claim",
+    "paper/arxiv/macros.tex:94-95 - underReactN=54 / underReactGoalsN=185 absent from the Table 1 funnel",
+    "references.bib - Putnins (2013) uncited despite reported Hasbrouck/GG divergence",
+    "Figure 1 annotation - 83 of 392 events lie beyond +/-3s under a +600ms headline"
+  ]
+}

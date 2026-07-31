@@ -1,0 +1,42 @@
+{
+  "tool_status": "paper_search.py executed but returned unusable results. Its arXiv query is date-filtered to submissions after 2025-07 and the Semantic Scholar endpoint rate-limited on every attempt, so returned hits were topically irrelevant (Gaussian-process intermittent forecasting; 2016 dark-pool theory). Candidates below are compiled from domain knowledge and verified against the manuscript bibliography by grep. Recorded honestly rather than padded with tool output.",
+  "search_queries": ["prediction market efficiency forecasting accuracy", "information share price discovery multiple venues"],
+  "results": [
+    {
+      "title": "What do price discovery metrics really measure?",
+      "authors": "Talis J. Putnins",
+      "year": 2013,
+      "venue": "Journal of Empirical Finance",
+      "relevance_reason": "Canonical treatment of when Hasbrouck information share and Gonzalo-Granger component share diverge, and of the information leadership share. The paper reports GG 81.0% against Hasbrouck 75.2% on the same unit without the standard interpretive frame. Highest-priority addition.",
+      "cite_in": "Sections 2, 4, 5.2",
+      "verified_absent": true
+    },
+    {
+      "title": "Prediction Markets",
+      "authors": "Justin Wolfers, Eric Zitzewitz",
+      "year": 2004,
+      "venue": "Journal of Economic Perspectives",
+      "relevance_reason": "The canonical prediction-markets survey. Its absence from a 20-item bibliography in a prediction-markets paper is conspicuous.",
+      "cite_in": "Section 2",
+      "verified_absent": true
+    },
+    {
+      "title": "Flow toxicity and liquidity in a high-frequency world",
+      "authors": "David Easley, Marcos Lopez de Prado, Maureen O'Hara",
+      "year": 2012,
+      "venue": "Review of Financial Studies",
+      "relevance_reason": "Flow toxicity as the driver of liquidity withdrawal is precisely the mechanism claimed in Section 6.2; would strengthen the adverse-selection framing beyond Glosten-Milgrom and Kyle.",
+      "cite_in": "Sections 2, 6.2",
+      "verified_absent": true
+    },
+    {
+      "title": "High frequency trading and the new market makers",
+      "authors": "Albert J. Menkveld",
+      "year": 2013,
+      "venue": "Journal of Financial Markets",
+      "relevance_reason": "Cross-venue market making and fragmentation; supports the cross-venue framing beyond the arms-race citations already added.",
+      "cite_in": "Section 2",
+      "verified_absent": true
+    }
+  ]
+}
