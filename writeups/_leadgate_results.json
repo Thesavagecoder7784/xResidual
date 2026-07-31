@@ -1,0 +1,37 @@
+{
+ "gate_ms_published": 8000,
+ "n_events_published": 392,
+ "buckets": {
+  "0_1s": 239,
+  "1_3s": 70,
+  "beyond_3s": 83
+ },
+ "sensitivity": {
+  "8000ms": {
+   "n_events": 392,
+   "poly_share": 0.7168,
+   "median_lead_ms": 600.0,
+   "per_match": "57 of 66"
+  },
+  "5000ms": {
+   "n_events": 340,
+   "poly_share": 0.7441,
+   "median_lead_ms": 600.0,
+   "per_match": "61 of 69"
+  },
+  "3000ms": {
+   "n_events": 309,
+   "poly_share": 0.7702,
+   "median_lead_ms": 600.0,
+   "per_match": "60 of 68"
+  },
+  "2000ms": {
+   "n_events": 291,
+   "poly_share": 0.7904,
+   "median_lead_ms": 600.0,
+   "per_match": "60 of 66"
+  }
+ },
+ "note": "tightening the co-movement gate strengthens the lead and leaves the median unchanged, so the long-lag tail dilutes rather than drives the result",
+ "bucket_note": "'beyond 3s' is strict (>3000ms), matching the Figure 1 annotation; 3 events sit exactly at the 8000ms gate"
+}
