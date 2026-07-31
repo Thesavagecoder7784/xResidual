@@ -264,6 +264,9 @@ writeups/recruiting-ft2027.md
 # Interview prep — private, not for the public repo
 prep/
 
+# Private working notes (concept guide, explainers) — not for the public repo
+_private/
+
 # Downloaded source cache + transient availability review (regenerate via fetch_squad_data.py).
 # EXCEPTION: ko_advancers.json is NOT regenerable — it is the persistent knockout advancer ledger
 # (penalty/ET ties; fetch_scores.py reads it as KO_LEDGER) and the feed it was built from no longer
