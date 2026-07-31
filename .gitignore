@@ -338,17 +338,16 @@ viz/**/*.png
 # scrubbed from history. The rule below is what should have existed then. Keep it.
 paper/arxiv/PRESSURE_TEST.md
 paper/arxiv/STRESS_TEST.md
+paper/arxiv/SUBMISSION_AUDIT.md
 
-# LaTeX build products only — the manuscript SOURCE (main.tex, sections/, macros.tex,
-# references.bib, figures/) is tracked, so the paper ships with the repo that backs it.
-paper/arxiv
-paper/arxiv/main.pdf
-paper/arxiv/main.tex
-paper/arxiv/*.aux
-paper/arxiv/*.log
-paper/arxiv/*.out
-paper/arxiv/*.bbl
-paper/arxiv/*.blg
-paper/arxiv/*.fls
-paper/arxiv/*.fdb_latexmk
-paper/arxiv/*.synctex.gz
+# ENTIRE paper/arxiv is PRIVATE (decision 2026-07-31). The manuscript is an unpublished
+# work-in-progress and NOTHING in this folder should be public until submission. The source
+# (main.tex, sections/, macros.tex, references.bib, figures/) and the *_submission.md notes
+# were tracked and public before this; they have been untracked with
+#   git rm -r --cached paper/arxiv/
+# and the whole folder is ignored below. This removes them from the tree GOING FORWARD only —
+# the files remain in git HISTORY on the public remote until a history rewrite + GitHub Support
+# cache purge (see the repo privacy notes; forward rm is used here because a filter-branch was
+# previously undone by a VS Code auto-pull). REPRODUCING.md's Tier-A "paper ships with the repo"
+# line no longer holds while this is private — revisit when the paper goes public at submission.
+paper/arxiv/
