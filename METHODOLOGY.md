@@ -472,7 +472,7 @@ share** and the **Gonzalo–Granger (1995) permanent-component share**. The deco
 **gated by a cointegration test** (ADF / Engle–Granger): only matched contracts that pass are
 pooled, since the shares are only defined when the two mids share a common stochastic trend.
 Computing on **mids** is what makes this robust to the trade-direction-classification problem —
-Lee–Ready-style signing misclassifies ≈59% of prediction-market trades (arXiv:2604.24366), so any
+Lee–Ready-style signing matches on-chain ground truth only ≈59% of the time (arXiv:2604.24366), so any
 flow- or trade-signed discovery measure would inherit that error; the MID series carries no
 direction to misclassify. Result: **Polymarket's Gonzalo–Granger permanent-component share is
 ≈81.0%** (per-match median, bootstrap CI [77%, 87%]), and it **leads in 61 of 63 cointegrated
