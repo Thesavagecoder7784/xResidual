@@ -46,6 +46,8 @@ SOURCES = {
     "K": "_harvest_gate_results.json",  # depth-gate sensitivity (§6.2)
     "W": "_loop_window_results.json",   # law-of-one-price, raw vs de-vig, by day (§5.1)
     "X": "_detection_results.json",     # goal-detection validity vs scoreline (§4)
+    "H2": "_harvest_ci_results.json",   # bootstrap CI on the harvestable share (§6.2)
+    "G2": "_leadgate_results.json",     # co-movement gate sensitivity (§5.2)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -54,8 +56,23 @@ SOURCES = {
 BASIS_ASOF = "2026-06-22"
 
 
+def _load_js(path):
+    """window.NAME = {...}; -> dict. _basis.js is a JS artifact, not JSON, but it is the source of
+    record for the close-of-tournament basis numbers, so read it rather than hard-coding them."""
+    import re as _re
+    try:
+        with open(path) as f:
+            raw = f.read()
+        m = _re.search(r"=\s*(\{.*\})\s*;?\s*$", raw.strip(), _re.S)
+        return json.loads(m.group(1)) if m else {}
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! could not load {os.path.basename(path)}: {e}", file=sys.stderr)
+        return {}
+
+
 def load():
     D = {}
+    D["J"] = _load_js(os.path.join(os.path.dirname(WRITEUPS), "viz", "market", "_basis.js"))
     # The exogenous goal clock lives in data/, not writeups/, because it is input data rather
     # than a derived result. Loaded under "G" and summarised into counts below.
     gp = os.path.join(os.path.dirname(WRITEUPS), "data", "wc_goals_espn.json")
@@ -133,13 +150,20 @@ GROUPS = [
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
         auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
         auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
+        auto("harvestCIlo",   lambda D: rawpct(dig(D, "H2", "ci95.0"), 0), "0\\%", "bootstrap CI lower, harvestable share"),
+        auto("harvestCIhi",   lambda D: rawpct(dig(D, "H2", "ci95.1"), 0), "0\\%", "bootstrap CI upper"),
+        auto("harvestNzero",  lambda D: intu(dig(D, "H2", "n_zero_matches")), "15", "archived matches with zero harvestable goals"),
+        auto("harvestNci",    lambda D: intu(dig(D, "H2", "n_matches")), "21", "matches in the CI"),
+        auto("nEventsThree",  lambda D: intu(dig(D, "G2", "sensitivity.3000ms.n_events")), "309", "decisive events under a 3s gate"),
+        auto("gateShareThree",lambda D: pct(dig(D, "G2", "sensitivity.3000ms.poly_share"), 0), "77\\%", "poly share at a 3s gate"),
+        auto("gateEventsLong",lambda D: intu(dig(D, "G2", "buckets.beyond_3s")), "83", "events in the 3-8s bucket"),
         auto("nDetectChecked", lambda D: intu(dig(D, "X", "n_matches_checked")), "29", "matches with both a detection count and a scoreline"),
         auto("nOverDetect",    lambda D: intu(dig(D, "X", "n_over_detect")), "15", "matches where detection exceeds actual goals"),
         auto("overroundKMed",    lambda D: rawpct(dig(D, "W", "overround_kalshi_pct_median"), 1), "5.6\\%", "Kalshi title overround, median over the window"),
         auto("overroundPMed",    lambda D: rawpct(dig(D, "W", "overround_poly_pct_median"), 1), "2.1\\%", "Polymarket title overround, median"),
         auto("overroundRatioMed",lambda D: f"{dig(D, 'W', 'overround_ratio_median'):.1f}$\\times$", "2.8$\\times$", "measured Kalshi/Poly vig ratio"),
-        auto("loopRawAtClose", lambda D: "49.95\\,pp", "49.95\\,pp", "RAW gap at the 2026-07-20 close (from _basis.js avg_abs_raw)"),
-        auto("overroundKClose",lambda D: "2300\\%", "2300\\%", "Kalshi title overround at the close -- the field has stopped normalizing"),
+        auto("loopRawAtClose", lambda D: f"{dig(D, 'J', 'avg_abs_raw'):.2f}\\,pp", "49.95\\,pp", "RAW gap at the close (_basis.js avg_abs_raw)"),
+        auto("overroundKClose",lambda D: rawpct(dig(D, "J", "overround.kalshi"), 0), "2300\\%", "Kalshi title overround at the close -- the field has stopped normalizing"),
         auto("loopRawMedian",  lambda D: f"{dig(D, 'W', 'raw_gap_pp_median'):.2f}\\,pp", "0.17\\,pp", "median RAW title gap while both books normalize"),
         auto("loopDevigMedian",lambda D: f"{dig(D, 'W', 'devig_gap_pp_median'):.2f}\\,pp", "0.17\\,pp", "median de-vigged gap, same window"),
         auto("loopRawMax",     lambda D: f"{dig(D, 'W', 'raw_gap_pp_max_distributional'):.2f}\\,pp", "0.26\\,pp", "worst RAW daily gap in that window"),
@@ -223,8 +247,6 @@ GROUPS = [
         auto("spreadKalshi",  lambda D: intu(dig(D, "Q", "kalshi.spread_widen_med")), "2", "spread blow-out multiple, Kalshi"),
     ]),
     ("Order-flow imbalance (within-venue mechanism)", [
-        auto("ofiPolyT",   lambda D: intu(dig(D, "O", "impact.poly.tstat")), "111", "bin-level OLS t (overstates sig; use n_matches)"),
-        auto("ofiKalshiT", lambda D: intu(dig(D, "O", "impact.kalshi.tstat")), "71", "bin-level OLS t"),
     ]),
     ("Goal under-reaction (in-play, preliminary; full shock-inferred sample)", [
         auto("underReactN",       lambda D: intu(dig(D, "P", "n_matches")), "54", "goal-anchored matches"),

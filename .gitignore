@@ -341,7 +341,9 @@ paper/arxiv/STRESS_TEST.md
 
 # LaTeX build products only — the manuscript SOURCE (main.tex, sections/, macros.tex,
 # references.bib, figures/) is tracked, so the paper ships with the repo that backs it.
+paper/arxiv
 paper/arxiv/main.pdf
+paper/arxiv/main.tex
 paper/arxiv/*.aux
 paper/arxiv/*.log
 paper/arxiv/*.out
