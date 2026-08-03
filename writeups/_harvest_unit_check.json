@@ -1,11 +1,12 @@
 {
- "n_matches_checked": 21,
- "n_goals_checked": 117,
+ "n_matches_checked": 66,
+ "n_goals_checked": 405,
  "pct_harvestable_match_unit": 0.0,
- "pct_harvestable_goal_weighted": 11.12,
- "harvestable_goals": 13,
- "matches_with_any_harvestable": 6,
+ "pct_harvestable_goal_weighted": 9.14,
+ "harvestable_goals": 37,
+ "matches_with_any_harvestable": 21,
  "pooled_ledger_n_matches": 66,
- "coverage_note": "Computed on the per-game harvest archive PRESENT ON THIS MACHINE, which is a subset of the matches behind writeups/_harvest_results.json (pooled_ledger_n_matches). The match-unit figure reproduces the published estimator on this subset; the goal-weighted figure is the number the published one is routinely mistaken for. Re-run where the full archive lives to supersede.",
+ "n_matches_tracked": 21,
+ "coverage_note": "Computed on the COMPLETE per-game harvest archive: 66 matches, matching the 66 behind writeups/_harvest_results.json. (It was a reduced subset until the missing per-game JSONs were recovered from a VM disk backup on 2026-07-25; supersedes any earlier reduced-coverage reading.) The match-unit figure reproduces the published estimator; the goal-weighted figure is the number the published one is routinely mistaken for. REPRODUCIBILITY: only 21 of these 66 archives are git-tracked (viz/market/harvest is gitignored; the tracked ones predate that rule), so a fresh CLONE recomputes this check on 21 matches and gets a different goal-weighted rate. The figure published here is not clone-reproducible until the remaining archives ship.",
  "claim_note": "Correct phrasing: 'the median match has no harvestable goal'. INCORRECT: '0% of goals are harvestable' / 'essentially 0% of goals clear a tradeable-depth bar'."
 }

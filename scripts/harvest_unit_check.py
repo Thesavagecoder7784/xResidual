@@ -8,10 +8,19 @@ soon as half the matches contain no harvestable goal, which is emphatically NOT 
 "0% of goals were harvestable" — yet every draft before 2026-07-25 published it as exactly that.
 
 This recomputes both denominators side by side from the per-game harvest archive so the gap is a
-committed number rather than an argument, and it records its own COVERAGE: the archive on this
-machine is a subset of the matches behind the pooled artifact (the tapes are transient and the
-per-game JSONs were pruned), so `n_matches` here is smaller than `pooled.n_matches` there. Quote
-this file only with its coverage attached; re-run it wherever the full archive lives to supersede.
+committed number rather than an argument, and it records its own COVERAGE against two different
+denominators, because they answer two different questions:
+
+  * `n_matches_checked` vs `pooled_ledger_n_matches` — does this check cover the whole ledger?
+    It did NOT until the per-game JSONs were recovered from a VM disk backup (2026-07-25); the
+    note used to hard-code "this is a subset" and kept saying so after it stopped being true.
+  * `n_matches_tracked` — how many of those archives are git-tracked, i.e. what a REVIEWER
+    CLONING THE REPO can actually recompute. `viz/market/harvest` is gitignored and only the
+    files committed before that rule existed still ship, so this can be far below the figure
+    above. Whenever it is, the published number is not reproducible from a clone and the
+    coverage note says so in as many words.
+
+Quote this file only with its coverage attached.
 
 Fork-forward safe: reads the archive, writes one artifact, edits nothing under xresidual/.
 """
@@ -20,11 +29,26 @@ from __future__ import annotations
 import glob
 import json
 import os
+import subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HARV_DIR = os.path.join(ROOT, "viz", "market", "harvest")
 POOLED = os.path.join(ROOT, "writeups", "_harvest_results.json")
 OUT = os.path.join(ROOT, "writeups", "_harvest_unit_check.json")
+
+
+def n_tracked() -> int | None:
+    """How many per-game harvest archives are git-tracked = what a fresh clone can recompute.
+
+    `core.quotepath=off` + NUL separation: several fixtures carry non-ASCII names (Curacao),
+    which the default quoted output mangles into paths that do not exist on disk."""
+    try:
+        out = subprocess.run(
+            ["git", "-c", "core.quotepath=off", "ls-files", "-z", "viz/market/harvest"],
+            capture_output=True, cwd=ROOT, check=True)
+        return len([p for p in out.stdout.decode().split("\0") if p.endswith(".json")])
+    except Exception:  # noqa: BLE001 — not a git checkout; coverage-vs-clone is then unknowable
+        return None
 
 
 def main() -> int:
@@ -50,6 +74,31 @@ def main() -> int:
     except Exception:  # noqa: BLE001 — the pooled artifact is optional context, not a dependency
         pass
 
+    tracked = n_tracked()
+
+    # Two independent coverage statements. Neither is allowed to be assumed: the first was
+    # hard-coded as "subset" and outlived its own truth by a re-pool, and the second is the
+    # failure this file exists to make visible rather than repeat.
+    if ledger_n and len(rows) >= ledger_n:
+        cov = (f"Computed on the COMPLETE per-game harvest archive: {len(rows)} matches, matching "
+               f"the {ledger_n} behind writeups/_harvest_results.json. (It was a "
+               f"reduced subset until the missing per-game JSONs were recovered from a VM disk "
+               f"backup on 2026-07-25; supersedes any earlier reduced-coverage reading.) The "
+               f"match-unit figure reproduces the published estimator; the goal-weighted figure "
+               f"is the number the published one is routinely mistaken for.")
+    else:
+        cov = (f"Computed on the per-game harvest archive PRESENT ON THIS MACHINE "
+               f"({len(rows)} matches), a SUBSET of the "
+               f"{ledger_n if ledger_n else 'pooled'} matches behind "
+               f"writeups/_harvest_results.json. Re-run where the full archive lives to supersede.")
+
+    if tracked is not None and tracked < len(rows):
+        cov += (f" REPRODUCIBILITY: only {tracked} of these {len(rows)} archives are git-tracked "
+                f"(viz/market/harvest is gitignored; the tracked ones predate that rule), so a "
+                f"fresh CLONE recomputes this check on {tracked} matches and gets a different "
+                f"goal-weighted rate. The figure published here is not clone-reproducible until "
+                f"the remaining archives ship.")
+
     out = {
         "n_matches_checked": len(rows),
         "n_goals_checked": n_goals,
@@ -58,12 +107,8 @@ def main() -> int:
         "harvestable_goals": int(round(harv_goals)),
         "matches_with_any_harvestable": sum(1 for r in rows if r[2] > 0),
         "pooled_ledger_n_matches": ledger_n,
-        "coverage_note": (
-            "Computed on the per-game harvest archive PRESENT ON THIS MACHINE, which is a subset "
-            "of the matches behind writeups/_harvest_results.json (pooled_ledger_n_matches). The "
-            "match-unit figure reproduces the published estimator on this subset; the goal-weighted "
-            "figure is the number the published one is routinely mistaken for. Re-run where the "
-            "full archive lives to supersede."),
+        "n_matches_tracked": tracked,
+        "coverage_note": cov,
         "claim_note": (
             "Correct phrasing: 'the median match has no harvestable goal'. INCORRECT: '0% of goals "
             "are harvestable' / 'essentially 0% of goals clear a tradeable-depth bar'."),
@@ -76,6 +121,9 @@ def main() -> int:
     print(f"  goal unit  (what it is misread as):   {goal_unit:.2f}% of goals "
           f"({int(round(harv_goals))} of {n_goals})")
     print(f"  matches with >=1 harvestable goal:    {out['matches_with_any_harvestable']} of {len(rows)}")
+    if tracked is not None and tracked < len(rows):
+        print(f"  ! only {tracked} of {len(rows)} archives are git-tracked — a fresh clone "
+              f"recomputes this on {tracked} matches")
     print(f"wrote {os.path.relpath(OUT, ROOT)}")
     return 0
 

@@ -1,3 +1,7 @@
+# macOS Finder droppings. Added while none were tracked — check `git ls-files` before adding
+# any rule here, because a rule written after the file is tracked does nothing at all.
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

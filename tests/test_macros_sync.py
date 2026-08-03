@@ -213,7 +213,8 @@ def test_harvestability_cannot_be_quoted_at_the_wrong_unit():
 
     It reads 0.0 as soon as half the matches contain no harvestable goal, which is not the claim
     "0% of goals are harvestable" — every draft before Jul-25 published exactly that conflation,
-    while the goal-weighted rate on the reconstructible subset was ~11%. Require the estimator
+    while the goal-weighted rate was ~9% over the full ledger (~11% on the 21-match subset that
+    was all the archive could reach before the VM backup was recovered). Require the estimator
     string to spell out the unit, and require the goal-weighted companion to travel with it so the
     two denominators are always visible together."""
     D = EM.load()
@@ -236,7 +237,13 @@ def test_harvestability_cannot_be_quoted_at_the_wrong_unit():
 
 
 def test_goal_unit_harvest_check_declares_its_coverage():
-    """The goal-weighted rate is computed on a REDUCED archive; it must say so, every time."""
+    """The goal-weighted rate must always state the coverage it was computed on.
+
+    This used to assert the archive was REDUCED. That premise died when the missing per-game
+    JSONs were recovered from a VM backup (2026-07-25) and the rate was re-pooled over all 66
+    ledger matches — and the hard-coded "this is a subset" note went on asserting it anyway.
+    So the invariant is not "say it is reduced", it is "say what it actually covers", against
+    both denominators that matter: the pooled ledger, and what a fresh CLONE can recompute."""
     U = EM.load().get("U")
     if not U:
         if pytest:
@@ -244,10 +251,31 @@ def test_goal_unit_harvest_check_declares_its_coverage():
         return
     assert U.get("coverage_note"), "_harvest_unit_check.json lost its coverage_note"
     ledger = U.get("pooled_ledger_n_matches")
+    n = U["n_matches_checked"]
     if ledger:
-        assert U["n_matches_checked"] <= ledger, (
-            f"unit check claims {U['n_matches_checked']} matches but the pooled ledger has "
+        assert n <= ledger, (
+            f"unit check claims {n} matches but the pooled ledger has "
             f"{ledger} — the check cannot cover more than the ledger it is checking")
+        # The note must describe the coverage it actually has, in either direction. (Only the
+        # positive claim is asserted: the note may legitimately mention the historical subset
+        # in explaining why the figure moved, so "subset" appearing is not itself a defect.)
+        note = U["coverage_note"].lower()
+        if n >= ledger:
+            assert "complete" in note, (
+                f"the check now covers the whole {ledger}-match ledger but its coverage_note "
+                f"does not say so — rerun scripts/harvest_unit_check.py")
+        else:
+            assert "subset" in note, (
+                f"the check covers {n} of {ledger} ledger matches without saying so")
+
+    # The clone-coverage gap is the failure this file exists to surface: the archives behind it
+    # are gitignored, so a reviewer can silently recompute a different number. Whenever fewer
+    # archives are tracked than were used, the note has to say the figure is not clone-reproducible.
+    tracked = U.get("n_matches_tracked")
+    if tracked is not None and tracked < n:
+        assert "reproducibility" in U["coverage_note"].lower(), (
+            f"only {tracked} of {n} harvest archives are git-tracked, so a clone recomputes a "
+            f"different goal-weighted rate — coverage_note must say so")
 
 
 def test_calibration_brier_gap_ships_with_its_uncertainty():

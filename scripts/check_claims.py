@@ -69,9 +69,17 @@ def canonical() -> list[dict]:
         dict(name="per-match lean",
              value=f"{ll['per_match_poly_leaning']} of {ll['per_match_total']}",
              pattern=r"(\d{2}\s*of\s*\d{2})\s*matches\s*lean", unit=""),
-        dict(name="Gonzalo-Granger info share",
+        # TWO measures, two guards. The old single rule matched a bare "information share" and
+        # so accepted either number for either name -- which is precisely the conflation the
+        # manuscript was carrying (the GG COMPONENT share was called an information share in the
+        # abstract). Splitting the rule makes the checker enforce the distinction: "component
+        # share"/"Gonzalo-Granger" must be followed by the GG number, "Hasbrouck" by its own.
+        dict(name="Gonzalo-Granger component share",
              value=round(isr["median_gg"] * 100, 1),
-             pattern=r"(?:information share|GG|Gonzalo.Granger)[^.]{0,60}?(\d{2}\.\d)%", unit="%"),
+             pattern=r"(?:component share|GG|Gonzalo.Granger)[^.]{0,60}?(\d{2}\.\d)%", unit="%"),
+        dict(name="Hasbrouck information share",
+             value=round(isr["median_hasbrouck"] * 100, 1),
+             pattern=r"Hasbrouck[^.]{0,60}?(\d{2}\.\d)%", unit="%"),
         dict(name="info-share matches led",
              value=f"{isr['matches_poly_gt_50']} of {isr['n_matches']}",
              pattern=r"(\d{2}\s*of\s*\d{2})\s*cointegrated", unit=""),
@@ -79,9 +87,17 @@ def canonical() -> list[dict]:
              value=harv["n_goals"], pattern=r"(\d{3})\s*goal-shock", unit="obs"),
         dict(name="harvest gross cents",
              value=harv["gross_med_c"], pattern=r"median\s*(?:gross\s*)?(\d{2}\.\d)[\s-]*cent", unit="c"),
+        # 1-2 digits, not 2: the full-ledger re-pool moved this from 11% to 9%, and a \d{2}
+        # pattern then matched nothing at all -- caught only by the zero-mention guard below.
+        # BOTH word orders: "9% goal-weighted" and "goal-weighted rate is 9.1%". The second
+        # phrasing sat stale in three surfaces through a re-pool because only the first matched.
         dict(name="goal-weighted harvestable",
              value=round(unit["pct_harvestable_goal_weighted"]),
-             pattern=r"~?(\d{2})%\s*goal-weighted", unit="%"),
+             # The emphasis marker between "is" and the number may be markdown (**) or HTML
+             # (<b>): docs/note.html sat stale behind a <b> tag while the guard reported CLEAN.
+             pattern=r"(?:~?(\d{1,2})(?:\.\d)?%\s*goal-weighted"
+                     r"|goal-weighted[^.]{0,40}?(?:is|:)\s*(?:\*{1,2}|<b>)?\s*~?(\d{1,2})(?:\.\d)?%)",
+             unit="%"),
         # The artifact carries 4 dp (0.5033) but the manuscript macro rounds to 3 (0.503), so the
         # comparison is made at the precision the paper prints. Demanding 4 dp matched nothing and
         # passed silently -- the failure mode the zero-mention guard below now catches.
@@ -116,15 +132,26 @@ BANNED = [
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument("--allow-missing", action="store_true",
+                    help="Do not fail when a surface file is absent. For contexts where the "
+                         "manuscript is deliberately not present (e.g. the public repo, where "
+                         "paper/arxiv is private). Coverage is still reported either way.")
     args = ap.parse_args()
 
     claims = canonical()
     text = {}
+    missing = []
     for s in SURFACES:
         p = os.path.join(ROOT, s)
         if os.path.exists(p):
             with open(p, encoding="utf-8", errors="replace") as fh:
                 text[s] = fh.read()
+        else:
+            # Same principle as the silent-pass guard below: an ABSENT surface is
+            # indistinguishable from a surface that agrees, so it must be reported. This
+            # checker printed "CLEAN -- every surface agrees" while silently scanning 12 of 15
+            # from a fresh clone, which is precisely the reassurance it exists to prevent.
+            missing.append(s)
 
     print("=" * 78)
     print("  CLAIM CONSISTENCY — prose surfaces vs the artifacts they came from")
@@ -143,8 +170,18 @@ def main() -> int:
                   f"— macros hide banned phrasings from a source-only scan")
         except Exception as e:  # noqa: BLE001
             print(f"  ! could not read main.pdf ({type(e).__name__}); source-only scan")
+            missing.append("paper/arxiv/main.pdf (rendered)")
+    else:
+        missing.append("paper/arxiv/main.pdf (rendered)")
 
-    print(f"  {len(claims)} headline figures · {len(text)} surfaces\n")
+    expected = len(SURFACES) + 1  # +1 for the rendered PDF
+    print(f"  {len(claims)} headline figures · {len(text)} of {expected} surfaces\n")
+
+    if missing:
+        print("  MISSING SURFACES — not scanned, so not certified")
+        for s in missing:
+            print(f"    -- {s}")
+        print()
 
     failures = 0
     for c in claims:
@@ -152,7 +189,12 @@ def main() -> int:
         hits, bad = 0, []
         for s, body in text.items():
             for m in re.finditer(c["pattern"], body, re.I):
-                got = re.sub(r"\s+", " ", m.group(1)).strip()
+                # First non-None group: patterns may carry alternatives (the same figure gets
+                # written in more than one word order), and only one branch captures per match.
+                grp = next((g for g in m.groups() if g is not None), None)
+                if grp is None:
+                    continue
+                got = re.sub(r"\s+", " ", grp).strip()
                 hits += 1
                 if got.replace(" ", "") != want.replace(" ", "") and got not in c.get("allow", set()):
                     bad.append(f"{s}: says {got}, artifact says {want}")
@@ -178,10 +220,22 @@ def main() -> int:
                 print(f"    !! {s}: {why}")
                 failures += 1
 
+    incomplete = bool(missing) and not args.allow_missing
+
     print("\n" + "=" * 78)
-    print(f"  {'CLEAN — every surface agrees with its artifact' if not failures else f'{failures} DISAGREEMENT(S)'}")
+    if failures:
+        print(f"  {failures} DISAGREEMENT(S)")
+    elif missing:
+        # Never say "every surface" when some were not read. The claim is scoped to coverage.
+        label = "PARTIAL" if args.allow_missing else "INCOMPLETE"
+        note = ("absent by design here and not certified"
+                if args.allow_missing else "not scanned. Coverage is not a pass")
+        print(f"  {label} — {len(text)} of {expected} surfaces agree with their artifacts;\n"
+              f"  {len(missing)} {note} (listed above).")
+    else:
+        print(f"  CLEAN — all {expected} surfaces agree with their artifacts")
     print("=" * 78)
-    return 1 if failures else 0
+    return 1 if (failures or incomplete) else 0
 
 
 if __name__ == "__main__":

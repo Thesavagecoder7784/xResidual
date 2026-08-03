@@ -106,12 +106,34 @@ practice until this date — `viz/market/leadlag/` (54 files) and `viz/model/ove
 shipped in the public repository despite this statement. They have been removed from tracking;
 the statement is now true as written.
 
-**A limitation to state plainly:** Tier B is not re-runnable by a third party, and is not
-fully re-runnable by us either. The tapes are transient by design (`scripts/cleanup_tapes.sh`
-prunes them after processing), the collection VM has been decommissioned, and the per-game
-archives survive only in part on the analysis machine — for the harvest ledger, 21 of the 66
-matches behind the pooled figure. The committed Tier A artifacts are therefore the durable
-evidence base, and the goal-level harvestability check
-(`writeups/_harvest_unit_check.json`) reports its own reduced coverage rather than implying
-the full sample. Anyone re-running Tier B must re-capture a live event from the venues'
-feeds with their own credentials; they cannot reconstruct this tournament.
+**A limitation to state plainly:** Tier B is not re-runnable by a third party. The tapes are
+transient by design (`scripts/cleanup_tapes.sh` prunes them after processing) and the collection
+VM has been decommissioned, so anyone re-running Tier B must re-capture a live event from the
+venues' feeds with their own credentials; they cannot reconstruct this tournament.
+
+*Update, 2026-07-25:* the per-game archives had themselves survived only in part on the analysis
+machine — for the harvest ledger, 21 of the 66 matches behind the pooled figure. They were
+recovered in full from a VM disk backup, and the goal-weighted harvestability rate was re-pooled
+over the whole ledger accordingly (it moved from 11.1% on the 21-match subset to **9.1%** on all
+66). Every affected artifact regenerates bit-identically from those archives.
+
+**What that does *not* fix — read this before quoting a coverage claim.** Recovery restored the
+numbers on *this machine*; it did not put the archives in the repository. `viz/market/{harvest,
+infoshare,ofi}` are gitignored, and only the files committed before those rules existed still
+ship. So a reviewer cloning this repository re-runs the affected checks on a strict subset:
+
+| Archive | Ships in a clone | Present locally | Numbers computed on the full set |
+|---|---:|---:|---|
+| `viz/market/harvest` | 21 | 66 used (74 files) | `_harvest_unit_check`, `_harvest_ci_results`, `_harvest_gate_results`, `pct_harvestable_goal_weighted` |
+| `viz/market/infoshare` | 18 | 80 | `_identification_results` (ADF sweep, ILS bounds) |
+| `viz/market/ofi` | 24 | 83 | `_ofi_ci_results` (match-clustered OFI null) |
+| `viz/market/leadlag` | 0 (by policy) | 86 | `_leadgate_results`, `_detection_results`, `_clock_verified_results` |
+
+`viz/market/leadlag` is withheld deliberately — it retains per-event quote levels and absolute
+`t_ms`, so it falls under the redistribution limits above and is expected to be unreproducible.
+The other three carry no quote levels and no timestamps; they are the class this document already
+lists as shipping, and their absence is an artefact of the `.gitignore`-after-tracking sequence,
+not a policy decision. Until those archives are committed, the pooled Tier A `writeups/*.json`
+are the durable evidence for those figures, and `writeups/_harvest_unit_check.json` records both
+its ledger coverage and its git-tracked coverage (`n_matches_tracked`) so the gap is a committed
+number rather than a footnote.

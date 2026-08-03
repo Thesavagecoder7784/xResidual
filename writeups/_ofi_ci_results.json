@@ -1,0 +1,90 @@
+{
+ "direction": "poly_to_kalshi",
+ "lags_s": [
+  -3,
+  -2,
+  -1,
+  0,
+  1,
+  2,
+  3
+ ],
+ "profile": {
+  "-3": {
+   "n_matches": 80,
+   "median_r": -0.0001,
+   "ci95": [
+    -0.0009,
+    0.0007
+   ],
+   "straddles_zero": true
+  },
+  "-2": {
+   "n_matches": 80,
+   "median_r": 0.0027,
+   "ci95": [
+    0.001,
+    0.0034
+   ],
+   "straddles_zero": false
+  },
+  "-1": {
+   "n_matches": 80,
+   "median_r": 0.0052,
+   "ci95": [
+    0.0042,
+    0.0062
+   ],
+   "straddles_zero": false
+  },
+  "0": {
+   "n_matches": 80,
+   "median_r": -0.001,
+   "ci95": [
+    -0.0101,
+    0.0031
+   ],
+   "straddles_zero": true
+  },
+  "1": {
+   "n_matches": 80,
+   "median_r": 0.0202,
+   "ci95": [
+    0.0134,
+    0.0253
+   ],
+   "straddles_zero": false
+  },
+  "2": {
+   "n_matches": 80,
+   "median_r": 0.0053,
+   "ci95": [
+    0.0041,
+    0.0074
+   ],
+   "straddles_zero": false
+  },
+  "3": {
+   "n_matches": 80,
+   "median_r": 0.0028,
+   "ci95": [
+    0.0018,
+    0.0037
+   ],
+   "straddles_zero": false
+  }
+ },
+ "peak_lag_s": 1,
+ "peak": {
+  "n_matches": 80,
+  "median_r": 0.0202,
+  "ci95": [
+   0.0134,
+   0.0253
+  ],
+  "straddles_zero": false
+ },
+ "max_abs_median_r": 0.0202,
+ "max_abs_ci_bound": 0.0253,
+ "note": "per-match cross-venue OFI correlation recovered from stored sufficient statistics over 83 archives (all archives present); match-resampling bootstrap, 10000 replicates, seed 20260702. peak_lag_s=0 means the relation is contemporaneous rather than predictive."
+}

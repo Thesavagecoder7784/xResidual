@@ -146,10 +146,14 @@ def fig_book_collapse():
     Q = _load("_liquidity_results.json")
     spread = [Q["poly"]["spread_widen_med"], Q["kalshi"]["spread_widen_med"]]
     depth = [Q["poly"]["depth_withdraw_med"] * 100, Q["kalshi"]["depth_withdraw_med"] * 100]
+    # Refill (resilience): the caption's \refillSecs claim needs a panel of its own.
+    refill = [Q["poly"]["resilience_ms_med"] / 1000.0, Q["kalshi"]["resilience_ms_med"] / 1000.0]
     labs = ["Polymarket", "Kalshi"]
     cols = [POLY, KALSHI]
 
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.3, 2.9))
+    # wspace: three long y-axis labels need a wider gutter than the 2-panel default
+    fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(9.2, 2.9),
+                                     gridspec_kw={"wspace": 0.45})
     # Panel A: spread blow-out (x normal)
     a1.axhline(1, color=REF, lw=0.9, ls="--")
     a1.bar(labs, spread, color=cols, width=0.55, alpha=0.9)
@@ -167,6 +171,14 @@ def fig_book_collapse():
     a2.set_ylabel("best-price depth at the goal  (% of calm)")
     a2.set_ylim(0, max(max(depth) * 1.6, 2.0))
     _clean(a2)
+    # Panel C: how long the book takes to come back (resilience)
+    a3.bar(labs, refill, color=cols, width=0.55, alpha=0.9)
+    for i, v in enumerate(refill):
+        a3.text(i, v + 0.08, f"{v:.1f}s", ha="center", fontsize=9, color=INK)
+    a3.text(0.02, 0.95, "time to refill", transform=a3.transAxes, fontsize=8, color=MUTE, va="top")
+    a3.set_ylabel("book refill after the goal  (s)")
+    a3.set_ylim(0, max(refill) * 1.3)
+    _clean(a3)
     fig.suptitle("The book withdraws at the goal — adverse selection in real time",
                  fontsize=9.5, y=1.02, color=INK)
     _save(fig, "book_collapse")
