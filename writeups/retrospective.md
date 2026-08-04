@@ -240,5 +240,7 @@ know, and the harder one to be honest about.
 
 *Every claim above is reproducible from this repository. `python scripts/grade_prereg.py` prints the
 scorecard from committed artifacts; `python scripts/emit_macros.py --check` verifies that every number
-in the paper still matches the JSON it came from. The pre-registration is a git commit that predates
-kickoff. Raw venue tapes are not redistributed — see `REPRODUCING.md` for what ships and why.*
+in the paper still matches the JSON it came from. The pre-registration is tag `prereg-2026-06-10`
+(SHA-256 `913a8186…`), finalised the day before kickoff and unmodified since; commit hashes were
+rewritten 2026-08-04 to excise per-event venue data, so cite the content hash rather than a commit
+— see `REPRODUCING.md`. Raw venue tapes are not redistributed — see `REPRODUCING.md` for what ships and why.*
