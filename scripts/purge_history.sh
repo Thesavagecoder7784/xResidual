@@ -27,7 +27,37 @@
 #     bash scripts/purge_history.sh --run       # rewrite local history, still does not push
 set -euo pipefail
 
-PATHS=("viz/market/leadlag" "viz/model/overreaction")
+# Two groups, one rewrite. Deleting the ML files in an ordinary commit would leave them
+# reachable in history — the precise mistake this script exists to undo — so they are excised
+# here instead.
+#
+#   leadlag / overreaction : per-event venue data (t_ms + quote levels) that the published
+#                            data-availability statement says is withheld.
+#   ml_microstructure      : a gradient-boosted model trained on pooled Kalshi+Polymarket
+#                            order-book features. Kalshi's Data Terms expressly prohibit use
+#                            of Kalshi Data for machine learning, including for training. The
+#                            result was a reported null (~52% leave-one-match-out on six
+#                            matches); the code and write-up are withdrawn regardless.
+PATHS=(
+  "viz/market/leadlag"
+  "viz/model/overreaction"
+  "scripts/ml_microstructure.py"
+  "writeups/ml-microstructure-note.md"
+  "writeups/_ml_micro_results.json"
+)
+
+# RESTORE_PATHS are different, and the difference matters. These files must KEEP shipping --
+# writeups/_leadlag_results.json is the Tier A artifact every published lead-lag number
+# regenerates from -- but their EARLIER revisions predate the redaction in build_leadlag.py and
+# still carry per-event t_ms and kalshi_reaction / poly_reaction levels. Audited 2026-08-04:
+# 26 revisions of that file exist, ~24 of them unredacted (587 KB vs the current, clean 127 KB).
+#
+# So a plain --invert-paths is wrong here (it would delete a file the paper depends on) and
+# leaving it alone is also wrong (the old revisions leak). The fix is to drop the path from all
+# history and then re-commit the current, redacted content as a single new blob.
+RESTORE_PATHS=(
+  "writeups/_leadlag_results.json"
+)
 MODE="${1:---check}"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
@@ -35,11 +65,15 @@ cd "$ROOT"
 banner() { printf '\n=== %s ===\n' "$1"; }
 
 count_exposure() {
-  local total=0
-  for p in "${PATHS[@]}"; do
+  # PATHS holds both directories and single files, so the pattern must match "<path>/..." AND
+  # "<path>" exactly. An earlier version anchored on a trailing slash only and silently
+  # reported 0 for every file entry -- a broken check reading as a clean one.
+  local total=0 objects
+  objects=$(git rev-list --objects --all 2>/dev/null || true)
+  for p in "${PATHS[@]}" "${RESTORE_PATHS[@]}"; do
     local n
-    n=$(git rev-list --objects --all 2>/dev/null | grep -c " $p/" || true)
-    printf '  %-28s %4s blob(s) reachable in history\n' "$p" "$n"
+    n=$(printf '%s\n' "$objects" | grep -cE " ${p//./\\.}(/|\$)" || true)
+    printf '  %-38s %4s blob(s) reachable in history\n' "$p" "$n"
     total=$(( total + n ))
   done
   echo "  TOTAL: $total"
@@ -103,11 +137,44 @@ echo
 read -r -p "Rewrite ALL history in $ROOT, removing ${PATHS[*]}? Type REWRITE to confirm: " ans
 [[ "$ans" == "REWRITE" ]] || { echo "aborted."; exit 1; }
 
+banner "PRESERVING CURRENT CONTENT OF RESTORE_PATHS"
+STASH="$(mktemp -d)"
+for p in "${RESTORE_PATHS[@]}"; do
+  if git cat-file -e "HEAD:$p" 2>/dev/null; then
+    mkdir -p "$STASH/$(dirname "$p")"
+    git show "HEAD:$p" > "$STASH/$p"
+    # Refuse to carry a dirty blob across the rewrite -- that would defeat the whole exercise.
+    if grep -qE '"(t_ms|kalshi_reaction|poly_reaction)"' "$STASH/$p"; then
+      echo "  FAIL: current $p still contains per-event fields; redact it before purging" >&2
+      exit 1
+    fi
+    echo "  saved $p ($(wc -c < "$STASH/$p" | tr -d ' ') bytes, verified clean)"
+  fi
+done
+
 banner "REWRITING"
 ARGS=()
-for p in "${PATHS[@]}"; do ARGS+=(--path "$p"); done
+for p in "${PATHS[@]}" "${RESTORE_PATHS[@]}"; do ARGS+=(--path "$p"); done
 # --invert-paths: keep everything EXCEPT these. --force: proceed on a non-fresh clone.
 git filter-repo "${ARGS[@]}" --invert-paths --force
+
+banner "RESTORING CURRENT CONTENT AS A SINGLE CLEAN BLOB"
+for p in "${RESTORE_PATHS[@]}"; do
+  [[ -f "$STASH/$p" ]] || continue
+  mkdir -p "$(dirname "$p")"
+  cp "$STASH/$p" "$p"
+  git add -- "$p"
+  echo "  restored $p"
+done
+if ! git diff --cached --quiet; then
+  git commit -q -m "Restore redacted Tier A artifacts after history purge
+
+Their pre-redaction revisions carried per-event t_ms and venue quote levels and were
+excised with the rest of the per-event data. The current, redacted content is re-committed
+here as a single blob so Tier A still reproduces."
+  echo "  committed"
+fi
+rm -rf "$STASH"
 
 banner "POST-REWRITE EXPOSURE (expect 0)"
 count_exposure
