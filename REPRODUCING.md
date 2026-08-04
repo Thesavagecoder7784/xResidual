@@ -100,11 +100,59 @@ What ships is measurement, not market data: counts, per-match shares, medians, r
 statistics, and signed lead times in milliseconds. No third-party raw market data is
 redistributed with this paper.
 
+### Reproducible by method, not by dataset
+
+This study is deliberately **method-reproducible rather than data-reproducible**, and the
+distinction is a design choice rather than a shortfall.
+
+Kalshi's Developer Agreement limits API data to facilitating the member's own trading and
+forbids sharing it with third parties absent written authorization (§3, §3.1); its Data Terms
+restrict republication of Kalshi Data; Polymarket's terms govern its off-chain order-book
+feed. A study of two live venues therefore cannot ship its inputs, no matter how much its
+author would prefer to. Given that constraint, there are two honest options: publish nothing,
+or publish everything that *can* be published and be exact about the boundary. This repository
+takes the second.
+
+What that means in practice:
+
+| Layer | Ships | Why |
+|---|---|---|
+| Capture pipeline (`logger/`) | **Yes** | Our code, not their data. Re-point it at either venue's public feed with your own credentials. |
+| Analysis code (`scripts/`, `xresidual/`) | **Yes** | Every estimator, gate and statistic, including the ones that produced null results. |
+| Derived per-match statistics | **Yes** | Counts, medians, shares, regression sufficient statistics. Measurement, not market data. |
+| Pooled artifacts (`writeups/_*_results.json`) | **Yes** | Every published number regenerates from these — see Tier A. |
+| Pre-registration | **Yes** | Tagged pre-kickoff commit; predictions cannot be edited after the fact. |
+| Raw tapes, per-event quote levels, wall-clock timestamps | **No** | Third-party market data under the terms above. |
+
+A reader can therefore audit every inferential step — re-derive each published figure from the
+shipped aggregates, read the exact code that produced them, and check the pre-registered
+predictions against the graded outcome — without ever receiving a byte of redistributable
+venue data. What cannot be re-run is the capture itself, which requires your own accounts and
+a live tournament.
+
+This is the same posture as most credible empirical work on proprietary or licensed data
+(CRSP, TAQ, exchange feeds): the code and the derived statistics are the scientific object;
+the vendor's raw feed is not the author's to hand out. Treating the boundary as something to
+state precisely, rather than to blur, is the point.
+
 *Correction, 2026-07-28:* the first two bullets above were accurate as policy but not as
-practice until this date — `viz/market/leadlag/` (54 files) and `viz/model/overreaction/`
-(24 files) had been committed before the corresponding `.gitignore` rules existed, so they
-shipped in the public repository despite this statement. They have been removed from tracking;
-the statement is now true as written.
+practice until this date — `viz/market/leadlag/` and `viz/model/overreaction/` had been
+committed before the corresponding `.gitignore` rules existed, so they shipped in the public
+repository despite this statement. They were removed from tracking on that date.
+
+*Correction, 2026-08-04:* the note above concluded "the statement is now true as written."
+That was wrong, and the error is worth recording because it is a general one. **Removing a
+file from tracking does not remove it from the repository** — the objects remain reachable
+from earlier commits, so the working tree is clean while the distributed artifact is not.
+Untracking is a forward-looking fix that answers "what ships next" and says nothing about
+what already shipped. The removal was necessary and correct; the conclusion drawn from it
+was not.
+
+Excising those paths from history is what actually makes the statement above true, and
+`scripts/purge_history.sh` performs and verifies it (`--check` audits without modifying
+anything; it must report `TOTAL: 0` from a fresh clone once the rewrite has been pushed).
+**Until that reports zero, treat the bulleted withholding statement above as a statement of
+policy, not of fact.**
 
 **A limitation to state plainly:** Tier B is not re-runnable by a third party, and is not
 fully re-runnable by us either. The tapes are transient by design (`scripts/cleanup_tapes.sh`
