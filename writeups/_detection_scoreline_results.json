@@ -1,0 +1,7 @@
+{
+ "n_matches_checked": 29,
+ "n_over_detect": 15,
+ "n_bad_n_goals": 14,
+ "n_archives": 31,
+ "note": "detection validity vs SCORELINE ground truth (check [2]), on the archives carrying an n_goals field. The manuscript's detection figures come from _detection_results.json, written by scripts/detection_check.py against the exogenous goal clock over every surviving archive. This file is the narrower cross-check, kept separate so neither can overwrite the other."
+}
