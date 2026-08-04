@@ -1,10 +1,10 @@
 {
- "n_matches_checked": 21,
- "n_goals_checked": 117,
+ "n_matches_checked": 66,
+ "n_goals_checked": 405,
  "pct_harvestable_match_unit": 0.0,
- "pct_harvestable_goal_weighted": 11.12,
- "harvestable_goals": 13,
- "matches_with_any_harvestable": 6,
+ "pct_harvestable_goal_weighted": 9.14,
+ "harvestable_goals": 37,
+ "matches_with_any_harvestable": 21,
  "pooled_ledger_n_matches": 66,
  "coverage_note": "Computed on the per-game harvest archive PRESENT ON THIS MACHINE, which is a subset of the matches behind writeups/_harvest_results.json (pooled_ledger_n_matches). The match-unit figure reproduces the published estimator on this subset; the goal-weighted figure is the number the published one is routinely mistaken for. Re-run where the full archive lives to supersede.",
  "claim_note": "Correct phrasing: 'the median match has no harvestable goal'. INCORRECT: '0% of goals are harvestable' / 'essentially 0% of goals clear a tradeable-depth bar'."

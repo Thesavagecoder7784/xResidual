@@ -1,0 +1,110 @@
+{
+ "n_tapes": 2,
+ "n_observations": 21,
+ "follower_window_ms": [
+  0,
+  600
+ ],
+ "trough_window_ms": [
+  -1000,
+  4000
+ ],
+ "depth_gate": 0.25,
+ "pooled": {
+  "trough": {
+   "n": 21,
+   "median_depth_frac": 0.002,
+   "pct_harvestable": 0.0
+  },
+  "at_zero": {
+   "n": 21,
+   "median_depth_frac": 0.1474,
+   "pct_harvestable": 33.3
+  },
+  "win_min": {
+   "n": 18,
+   "median_depth_frac": 0.0137,
+   "pct_harvestable": 11.1
+  },
+  "win_med": {
+   "n": 18,
+   "median_depth_frac": 0.0189,
+   "pct_harvestable": 16.7
+  },
+  "window_updates": {
+   "n": 21,
+   "median_updates_in_window": 1,
+   "pct_no_update_in_window": 14.3,
+   "pct_one_or_fewer": 66.7
+  },
+  "trough_timing": {
+   "n": 21,
+   "median_offset_ms": 1161,
+   "pct_within_follower_window": 28.6,
+   "pct_within_1s": 42.9
+  }
+ },
+ "per_capture": {
+  "20260718T202817Z-france-vs-england": {
+   "trough": {
+    "n": 20,
+    "median_depth_frac": 0.0019,
+    "pct_harvestable": 0.0
+   },
+   "at_zero": {
+    "n": 20,
+    "median_depth_frac": 0.1625,
+    "pct_harvestable": 35.0
+   },
+   "win_min": {
+    "n": 18,
+    "median_depth_frac": 0.0137,
+    "pct_harvestable": 11.1
+   },
+   "win_med": {
+    "n": 18,
+    "median_depth_frac": 0.0189,
+    "pct_harvestable": 16.7
+   },
+   "window_updates": {
+    "n": 20,
+    "median_updates_in_window": 1,
+    "pct_no_update_in_window": 10.0,
+    "pct_one_or_fewer": 65.0
+   },
+   "trough_timing": {
+    "n": 20,
+    "median_offset_ms": 1092,
+    "pct_within_follower_window": 30.0,
+    "pct_within_1s": 45.0
+   }
+  },
+  "20260719T183322Z-spain-vs-argentina": {
+   "trough": {
+    "n": 1,
+    "median_depth_frac": 0.0155,
+    "pct_harvestable": 0.0
+   },
+   "at_zero": {
+    "n": 1,
+    "median_depth_frac": 0.029,
+    "pct_harvestable": 0.0
+   },
+   "win_min": null,
+   "win_med": null,
+   "window_updates": {
+    "n": 1,
+    "median_updates_in_window": 0,
+    "pct_no_update_in_window": 100.0,
+    "pct_one_or_fewer": 100.0
+   },
+   "trough_timing": {
+    "n": 1,
+    "median_offset_ms": 1904,
+    "pct_within_follower_window": 0.0,
+    "pct_within_1s": 0.0
+   }
+  }
+ },
+ "note": "book-reconstruction validation of the depth statistic on the only captures for which complete raw tapes survive; NOT a re-estimate of the ledger. Event detection, jump filter, follower assignment and pre-goal baseline are build_harvest.py's. The 'trough' column is the published statistic and serves as this script's regression test."
+}

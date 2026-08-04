@@ -1,0 +1,39 @@
+{
+ "n_matches": 45,
+ "n_with_harvestable": 14,
+ "base_rate": 0.3111,
+ "features_ex_ante": [
+  "fav_prob",
+  "p_draw",
+  "closeness"
+ ],
+ "loo_auc_ex_ante": 0.2742,
+ "loo_auc_ex_ante_ci95": [
+  0.1364,
+  0.4311
+ ],
+ "loo_auc_ex_ante_ci95_covers_half_naive": false,
+ "loo_auc_with_hindsight_feature": 0.576,
+ "loo_auc_with_hindsight_ci95": [
+  0.33,
+  0.8022
+ ],
+ "loo_auc_with_hindsight_ci95_covers_half_naive": true,
+ "permutation_null_ex_ante": {
+  "observed_auc": 0.2742,
+  "null_median_auc": 0.3733,
+  "null_ci95": [
+   0.0,
+   0.6176
+  ],
+  "n_permutations": 400,
+  "p_two_sided": 0.4988
+ },
+ "n_scored": 45,
+ "in_sample_weights": {
+  "fav_prob": 0.2545,
+  "p_draw": 0.5233,
+  "closeness": 0.0527
+ },
+ "note": "leave-one-out AUC for predicting which matches contain a harvestable goal. Ex-ante features are knowable before kickoff; the hindsight variant adds the match's realised event count as an upper bound on what any feature set could reach. Pre-goal book depth, the covariate a desk would actually use, does not survive in the derived layer, so this bounds predictability from public ex-ante information only."
+}

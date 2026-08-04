@@ -1,0 +1,61 @@
+{
+ "adf_sensitivity": [
+  {
+   "adf_level": 0.1,
+   "n_matches": 63,
+   "median_gg": 0.8096,
+   "median_hasbrouck": 0.7522,
+   "matches_poly_gt_50": 61
+  },
+  {
+   "adf_level": 0.05,
+   "n_matches": 61,
+   "median_gg": 0.8096,
+   "median_hasbrouck": 0.7593,
+   "matches_poly_gt_50": 59
+  },
+  {
+   "adf_level": 0.01,
+   "n_matches": 53,
+   "median_gg": 0.8517,
+   "median_hasbrouck": 0.8715,
+   "matches_poly_gt_50": 51
+  }
+ ],
+ "support": {
+  "n_contracts_out_of_support": 13,
+  "max_gg_contract": 2.0252,
+  "n_in_permissive_band": 1,
+  "permissive_band": [
+   0.05,
+   0.1
+  ]
+ },
+ "hasbrouck_band_width": {
+  "median": 0.066,
+  "mean": 0.0969,
+  "n_contracts": 104
+ },
+ "ils": {
+  "lower": {
+   "median_ils_poly": 0.2488,
+   "n_matches": 61,
+   "matches_poly_leads": 15,
+   "n_contracts_undefined": 13
+  },
+  "mid": {
+   "median_ils_poly": 0.3918,
+   "n_matches": 61,
+   "matches_poly_leads": 22,
+   "n_contracts_undefined": 13
+  },
+  "upper": {
+   "median_ils_poly": 0.7236,
+   "n_matches": 61,
+   "matches_poly_leads": 39,
+   "n_contracts_undefined": 13
+  },
+  "spans_one_half": true
+ },
+ "note": "ADF-gate sensitivity and Putnins (2013) ILS, computed per contract then per-match median over 80 infoshare archives (all archives present). The adf_level=0.1 row is the published specification and reproduces the shipped headline. ILS is evaluated at each Hasbrouck Cholesky bound; spans_one_half=true means the leadership verdict is not identified."
+}

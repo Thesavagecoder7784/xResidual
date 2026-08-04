@@ -1,7 +1,11 @@
 {
- "n_matches_checked": 29,
- "n_over_detect": 15,
- "n_bad_n_goals": 14,
- "n_archives": 31,
- "note": "detection validity vs scoreline ground truth; see check [2]"
+ "n_matches_checked": 86,
+ "n_over_detect": 49,
+ "n_archives": 86,
+ "n_no_clock_entry": 0,
+ "n_goalless": 7,
+ "n_goalless_detecting": 7,
+ "median_detected_per_goal": 1.25,
+ "definition": "distinct gate-passing events (30s de-dup across contracts) vs goals from data/wc_goals_espn.json",
+ "note": "detection validity vs an exogenous goal clock. SUPERSEDES the earlier artifact, which was computed on 31 surviving archives against scoreline totals; this runs on every surviving archive. See scripts/detection_check.py for the counting rule."
 }
