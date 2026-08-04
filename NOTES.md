@@ -17,7 +17,7 @@ roughly 2.5×. The final numbers, and the only ones to quote:
   **57 of 66** matches lean Polymarket (sign-test *p* ≈ 1.2×10⁻⁹).
 - Information share: Gonzalo–Granger **81.0%**, leading **61 of 63** matches.
 - Harvestability: across 405 goals in 66 matches, **the median match yields no harvestable goal**
-  (~11% goal-weighted on the 21-match reconstructible subset).
+  (~9% goal-weighted across the full 66-match ledger).
 
 Canonical sources: `FINDINGS.md`, `writeups/price_discovery_note.pdf`, and the
 `writeups/_*_results.json` artifacts that the paper's macros are generated from.
