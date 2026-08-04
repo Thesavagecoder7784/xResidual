@@ -102,6 +102,9 @@ since** — the 2026 World Cup began 2026-06-11. Three revisions, all pre-kickof
     tag       prereg-2026-06-10
     SHA-256   913a8186aa3ca5f3b22bf12230327c923917cb0030afc7461325f733e7a956da
     git blob  381e798593b46a6c4d3291e1ccc84d65af60fbaf
+    archive   swh:1:snp:966399773498cb9d977a958f297d95bef8e602c6  (Software Heritage,
+              archived 2026-08-04, full visit — an independent, permanent copy of this
+              repository held by a third party and not modifiable by its author)
 
 **On 2026-08-04 every commit hash in this repository changed.** A history rewrite
 (`scripts/purge_history.sh`) excised per-event venue data that should not have been published,
@@ -120,10 +123,15 @@ Two limits, stated rather than glossed:
   It is evidence, not proof, and it never was proof — that is true of every git-based
   pre-registration, before any rewrite.
 - The strong form of the claim would be a third-party attestation predating kickoff. This
-  repository does not have one: it is not in Software Heritage, has no Wayback snapshot from
-  that period, and GitHub's events API retains only the most recent 300 events, which no longer
-  reach June. The honest statement is that the predictions are frozen, internally consistent,
-  and graded in public including the ones that failed — not that a notary witnessed them.
+  repository does not have one, and cannot acquire one retroactively: there is no Wayback
+  snapshot from that period, and GitHub's events API retains only the most recent 300 events,
+  which no longer reach June. The Software Heritage snapshot above was taken on 2026-08-04 and
+  therefore attests to the repository's state *as of that date*, not to what existed in June.
+  What it does guarantee is that from 2026-08-04 onward an independent party holds a copy that
+  the author cannot alter or rewrite — so this file, and its hashes, are now fixed in a way they
+  were not before. The honest statement is that the predictions are frozen, internally
+  consistent, and graded in public including the ones that failed — not that a notary witnessed
+  them in June.
 
 The grading is its own evidence of good faith: `scripts/grade_prereg.py` reproduces from a
 clone and returns **6 PASS · 2 FAIL · 3 INCONCLUSIVE**. A pre-registration edited after the
