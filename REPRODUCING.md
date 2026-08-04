@@ -177,7 +177,8 @@ was not.
 
 Excising those paths from history is what actually makes the statement above true, and
 `scripts/purge_history.sh` performs and verifies it (`--check` audits without modifying
-anything; it must report `TOTAL: 0` from a fresh clone once the rewrite has been pushed).
+anything; from a fresh clone, once the rewrite has been pushed, it must report `PURGED_TOTAL:
+0` alongside one restored blob for each redacted artifact the paper still reproduces from).
 **Until that reports zero, treat the bulleted withholding statement above as a statement of
 policy, not of fact.**
 
