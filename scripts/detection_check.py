@@ -37,6 +37,7 @@ import glob
 import importlib.util
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEADLAG = os.path.join(ROOT, "viz", "market", "leadlag")
@@ -115,6 +116,18 @@ def main() -> int:
                  "which was computed on 31 surviving archives against scoreline totals; this runs "
                  "on every surviving archive. See scripts/detection_check.py for the counting rule."),
     }
+
+    # viz/market/leadlag/ is per-event venue data and is deliberately not published
+    # (REPRODUCING.md), so from a fresh clone this loop reads nothing. Without this guard the
+    # script cheerfully wrote n_archives=0 / n_matches_checked=0 over a good artifact and exited
+    # 0 -- a third party running it would have destroyed the shipped numbers and seen no error.
+    # leadgate.py already refuses in this situation; this now matches it.
+    if n_archives == 0:
+        print("  !! no leadlag archives found — nothing to compute", file=sys.stderr)
+        print("     This script is Tier B: it reads viz/market/leadlag/, which is withheld as "
+              "per-event\n     venue data. Re-capture is required; the shipped artifact is left "
+              "untouched.", file=sys.stderr)
+        return 1
 
     print(f"  archives read     : {n_archives}   (no clock entry: {no_clock})")
     print(f"  matches checked   : {checked}   (superseded artifact: 29)")
