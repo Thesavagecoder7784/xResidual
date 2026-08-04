@@ -1,0 +1,25 @@
+{
+  "match": "Colombia vs Ghana",
+  "capture": "20260704T005721Z-colombia-vs-ghana",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 8.5,
+    "cost_med_c": 1.2,
+    "net_med_c": 7.76,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 553
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 3,
+    "gross_med_c": 8.5,
+    "cost_med_c": 1.2,
+    "net_med_c": 7.76,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 553
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Cape Verde vs Saudi Arabia",
+  "capture": "20260626T232752Z-cape-verde-vs-saudi-arabia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.5574,
+  "match_poly_gg": 0.7115,
+  "contracts": [
+    {
+      "label": "Cape Verde",
+      "kalshi": "KXWCGAME-26JUN26CPVKSA-CPV",
+      "poly": "102982370594795926465551165513338503688720151395360838811850524398055739613847",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7115,
+      "gg_b": 0.2885,
+      "alpha_a": -0.01851,
+      "alpha_b": 0.04564,
+      "hasbrouck_a_lo": 0.5479,
+      "hasbrouck_a_hi": 0.567,
+      "hasbrouck_a_mid": 0.5574,
+      "cointegrated": true,
+      "adf_p": 0.0002,
+      "n": 9077
+    },
+    {
+      "label": "Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN26CPVKSA-KSA",
+      "poly": "13230917211575471424029299482277772949555090343730463577580317503550035691955",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01121,
+      "alpha_b": 0.02525,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.2911,
+      "n": 9077
+    }
+  ]
+}

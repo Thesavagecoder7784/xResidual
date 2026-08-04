@@ -1,0 +1,34 @@
+{
+  "match": "Senegal vs Iraq",
+  "capture": "20260626T183323Z-senegal-vs-iraq",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 4.77,
+    "cost_med_c": 0.61,
+    "net_med_c": 4.16,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 32.33,
+    "pct_harvestable": 100.0,
+    "lead_ms_med": 461
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 11.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 10.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.02,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 674
+  },
+  "all": {
+    "n": 3,
+    "gross_med_c": 4.77,
+    "cost_med_c": 0.5,
+    "net_med_c": 4.16,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.02,
+    "pct_harvestable": 33.3,
+    "lead_ms_med": 461
+  }
+}

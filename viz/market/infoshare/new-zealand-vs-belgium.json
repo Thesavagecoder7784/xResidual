@@ -1,0 +1,48 @@
+{
+  "match": "New Zealand vs Belgium",
+  "capture": "20260627T022522Z-new-zealand-vs-belgium",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.1193,
+  "match_poly_gg": 0.5619,
+  "contracts": [
+    {
+      "label": "Belgium",
+      "kalshi": "KXWCGAME-26JUN26NZLBEL-BEL",
+      "poly": "56919576321692543804120333477806892227587677219602902701553511079254437421526",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5619,
+      "gg_b": 0.4381,
+      "alpha_a": -0.02768,
+      "alpha_b": 0.03551,
+      "hasbrouck_a_lo": 0.1122,
+      "hasbrouck_a_hi": 0.1263,
+      "hasbrouck_a_mid": 0.1193,
+      "cointegrated": true,
+      "adf_p": 0.0075,
+      "n": 8564
+    },
+    {
+      "label": "New Zealand",
+      "kalshi": "KXWCGAME-26JUN26NZLBEL-NZL",
+      "poly": "51519876214140449660166550584440656906007152566889523395451234960389805633766",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01176,
+      "alpha_b": 0.01472,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.4393,
+      "n": 7132
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Norway vs France",
+  "capture": "20260626T183323Z-norway-vs-france",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 12.0,
+    "cost_med_c": 1.39,
+    "net_med_c": 10.61,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 108
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 8.5,
+    "cost_med_c": 0.35,
+    "net_med_c": 8.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.005,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 136
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 11.28,
+    "cost_med_c": 1.21,
+    "net_med_c": 9.85,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.005,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 136
+  }
+}

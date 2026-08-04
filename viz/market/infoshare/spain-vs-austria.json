@@ -1,0 +1,48 @@
+{
+  "match": "Spain vs Austria",
+  "capture": "20260702T183222Z-spain-vs-austria",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.7497,
+  "match_poly_gg": 0.6122,
+  "contracts": [
+    {
+      "label": "Austria",
+      "kalshi": "KXWCGAME-26JUL02ESPAUT-AUT",
+      "poly": "98527153031306952978660040867395139087621992676427333568334777278688370278755",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0093,
+      "alpha_b": 0.01398,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.5903,
+      "n": 7293
+    },
+    {
+      "label": "Spain",
+      "kalshi": "KXWCGAME-26JUL02ESPAUT-ESP",
+      "poly": "110474601866909537724044216141585040787927916157559633438159999666255694855775",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6122,
+      "gg_b": 0.3878,
+      "alpha_a": -0.06046,
+      "alpha_b": 0.09545,
+      "hasbrouck_a_lo": 0.705,
+      "hasbrouck_a_hi": 0.7943,
+      "hasbrouck_a_mid": 0.7497,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8284
+    }
+  ]
+}

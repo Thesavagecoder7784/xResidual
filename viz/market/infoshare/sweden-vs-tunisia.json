@@ -1,0 +1,48 @@
+{
+  "match": "Sweden vs Tunisia",
+  "capture": "20260615T012609Z-sweden-vs-tunisia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Tunisia",
+      "kalshi": "KXWCGAME-26JUN14SWETUN-TUN",
+      "poly": "83899205056028320634506792090435502639229370708908873019388029731945043477417",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00743,
+      "alpha_b": 0.00691,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6936,
+      "n": 8079
+    },
+    {
+      "label": "Sweden",
+      "kalshi": "KXWCGAME-26JUN14SWETUN-SWE",
+      "poly": "77891685052397355147816140430897431230743681776824155461036740561521945442239",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00423,
+      "alpha_b": 0.01529,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.3122,
+      "n": 8429
+    }
+  ]
+}

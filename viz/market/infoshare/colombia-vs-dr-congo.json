@@ -1,0 +1,48 @@
+{
+  "match": "Colombia vs Dr Congo",
+  "capture": "20260624T013522Z-colombia-vs-dr-congo",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.637,
+  "match_poly_gg": 0.8407,
+  "contracts": [
+    {
+      "label": "DR Congo",
+      "kalshi": "KXWCGAME-26JUN23COLCOD-COD",
+      "poly": "27087363386694674049005402437888440764538397638814511740652870655708130928058",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6711,
+      "gg_b": 0.3289,
+      "alpha_a": -0.01812,
+      "alpha_b": 0.03697,
+      "hasbrouck_a_lo": 0.255,
+      "hasbrouck_a_hi": 0.3031,
+      "hasbrouck_a_mid": 0.279,
+      "cointegrated": true,
+      "adf_p": 0.0174,
+      "n": 8319
+    },
+    {
+      "label": "Colombia",
+      "kalshi": "KXWCGAME-26JUN23COLCOD-COL",
+      "poly": "34999267410182663441586115553518943962188580583548745660828050477474485422496",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.0104,
+      "gg_b": -0.0104,
+      "alpha_a": 0.00113,
+      "alpha_b": 0.11039,
+      "hasbrouck_a_lo": 0.9901,
+      "hasbrouck_a_hi": 0.9998,
+      "hasbrouck_a_mid": 0.9949,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8524
+    }
+  ]
+}

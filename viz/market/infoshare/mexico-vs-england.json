@@ -1,0 +1,48 @@
+{
+  "match": "Mexico vs England",
+  "capture": "20260706T003451Z-mexico-vs-england",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8213,
+  "match_poly_gg": 0.8517,
+  "contracts": [
+    {
+      "label": "Mexico",
+      "kalshi": "KXWCGAME-26JUL05MEXENG-MEX",
+      "poly": "51911548599887870208512834589104874988746646324647658251485676564237334602135",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7237,
+      "gg_b": 0.2763,
+      "alpha_a": -0.01694,
+      "alpha_b": 0.04437,
+      "hasbrouck_a_lo": 0.6028,
+      "hasbrouck_a_hi": 0.7078,
+      "hasbrouck_a_mid": 0.6553,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 8859
+    },
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUL05MEXENG-ENG",
+      "poly": "53791259745705726030589240827060759250615158391415011769641887216926825684479",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9796,
+      "gg_b": 0.0204,
+      "alpha_a": -0.00228,
+      "alpha_b": 0.10947,
+      "hasbrouck_a_lo": 0.9754,
+      "hasbrouck_a_hi": 0.9991,
+      "hasbrouck_a_mid": 0.9872,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8971
+    }
+  ]
+}

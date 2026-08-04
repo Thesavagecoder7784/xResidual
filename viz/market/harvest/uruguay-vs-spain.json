@@ -1,0 +1,25 @@
+{
+  "match": "Uruguay vs Spain",
+  "capture": "20260626T232753Z-uruguay-vs-spain",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 25.25,
+    "cost_med_c": 1.92,
+    "net_med_c": 23.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.205,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 539
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 2,
+    "gross_med_c": 25.25,
+    "cost_med_c": 1.92,
+    "net_med_c": 23.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.205,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 539
+  }
+}

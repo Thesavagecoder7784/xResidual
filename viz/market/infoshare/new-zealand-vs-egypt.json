@@ -1,0 +1,48 @@
+{
+  "match": "New Zealand vs Egypt",
+  "capture": "20260622T002808Z-new-zealand-vs-egypt",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.7321,
+  "match_poly_gg": 0.7495,
+  "contracts": [
+    {
+      "label": "New Zealand",
+      "kalshi": "KXWCGAME-26JUN21NZLEGY-NZL",
+      "poly": "33714788520669769280954321212574588471029548850737990640617719122550413982550",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6968,
+      "gg_b": 0.3032,
+      "alpha_a": -0.02606,
+      "alpha_b": 0.05989,
+      "hasbrouck_a_lo": 0.5012,
+      "hasbrouck_a_hi": 0.7677,
+      "hasbrouck_a_mid": 0.6345,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8033
+    },
+    {
+      "label": "Egypt",
+      "kalshi": "KXWCGAME-26JUN21NZLEGY-EGY",
+      "poly": "13689393741027779813840434297856122590360803048059505899834082936957632248186",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8023,
+      "gg_b": 0.1977,
+      "alpha_a": -0.02413,
+      "alpha_b": 0.09795,
+      "hasbrouck_a_lo": 0.7639,
+      "hasbrouck_a_hi": 0.8954,
+      "hasbrouck_a_mid": 0.8297,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8873
+    }
+  ]
+}

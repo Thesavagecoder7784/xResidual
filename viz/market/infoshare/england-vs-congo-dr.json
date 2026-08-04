@@ -1,0 +1,48 @@
+{
+  "match": "England vs Congo Dr",
+  "capture": "20260701T162435Z-england-vs-congo-dr",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.983,
+  "match_poly_gg": 0.9501,
+  "contracts": [
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUL01ENGCOD-ENG",
+      "poly": "47128076194656719884583796201362709805790165917758295559618985609098741011893",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9527,
+      "gg_b": 0.0473,
+      "alpha_a": -0.00542,
+      "alpha_b": 0.10928,
+      "hasbrouck_a_lo": 0.9894,
+      "hasbrouck_a_hi": 0.9964,
+      "hasbrouck_a_mid": 0.9929,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 5720
+    },
+    {
+      "label": "Congo DR",
+      "kalshi": "KXWCGAME-26JUL01ENGCOD-COD",
+      "poly": "40095690165100403740959014720632641918616938378417968277635915917247868465688",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9474,
+      "gg_b": 0.0526,
+      "alpha_a": -0.00371,
+      "alpha_b": 0.06671,
+      "hasbrouck_a_lo": 0.9553,
+      "hasbrouck_a_hi": 0.9911,
+      "hasbrouck_a_mid": 0.9732,
+      "cointegrated": true,
+      "adf_p": 0.0004,
+      "n": 5445
+    }
+  ]
+}

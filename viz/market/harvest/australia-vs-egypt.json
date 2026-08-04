@@ -1,0 +1,25 @@
+{
+  "match": "Australia vs Egypt",
+  "capture": "20260703T172753Z-australia-vs-egypt",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 25.0,
+    "cost_med_c": 1.96,
+    "net_med_c": 22.9,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.008,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 329
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 4,
+    "gross_med_c": 25.0,
+    "cost_med_c": 1.96,
+    "net_med_c": 22.9,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.008,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 329
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "match": "England vs Argentina",
+  "capture": "20260715T182821Z-england-vs-argentina",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.978,
+  "match_poly_gg": 0.9429,
+  "contracts": [
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUL15ENGARG-ENG",
+      "poly": "62975583795498792086117213116943744194566684233762863056174017776352240969485",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9617,
+      "gg_b": 0.0383,
+      "alpha_a": -0.00321,
+      "alpha_b": 0.08078,
+      "hasbrouck_a_lo": 0.9727,
+      "hasbrouck_a_hi": 0.9973,
+      "hasbrouck_a_mid": 0.985,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9029
+    },
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUL15ENGARG-ARG",
+      "poly": "85633756210324151397822274959403676422451634259093065838612463900396751402106",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9242,
+      "gg_b": 0.0758,
+      "alpha_a": -0.00943,
+      "alpha_b": 0.11487,
+      "hasbrouck_a_lo": 0.9512,
+      "hasbrouck_a_hi": 0.991,
+      "hasbrouck_a_mid": 0.9711,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9262
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Bosnia Herzegovina vs Qatar",
+  "capture": "20260624T183243Z-bosnia-herzegovina-vs-qatar",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.51,
+    "net_med_c": 9.61,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 284
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 10.67,
+    "cost_med_c": 1.5,
+    "net_med_c": 9.72,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.077,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 387
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 10.5,
+    "cost_med_c": 1.5,
+    "net_med_c": 9.61,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.008,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 343
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Panama vs England",
+  "capture": "20260627T202735Z-panama-vs-england",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.7207,
+  "match_poly_gg": 0.7785,
+  "contracts": [
+    {
+      "label": "Panama",
+      "kalshi": "KXWCGAME-26JUN27PANENG-PAN",
+      "poly": "59058041199432950171496335927523101634207424833883434829808368909648870164143",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00676,
+      "alpha_b": 0.04491,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.2715,
+      "n": 7899
+    },
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUN27PANENG-ENG",
+      "poly": "93320332124999747203356838766183249400983580913731153318561555477528481141967",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7785,
+      "gg_b": 0.2215,
+      "alpha_a": -0.01123,
+      "alpha_b": 0.03947,
+      "hasbrouck_a_lo": 0.6879,
+      "hasbrouck_a_hi": 0.7535,
+      "hasbrouck_a_mid": 0.7207,
+      "cointegrated": true,
+      "adf_p": 0.01,
+      "n": 8636
+    }
+  ]
+}

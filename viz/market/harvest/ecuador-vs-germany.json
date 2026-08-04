@@ -1,0 +1,34 @@
+{
+  "match": "Ecuador vs Germany",
+  "capture": "20260625T192608Z-ecuador-vs-germany",
+  "follower_kalshi": {
+    "n": 7,
+    "gross_med_c": 13.72,
+    "cost_med_c": 1.85,
+    "net_med_c": 11.95,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 991
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 25.2,
+    "cost_med_c": 2.3,
+    "net_med_c": 22.9,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.012,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2187
+  },
+  "all": {
+    "n": 9,
+    "gross_med_c": 18.52,
+    "cost_med_c": 1.85,
+    "net_med_c": 18.07,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1201
+  }
+}

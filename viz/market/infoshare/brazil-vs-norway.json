@@ -1,0 +1,48 @@
+{
+  "match": "Brazil vs Norway",
+  "capture": "20260705T192723Z-brazil-vs-norway",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6956,
+  "match_poly_gg": 0.7049,
+  "contracts": [
+    {
+      "label": "Norway",
+      "kalshi": "KXWCGAME-26JUL05BRANOR-NOR",
+      "poly": "19270630777558640544547501118520831346147002509997851493750997099589698621398",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7627,
+      "gg_b": 0.2373,
+      "alpha_a": -0.0382,
+      "alpha_b": 0.12277,
+      "hasbrouck_a_lo": 0.7369,
+      "hasbrouck_a_hi": 0.8698,
+      "hasbrouck_a_mid": 0.8034,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9398
+    },
+    {
+      "label": "Brazil",
+      "kalshi": "KXWCGAME-26JUL05BRANOR-BRA",
+      "poly": "105654713241167797590254709131417748215287316658191010694033065067279349239377",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6471,
+      "gg_b": 0.3529,
+      "alpha_a": -0.03622,
+      "alpha_b": 0.06642,
+      "hasbrouck_a_lo": 0.4354,
+      "hasbrouck_a_hi": 0.74,
+      "hasbrouck_a_mid": 0.5877,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9419
+    }
+  ]
+}

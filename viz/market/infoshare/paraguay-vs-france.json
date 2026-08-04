@@ -1,0 +1,48 @@
+{
+  "match": "Paraguay vs France",
+  "capture": "20260704T202622Z-paraguay-vs-france",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.7593,
+  "match_poly_gg": 0.8038,
+  "contracts": [
+    {
+      "label": "Paraguay",
+      "kalshi": "KXWCGAME-26JUL04PARFRA-PAR",
+      "poly": "5986488984275762288846227630442187818951318412322984320385279750603889532502",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01658,
+      "alpha_b": -0.00159,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.8146,
+      "n": 9358
+    },
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUL04PARFRA-FRA",
+      "poly": "113891226639705983282066963484423345278150974279743795316461155085208879415201",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8038,
+      "gg_b": 0.1962,
+      "alpha_a": -0.008,
+      "alpha_b": 0.03277,
+      "hasbrouck_a_lo": 0.7513,
+      "hasbrouck_a_hi": 0.7673,
+      "hasbrouck_a_mid": 0.7593,
+      "cointegrated": true,
+      "adf_p": 0.0252,
+      "n": 9482
+    }
+  ]
+}

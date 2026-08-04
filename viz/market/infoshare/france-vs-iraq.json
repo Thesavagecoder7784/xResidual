@@ -1,0 +1,48 @@
+{
+  "match": "France vs Iraq",
+  "capture": "20260622T203215Z-france-vs-iraq",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6958,
+  "match_poly_gg": 0.6377,
+  "contracts": [
+    {
+      "label": "Iraq",
+      "kalshi": "KXWCGAME-26JUN22FRAIRQ-IRQ",
+      "poly": "76510222428165877597575721449543571541796482738486080354541430902498097062984",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8208,
+      "gg_b": 0.1792,
+      "alpha_a": -0.00169,
+      "alpha_b": 0.00776,
+      "hasbrouck_a_lo": 0.9289,
+      "hasbrouck_a_hi": 0.931,
+      "hasbrouck_a_mid": 0.9299,
+      "cointegrated": true,
+      "adf_p": 0.004,
+      "n": 9588
+    },
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUN22FRAIRQ-FRA",
+      "poly": "33487993003158194673584478096137518804695909934938955095498705571367038286718",
+      "leader": "kalshi",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.4546,
+      "gg_b": 0.5454,
+      "alpha_a": -0.01122,
+      "alpha_b": 0.00935,
+      "hasbrouck_a_lo": 0.3579,
+      "hasbrouck_a_hi": 0.5655,
+      "hasbrouck_a_mid": 0.4617,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9596
+    }
+  ]
+}

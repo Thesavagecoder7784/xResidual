@@ -1,0 +1,48 @@
+{
+  "match": "Croatia vs Ghana",
+  "capture": "20260627T202735Z-croatia-vs-ghana",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.4748,
+  "match_poly_gg": 0.6259,
+  "contracts": [
+    {
+      "label": "Croatia",
+      "kalshi": "KXWCGAME-26JUN27CROGHA-CRO",
+      "poly": "23522010053796928314095406008924900761833610419543982088160250459540934114445",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7756,
+      "gg_b": 0.2244,
+      "alpha_a": -0.03444,
+      "alpha_b": 0.11907,
+      "hasbrouck_a_lo": 0.6292,
+      "hasbrouck_a_hi": 0.9495,
+      "hasbrouck_a_mid": 0.7894,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9054
+    },
+    {
+      "label": "Ghana",
+      "kalshi": "KXWCGAME-26JUN27CROGHA-GHA",
+      "poly": "90597327262250836004646033934453860417100833449408628755662053427096482500586",
+      "leader": "kalshi",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.4761,
+      "gg_b": 0.5239,
+      "alpha_a": -0.07118,
+      "alpha_b": 0.06469,
+      "hasbrouck_a_lo": 0.1289,
+      "hasbrouck_a_hi": 0.1915,
+      "hasbrouck_a_mid": 0.1602,
+      "cointegrated": true,
+      "adf_p": 0.0818,
+      "n": 8837
+    }
+  ]
+}

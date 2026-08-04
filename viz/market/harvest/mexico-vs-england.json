@@ -1,0 +1,34 @@
+{
+  "match": "Mexico vs England",
+  "capture": "20260706T003451Z-mexico-vs-england",
+  "follower_kalshi": {
+    "n": 13,
+    "gross_med_c": 7.88,
+    "cost_med_c": 2.13,
+    "net_med_c": 6.23,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.009,
+    "pct_harvestable": 23.1,
+    "lead_ms_med": 2713
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 17.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 16.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2476
+  },
+  "all": {
+    "n": 16,
+    "gross_med_c": 10.5,
+    "cost_med_c": 2.13,
+    "net_med_c": 8.67,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.009,
+    "pct_harvestable": 18.8,
+    "lead_ms_med": 2532
+  }
+}

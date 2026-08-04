@@ -1,0 +1,25 @@
+{
+  "match": "Belgium vs Senegal",
+  "capture": "20260701T193422Z-belgium-vs-senegal",
+  "follower_kalshi": {
+    "n": 7,
+    "gross_med_c": 16.5,
+    "cost_med_c": 2.25,
+    "net_med_c": 13.19,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 673
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 7,
+    "gross_med_c": 16.5,
+    "cost_med_c": 2.25,
+    "net_med_c": 13.19,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 673
+  }
+}

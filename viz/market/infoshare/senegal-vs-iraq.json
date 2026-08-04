@@ -1,0 +1,48 @@
+{
+  "match": "Senegal vs Iraq",
+  "capture": "20260626T183323Z-senegal-vs-iraq",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.0846,
+  "match_poly_gg": 0.5106,
+  "contracts": [
+    {
+      "label": "Iraq",
+      "kalshi": "KXWCGAME-26JUN26SENIRQ-IRQ",
+      "poly": "42446028394641227058711863003994762636042573921212384468888917154482444605317",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01598,
+      "alpha_b": -0.00913,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.9279,
+      "n": 6792
+    },
+    {
+      "label": "Senegal",
+      "kalshi": "KXWCGAME-26JUN26SENIRQ-SEN",
+      "poly": "18743217884084451181326534803259386349719190738348996062011676818990905009388",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5106,
+      "gg_b": 0.4894,
+      "alpha_a": -0.02374,
+      "alpha_b": 0.02476,
+      "hasbrouck_a_lo": 0.0631,
+      "hasbrouck_a_hi": 0.1062,
+      "hasbrouck_a_mid": 0.0846,
+      "cointegrated": true,
+      "adf_p": 0.0441,
+      "n": 6929
+    }
+  ]
+}

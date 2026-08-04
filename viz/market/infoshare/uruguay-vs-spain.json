@@ -1,0 +1,48 @@
+{
+  "match": "Uruguay vs Spain",
+  "capture": "20260626T232753Z-uruguay-vs-spain",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.5795,
+  "match_poly_gg": 0.7074,
+  "contracts": [
+    {
+      "label": "Uruguay",
+      "kalshi": "KXWCGAME-26JUN26URUESP-URU",
+      "poly": "19006898597508386281847912902191120242282582317334085817745325501448261696961",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00878,
+      "alpha_b": 0.01685,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.1542,
+      "n": 8865
+    },
+    {
+      "label": "Spain",
+      "kalshi": "KXWCGAME-26JUN26URUESP-ESP",
+      "poly": "21212784061998732060753310583727616688784929823373352237868078199791664491531",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7074,
+      "gg_b": 0.2926,
+      "alpha_a": -0.00916,
+      "alpha_b": 0.02213,
+      "hasbrouck_a_lo": 0.5063,
+      "hasbrouck_a_hi": 0.6527,
+      "hasbrouck_a_mid": 0.5795,
+      "cointegrated": true,
+      "adf_p": 0.0283,
+      "n": 9181
+    }
+  ]
+}

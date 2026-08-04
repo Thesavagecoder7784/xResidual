@@ -1,0 +1,48 @@
+{
+  "match": "Japan vs Sweden",
+  "capture": "20260625T223022Z-japan-vs-sweden",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.5186,
+  "match_poly_gg": 0.5889,
+  "contracts": [
+    {
+      "label": "Sweden",
+      "kalshi": "KXWCGAME-26JUN25JPNSWE-SWE",
+      "poly": "12789581828610654936852030631608949195058761081844775016106587060501098784149",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6321,
+      "gg_b": 0.3679,
+      "alpha_a": -0.08044,
+      "alpha_b": 0.13819,
+      "hasbrouck_a_lo": 0.5193,
+      "hasbrouck_a_hi": 0.701,
+      "hasbrouck_a_mid": 0.6101,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8847
+    },
+    {
+      "label": "Japan",
+      "kalshi": "KXWCGAME-26JUN25JPNSWE-JPN",
+      "poly": "101491499269793539765890729500440478078979559571972876836355209033272846559170",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5457,
+      "gg_b": 0.4543,
+      "alpha_a": -0.05251,
+      "alpha_b": 0.06309,
+      "hasbrouck_a_lo": 0.2723,
+      "hasbrouck_a_hi": 0.5819,
+      "hasbrouck_a_mid": 0.4271,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 8857
+    }
+  ]
+}

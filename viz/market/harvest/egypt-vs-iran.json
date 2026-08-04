@@ -1,0 +1,25 @@
+{
+  "match": "Egypt vs Iran",
+  "capture": "20260627T022522Z-egypt-vs-iran",
+  "follower_kalshi": {
+    "n": 11,
+    "gross_med_c": 13.0,
+    "cost_med_c": 2.16,
+    "net_med_c": 10.84,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 18.2,
+    "lead_ms_med": 902
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 11,
+    "gross_med_c": 13.0,
+    "cost_med_c": 2.16,
+    "net_med_c": 10.84,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 18.2,
+    "lead_ms_med": 902
+  }
+}

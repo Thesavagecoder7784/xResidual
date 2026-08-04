@@ -1,0 +1,48 @@
+{
+  "match": "Cura\u00e7ao vs Ivory Coast",
+  "capture": "20260625T192608Z-cura\u00e7ao-vs-ivory-coast",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN25CUWCIV-CUW",
+      "poly": "19148172802481517881692352905829372357755800754194043495831127988905408662349",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00198,
+      "alpha_b": 0.00428,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.8947,
+      "n": 7910
+    },
+    {
+      "label": "Ivory Coast",
+      "kalshi": "KXWCGAME-26JUN25CUWCIV-CIV",
+      "poly": "112165227742342790816614520312092947420861337398279265432656445292580690894446",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.01024,
+      "alpha_b": 0.01782,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.411,
+      "n": 8722
+    }
+  ]
+}

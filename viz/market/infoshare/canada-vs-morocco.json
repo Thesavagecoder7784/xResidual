@@ -1,0 +1,48 @@
+{
+  "match": "Canada vs Morocco",
+  "capture": "20260704T162910Z-canada-vs-morocco",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8452,
+  "match_poly_gg": 0.7903,
+  "contracts": [
+    {
+      "label": "Morocco",
+      "kalshi": "KXWCGAME-26JUL04CANMAR-MAR",
+      "poly": "102051736436656560797672629859737891705962543111476656351708851920203673046762",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9059,
+      "gg_b": 0.0941,
+      "alpha_a": -0.00369,
+      "alpha_b": 0.03557,
+      "hasbrouck_a_lo": 0.8337,
+      "hasbrouck_a_hi": 0.9866,
+      "hasbrouck_a_mid": 0.9101,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9084
+    },
+    {
+      "label": "Canada",
+      "kalshi": "KXWCGAME-26JUL04CANMAR-CAN",
+      "poly": "39829420117533150550184846325805706216027544339731400040170885335796384867455",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6747,
+      "gg_b": 0.3253,
+      "alpha_a": -0.02749,
+      "alpha_b": 0.05701,
+      "hasbrouck_a_lo": 0.7237,
+      "hasbrouck_a_hi": 0.8369,
+      "hasbrouck_a_mid": 0.7803,
+      "cointegrated": true,
+      "adf_p": 0.0007,
+      "n": 8384
+    }
+  ]
+}

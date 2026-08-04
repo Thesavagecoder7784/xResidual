@@ -1,0 +1,48 @@
+{
+  "match": "Paraguay vs Australia",
+  "capture": "20260626T013443Z-paraguay-vs-australia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.2206,
+  "match_poly_gg": 0.6623,
+  "contracts": [
+    {
+      "label": "Australia",
+      "kalshi": "KXWCGAME-26JUN25PARAUS-AUS",
+      "poly": "21990437237634439641535931317392242133464382121486985420713435551817663743535",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6765,
+      "gg_b": 0.3235,
+      "alpha_a": -0.01917,
+      "alpha_b": 0.0401,
+      "hasbrouck_a_lo": 0.2626,
+      "hasbrouck_a_hi": 0.3074,
+      "hasbrouck_a_mid": 0.285,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8616
+    },
+    {
+      "label": "Paraguay",
+      "kalshi": "KXWCGAME-26JUN25PARAUS-PAR",
+      "poly": "49296719184627637111102906756410924588753297305614598618877406701338912319300",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6482,
+      "gg_b": 0.3518,
+      "alpha_a": -0.02389,
+      "alpha_b": 0.04401,
+      "hasbrouck_a_lo": 0.1527,
+      "hasbrouck_a_hi": 0.1599,
+      "hasbrouck_a_mid": 0.1563,
+      "cointegrated": true,
+      "adf_p": 0.0004,
+      "n": 8616
+    }
+  ]
+}

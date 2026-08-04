@@ -1,0 +1,25 @@
+{
+  "match": "Brazil vs Japan",
+  "capture": "20260629T162753Z-brazil-vs-japan",
+  "follower_kalshi": {
+    "n": 6,
+    "gross_med_c": 22.5,
+    "cost_med_c": 1.9,
+    "net_med_c": 20.6,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 16.7,
+    "lead_ms_med": 601
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 6,
+    "gross_med_c": 22.5,
+    "cost_med_c": 1.9,
+    "net_med_c": 20.6,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 16.7,
+    "lead_ms_med": 601
+  }
+}

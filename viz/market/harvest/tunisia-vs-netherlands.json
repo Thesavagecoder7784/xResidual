@@ -1,0 +1,25 @@
+{
+  "match": "Tunisia vs Netherlands",
+  "capture": "20260625T223023Z-tunisia-vs-netherlands",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 10.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 9.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 281
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 10.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 9.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 281
+  }
+}

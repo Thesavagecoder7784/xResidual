@@ -1,0 +1,48 @@
+{
+  "match": "Switzerland vs Algeria",
+  "capture": "20260703T023333Z-switzerland-vs-algeria",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Algeria",
+      "kalshi": "KXWCGAME-26JUL02SUIDZA-DZA",
+      "poly": "75771817078472080882207303024349440209183684662422891257718386385240666521405",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00316,
+      "alpha_b": 0.00382,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.76,
+      "n": 7590
+    },
+    {
+      "label": "Switzerland",
+      "kalshi": "KXWCGAME-26JUL02SUIDZA-SUI",
+      "poly": "87420881416753183950847701965163525629817652213917429006273635360524465160861",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00795,
+      "alpha_b": 0.02328,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.332,
+      "n": 8319
+    }
+  ]
+}

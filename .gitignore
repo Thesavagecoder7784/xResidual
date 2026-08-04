@@ -285,14 +285,23 @@ RUNBOOK.md
 scripts/probcup_*.py
 deploy/systemd/xresidual-probcup.*
 
-viz/market/ofi
-viz/market/liquidity
+# Per-event venue data. These two carry quote levels and absolute wall-clock timestamps, which
+# REPRODUCING.md commits to withholding. Ignoring them is necessary but NOT sufficient -- the
+# revisions committed before this rule existed stayed reachable in history until
+# scripts/purge_history.sh excised them.
 viz/market/leadlag
-viz/market/infoshare
-viz/market/harvest
-viz/market/eventis
-viz/market/livewp
 viz/model/overreaction
+
+# The aggregate per-match archives (harvest, infoshare, ofi, liquidity, eventis, livewp, sigma)
+# are deliberately NOT ignored. They were, once, and the result was the same trap running
+# backwards: files already tracked when the rule landed kept shipping, so an arbitrary quarter
+# of each directory reached a clone -- 20 of 74 harvest, 17 of 80 infoshare, 22 of 83 ofi --
+# while REPRODUCING.md said they ship. Scripts that read those directories (harvest_ci.py,
+# harvest_predict.py, identification_check.py, ofi_ci.py) then ran on the subset from a clone
+# and produced different numbers than the committed artifacts, silently. They hold counts,
+# medians and regression statistics only -- no quote levels, no timestamps -- so there was
+# never a reason to withhold them, and shipping all of them is what makes the robustness layer
+# reproducible rather than merely assertable.
 
 # Regenerable build outputs (window.* data). BOTH the laptop (build_all.py) and the VM
 # (refresh_site_vm.sh -> build_micro_all) write these, so tracking them caused the recurring
@@ -351,3 +360,5 @@ paper/arxiv/SUBMISSION_AUDIT.md
 # previously undone by a VS Code auto-pull). REPRODUCING.md's Tier-A "paper ships with the repo"
 # line no longer holds while this is private — revisit when the paper goes public at submission.
 paper/arxiv/
+# macOS Finder metadata
+.DS_Store

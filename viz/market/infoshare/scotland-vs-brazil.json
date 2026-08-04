@@ -1,0 +1,48 @@
+{
+  "match": "Scotland vs Brazil",
+  "capture": "20260624T212715Z-scotland-vs-brazil",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "Brazil",
+      "kalshi": "KXWCGAME-26JUN24SCOBRA-BRA",
+      "poly": "52345319584298671384241333674201063268836142597903677481641810116870044724915",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00487,
+      "alpha_b": 0.03088,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.219,
+      "n": 7856
+    },
+    {
+      "label": "Scotland",
+      "kalshi": "KXWCGAME-26JUN24SCOBRA-SCO",
+      "poly": "47270884544902187710532732045488098581735089212206395717548237797985049565017",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00264,
+      "alpha_b": -0.00409,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.9266,
+      "n": 7119
+    }
+  ]
+}

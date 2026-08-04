@@ -1,0 +1,25 @@
+{
+  "match": "Jordan vs Argentina",
+  "capture": "20260628T013349Z-jordan-vs-argentina",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 9.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 8.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.047,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 660
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 2,
+    "gross_med_c": 9.0,
+    "cost_med_c": 0.89,
+    "net_med_c": 8.11,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.047,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 660
+  }
+}

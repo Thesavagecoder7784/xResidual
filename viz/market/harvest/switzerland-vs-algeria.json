@@ -1,0 +1,25 @@
+{
+  "match": "Switzerland vs Algeria",
+  "capture": "20260703T023333Z-switzerland-vs-algeria",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 17.62,
+    "cost_med_c": 1.26,
+    "net_med_c": 16.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 749
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 4,
+    "gross_med_c": 17.62,
+    "cost_med_c": 1.26,
+    "net_med_c": 16.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 749
+  }
+}

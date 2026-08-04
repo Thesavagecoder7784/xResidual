@@ -1,0 +1,25 @@
+{
+  "match": "Jordan vs Algeria",
+  "capture": "20260623T022922Z-jordan-vs-algeria",
+  "follower_kalshi": {
+    "n": 7,
+    "gross_med_c": 23.5,
+    "cost_med_c": 1.74,
+    "net_med_c": 21.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.012,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 535
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 7,
+    "gross_med_c": 23.5,
+    "cost_med_c": 1.74,
+    "net_med_c": 21.4,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.012,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 535
+  }
+}
