@@ -4,7 +4,7 @@
 Purdue University — Mathematics & Statistics
 ORCID: [0009-0002-1795-0195](https://orcid.org/0009-0002-1795-0195)
 Working paper · July 2026 · *Draft — comments welcome*
-Code & data: github.com/Thesavagecoder7784/xResidual · Contact: pmanijam@purdue.edu
+Code & derived data: github.com/Thesavagecoder7784/xResidual · Contact: pmanijam@purdue.edu
 
 ---
 
@@ -85,6 +85,35 @@ Conditioning on the actual information event turns the pooled ~81% into a dynami
 On a clean, repeated in-play information stream, Polymarket discovers the price of a goal first — ~600 ms ahead, ~81% of the information share, on 61 of 63 cointegrated matches — generalizing to fast sports events a result previously shown only for slow election contracts, and doing so on mid-quotes so it survives the trade-direction problem that limits public-feed work. The lead is genuine but mostly un-harvestable: it *is* the cost of immediacy, not alpha. The natural next step is the on-chain signed-flow layer — a ground-truth VPIN / order-flow-toxicity study that the public-feed literature cannot execute — and the generalization of the same cross-venue stack to macro and event contracts where the volume, and the stakes, are larger.
 
 ---
+
+## Data availability
+
+This study is **method-reproducible rather than data-reproducible**, by necessity and by design.
+
+The venues' terms govern their market data: Kalshi's Developer Agreement limits API data to
+facilitating the member's own trading and prohibits sharing it with third parties without prior
+written authorization, and its Data Terms restrict republication of Kalshi Data; Polymarket's
+terms govern its off-chain order-book feed. I therefore do not redistribute the raw captures,
+the per-event quote levels, or the wall-clock event timestamps from either venue.
+
+What is public, at github.com/Thesavagecoder7784/xResidual under an MIT licence: the full
+capture pipeline; every analysis script, including those producing the null results; the
+derived per-match statistics (counts, medians, shares, regression sufficient statistics); the
+pooled artifacts from which every number in this paper is mechanically regenerated; and the
+pre-registration as a tagged pre-kickoff commit, so the forecasts cannot have been edited after
+the outcomes were known. A reader can audit every inferential step from the shipped aggregates
+and the code that produced them, and can verify the pre-registered predictions against the
+graded outcome, without receiving any redistributable venue data.
+
+Quantities attributed to Kalshi in this paper are aggregate statistics — per-match medians,
+event counts, venue shares — never quote-level observations. The Polymarket-side and
+cross-venue results additionally rest on an on-chain layer (`OrderFilled` events from the
+Polygon CTF Exchange) that is public by construction and carries no such restriction.
+
+What cannot be reproduced by a third party is the capture itself: it requires the reader's own
+venue accounts and a live tournament. This is the standard position for empirical work on
+licensed or proprietary feeds — the code and the derived statistics are the scientific object;
+the vendor's raw feed is not the author's to distribute.
 
 ## References
 
