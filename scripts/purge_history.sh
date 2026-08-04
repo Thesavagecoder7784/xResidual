@@ -263,6 +263,7 @@ DANGER = [b'"t_ms"', b'"kalshi_reaction"', b'"poly_reaction"']
 PAPER_DANGER = [b'KXWC', b'KXWORLD']
 hits = collections.Counter()
 checked = 0
+want = []
 for line in raw.splitlines():
     part = line.split(' ', 1)
     if len(part) != 2:
@@ -273,11 +274,29 @@ for line in raw.splitlines():
     paper = path.startswith('paper/') and not path.startswith('paper/watchlist')
     if not (path.endswith('.json') or path.endswith('.js') or paper):
         continue
-    blob = subprocess.run(['git','cat-file','-p',sha], capture_output=True).stdout
+    want.append((sha, path, paper))
+
+# One long-lived `cat-file --batch` rather than one subprocess per blob. The per-blob version
+# took 5-10 minutes on this repo's ~9k text blobs -- long enough to look hung, and a verify
+# people interrupt is a verify that never runs.
+proc = subprocess.Popen(['git', 'cat-file', '--batch'],
+                        stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+for sha, path, paper in want:
+    proc.stdin.write((sha + '\n').encode())
+    proc.stdin.flush()
+    header = proc.stdout.readline().split()
+    if len(header) < 3:
+        continue
+    blob = proc.stdout.read(int(header[2]))
+    proc.stdout.read(1)          # trailing newline after the object payload
+    if header[1] != b'blob':
+        continue
     checked += 1
     for d in (DANGER + PAPER_DANGER if paper else DANGER):
         if d in blob:
             hits[path] += 1
+proc.stdin.close()
+proc.wait()
 print(f"  scanned {checked} JSON/JS and paper/ blobs across all history")
 if hits:
     print("  !! RESIDUAL EXPOSURE:")
