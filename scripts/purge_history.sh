@@ -27,20 +27,39 @@
 #     bash scripts/purge_history.sh --run       # rewrite local history, still does not push
 set -euo pipefail
 
-# Two groups, one rewrite. Deleting the ML files in an ordinary commit would leave them
+# Three groups, one rewrite. Deleting any of these in an ordinary commit would leave them
 # reachable in history — the precise mistake this script exists to undo — so they are excised
 # here instead.
 #
 #   leadlag / overreaction : per-event venue data (t_ms + quote levels) that the published
 #                            data-availability statement says is withheld.
+#   paper book backups     : three .bak copies of the paper-trading ledger. Three of its rows
+#                            are Kalshi positions carrying a market ticker, entry/exit quote
+#                            levels and a share count that divides straight back into the
+#                            entry price — the same class of per-event venue data as leadlag.
+#                            The 2026-08-04 audit missed them because it swept viz/, not
+#                            paper/. The live ledger and book.md are redacted in place and
+#                            re-committed clean (RESTORE_PATHS); the .bak copies have no
+#                            value and are dropped outright.
 #   ml_microstructure      : a gradient-boosted model trained on pooled Kalshi+Polymarket
-#                            order-book features. Kalshi's Data Terms expressly prohibit use
-#                            of Kalshi Data for machine learning, including for training. The
+#                            order-book features. Two documents bear on this and it is worth
+#                            being exact about which one applies. Kalshi's Data Terms of Use
+#                            §II prohibit use of Kalshi Data "in any manner for any machine
+#                            learning and/or artificial intelligence" — but that document is
+#                            scoped to content on the kalshi.com website, and these tapes came
+#                            off the WebSocket API. The API is governed by the Developer
+#                            Agreement, which carries no ML clause; there the operative bar is
+#                            §3 ("use of Kalshi APIs is expressly limited to facilitating a
+#                            member's own trading") and §3.1 (no collecting or storing except
+#                            to facilitate your own trading). Either route forbids it. The
 #                            result was a reported null (~52% leave-one-match-out on six
 #                            matches); the code and write-up are withdrawn regardless.
 PATHS=(
   "viz/market/leadlag"
   "viz/model/overreaction"
+  "paper/positions.json.bak"
+  "paper/positions.json.bak2"
+  "paper/positions.json.bak3"
   "scripts/ml_microstructure.py"
   "writeups/ml-microstructure-note.md"
   "writeups/_ml_micro_results.json"
@@ -55,14 +74,35 @@ PATHS=(
 # So a plain --invert-paths is wrong here (it would delete a file the paper depends on) and
 # leaving it alone is also wrong (the old revisions leak). The fix is to drop the path from all
 # history and then re-commit the current, redacted content as a single new blob.
+#
+# paper/positions.json and paper/book.md are here for the same reason: the ledger is the record
+# behind the paper-trading result and has to keep shipping, but every earlier revision carries
+# the unredacted Kalshi rows.
 RESTORE_PATHS=(
   "writeups/_leadlag_results.json"
+  "paper/positions.json"
+  "paper/book.md"
 )
 MODE="${1:---check}"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
 banner() { printf '\n=== %s ===\n' "$1"; }
+
+# What counts as a dirty blob differs by file, and collapsing that into one pattern gets it
+# wrong in both directions. A bare Kalshi ticker is a contract identifier, not a quote, and
+# writeups/_leadlag_results.json deliberately keeps its tickers so the venue pairing stays
+# auditable — a blanket ticker ban would fail a file that is already clean. The paper ledger is
+# the opposite case: its redaction removes the ticker entirely, so a surviving ticker there
+# means the redaction did not run. Note the limit of that check: it catches the redaction being
+# reverted, not a brand-new untickered Kalshi row carrying a price. The Polymarket rows keep
+# their numeric prices on purpose — those are on-chain-derived, not Kalshi Data.
+danger_pattern_for() {
+  case "$1" in
+    paper/positions.json|paper/book.md) printf '%s' 'KXWC|KXWORLD' ;;
+    *)                                  printf '%s' '"(t_ms|kalshi_reaction|poly_reaction)"' ;;
+  esac
+}
 
 count_exposure() {
   # PATHS holds both directories and single files, so the pattern must match "<path>/..." AND
@@ -144,8 +184,8 @@ for p in "${RESTORE_PATHS[@]}"; do
     mkdir -p "$STASH/$(dirname "$p")"
     git show "HEAD:$p" > "$STASH/$p"
     # Refuse to carry a dirty blob across the rewrite -- that would defeat the whole exercise.
-    if grep -qE '"(t_ms|kalshi_reaction|poly_reaction)"' "$STASH/$p"; then
-      echo "  FAIL: current $p still contains per-event fields; redact it before purging" >&2
+    if grep -qE "$(danger_pattern_for "$p")" "$STASH/$p"; then
+      echo "  FAIL: current $p still contains per-event venue fields; redact it before purging" >&2
       exit 1
     fi
     echo "  saved $p ($(wc -c < "$STASH/$p" | tr -d ' ') bytes, verified clean)"
@@ -185,6 +225,10 @@ import subprocess, collections
 raw = subprocess.run(['git','rev-list','--objects','--all'],
                      capture_output=True, text=True).stdout
 DANGER = [b'"t_ms"', b'"kalshi_reaction"', b'"poly_reaction"']
+# Scoped to paper/ on purpose: a Kalshi ticker is fine in _leadlag_results.json and in the
+# infoshare archives, where it identifies a contract and nothing else. In the paper ledger it
+# travels next to an entry price, which is why the ledger is redacted rather than kept.
+PAPER_DANGER = [b'KXWC', b'KXWORLD']
 hits = collections.Counter()
 checked = 0
 for line in raw.splitlines():
@@ -192,20 +236,24 @@ for line in raw.splitlines():
     if len(part) != 2:
         continue
     sha, path = part
-    if not (path.endswith('.json') or path.endswith('.js')):
+    # paper/watchlist.md is the deliberate exception: it lists tickers for markets the venue
+    # had not quoted yet ("no bid/ask/last"), so it carries model views and no venue data.
+    paper = path.startswith('paper/') and not path.startswith('paper/watchlist')
+    if not (path.endswith('.json') or path.endswith('.js') or paper):
         continue
     blob = subprocess.run(['git','cat-file','-p',sha], capture_output=True).stdout
     checked += 1
-    for d in DANGER:
+    for d in (DANGER + PAPER_DANGER if paper else DANGER):
         if d in blob:
             hits[path] += 1
-print(f"  scanned {checked} JSON/JS blobs across all history")
+print(f"  scanned {checked} JSON/JS and paper/ blobs across all history")
 if hits:
     print("  !! RESIDUAL EXPOSURE:")
     for p, n in hits.most_common(20):
         print(f"     {p}  ({n})")
     raise SystemExit(1)
-print("  CLEAN — no t_ms / kalshi_reaction / poly_reaction in any reachable blob")
+print("  CLEAN — no t_ms / kalshi_reaction / poly_reaction in any reachable blob,")
+print("          and no Kalshi ticker under paper/")
 PY
 
 cat <<'EOF'

@@ -170,8 +170,13 @@ def cmd_report(a) -> None:
         for x in closed:
             r = x.get("realized_pnl_net", x.get("realized_pnl", 0)) or 0
             realized += r
+            # Redacted rows (the Kalshi positions -- see the "redacted" key) carry no quote
+            # levels, so there is nothing to print in the entry -> exit column. The stake and
+            # the realized P&L are ours and still render.
+            px = ("redacted" if x["entry_price"] is None or x["exit_price"] is None
+                  else f"{x['entry_price']:.3f} → {x['exit_price']:.3f}")
             L.append(f"| {x['id']} | {x['side'].upper()} | {_mkt_label(x)} | "
-                     f"{x['entry_price']:.3f} → {x['exit_price']:.3f} | {r:+.1f} |")
+                     f"{px} | {r:+.1f} |")
     else:
         L.append("_none yet_")
     L += ["", f"**Realized P&L (net of {COST_BPS}bps):** {realized:+.1f}", "",
