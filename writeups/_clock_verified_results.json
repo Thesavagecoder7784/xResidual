@@ -1,0 +1,109 @@
+{
+ "n_matches": 72,
+ "n_events_all": 371,
+ "n_events_clock_verified": 221,
+ "verified_share": 0.5957,
+ "poly_share_all": 0.7116,
+ "poly_share_clock_verified": 0.7466,
+ "poly_ver": 165,
+ "kalshi_ver": 56,
+ "per_match_lean": "48 of 58",
+ "per_match_sign_p": 4.5166191631196295e-07,
+ "skipped": {
+  "no_kickoff": 0,
+  "no_clock": 0,
+  "no_goals": 7,
+  "no_events": 0,
+  "events_but_no_leader": 7,
+  "bad_name": 0
+ },
+ "window": {
+  "first_half": [
+   -1.0,
+   6.0
+  ],
+  "second_half": [
+   10.0,
+   22.0
+  ]
+ },
+ "note": "Detected repricing events retained only when they fall in an exogenous window around a goal minute from data/wc_goals_espn.json (public match feed, reconciled 104/104 to the scorelines). Clock model fixed in advance, applied uniformly, no per-match fitting. Tests whether the Polymarket-first ordering is an artifact of detector selection.",
+ "window_sensitivity": [
+  {
+   "first_half": [
+    -1,
+    6
+   ],
+   "second_half": [
+    10,
+    22
+   ],
+   "n_verified": 221,
+   "poly_share": 0.7466
+  },
+  {
+   "first_half": [
+    -0.5,
+    3
+   ],
+   "second_half": [
+    12,
+    18
+   ],
+   "n_verified": 124,
+   "poly_share": 0.7016
+  },
+  {
+   "first_half": [
+    -1,
+    10
+   ],
+   "second_half": [
+    8,
+    25
+   ],
+   "n_verified": 272,
+   "poly_share": 0.739
+  },
+  {
+   "first_half": [
+    -2,
+    4
+   ],
+   "second_half": [
+    13,
+    17
+   ],
+   "n_verified": 128,
+   "poly_share": 0.7266
+  },
+  {
+   "first_half": [
+    0,
+    5
+   ],
+   "second_half": [
+    14,
+    20
+   ],
+   "n_verified": 131,
+   "poly_share": 0.7176
+  },
+  {
+   "first_half": [
+    -1,
+    6
+   ],
+   "second_half": [
+    14,
+    16
+   ],
+   "n_verified": 120,
+   "poly_share": 0.725
+  }
+ ],
+ "poly_share_clock_verified_range": [
+  0.7016,
+  0.7466
+ ]
+}

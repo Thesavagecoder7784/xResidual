@@ -3,7 +3,8 @@
 
 WHY. `xresidual.ws_events.detect_shocks` (v1, frozen) finds sharp, persistent mid moves. It is
 labelled a GOAL detector, and `scripts/verify_goals.py` shows it firing more often than there
-were goals in 15 of 29 matches, including 5 times in each of two goalless matches.
+were goals in 49 of 86 matches, with all 7 goalless matches registering detections
+(superseding the original 15-of-29 read, taken when 31 archives survived).
 
 WHAT THE TAPES ACTUALLY SAY. Diagnosed on Belgium-Iran (0-0, 918 MB tape). The phantom events are
 NOT noise and NOT smooth clock drift. Their burst concentration is 0.75-1.21, so each is a genuine

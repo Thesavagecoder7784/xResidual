@@ -3,8 +3,9 @@
 
 WHY THIS EXISTS. The microstructure pipeline infers goals from the tape as decisive mid shocks
 (`ws_events.detect_shocks`), which `04_methods.tex` discloses as a limitation and
-`scripts/verify_goals.py` quantifies: detection fires more often than there were goals in 15 of
-29 matches, including 5 times in each of two goalless matches. Those phantom events are real
+`scripts/verify_goals.py` quantifies: detection fires more often than there were goals in 49 of
+86 matches, and all 7 goalless matches register detections (scripts/detection_check.py;
+the original 15-of-29 read dates from when only 31 per-game archives survived locally). Those phantom events are real
 repricings driven by the clock running on a 0-0, not by goals, and price alone cannot separate
 the two (see `scripts/shock_detect_v2.py` for the failed attempts). An exogenous goal clock
 removes the problem at the source rather than filtering it downstream.

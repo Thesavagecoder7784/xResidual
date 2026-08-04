@@ -144,8 +144,8 @@ lagging venue is stale by a median **12.0 cents**, netting **+10.8 cents on pape
 
 It is not free money, because **at the instant of the goal the book is gone** — spread roughly 8×
 wider, best-price depth under 1% of normal. Gate the ledger on what is actually resting and **the
-median match yields no harvestable goal at all.** Harvestable goals exist (~11% goal-weighted on the
-21-match subset still reconstructible from the archive, clustered in 6 of those 21) but they are a
+median match yields no harvestable goal at all.** Harvestable goals exist (~9% goal-weighted across the
+full 66-match ledger, clustered in 21 of those 66) but they are a
 minority you cannot identify in advance, because the depth vanishes in the same instant the signal
 fires.
 
@@ -218,9 +218,10 @@ the lane is roughly flat. Only the group-to-R32 advance lane is diversified enou
   almost none, so the conclusion is if anything conservative. But a random capture schedule would
   have been cleaner.
 - **Treat the archive as primary from day one.** The raw tapes are transient by design and the
-  collection VM is now decommissioned. Roughly two-thirds of the per-game harvest archives did not
-  survive, which is why the goal-weighted harvestability rate is pinned to a 21-match subset forever.
-  That is a permanent, self-inflicted limit on my own dataset.
+  collection VM is now decommissioned. Roughly two-thirds of the per-game harvest archives went missing from the
+  working machine, and for a while the goal-weighted rate was pinned to the 21 that remained. They
+  were later recovered in full from a VM disk backup, so the ledger is whole again — but only by
+  luck, not by design. The lesson stands: treat the archive as primary, not the tape.
 
 ## 9. What the residuals actually said
 

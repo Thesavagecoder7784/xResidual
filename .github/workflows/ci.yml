@@ -18,5 +18,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt pytest
+      # REPRODUCING.md told reviewers that `make check` runs here and that "a stale paper number
+      # cannot be committed". It did not run here — this job was pytest only — and the macro
+      # guard that would have caught it SKIPS on a clean checkout, because paper/arxiv is
+      # gitignored and macros.tex is therefore absent. The claim was unenforced in both
+      # directions. These steps make the enforceable part real.
+      - name: Reproduce the paper macros from the shipped artifacts
+        run: python scripts/emit_macros.py
+
+      # Fails if any macro fell back to a hard-coded constant, i.e. an artifact does not ship.
+      # This is the failure that once put nine wrong values into a clean clone.
+      - name: Assert every macro came from an artifact, not a fallback
+        run: python scripts/emit_macros.py --strict
+
+      # Runs AFTER the step above, so macros.tex exists and test_macros_sync actually executes
+      # instead of skipping.
       - name: Run test suite
         run: python -m pytest tests/ -q

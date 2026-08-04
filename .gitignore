@@ -285,6 +285,25 @@ RUNBOOK.md
 scripts/probcup_*.py
 deploy/systemd/xresidual-probcup.*
 
+# WARNING — THESE RULES ARE PARTLY DEAD. Audited 2026-08-03: 132 files under these paths are
+# already TRACKED, because they were committed before the rules were written, and a .gitignore
+# rule has no effect on a tracked file. So these directories are neither fully ignored nor fully
+# shipped, and `git check-ignore` will happily report "ignored" for a file that is public right
+# now. Counts at the audit (tracked / present on the analysis machine):
+#
+#     livewp 27/27 · liquidity 21/21 · eventis 21/21   <- fully tracked, rule is inert
+#     ofi 24/83 · harvest 21/74 · infoshare 18/80      <- PARTIAL: pooled figures are computed
+#                                                         on the full local set, so a fresh clone
+#                                                         recomputes them on a subset and gets
+#                                                         different numbers (see REPRODUCING.md)
+#     leadlag 0/86                                     <- correctly and fully out: this is the
+#                                                         only one carrying per-event quote
+#                                                         levels and absolute t_ms
+#
+# Before trusting any rule here, run: git ls-files <path> | wc -l
+# Deciding to close the partial cases means EITHER shipping the rest (they carry no quote levels
+# and no timestamps, so policy permits it) OR untracking what is there. Do not add a blanket `!`
+# negation without checking which files it would newly publish.
 viz/market/ofi
 viz/market/liquidity
 viz/market/leadlag

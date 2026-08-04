@@ -48,6 +48,11 @@ SOURCES = {
     "X": "_detection_results.json",     # goal-detection validity vs scoreline (§4)
     "H2": "_harvest_ci_results.json",   # bootstrap CI on the harvestable share (§6.2)
     "G2": "_leadgate_results.json",     # co-movement gate sensitivity (§5.2)
+    "CV": "_clock_verified_results.json",  # lead-lag on exogenously clock-anchored events (§5.2)
+    "ID": "_identification_results.json",  # ADF-gate sensitivity + Putnins ILS sweep (§4)
+    "OC": "_ofi_ci_results.json",          # match-clustered interval on the cross-venue OFI null (§5.5)
+    "DI": "_depth_instant_results.json",   # instantaneous vs trough depth, raw-tape reconstruction (§6.2)
+    "HP": "_harvest_predict_results.json", # ex-ante predictability of harvestable matches (§6.2)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -116,6 +121,7 @@ def rawpct(x, d=0):   return f"{x:.{d}f}\\%"            # already in percent uni
 def num(x, d=0):      return f"{x:.{d}f}"
 def msn(x):           return f"+{int(round(x))}\\,ms"
 def intu(x):          return str(int(round(x)))
+def intu_i(x):        return int(round(x))          # same, but keeps the int for arithmetic
 
 
 def pval(p):
@@ -127,6 +133,14 @@ def pval(p):
         mant /= 10
         exp += 1
     return f"{mant:.1f}\\times10^{{{exp}}}"
+
+
+def binom_two_sided(k, n):
+    """Exact two-sided sign-test p for k of n successes against p=1/2. Used where the paper
+    quotes a count but no statistic; every other count in the manuscript carries one."""
+    k = min(k, n - k)
+    tail = sum(math.comb(n, i) for i in range(0, k + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
 
 
 def refill(D):
@@ -145,20 +159,22 @@ def manual(name, val, note):         return ("manual", name, val, note)
 
 GROUPS = [
     ("Sample sizes (four distinct denominators — do not conflate)", [
-        auto("nCaptured",    lambda D: intu(dig(D, "L", "n_matches")), "84", "marquee matches captured cross-venue"),
+        auto("nCaptured",    lambda D: intu(dig(D, "L", "n_matches")), "86", "marquee matches captured cross-venue"),
         auto("devigSpreadPM", lambda D: f"{dig(D, 'D', 'venues.polymarket.median_spread_pp'):.3f}\\,pp", "0.006\\,pp", "de-vig method spread, Polymarket"),
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
-        auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
+        auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.01", "Polymarket title book sum"),
         auto("bookSumKA",     lambda D: num(dig(D, "D", "venues.kalshi.book_sum_median"), 1), "12.6", "Kalshi title book sum (independent binaries)"),
         auto("harvestCIlo",   lambda D: rawpct(dig(D, "H2", "ci95.0"), 0), "0\\%", "bootstrap CI lower, harvestable share"),
         auto("harvestCIhi",   lambda D: rawpct(dig(D, "H2", "ci95.1"), 0), "0\\%", "bootstrap CI upper"),
-        auto("harvestNzero",  lambda D: intu(dig(D, "H2", "n_zero_matches")), "15", "archived matches with zero harvestable goals"),
-        auto("harvestNci",    lambda D: intu(dig(D, "H2", "n_matches")), "21", "matches in the CI"),
+        auto("harvestNzero",  lambda D: intu(dig(D, "H2", "n_zero_matches")), "45", "archived matches with zero harvestable goals"),
+        auto("harvestNci",    lambda D: intu(dig(D, "H2", "n_matches")), "66", "matches in the CI"),
         auto("nEventsThree",  lambda D: intu(dig(D, "G2", "sensitivity.3000ms.n_events")), "309", "decisive events under a 3s gate"),
         auto("gateShareThree",lambda D: pct(dig(D, "G2", "sensitivity.3000ms.poly_share"), 0), "77\\%", "poly share at a 3s gate"),
         auto("gateEventsLong",lambda D: intu(dig(D, "G2", "buckets.beyond_3s")), "83", "events in the 3-8s bucket"),
-        auto("nDetectChecked", lambda D: intu(dig(D, "X", "n_matches_checked")), "29", "matches with both a detection count and a scoreline"),
-        auto("nOverDetect",    lambda D: intu(dig(D, "X", "n_over_detect")), "15", "matches where detection exceeds actual goals"),
+        auto("nDetectChecked", lambda D: intu(dig(D, "X", "n_matches_checked")), "86", "matches with both a detection count and a scoreline"),
+        auto("nOverDetect",    lambda D: intu(dig(D, "X", "n_over_detect")), "49", "matches where detection exceeds actual goals"),
+        auto("detPerGoal",     lambda D: num(dig(D, "X", "median_detected_per_goal"), 2), "1.25", "median distinct detected events per actual goal"),
+        auto("nGoalless",      lambda D: intu(dig(D, "X", "n_goalless")), "7", "goalless matches in the checked set"),
         auto("overroundKMed",    lambda D: rawpct(dig(D, "W", "overround_kalshi_pct_median"), 1), "5.6\\%", "Kalshi title overround, median over the window"),
         auto("overroundPMed",    lambda D: rawpct(dig(D, "W", "overround_poly_pct_median"), 1), "2.1\\%", "Polymarket title overround, median"),
         auto("overroundRatioMed",lambda D: f"{dig(D, 'W', 'overround_ratio_median'):.1f}$\\times$", "2.8$\\times$", "measured Kalshi/Poly vig ratio"),
@@ -169,16 +185,16 @@ GROUPS = [
         auto("loopRawMax",     lambda D: f"{dig(D, 'W', 'raw_gap_pp_max_distributional'):.2f}\\,pp", "0.26\\,pp", "worst RAW daily gap in that window"),
         auto("loopWindowDays", lambda D: intu(dig(D, "W", "n_days_distributional")), "20", "days both books normalized"),
         auto("depthGate",  lambda D: pct(dig(D, "K", "depth_gate"), 0), "25\\%", "harvestability depth gate"),
-        auto("nGateOne",   lambda D: intu(dig(D, "K", "n_clearing_gate_1pct")), "7", "archived matches clearing a 1% gate"),
+        auto("nGateOne",   lambda D: intu(dig(D, "K", "n_clearing_gate_1pct")), "21", "archived matches clearing a 1% gate"),
         auto("minJumpCents", lambda D: num(dig(D, "V", "min_jump") * 100, 0), "4", "min consensus mid move to enter the harvest ledger"),
         auto("nTiedMatches", lambda D: intu(dig(D, "H", "leadlag.n_matches") - dig(D, "H", "leadlag.per_match_total")), "13", "lead-bearing matches split exactly evenly (dropped from the sign test)"),
         auto("nLeadMatchUnit", lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "66", "matches in the per-match lead unit"),
         auto("nClockMatches", lambda D: intu(dig(D, "G", "n_matches")), "104", "matches in the exogenous goal clock"),
         auto("nClockGoals",   lambda D: intu(dig(D, "G", "n_goals")), "308", "goals with exogenous minute stamps"),
         auto("nClockCards",   lambda D: intu(dig(D, "G", "n_cards")), "290", "card events in the goal clock"),
-        auto("nLeadBearing", lambda D: intu(dig(D, "H", "leadlag.n_matches")), "77", "matches with >=1 decisive event"),
-        auto("nPerMatch",    lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "65", "matches in the per-match sign test"),
-        auto("nEvents",      lambda D: intu(dig(D, "H", "leadlag.n_events")), "377", "decisive repricing events"),
+        auto("nLeadBearing", lambda D: intu(dig(D, "H", "leadlag.n_matches")), "79", "matches with >=1 decisive event"),
+        auto("nPerMatch",    lambda D: intu(dig(D, "H", "leadlag.per_match_total")), "66", "matches in the per-match sign test"),
+        auto("nEvents",      lambda D: intu(dig(D, "H", "leadlag.n_events")), "392", "decisive repricing events"),
         auto("nSync",        lambda D: intu(dig(D, "H", "leadlag.n_synchronous")), "35", "synchronous (same-second) events"),
         # The harvest ledger has its OWN denominator, smaller than the harvest match-file count
         # (n_match_files) because a captured match need not contain a goal-sized move. Quote this
@@ -186,24 +202,35 @@ GROUPS = [
         auto("nMatchesHarvest", lambda D: intu(dig(D, "V", "pooled.n_matches")), "66", "matches in the harvestability ledger (>=1 qualifying goal)"),
     ]),
     ("Lead-lag (event study)", [
-        auto("polyEvents",     lambda D: intu(dig(D, "L", "pooled.poly_leads")), "269", ""),
-        auto("kalshiEvents",   lambda D: intu(dig(D, "L", "pooled.kalshi_leads")), "108", ""),
-        auto("polyShare",      lambda D: pct(dig(D, "H", "leadlag.poly_share_decisive")), "71\\%", "decisive share"),
-        auto("polyShareSync",  lambda D: pct(dig(D, "H", "leadlag.poly_share_incl_sync")), "65\\%", "if synchronous count against"),
+        auto("polyEvents",     lambda D: intu(dig(D, "L", "pooled.poly_leads")), "281", ""),
+        auto("kalshiEvents",   lambda D: intu(dig(D, "L", "pooled.kalshi_leads")), "111", ""),
+        auto("polyShare",      lambda D: pct(dig(D, "H", "leadlag.poly_share_decisive")), "72\\%", "decisive share"),
+        auto("polyShareSync",  lambda D: pct(dig(D, "H", "leadlag.poly_share_incl_sync")), "66\\%", "if synchronous count against"),
         auto("medLead",        lambda D: msn(dig(D, "H", "leadlag.median_lead_ms")), "+600\\,ms", ""),
-        auto("leadCIlo",       lambda D: pct(dig(D, "H", "leadlag.cluster_boot_ci.0")), "66\\%", ""),
+        # --- lead-lag on exogenously clock-anchored events (scripts/clock_verified_leadlag.py) ---
+        auto("cvMatches",      lambda D: intu(dig(D, "CV", "n_matches")), "72", "matches with kickoff + goal clock + events"),
+        auto("cvEventsAll",    lambda D: intu(dig(D, "CV", "n_events_all")), "371", "decisive events in those matches"),
+        auto("cvEventsVer",    lambda D: intu(dig(D, "CV", "n_events_clock_verified")), "221", "of those, aligned to an exogenous goal minute"),
+        auto("cvRetained",     lambda D: pct(dig(D, "CV", "verified_share")), "60\\%", "share of detected events that are clock-verified"),
+        auto("cvShareAll",     lambda D: pct(dig(D, "CV", "poly_share_all")), "71\\%", "poly share, same matches, all detected events"),
+        auto("cvShareVer",     lambda D: pct(dig(D, "CV", "poly_share_clock_verified")), "75\\%", "poly share on clock-verified events only"),
+        auto("cvRangeLo",      lambda D: pct(dig(D, "CV", "poly_share_clock_verified_range.0")), "70\\%", "window-sensitivity floor"),
+        auto("cvRangeHi",      lambda D: pct(dig(D, "CV", "poly_share_clock_verified_range.1")), "75\\%", "window-sensitivity ceiling"),
+        auto("cvLean",         lambda D: str(dig(D, "CV", "per_match_lean")), "48 of 58", "per-match lean, clock-verified"),
+        auto("cvSignP",        lambda D: pval(dig(D, "CV", "per_match_sign_p")), "4.5\\times10^{-7}", "per-match sign test, clock-verified"),
+        auto("leadCIlo",       lambda D: pct(dig(D, "H", "leadlag.cluster_boot_ci.0")), "67\\%", ""),
         auto("leadCIhi",       lambda D: pct(dig(D, "H", "leadlag.cluster_boot_ci.1")), "76\\%", ""),
         auto("designEffect",   lambda D: num(dig(D, "H", "leadlag.design_effect"), 2), "1.13", ""),
-        auto("iccVal",         lambda D: num(dig(D, "H", "leadlag.icc"), 3), "0.033", ""),
-        auto("permatchLean",   lambda D: f"{intu(dig(D,'H','leadlag.per_match_poly_leaning'))} of {intu(dig(D,'H','leadlag.per_match_total'))}", "56 of 65", ""),
-        auto("permatchSignP",  lambda D: pval(dig(D, "H", "leadlag.per_match_sign_p")), "2.0\\times10^{-9}", ""),
-        auto("permatchWilcoxP",lambda D: pval(dig(D, "H", "leadlag.per_match_wilcoxon_p")), "1.0\\times10^{-7}", ""),
+        auto("iccVal",         lambda D: num(dig(D, "H", "leadlag.icc"), 3), "0.032", ""),
+        auto("permatchLean",   lambda D: f"{intu(dig(D,'H','leadlag.per_match_poly_leaning'))} of {intu(dig(D,'H','leadlag.per_match_total'))}", "57 of 66", ""),
+        auto("permatchSignP",  lambda D: pval(dig(D, "H", "leadlag.per_match_sign_p")), "1.2\\times10^{-9}", ""),
+        auto("permatchWilcoxP",lambda D: pval(dig(D, "H", "leadlag.per_match_wilcoxon_p")), "7.2\\times10^{-8}", ""),
     ]),
     ("Information share (Hasbrouck / Gonzalo-Granger)", [
-        auto("nCoint",          lambda D: intu(dig(D, "H", "infoshare.n_matches")), "61", "cointegrated matches"),
-        auto("nCointContracts", lambda D: intu(dig(D, "I", "n_cointegrated_contracts")), "100", "cointegrated contracts"),
-        auto("ggShare",         lambda D: pct(dig(D, "H", "infoshare.median_gg"), 1), "80.6\\%", ""),
-        auto("ggCIlo",          lambda D: pct(dig(D, "H", "infoshare.median_ci.0")), "76\\%", ""),
+        auto("nCoint",          lambda D: intu(dig(D, "H", "infoshare.n_matches")), "63", "cointegrated matches"),
+        auto("nCointContracts", lambda D: intu(dig(D, "I", "n_cointegrated_contracts")), "104", "cointegrated contracts"),
+        auto("ggShare",         lambda D: pct(dig(D, "H", "infoshare.median_gg"), 1), "81.0\\%", ""),
+        auto("ggCIlo",          lambda D: pct(dig(D, "H", "infoshare.median_ci.0")), "77\\%", ""),
         auto("ggCIhi",          lambda D: pct(dig(D, "H", "infoshare.median_ci.1")), "87\\%", ""),
         # Hasbrouck, MATCH unit throughout — mid and CI share a denominator, so they can be quoted
         # together. \hasContractBand* is the per-CONTRACT Cholesky identification width: a different
@@ -219,17 +246,35 @@ GROUPS = [
         auto("ggMax",           lambda D: num(dig(D, "H", "infoshare.gg_max"), 2), "1.42", "largest GG estimate"),
         auto("ggInSupport",     lambda D: pct(dig(D, "H", "infoshare.median_gg_in_support"), 1), "80.2\\%", "median over in-support matches only"),
         auto("nInSupport",      lambda D: intu(dig(D, "H", "infoshare.n_in_support")), "58", "matches with GG inside [0,1]"),
-        auto("isLead",          lambda D: f"{intu(dig(D,'H','infoshare.matches_poly_gt_50'))} of {intu(dig(D,'H','infoshare.n_matches'))}", "59 of 61", ""),
-        auto("isSignP",         lambda D: pval(dig(D, "H", "infoshare.sign_p")), "1.6\\times10^{-15}", ""),
+        auto("isLead",          lambda D: f"{intu(dig(D,'H','infoshare.matches_poly_gt_50'))} of {intu(dig(D,'H','infoshare.n_matches'))}", "61 of 63", ""),
+        auto("isSignP",         lambda D: pval(dig(D, "H", "infoshare.sign_p")), "4.4\\times10^{-16}", ""),
         auto("betweenSD",       lambda D: pct(dig(D, "H", "infoshare.between_match_sd")), "19\\%", ""),
         auto("isGoalWindow", lambda D: pct(dig(D, "E", "goal.poly_gg_med"), 0), "86\\%", "GG info share inside goal windows"),
         auto("isCalm",       lambda D: pct(dig(D, "E", "calm.poly_gg_med"), 0), "53\\%", "GG info share in calm play"),
+    ]),
+    # Identification robustness (scripts/identification_check.py). The adf<0.10 row of that
+    # artifact reproduces \nCoint / \ggShare / \isLead exactly and is the script's own
+    # regression test, so only the STRICTER rows are emitted here. \ils* is a sweep, never a
+    # point estimate: the three values bracket the leadership verdict rather than locating it.
+    ("Identification robustness (ADF gate, ILS sweep; see _identification_results.json)", [
+        auto("adfFiveN",     lambda D: intu(dig(D, "ID", "adf_sensitivity.1.n_matches")), "61", "matches surviving ADF at p<0.05"),
+        auto("adfFiveGG",    lambda D: pct(dig(D, "ID", "adf_sensitivity.1.median_gg"), 1), "81.0\\%", "component share, stricter gate"),
+        auto("adfFiveLead",  lambda D: f"{intu(dig(D,'ID','adf_sensitivity.1.matches_poly_gt_50'))} of {intu(dig(D,'ID','adf_sensitivity.1.n_matches'))}", "59 of 61", ""),
+        auto("adfOneN",      lambda D: intu(dig(D, "ID", "adf_sensitivity.2.n_matches")), "53", "matches surviving ADF at p<0.01"),
+        auto("adfOneGG",     lambda D: pct(dig(D, "ID", "adf_sensitivity.2.median_gg"), 1), "85.2\\%", "component share, strictest gate"),
+        auto("adfOneLead",   lambda D: f"{intu(dig(D,'ID','adf_sensitivity.2.matches_poly_gt_50'))} of {intu(dig(D,'ID','adf_sensitivity.2.n_matches'))}", "51 of 53", ""),
+        auto("ggOOSContracts", lambda D: intu(dig(D, "ID", "support.n_contracts_out_of_support")), "13", "CONTRACTS outside [0,1] (cf. \\ggOutOfSupport, which counts MATCHES)"),
+        auto("ggOOSBand",    lambda D: intu(dig(D, "ID", "support.n_in_permissive_band")), "1", "of those, admitted only by the permissive band"),
+        auto("hasBandWidth", lambda D: f"{dig(D, 'ID', 'hasbrouck_band_width.median') * 100:.1f}\\,pp", "6.6\\,pp", "median per-contract Cholesky interval WIDTH (why the ILS sweep is wide)"),
+        auto("ilsLo",        lambda D: num(dig(D, "ID", "ils.lower.median_ils_poly"), 3), "0.249", "ILS at the Hasbrouck LOWER bound"),
+        auto("ilsMid",       lambda D: num(dig(D, "ID", "ils.mid.median_ils_poly"), 3), "0.392", "ILS at the reported midpoint"),
+        auto("ilsHi",        lambda D: num(dig(D, "ID", "ils.upper.median_ils_poly"), 3), "0.724", "ILS at the Hasbrouck UPPER bound"),
     ]),
     # Every value here is a median-of-medians over \nMatchesHarvest matches (see the builder's
     # `estimator` field), NOT a mean and NOT a goal-level median. gross/cost/net are computed
     # independently, so \grossCents - \costCents != \netCents — quote \netCents, never a subtraction.
     ("Harvestability ledger", [
-        auto("nGoalsHarvest", lambda D: intu(dig(D, "V", "pooled.n_goals")), "384", ""),
+        auto("nGoalsHarvest", lambda D: intu(dig(D, "V", "pooled.n_goals")), "405", ""),
         auto("grossCents",    lambda D: num(dig(D, "V", "pooled.gross_med_c"), 1), "12.0", ""),
         auto("costCents",     lambda D: num(dig(D, "V", "pooled.cost_med_c"), 1), "1.4", ""),
         auto("netCents",      lambda D: num(dig(D, "V", "pooled.net_med_c"), 1), "10.8", ""),
@@ -238,15 +283,75 @@ GROUPS = [
         auto("pctHarvest",    lambda D: pct(dig(D, "V", "pooled.pct_harvestable")), "0\\%", "share for the MEDIAN MATCH; never quote as '% of goals'"),
         # The goal-level rate, on the reduced archive that survives locally. ALWAYS quote with
         # \nHarvestUnitMatches / \nHarvestUnitGoals attached — it is a subset of \nMatchesHarvest.
-        auto("pctHarvestGoalWt",   lambda D: rawpct(dig(D, "U", "pct_harvestable_goal_weighted"), 1), "11.1\\%", "goal-weighted, PARTIAL coverage"),
-        auto("nHarvestUnitMatches",lambda D: intu(dig(D, "U", "n_matches_checked")), "21", "coverage of the goal-weighted check"),
-        auto("nHarvestUnitGoals",  lambda D: intu(dig(D, "U", "n_goals_checked")), "117", "coverage of the goal-weighted check"),
-        auto("nHarvestUnitAny",    lambda D: f"{intu(dig(D,'U','matches_with_any_harvestable'))} of {intu(dig(D,'U','n_matches_checked'))}", "6 of 21", "matches with >=1 harvestable goal"),
+        auto("pctHarvestGoalWt",   lambda D: rawpct(dig(D, "U", "pct_harvestable_goal_weighted"), 1), "9.1\\%", "goal-weighted, PARTIAL coverage"),
+        auto("nHarvestUnitMatches",lambda D: intu(dig(D, "U", "n_matches_checked")), "66", "coverage of the goal-weighted check"),
+        auto("nHarvestUnitGoals",  lambda D: intu(dig(D, "U", "n_goals_checked")), "405", "coverage of the goal-weighted check"),
+        auto("nHarvestUnitAny",    lambda D: f"{intu(dig(D,'U','matches_with_any_harvestable'))} of {intu(dig(D,'U','n_matches_checked'))}", "21 of 66", "matches with >=1 harvestable goal"),
         auto("refillSecs",    refill, "3-4\\,s", ""),
         auto("spreadPoly",    lambda D: intu(dig(D, "Q", "poly.spread_widen_med")), "8", "spread blow-out multiple, Polymarket"),
         auto("spreadKalshi",  lambda D: intu(dig(D, "Q", "kalshi.spread_widen_med")), "2", "spread blow-out multiple, Kalshi"),
+        # Per-venue depth withdrawal, from the LIQUIDITY study (21 matches), not the ledger.
+        # \depthFrac is the ledger's pooled figure over 66 matches -- a different denominator, so
+        # these are quoted beside it as the per-venue split, never as a decomposition of it.
+        auto("depthPolyFrac",   lambda D: rawpct(dig(D, "Q", "poly.depth_withdraw_med") * 100, 0), "0\\%", "best-price depth at the goal, Polymarket (liquidity study)"),
+        auto("depthKalshiFrac", lambda D: rawpct(dig(D, "Q", "kalshi.depth_withdraw_med") * 100, 0), "1\\%", "best-price depth at the goal, Kalshi (liquidity study)"),
+        auto("nLiquidityMatches", lambda D: intu(dig(D, "Q", "n_matches")), "21", "matches in the per-venue liquidity study"),
+    ]),
+    # Depth-statistic validation on the surviving raw tapes (scripts/depth_instant.py). These
+    # BOUND the harvestability headline rather than restating it: \diTroughHarv is the published
+    # statistic and \diZeroHarv the most generous alternative. Never quote one without the other
+    # -- the whole point of the exercise is that they bracket, and the bracket is wide.
+    ("Depth statistic: trough vs instantaneous (raw-tape validation, §6.2)", [
+        auto("FollowerWinMs", lambda D: intu(dig(D, "DI", "follower_window_ms.1")), "600", "the window a follower could transact in"),
+        auto("diTapes",     lambda D: intu(dig(D, "DI", "n_tapes")), "2", "tapes yielding qualifying shocks"),
+        auto("diObs",       lambda D: intu(dig(D, "DI", "n_observations")), "21", "goal-shock observations reconstructed"),
+        auto("diTroughHarv",lambda D: rawpct(dig(D, "DI", "pooled.trough.pct_harvestable"), 1), "0.0\\%", "harvestable under the PUBLISHED trough statistic"),
+        auto("diWinMinHarv",lambda D: rawpct(dig(D, "DI", "pooled.win_min.pct_harvestable"), 1), "11.1\\%", "harvestable, worst case inside the follower window"),
+        auto("diWinMedHarv",lambda D: rawpct(dig(D, "DI", "pooled.win_med.pct_harvestable"), 1), "16.7\\%", "harvestable, typical case inside the follower window"),
+        auto("diZeroHarv",  lambda D: rawpct(dig(D, "DI", "pooled.at_zero.pct_harvestable"), 1), "33.3\\%", "harvestable at the anchor instant -- the generous bound"),
+        auto("diTroughDepth",lambda D: rawpct(dig(D, "DI", "pooled.trough.median_depth_frac") * 100, 1), "0.2\\%", "median trough depth, vs calm"),
+        auto("diZeroDepth", lambda D: rawpct(dig(D, "DI", "pooled.at_zero.median_depth_frac") * 100, 1), "14.7\\%", "median depth at the anchor instant, vs calm"),
+        auto("diTroughOffset", lambda D: intu(dig(D, "DI", "pooled.trough_timing.median_offset_ms")), "1161", "ms after the shock at which the trough lands"),
+        auto("diWithinWin", lambda D: rawpct(dig(D, "DI", "pooled.trough_timing.pct_within_follower_window"), 1), "28.6\\%", "troughs landing inside the follower window"),
+        auto("diOneOrFewer",lambda D: rawpct(dig(D, "DI", "pooled.window_updates.pct_one_or_fewer"), 1), "66.7\\%", "observations with <=1 book update in the window (why at_zero over-states)"),
+        auto("diNoUpdate",  lambda D: rawpct(dig(D, "DI", "pooled.window_updates.pct_no_update_in_window"), 1), "14.3\\%", "observations with NO book update in the window"),
+    ]),
+    # Ex-ante predictability (scripts/harvest_predict.py). \hpPermP is the statistic that matters:
+    # LOO AUC is downward-biased at this n, so the observed AUC is compared to the permutation
+    # null's own centre (\hpNullMed), never to 0.5.
+    ("Ex-ante predictability of harvestable matches (§6.2)", [
+        auto("hpMatches",  lambda D: intu(dig(D, "HP", "n_matches")), "45", "ledger matches joined to a pre-match forecast"),
+        auto("hpPos",      lambda D: intu(dig(D, "HP", "n_with_harvestable")), "14", "of those, with >=1 harvestable goal"),
+        auto("hpBase",     lambda D: pct(dig(D, "HP", "base_rate"), 1), "31.1\\%", "base rate"),
+        auto("hpAUC",      lambda D: num(dig(D, "HP", "loo_auc_ex_ante"), 3), "0.274", "leave-one-out AUC, ex-ante features"),
+        auto("hpAUCcheat", lambda D: num(dig(D, "HP", "loo_auc_with_hindsight_feature"), 3), "0.576", "same, plus a hindsight feature"),
+        auto("hpNullMed",  lambda D: num(dig(D, "HP", "permutation_null_ex_ante.null_median_auc"), 3), "0.373", "permutation null's own centre -- NOT 0.5"),
+        auto("hpNullLo",   lambda D: num(dig(D, "HP", "permutation_null_ex_ante.null_ci95.0"), 3), "0.000", ""),
+        auto("hpNullHi",   lambda D: num(dig(D, "HP", "permutation_null_ex_ante.null_ci95.1"), 3), "0.618", ""),
+        auto("hpPermP",    lambda D: num(dig(D, "HP", "permutation_null_ex_ante.p_two_sided"), 2), "0.50", "two-sided permutation p"),
     ]),
     ("Order-flow imbalance (within-venue mechanism)", [
+        # Effect sizes, not t-stats. The artifact's own note says the bin-level t is inflated by
+        # 1s autocorrelation and match clustering, so corr/R^2 are the honest summaries and the
+        # match is the unit. Quoting these makes 5.5 a measured null instead of a described one.
+        auto("ofiNMatches",   lambda D: intu(dig(D, "O", "n_matches")), "83", "matches in the OFI study"),
+        auto("ofiRsqPoly",     lambda D: rawpct(dig(D, "O", "impact.poly.r2") * 100, 1), "1.0\\%", "within-venue OFI->return R^2, Polymarket"),
+        auto("ofiRsqKalshi",   lambda D: rawpct(dig(D, "O", "impact.kalshi.r2") * 100, 1), "0.5\\%", "within-venue OFI->return R^2, Kalshi"),
+        auto("ofiCorrPoly",   lambda D: num(dig(D, "O", "impact.poly.corr"), 2), "0.10", "within-venue OFI->return correlation, Polymarket"),
+        auto("ofiCorrKalshi", lambda D: num(dig(D, "O", "impact.kalshi.corr"), 2), "0.07", "within-venue OFI->return correlation, Kalshi"),
+        auto("ofiCrossCorr",  lambda D: num(abs(dig(D, "O", "poly_to_kalshi.corr")), 2), "0.04", "cross-venue OFI correlation at its best lag"),
+        # Match-clustered version of the same null (scripts/ofi_ci.py). The pooled figure above
+        # is bin-weighted and a handful of high-volume matches carry it; these are per-match
+        # medians with a match-resampling bootstrap, the unit used everywhere else.
+        auto("ofiCImatches", lambda D: intu(dig(D, "OC", "peak.n_matches")), "80", "matches in the clustered OFI bootstrap"),
+        auto("ofiZeroLagMed", lambda D: num(dig(D, "OC", "profile.0.median_r"), 3), "-0.001", "per-match median cross-venue corr at lag 0"),
+        auto("ofiZeroLagCIlo", lambda D: num(dig(D, "OC", "profile.0.ci95.0"), 3), "-0.010", ""),
+        auto("ofiZeroLagCIhi", lambda D: num(dig(D, "OC", "profile.0.ci95.1"), 3), "0.003", ""),
+        auto("ofiPeakLag",   lambda D: intu(dig(D, "OC", "peak_lag_s")), "1", "lag (s) with the largest |median r|"),
+        auto("ofiPeakR",     lambda D: num(dig(D, "OC", "peak.median_r"), 3), "0.020", "median r at that lag"),
+        auto("ofiPeakCIlo",  lambda D: num(dig(D, "OC", "peak.ci95.0"), 3), "0.013", ""),
+        auto("ofiPeakCIhi",  lambda D: num(dig(D, "OC", "peak.ci95.1"), 3), "0.025", ""),
+        auto("ofiMaxBound",  lambda D: num(dig(D, "OC", "max_abs_ci_bound"), 3), "0.025", "largest |CI endpoint| over all lags -- the bound worth quoting"),
     ]),
     ("Goal under-reaction (in-play, preliminary; full shock-inferred sample)", [
         auto("underReactN",       lambda D: intu(dig(D, "P", "n_matches")), "54", "goal-anchored matches"),
@@ -261,7 +366,7 @@ GROUPS = [
         auto("urCleanMatches", lambda D: intu(dig(D, "R", "n_matches")), "8", "curated-minute matches that validate vs the final score"),
         auto("urCleanGoals",   lambda D: intu(dig(D, "R", "n_goals")), "29", ""),
         auto("urCleanGated",   lambda D: intu(dig(D, "R", "n_goals_gated")), "22", "goals where the market quote actually moved"),
-        auto("urRatio",        lambda D: num(dig(D, "R", "median_ratio_logodds"), 2) + "\\ensuremath{\\times}", "0.35\\ensuremath{\\times}", "median market/model move, LOG-ODDS"),
+        auto("urRatio",        lambda D: num(dig(D, "R", "median_ratio_logodds"), 2) + "\\ensuremath{\\times}", "0.34\\ensuremath{\\times}", "median market/model move, LOG-ODDS"),
         auto("urRatioProb",    lambda D: num(dig(D, "R", "median_ratio_prob"), 2) + "\\ensuremath{\\times}", "0.63\\ensuremath{\\times}", "same, probability space (for contrast only)"),
         auto("urUnderGoals",   lambda D: f"{intu(dig(D,'R','undershoot_goals'))} of {intu(dig(D,'R','n_goals_gated'))}", "22 of 22", ""),
         auto("urUnderMatches", lambda D: f"{intu(dig(D,'R','undershoot_matches'))} of {intu(dig(D,'R','n_matches_ratio'))}", "8 of 8", ""),
@@ -283,7 +388,22 @@ GROUPS = [
         auto("calMarketBrier", lambda D: num(dig(D, "C", "versions.market.brier"), 3), "0.487", ""),
         auto("calModelBrier",  lambda D: num(dig(D, "C", "versions.v1.brier"), 3), "0.503", "raw model (v1) Brier"),
         auto("calMarketSlope", lambda D: num(dig(D, "C", "versions.market.slope"), 2), "1.07", ""),
+        # Same logit calibration-regression slope for the pre-committed model. b=1 is perfect;
+        # b<1 means forecasts are too extreme for the outcomes, which IS the favourite-longshot
+        # test (§5.4) rather than a separate statistic.
+        auto("calModelSlope",  lambda D: num(dig(D, "C", "versions.v1.slope"), 2), "0.87", "raw model (v1) calibration slope; <1 = too extreme"),
         auto("calMarketSkill", lambda D: rawpct(dig(D, "C", "versions.market.skill_vs_baseline_pct"), 1), "23.6\\%", "vs base-rate Brier"),
+        # The Brier here is the MULTI-CATEGORY form, summed over the three outcomes, so it lives
+        # on 0-2 and 0.487 is good rather than catastrophic. \calBrierBase is the constant
+        # base-rate forecaster on the same scale -- quote it whenever \calMarketBrier appears
+        # cold, or a reader calibrated on binary Brier will misread the headline by a factor.
+        auto("calBrierBase",   lambda D: num(dig(D, "C", "versions.market.brier_baseline"), 3), "0.637", "base-rate Brier, same (multi-category) scale"),
+        # CORP/Murphy decomposition, PER-OUTCOME scale (mean over the three outcomes) -- a
+        # different normalisation from \calMarketBrier, so never subtract or compare across the
+        # two. MCB is miscalibration (lower is better); DSC is discrimination (higher is better).
+        auto("calMarketMCB",   lambda D: num(dig(D, "C", "versions.market.reliability"), 3), "0.003", "CORP miscalibration, market"),
+        auto("calModelMCB",    lambda D: num(dig(D, "C", "versions.v1.reliability"), 3), "0.008", "CORP miscalibration, pre-committed model"),
+        auto("calMarketDSC",   lambda D: num(dig(D, "C", "versions.market.resolution"), 3), "0.062", "CORP discrimination, market"),
         # THE calibration denominator. The forecast ledgers stop at 2026-06-27, so this is the
         # GROUP STAGE ONLY -- never write "~104 matches" (the tournament size) next to a Brier.
         auto("calN",           lambda D: intu(dig(D, "C", "versions.market.n_games")), "72", "group-stage matches scored"),
@@ -291,7 +411,7 @@ GROUPS = [
         # whenever the two Briers appear together; the P1 PASS is a point rule, not a win claim.
         auto("calPairedP",     lambda D: num(dig(D, "C", "paired_market_vs_v1.paired_t_p"), 2), "0.25", "paired t on per-match Brier"),
         auto("calPairedCIlo",  lambda D: num(dig(D, "C", "paired_market_vs_v1.boot_ci_advantage.0"), 3), "-0.011", ""),
-        auto("calPairedCIhi",  lambda D: num(dig(D, "C", "paired_market_vs_v1.boot_ci_advantage.1"), 3), "0.045", ""),
+        auto("calPairedCIhi",  lambda D: num(dig(D, "C", "paired_market_vs_v1.boot_ci_advantage.1"), 3), "0.044", ""),
         auto("calMarketWins",  lambda D: f"{intu(dig(D,'C','paired_market_vs_v1.a_better_in'))} of {intu(dig(D,'C','paired_market_vs_v1.n_games'))}", "34 of 72", "matches where the market scored better"),
     ]),
     # Recomputed by replaying the logged snapshots with an as-of cutoff, because the live builder
@@ -303,6 +423,7 @@ GROUPS = [
         auto("basisPMmae",     lambda D: num(dig(D, "B", f"series.{BASIS_ASOF}.pm_mae_pp"), 2) + "\\,pp", "0.15\\,pp", "mean |Polymarket - Betfair|"),
         auto("basisKAmae",     lambda D: num(dig(D, "B", f"series.{BASIS_ASOF}.ka_mae_pp"), 2) + "\\,pp", "0.26\\,pp", "mean |Kalshi - Betfair|"),
         auto("basisPMcloser",  lambda D: f"{intu(dig(D, 'B', f'series.{BASIS_ASOF}.pm_closer_on'))} of {intu(dig(D, 'B', f'series.{BASIS_ASOF}.n_teams'))}", "39 of 48", "teams where Polymarket is closer"),
+        auto("basisSignP",     lambda D: pval(binom_two_sided(intu_i(dig(D, "B", f"series.{BASIS_ASOF}.pm_closer_on")), intu_i(dig(D, "B", f"series.{BASIS_ASOF}.n_teams")))), "1.5\\times10^{-5}", "two-sided sign test on the closer-venue count"),
         auto("basisVerdict",   lambda D: dig(D, "B", "verdict").split(":")[0], "stable", "does the closer venue flip across as-of dates?"),
     ]),
     ("Frozen tournament observations (market resolved; see _frozen_observations.json)", [
@@ -366,6 +487,13 @@ def main():
     ap = argparse.ArgumentParser(description="Emit paper/arxiv/macros.tex from canonical JSONs.")
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--check", action="store_true", help="verify in-sync; exit 1 if stale")
+    ap.add_argument("--strict", action="store_true",
+                    help="exit 1 if ANY macro fell back to its hard-coded value, i.e. an "
+                         "artifact was missing. This is the check CI can actually enforce: "
+                         "macros.tex is gitignored, so 'committed macros match the JSONs' is "
+                         "unverifiable there, but 'every macro came from a shipped artifact' "
+                         "is exactly the property that failed before (a clean clone silently "
+                         "fell back for 27 of 58 macros, nine of them wrong).")
     ap.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args()
 
@@ -397,6 +525,11 @@ def main():
         print(f"macros.tex in sync ({n_auto} auto + {n_manual} manual).")
         return 0
 
+    # Create the output directory rather than assuming it. `paper/arxiv` is gitignored in its
+    # entirety, so it does NOT exist in a fresh clone or in CI — and without this, `make check`
+    # (the command REPRODUCING.md tells a reviewer to run) died on FileNotFoundError before it
+    # reached a single assertion.
+    os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     with open(args.out, "w") as f:
         f.write(text)
     rel = os.path.relpath(args.out, ROOT)
@@ -405,6 +538,18 @@ def main():
         print(f"\n{len(warnings)} value(s) need attention (manual or fallback):")
         for w in warnings:
             print(f"  - {w}")
+
+    # MANUAL entries are a deliberate, reviewed exception; a FALLBACK is an artifact that did
+    # not load, which is silent data loss dressed up as a number.
+    fell_back = [w for w in warnings if "used fallback" in w]
+    if args.strict and fell_back:
+        print(f"\nSTRICT: {len(fell_back)} macro(s) came from a hard-coded fallback, not from "
+              f"an artifact:", file=sys.stderr)
+        for w in fell_back:
+            print(f"  - {w}", file=sys.stderr)
+        print("Ship the missing writeups/_*.json, or run the builder that writes it.",
+              file=sys.stderr)
+        return 1
     return 0
 
 

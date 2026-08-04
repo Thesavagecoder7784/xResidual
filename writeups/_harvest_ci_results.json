@@ -1,11 +1,11 @@
 {
- "n_matches": 21,
+ "n_matches": 66,
  "median_pct": 0.0,
  "ci95": [
   0.0,
   0.0
  ],
- "n_zero_matches": 15,
- "frac_boot_median_zero": 0.9808,
- "note": "bootstrap over the per-game harvest archives surviving locally (21 of the 66 pooled ledger matches); resamples matches, 10k replicates, seed 20260702"
+ "n_zero_matches": 45,
+ "frac_boot_median_zero": 0.9986,
+ "note": "bootstrap over the per-game harvest archives (all archives present: 66 matches); resamples matches, 10000 replicates, seed 20260702"
 }
