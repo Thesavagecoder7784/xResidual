@@ -104,19 +104,37 @@ danger_pattern_for() {
   esac
 }
 
+# The two groups have DIFFERENT success criteria and an earlier version of this script summed
+# them into one "TOTAL" it told you to expect at 0. That total can never be 0 after a correct
+# run: each RESTORE_PATH is deliberately re-committed as one clean blob, so a perfect rewrite
+# scores 0 for PATHS and exactly 1 for each restored file. Reporting a single number meant the
+# documented success condition was unreachable, and a reader who followed it would have read a
+# correct purge as a failed one. PURGED_TOTAL / RESTORED_TOTAL are set here for the caller to
+# assert on.
+PURGED_TOTAL=0
+RESTORED_TOTAL=0
 count_exposure() {
   # PATHS holds both directories and single files, so the pattern must match "<path>/..." AND
   # "<path>" exactly. An earlier version anchored on a trailing slash only and silently
   # reported 0 for every file entry -- a broken check reading as a clean one.
-  local total=0 objects
+  local objects n
   objects=$(git rev-list --objects --all 2>/dev/null || true)
-  for p in "${PATHS[@]}" "${RESTORE_PATHS[@]}"; do
-    local n
+  PURGED_TOTAL=0
+  RESTORED_TOTAL=0
+  echo "  purged outright (must reach 0):"
+  for p in "${PATHS[@]}"; do
     n=$(printf '%s\n' "$objects" | grep -cE " ${p//./\\.}(/|\$)" || true)
-    printf '  %-38s %4s blob(s) reachable in history\n' "$p" "$n"
-    total=$(( total + n ))
+    printf '    %-38s %4s blob(s) reachable in history\n' "$p" "$n"
+    PURGED_TOTAL=$(( PURGED_TOTAL + n ))
   done
-  echo "  TOTAL: $total"
+  echo "  purged then re-committed redacted (must reach 1 each):"
+  for p in "${RESTORE_PATHS[@]}"; do
+    n=$(printf '%s\n' "$objects" | grep -cE " ${p//./\\.}(/|\$)" || true)
+    printf '    %-38s %4s blob(s) reachable in history\n' "$p" "$n"
+    RESTORED_TOTAL=$(( RESTORED_TOTAL + n ))
+  done
+  echo "  PURGED_TOTAL: $PURGED_TOTAL   (target 0)"
+  echo "  RESTORED_TOTAL: $RESTORED_TOTAL   (target ${#RESTORE_PATHS[@]})"
   return 0
 }
 
@@ -216,8 +234,22 @@ here as a single blob so Tier A still reproduces."
 fi
 rm -rf "$STASH"
 
-banner "POST-REWRITE EXPOSURE (expect 0)"
+banner "POST-REWRITE EXPOSURE"
 count_exposure
+# Assert, do not merely print. The previous version reported these numbers and then carried on
+# to the success banner regardless of what they said -- so a rewrite that silently purged
+# nothing would still have ended with "CLEAN" on screen.
+if (( PURGED_TOTAL != 0 )); then
+  echo "  FAIL: $PURGED_TOTAL blob(s) of purged paths still reachable" >&2
+  exit 1
+fi
+if (( RESTORED_TOTAL != ${#RESTORE_PATHS[@]} )); then
+  echo "  FAIL: expected ${#RESTORE_PATHS[@]} restored blob(s), found $RESTORED_TOTAL" >&2
+  echo "        (fewer means a Tier A artifact the paper depends on was dropped;" >&2
+  echo "         more means an old revision survived the rewrite)" >&2
+  exit 1
+fi
+echo "  ok: purged paths gone, ${#RESTORE_PATHS[@]} redacted blob(s) restored"
 
 banner "DEEP VERIFY — scan every surviving blob for quote-level / timestamp fields"
 python3 - <<'PY'
@@ -272,7 +304,10 @@ Then, and only then:
   - delete every other local clone and re-clone;
   - re-verify from a FRESH clone:
         git clone <remote-url> /tmp/verify && cd /tmp/verify
-        bash scripts/purge_history.sh --check      # must report TOTAL: 0
+        bash scripts/purge_history.sh --check
+    A correct rewrite reports PURGED_TOTAL: 0 and RESTORED_TOTAL equal to the number of
+    RESTORE_PATHS (one clean blob each). RESTORED_TOTAL of 0 is NOT a better result -- it
+    means an artifact the paper reproduces from is missing.
 
 Open pull requests created before the rewrite still reference the old commits and will
 show as broken. Close and reopen them from freshly-branched work.
