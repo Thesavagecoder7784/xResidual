@@ -90,11 +90,51 @@ the repository and ran it destroyed the shipped numbers without seeing an error.
 matching `leadgate.py`. A script that silently produces a null result from missing inputs is worse
 than one that crashes.
 
+## Pre-registration provenance
+
+The pre-registration is the binding scorecard for this project, so its provenance is stated
+precisely rather than gestured at.
+
+`PREREGISTRATION.md` was created 2026-06-09, finalised 2026-06-10, and **has not been modified
+since** — the 2026 World Cup began 2026-06-11. Three revisions, all pre-kickoff, none after.
+`git log -- PREREGISTRATION.md` shows the whole history in three lines.
+
+    tag       prereg-2026-06-10
+    SHA-256   913a8186aa3ca5f3b22bf12230327c923917cb0030afc7461325f733e7a956da
+    git blob  381e798593b46a6c4d3291e1ccc84d65af60fbaf
+
+**On 2026-08-04 every commit hash in this repository changed.** A history rewrite
+(`scripts/purge_history.sh`) excised per-event venue data that should not have been published,
+and rewriting history necessarily re-hashes every commit that follows the first change — here,
+all of them. Any commit SHA cited before that date no longer resolves.
+
+What that did and did not affect is worth being exact about. It did not alter the
+pre-registration: the blob id above is byte-identical in the pre-rewrite history and in the
+current one, verified against an independent mirror of the pre-rewrite repository. **Cite the
+content hash, not a commit hash.** A content hash is what survives a rewrite, and it is what
+the tag message records.
+
+Two limits, stated rather than glossed:
+
+- A git commit date is self-reported and could be set to any value by whoever made the commit.
+  It is evidence, not proof, and it never was proof — that is true of every git-based
+  pre-registration, before any rewrite.
+- The strong form of the claim would be a third-party attestation predating kickoff. This
+  repository does not have one: it is not in Software Heritage, has no Wayback snapshot from
+  that period, and GitHub's events API retains only the most recent 300 events, which no longer
+  reach June. The honest statement is that the predictions are frozen, internally consistent,
+  and graded in public including the ones that failed — not that a notary witnessed them.
+
+The grading is its own evidence of good faith: `scripts/grade_prereg.py` reproduces from a
+clone and returns **6 PASS · 2 FAIL · 3 INCONCLUSIVE**. A pre-registration edited after the
+fact would not report its own failures.
+
 ## Data availability
 
 Code, the capture pipeline, the **derived** result artifacts (`writeups/_*_results.json`,
 aggregated per-match statistics), the manuscript source (`paper/arxiv/`), the
-pre-registration (a tagged pre-kickoff git commit), and content-hash provenance are public
+pre-registration (tag `prereg-2026-06-10`; see **Pre-registration provenance** below), and
+content-hash provenance are public
 in this repository (MIT). We do **not** redistribute the raw venue order-book and trade
 captures: Kalshi's Data Terms and Developer Agreement, and Polymarket's Terms of Use,
 restrict republication of their market data. Concretely, what is withheld is:
