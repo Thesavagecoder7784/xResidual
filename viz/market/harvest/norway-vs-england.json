@@ -1,0 +1,34 @@
+{
+  "match": "Norway vs England",
+  "capture": "20260711T202725Z-norway-vs-england",
+  "follower_kalshi": {
+    "n": 5,
+    "gross_med_c": 21.0,
+    "cost_med_c": 2.2,
+    "net_med_c": 18.65,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 702
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 20.88,
+    "cost_med_c": 1.37,
+    "net_med_c": 19.63,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 130
+  },
+  "all": {
+    "n": 8,
+    "gross_med_c": 21.0,
+    "cost_med_c": 2.2,
+    "net_med_c": 18.8,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.003,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 702
+  }
+}

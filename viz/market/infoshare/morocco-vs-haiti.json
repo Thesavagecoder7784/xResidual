@@ -1,0 +1,48 @@
+{
+  "match": "Morocco vs Haiti",
+  "capture": "20260624T212715Z-morocco-vs-haiti",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9305,
+  "match_poly_gg": 0.8718,
+  "contracts": [
+    {
+      "label": "Haiti",
+      "kalshi": "KXWCGAME-26JUN24MARHTI-HTI",
+      "poly": "16734149502738704359673067089022355535903790350570508474097898646900570148376",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8648,
+      "gg_b": 0.1352,
+      "alpha_a": -0.00958,
+      "alpha_b": 0.06129,
+      "hasbrouck_a_lo": 0.8822,
+      "hasbrouck_a_hi": 0.9353,
+      "hasbrouck_a_mid": 0.9087,
+      "cointegrated": true,
+      "adf_p": 0.0012,
+      "n": 8649
+    },
+    {
+      "label": "Morocco",
+      "kalshi": "KXWCGAME-26JUN24MARHTI-MAR",
+      "poly": "42374815657442465500075937904016131801776204492796944288908751005433960581826",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8788,
+      "gg_b": 0.1212,
+      "alpha_a": -0.00827,
+      "alpha_b": 0.05995,
+      "hasbrouck_a_lo": 0.929,
+      "hasbrouck_a_hi": 0.9758,
+      "hasbrouck_a_mid": 0.9524,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8997
+    }
+  ]
+}

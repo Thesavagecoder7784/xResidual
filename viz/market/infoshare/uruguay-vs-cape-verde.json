@@ -1,0 +1,48 @@
+{
+  "match": "Uruguay vs Cape Verde",
+  "capture": "20260621T212603Z-uruguay-vs-cape-verde",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9035,
+  "match_poly_gg": 0.7857,
+  "contracts": [
+    {
+      "label": "Uruguay",
+      "kalshi": "KXWCGAME-26JUN21URUCPV-URU",
+      "poly": "115744004241615826068373834065815885045802138463705964527622590795637356148787",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8127,
+      "gg_b": 0.1873,
+      "alpha_a": -0.0344,
+      "alpha_b": 0.14925,
+      "hasbrouck_a_lo": 0.8625,
+      "hasbrouck_a_hi": 0.9777,
+      "hasbrouck_a_mid": 0.9201,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9471
+    },
+    {
+      "label": "Cape Verde",
+      "kalshi": "KXWCGAME-26JUN21URUCPV-CPV",
+      "poly": "92373800853975207163715439849233105963580357686874848773967900936113195244769",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7587,
+      "gg_b": 0.2413,
+      "alpha_a": -0.02685,
+      "alpha_b": 0.08441,
+      "hasbrouck_a_lo": 0.8128,
+      "hasbrouck_a_hi": 0.961,
+      "hasbrouck_a_mid": 0.8869,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9490
+    }
+  ]
+}

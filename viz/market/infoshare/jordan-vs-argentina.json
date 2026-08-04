@@ -1,0 +1,48 @@
+{
+  "match": "Jordan vs Argentina",
+  "capture": "20260628T013349Z-jordan-vs-argentina",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.4847,
+  "match_poly_gg": 0.7402,
+  "contracts": [
+    {
+      "label": "Jordan",
+      "kalshi": "KXWCGAME-26JUN27JORARG-JOR",
+      "poly": "45668841020533558878058431264255444612420443086293898941905939792694888997711",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0072,
+      "alpha_b": 0.02009,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.7671,
+      "n": 7659
+    },
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUN27JORARG-ARG",
+      "poly": "89969054941820905260983372139923320038115693660830083208242956669285748681379",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7402,
+      "gg_b": 0.2598,
+      "alpha_a": -0.00899,
+      "alpha_b": 0.0256,
+      "hasbrouck_a_lo": 0.4299,
+      "hasbrouck_a_hi": 0.5395,
+      "hasbrouck_a_mid": 0.4847,
+      "cointegrated": true,
+      "adf_p": 0.0938,
+      "n": 8258
+    }
+  ]
+}

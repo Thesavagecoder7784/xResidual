@@ -1,0 +1,34 @@
+{
+  "match": "Canada vs Morocco",
+  "capture": "20260704T162910Z-canada-vs-morocco",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 12.5,
+    "cost_med_c": 1.81,
+    "net_med_c": 10.96,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 33.3,
+    "lead_ms_med": 342
+  },
+  "follower_poly": {
+    "n": 2,
+    "gross_med_c": 18.25,
+    "cost_med_c": 2.5,
+    "net_med_c": 17.75,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.012,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2815
+  },
+  "all": {
+    "n": 5,
+    "gross_med_c": 12.5,
+    "cost_med_c": 1.81,
+    "net_med_c": 10.96,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 20.0,
+    "lead_ms_med": 1530
+  }
+}

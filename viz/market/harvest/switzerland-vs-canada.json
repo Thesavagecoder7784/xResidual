@@ -1,0 +1,34 @@
+{
+  "match": "Switzerland vs Canada",
+  "capture": "20260624T183243Z-switzerland-vs-canada",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 17.0,
+    "cost_med_c": 1.56,
+    "net_med_c": 15.96,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.009,
+    "pct_harvestable": 25.0,
+    "lead_ms_med": 989
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 20.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 20.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 23
+  },
+  "all": {
+    "n": 5,
+    "gross_med_c": 17.0,
+    "cost_med_c": 1.04,
+    "net_med_c": 15.96,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 20.0,
+    "lead_ms_med": 888
+  }
+}

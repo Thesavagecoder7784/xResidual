@@ -1,0 +1,48 @@
+{
+  "match": "Panama vs Croatia",
+  "capture": "20260623T223001Z-panama-vs-croatia",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.5259,
+  "match_poly_gg": 0.7127,
+  "contracts": [
+    {
+      "label": "Croatia",
+      "kalshi": "KXWCGAME-26JUN23PANCRO-CRO",
+      "poly": "109027609951989526893628757693490068717900103024949393927658066962316915180001",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7774,
+      "gg_b": 0.2226,
+      "alpha_a": -0.01047,
+      "alpha_b": 0.03655,
+      "hasbrouck_a_lo": 0.7135,
+      "hasbrouck_a_hi": 0.8053,
+      "hasbrouck_a_mid": 0.7594,
+      "cointegrated": true,
+      "adf_p": 0.0155,
+      "n": 8604
+    },
+    {
+      "label": "Panama",
+      "kalshi": "KXWCGAME-26JUN23PANCRO-PAN",
+      "poly": "24996055382005658349790471423878721697831808533961896596758588230034679203014",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.648,
+      "gg_b": 0.352,
+      "alpha_a": -0.02198,
+      "alpha_b": 0.04046,
+      "hasbrouck_a_lo": 0.2248,
+      "hasbrouck_a_hi": 0.3599,
+      "hasbrouck_a_mid": 0.2924,
+      "cointegrated": true,
+      "adf_p": 0.0287,
+      "n": 8491
+    }
+  ]
+}

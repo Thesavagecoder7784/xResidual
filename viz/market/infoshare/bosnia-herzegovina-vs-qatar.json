@@ -1,0 +1,48 @@
+{
+  "match": "Bosnia Herzegovina vs Qatar",
+  "capture": "20260624T183243Z-bosnia-herzegovina-vs-qatar",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.9499,
+  "match_poly_gg": 1.2631,
+  "contracts": [
+    {
+      "label": "Bosnia & Herzegovina",
+      "kalshi": "KXWCGAME-26JUN24BIHQAT-BIH",
+      "poly": "4925888325464503545476254709875431093074337031801188092359865362530954679246",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.2631,
+      "gg_b": -0.2631,
+      "alpha_a": 0.01538,
+      "alpha_b": 0.07385,
+      "hasbrouck_a_lo": 0.9121,
+      "hasbrouck_a_hi": 0.9876,
+      "hasbrouck_a_mid": 0.9499,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8538
+    },
+    {
+      "label": "Qatar",
+      "kalshi": "KXWCGAME-26JUN24BIHQAT-QAT",
+      "poly": "89402197250849053016718398593367058168289729633872183585442421218420206745943",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0138,
+      "alpha_b": 0.00449,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6568,
+      "n": 7844
+    }
+  ]
+}

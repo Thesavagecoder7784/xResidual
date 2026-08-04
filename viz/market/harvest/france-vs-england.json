@@ -1,0 +1,34 @@
+{
+  "match": "France vs England",
+  "capture": "20260718T202817Z-france-vs-england",
+  "follower_kalshi": {
+    "n": 13,
+    "gross_med_c": 10.2,
+    "cost_med_c": 1.67,
+    "net_med_c": 8.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 660
+  },
+  "follower_poly": {
+    "n": 7,
+    "gross_med_c": 7.5,
+    "cost_med_c": 0.65,
+    "net_med_c": 7.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.006,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 502
+  },
+  "all": {
+    "n": 20,
+    "gross_med_c": 7.8,
+    "cost_med_c": 1.42,
+    "net_med_c": 7.12,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 622
+  }
+}

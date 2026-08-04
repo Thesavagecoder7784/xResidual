@@ -1,0 +1,48 @@
+{
+  "match": "Spain vs Belgium",
+  "capture": "20260710T182641Z-spain-vs-belgium",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9263,
+  "match_poly_gg": 1.0941,
+  "contracts": [
+    {
+      "label": "Belgium",
+      "kalshi": "KXWCGAME-26JUL10ESPBEL-BEL",
+      "poly": "113258140039729603259288671364749723242703790462413008421390186262563698386140",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9134,
+      "gg_b": 0.0866,
+      "alpha_a": -0.00274,
+      "alpha_b": 0.02893,
+      "hasbrouck_a_lo": 0.8827,
+      "hasbrouck_a_hi": 0.9074,
+      "hasbrouck_a_mid": 0.895,
+      "cointegrated": true,
+      "adf_p": 0.0595,
+      "n": 8951
+    },
+    {
+      "label": "Spain",
+      "kalshi": "KXWCGAME-26JUL10ESPBEL-ESP",
+      "poly": "114083367175349101587118456512209157494315102378898420654169806682644264287063",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.2748,
+      "gg_b": -0.2748,
+      "alpha_a": 0.01705,
+      "alpha_b": 0.07907,
+      "hasbrouck_a_lo": 0.9184,
+      "hasbrouck_a_hi": 0.9967,
+      "hasbrouck_a_mid": 0.9575,
+      "cointegrated": true,
+      "adf_p": 0.0004,
+      "n": 9147
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Norway vs England",
+  "capture": "20260711T202725Z-norway-vs-england",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9621,
+  "match_poly_gg": 0.9395,
+  "contracts": [
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUL11NORENG-ENG",
+      "poly": "866370305411260885620344443432925550941005016614412438009174244566837236043",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9715,
+      "gg_b": 0.0285,
+      "alpha_a": -0.00254,
+      "alpha_b": 0.08643,
+      "hasbrouck_a_lo": 0.9606,
+      "hasbrouck_a_hi": 0.9979,
+      "hasbrouck_a_mid": 0.9793,
+      "cointegrated": true,
+      "adf_p": 0.0022,
+      "n": 9208
+    },
+    {
+      "label": "Norway",
+      "kalshi": "KXWCGAME-26JUL11NORENG-NOR",
+      "poly": "101609312241167873882360947921080859853145865660281247946682387335776462114544",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9074,
+      "gg_b": 0.0926,
+      "alpha_a": -0.00814,
+      "alpha_b": 0.07983,
+      "hasbrouck_a_lo": 0.9102,
+      "hasbrouck_a_hi": 0.9795,
+      "hasbrouck_a_mid": 0.9449,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9219
+    }
+  ]
+}

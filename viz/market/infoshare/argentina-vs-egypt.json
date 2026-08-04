@@ -1,0 +1,48 @@
+{
+  "match": "Argentina vs Egypt",
+  "capture": "20260707T152909Z-argentina-vs-egypt",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8715,
+  "match_poly_gg": 0.806,
+  "contracts": [
+    {
+      "label": "Egypt",
+      "kalshi": "KXWCGAME-26JUL07ARGEGY-EGY",
+      "poly": "115321303982678629228305623888886288749804075736763407098365012911341798952806",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8422,
+      "gg_b": 0.1578,
+      "alpha_a": -0.03064,
+      "alpha_b": 0.16355,
+      "hasbrouck_a_lo": 0.7712,
+      "hasbrouck_a_hi": 0.9702,
+      "hasbrouck_a_mid": 0.8707,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9080
+    },
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUL07ARGEGY-ARG",
+      "poly": "87390712702935875353084647255226721799646621048501318482801979643152933271064",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7699,
+      "gg_b": 0.2301,
+      "alpha_a": -0.03303,
+      "alpha_b": 0.1105,
+      "hasbrouck_a_lo": 0.8219,
+      "hasbrouck_a_hi": 0.9226,
+      "hasbrouck_a_mid": 0.8722,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9349
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "match": "South Africa vs South Korea",
+  "capture": "20260625T003043Z-south-africa-vs-south-korea",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9254,
+  "match_poly_gg": 0.8978,
+  "contracts": [
+    {
+      "label": "South Africa",
+      "kalshi": "KXWCGAME-26JUN24RSAKOR-RSA",
+      "poly": "58830526078196302612867530222421263708170468828968028907746961007548153805793",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9142,
+      "gg_b": 0.0858,
+      "alpha_a": -0.00475,
+      "alpha_b": 0.05063,
+      "hasbrouck_a_lo": 0.9654,
+      "hasbrouck_a_hi": 0.9762,
+      "hasbrouck_a_mid": 0.9708,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8742
+    },
+    {
+      "label": "South Korea",
+      "kalshi": "KXWCGAME-26JUN24RSAKOR-KOR",
+      "poly": "78041669573197271831143243516603089617333411410934465631182277350983388128942",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8814,
+      "gg_b": 0.1186,
+      "alpha_a": -0.00395,
+      "alpha_b": 0.02937,
+      "hasbrouck_a_lo": 0.8472,
+      "hasbrouck_a_hi": 0.9125,
+      "hasbrouck_a_mid": 0.8799,
+      "cointegrated": true,
+      "adf_p": 0.0237,
+      "n": 8578
+    }
+  ]
+}

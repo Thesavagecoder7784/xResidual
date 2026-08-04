@@ -1,0 +1,48 @@
+{
+  "match": "Spain vs Argentina",
+  "capture": "20260719T183322Z-spain-vs-argentina",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.7522,
+  "match_poly_gg": 0.8611,
+  "contracts": [
+    {
+      "label": "Spain",
+      "kalshi": "KXWCGAME-26JUL19ESPARG-ESP",
+      "poly": "105042264974012349507628582341465372921413790307165600767293079103508862620927",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8772,
+      "gg_b": 0.1228,
+      "alpha_a": -0.00759,
+      "alpha_b": 0.0542,
+      "hasbrouck_a_lo": 0.9189,
+      "hasbrouck_a_hi": 0.9677,
+      "hasbrouck_a_mid": 0.9433,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 9730
+    },
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUL19ESPARG-ARG",
+      "poly": "22596903656102431101396261359922941848858035376971300420659017295333613251025",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.845,
+      "gg_b": 0.155,
+      "alpha_a": -0.00532,
+      "alpha_b": 0.02898,
+      "hasbrouck_a_lo": 0.5523,
+      "hasbrouck_a_hi": 0.57,
+      "hasbrouck_a_mid": 0.5611,
+      "cointegrated": true,
+      "adf_p": 0.0117,
+      "n": 9735
+    }
+  ]
+}

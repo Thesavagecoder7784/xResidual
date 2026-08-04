@@ -1,0 +1,48 @@
+{
+  "match": "Ecuador vs Germany",
+  "capture": "20260625T192608Z-ecuador-vs-germany",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9635,
+  "match_poly_gg": 0.9482,
+  "contracts": [
+    {
+      "label": "Germany",
+      "kalshi": "KXWCGAME-26JUN25ECUGER-GER",
+      "poly": "101279272797775203956659007084828831261331275405585994446661991301016814257223",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8402,
+      "gg_b": 0.1598,
+      "alpha_a": -0.00835,
+      "alpha_b": 0.04389,
+      "hasbrouck_a_lo": 0.9155,
+      "hasbrouck_a_hi": 0.9459,
+      "hasbrouck_a_mid": 0.9307,
+      "cointegrated": true,
+      "adf_p": 0.0015,
+      "n": 8961
+    },
+    {
+      "label": "Ecuador",
+      "kalshi": "KXWCGAME-26JUN25ECUGER-ECU",
+      "poly": "14621976022388339155866443939403907158807725281606484508612016632018100973573",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.0561,
+      "gg_b": -0.0561,
+      "alpha_a": 0.00495,
+      "alpha_b": 0.09316,
+      "hasbrouck_a_lo": 0.994,
+      "hasbrouck_a_hi": 0.9986,
+      "hasbrouck_a_mid": 0.9963,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9100
+    }
+  ]
+}

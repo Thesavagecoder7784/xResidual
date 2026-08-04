@@ -1,0 +1,48 @@
+{
+  "match": "Norway vs Senegal",
+  "capture": "20260622T232521Z-norway-vs-senegal",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.9655,
+  "match_poly_gg": 0.8857,
+  "contracts": [
+    {
+      "label": "Norway",
+      "kalshi": "KXWCGAME-26JUN22NORSEN-NOR",
+      "poly": "87342664839192211473271920800753463563092786516324349723605782526214890691197",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8857,
+      "gg_b": 0.1143,
+      "alpha_a": -0.00446,
+      "alpha_b": 0.03459,
+      "hasbrouck_a_lo": 0.9606,
+      "hasbrouck_a_hi": 0.9704,
+      "hasbrouck_a_mid": 0.9655,
+      "cointegrated": true,
+      "adf_p": 0.002,
+      "n": 9237
+    },
+    {
+      "label": "Senegal",
+      "kalshi": "KXWCGAME-26JUN22NORSEN-SEN",
+      "poly": "41610575626461486529455331665861057346399083513953711754678027926024708412903",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00754,
+      "alpha_b": 0.01919,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.3241,
+      "n": 9089
+    }
+  ]
+}

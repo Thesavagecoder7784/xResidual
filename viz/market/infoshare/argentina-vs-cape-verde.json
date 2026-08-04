@@ -1,0 +1,48 @@
+{
+  "match": "Argentina vs Cape Verde",
+  "capture": "20260703T213223Z-argentina-vs-cape-verde",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.949,
+  "match_poly_gg": 0.883,
+  "contracts": [
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUL03ARGCPV-ARG",
+      "poly": "43456878767945280970650160648663035360756131789534577706790459269909777535061",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.883,
+      "gg_b": 0.117,
+      "alpha_a": -0.0151,
+      "alpha_b": 0.11402,
+      "hasbrouck_a_lo": 0.9315,
+      "hasbrouck_a_hi": 0.9666,
+      "hasbrouck_a_mid": 0.949,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8794
+    },
+    {
+      "label": "Cape Verde",
+      "kalshi": "KXWCGAME-26JUL03ARGCPV-CPV",
+      "poly": "27797173830695790192472564926188861680026963949667326881806426254251568869114",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00558,
+      "alpha_b": 0.05042,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.6457,
+      "n": 8807
+    }
+  ]
+}

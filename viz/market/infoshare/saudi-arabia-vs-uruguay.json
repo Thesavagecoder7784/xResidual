@@ -1,0 +1,48 @@
+{
+  "match": "Saudi Arabia vs Uruguay",
+  "capture": "20260615T213253Z-saudi-arabia-vs-uruguay",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8742,
+  "match_poly_gg": 0.99,
+  "contracts": [
+    {
+      "label": "Uruguay",
+      "kalshi": "KXWCGAME-26JUN15KSAURU-URU",
+      "poly": "67375566273017733280418349633635206252639538869301457434188127341791609355341",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8301,
+      "gg_b": 0.1699,
+      "alpha_a": -0.01571,
+      "alpha_b": 0.07674,
+      "hasbrouck_a_lo": 0.741,
+      "hasbrouck_a_hi": 0.9114,
+      "hasbrouck_a_mid": 0.8262,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 9054
+    },
+    {
+      "label": "Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN15KSAURU-KSA",
+      "poly": "108315368637387262892957153811435904912510274825529229627147648105187493645849",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.15,
+      "gg_b": -0.15,
+      "alpha_a": 0.00751,
+      "alpha_b": 0.0576,
+      "hasbrouck_a_lo": 0.8696,
+      "hasbrouck_a_hi": 0.975,
+      "hasbrouck_a_mid": 0.9223,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8931
+    }
+  ]
+}

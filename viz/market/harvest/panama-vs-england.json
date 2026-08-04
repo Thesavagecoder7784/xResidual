@@ -1,0 +1,25 @@
+{
+  "match": "Panama vs England",
+  "capture": "20260627T202735Z-panama-vs-england",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 6.0,
+    "cost_med_c": 0.7,
+    "net_med_c": 5.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.011,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 311
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 3,
+    "gross_med_c": 6.0,
+    "cost_med_c": 0.7,
+    "net_med_c": 5.33,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.011,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 311
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Norway vs France",
+  "capture": "20260626T183323Z-norway-vs-france",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": [
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUN26NORFRA-FRA",
+      "poly": "24577773509300358817327680170546846259151744300648018180120742538153285610470",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0067,
+      "alpha_b": 0.02127,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.1102,
+      "n": 8450
+    },
+    {
+      "label": "Norway",
+      "kalshi": "KXWCGAME-26JUN26NORFRA-NOR",
+      "poly": "13720141007204726132976932163658350553917819242912487119786312240512385978016",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.03264,
+      "alpha_b": 0.04628,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.1026,
+      "n": 7931
+    }
+  ]
+}

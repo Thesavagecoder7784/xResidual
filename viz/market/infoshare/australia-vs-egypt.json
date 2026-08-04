@@ -1,0 +1,48 @@
+{
+  "match": "Australia vs Egypt",
+  "capture": "20260703T172753Z-australia-vs-egypt",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6405,
+  "match_poly_gg": 0.8831,
+  "contracts": [
+    {
+      "label": "Australia",
+      "kalshi": "KXWCGAME-26JUL03AUSEGY-AUS",
+      "poly": "53970838488584180633352427972739785822858048152217079560347483794342661373892",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.6671,
+      "gg_b": 0.3329,
+      "alpha_a": -0.01379,
+      "alpha_b": 0.02763,
+      "hasbrouck_a_lo": 0.3645,
+      "hasbrouck_a_hi": 0.4072,
+      "hasbrouck_a_mid": 0.3859,
+      "cointegrated": true,
+      "adf_p": 0.0013,
+      "n": 8957
+    },
+    {
+      "label": "Egypt",
+      "kalshi": "KXWCGAME-26JUL03AUSEGY-EGY",
+      "poly": "86532936246759869909563954733130420453288003695560964566482181231108253829977",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.099,
+      "gg_b": -0.099,
+      "alpha_a": 0.00938,
+      "alpha_b": 0.10417,
+      "hasbrouck_a_lo": 0.8036,
+      "hasbrouck_a_hi": 0.9868,
+      "hasbrouck_a_mid": 0.8952,
+      "cointegrated": true,
+      "adf_p": 0.0002,
+      "n": 8952
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Colombia vs Ghana",
+  "capture": "20260704T005721Z-colombia-vs-ghana",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.4748,
+  "match_poly_gg": 0.7011,
+  "contracts": [
+    {
+      "label": "Ghana",
+      "kalshi": "KXWCGAME-26JUL03COLGHA-GHA",
+      "poly": "105539798766547200092323662417726863479637721229836283901511466011186180591923",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00841,
+      "alpha_b": 0.01342,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.4971,
+      "n": 8843
+    },
+    {
+      "label": "Colombia",
+      "kalshi": "KXWCGAME-26JUL03COLGHA-COL",
+      "poly": "76150025241705071715660741383746313361341926806422361774139695469030476859782",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7011,
+      "gg_b": 0.2989,
+      "alpha_a": -0.01296,
+      "alpha_b": 0.0304,
+      "hasbrouck_a_lo": 0.4588,
+      "hasbrouck_a_hi": 0.4908,
+      "hasbrouck_a_mid": 0.4748,
+      "cointegrated": true,
+      "adf_p": 0.0004,
+      "n": 9238
+    }
+  ]
+}

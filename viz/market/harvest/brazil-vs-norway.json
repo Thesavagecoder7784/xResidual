@@ -1,0 +1,34 @@
+{
+  "match": "Brazil vs Norway",
+  "capture": "20260705T192723Z-brazil-vs-norway",
+  "follower_kalshi": {
+    "n": 6,
+    "gross_med_c": 17.5,
+    "cost_med_c": 2.17,
+    "net_med_c": 15.76,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 16.7,
+    "lead_ms_med": 573
+  },
+  "follower_poly": {
+    "n": 4,
+    "gross_med_c": 12.0,
+    "cost_med_c": 0.5,
+    "net_med_c": 11.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 2283
+  },
+  "all": {
+    "n": 10,
+    "gross_med_c": 13.25,
+    "cost_med_c": 1.74,
+    "net_med_c": 11.18,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.002,
+    "pct_harvestable": 10.0,
+    "lead_ms_med": 573
+  }
+}

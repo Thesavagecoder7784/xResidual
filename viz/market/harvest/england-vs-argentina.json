@@ -1,0 +1,34 @@
+{
+  "match": "England vs Argentina",
+  "capture": "20260715T182821Z-england-vs-argentina",
+  "follower_kalshi": {
+    "n": 5,
+    "gross_med_c": 23.31,
+    "cost_med_c": 1.65,
+    "net_med_c": 19.67,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 20.0,
+    "lead_ms_med": 813
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 17.5,
+    "cost_med_c": 1.13,
+    "net_med_c": 16.37,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1443
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 23.31,
+    "cost_med_c": 1.65,
+    "net_med_c": 19.67,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 16.7,
+    "lead_ms_med": 1443
+  }
+}

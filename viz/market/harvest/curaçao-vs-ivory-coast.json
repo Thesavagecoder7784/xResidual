@@ -1,0 +1,25 @@
+{
+  "match": "Cura\u00e7ao vs Ivory Coast",
+  "capture": "20260625T192608Z-cura\u00e7ao-vs-ivory-coast",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 7.45,
+    "cost_med_c": 0.99,
+    "net_med_c": 6.8,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.038,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 447
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 3,
+    "gross_med_c": 7.45,
+    "cost_med_c": 0.99,
+    "net_med_c": 6.8,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.038,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 447
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "match": "Spain vs Argentina",
+  "capture": "20260719T183322Z-spain-vs-argentina",
+  "follower_kalshi": {
+    "n": 1,
+    "gross_med_c": 7.31,
+    "cost_med_c": 0.93,
+    "net_med_c": 6.38,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.016,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 4799
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 1,
+    "gross_med_c": 7.31,
+    "cost_med_c": 0.93,
+    "net_med_c": 6.38,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.016,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 4799
+  }
+}

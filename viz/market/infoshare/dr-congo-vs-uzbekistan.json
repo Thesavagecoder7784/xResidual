@@ -1,0 +1,48 @@
+{
+  "match": "Dr Congo vs Uzbekistan",
+  "capture": "20260627T230032Z-dr-congo-vs-uzbekistan",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9204,
+  "match_poly_gg": 0.8838,
+  "contracts": [
+    {
+      "label": "Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN27CODUZB-UZB",
+      "poly": "18008867159313570769262912171658897336337384293159822028565187451480762621316",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7153,
+      "gg_b": 0.2847,
+      "alpha_a": -0.0631,
+      "alpha_b": 0.15856,
+      "hasbrouck_a_lo": 0.8576,
+      "hasbrouck_a_hi": 0.9204,
+      "hasbrouck_a_mid": 0.889,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8616
+    },
+    {
+      "label": "DR Congo",
+      "kalshi": "KXWCGAME-26JUN27CODUZB-COD",
+      "poly": "32203747233944015438487799675613943430837031417969455986362970409671575279826",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.0522,
+      "gg_b": -0.0522,
+      "alpha_a": 0.00454,
+      "alpha_b": 0.09157,
+      "hasbrouck_a_lo": 0.9059,
+      "hasbrouck_a_hi": 0.9977,
+      "hasbrouck_a_mid": 0.9518,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8868
+    }
+  ]
+}

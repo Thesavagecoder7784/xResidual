@@ -1,0 +1,48 @@
+{
+  "match": "France vs Morocco",
+  "capture": "20260709T193050Z-france-vs-morocco",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.3242,
+  "match_poly_gg": 0.4751,
+  "contracts": [
+    {
+      "label": "Morocco",
+      "kalshi": "KXWCGAME-26JUL09FRAMAR-MAR",
+      "poly": "14226508065870426054190705878267947981688371809768362929061594780236487316843",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.00708,
+      "alpha_b": 0.01824,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.3123,
+      "n": 8194
+    },
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUL09FRAMAR-FRA",
+      "poly": "59376244379747988336832016917908236721650516433890704080422157946407884434153",
+      "leader": "kalshi",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.4751,
+      "gg_b": 0.5249,
+      "alpha_a": -0.03185,
+      "alpha_b": 0.02883,
+      "hasbrouck_a_lo": 0.1092,
+      "hasbrouck_a_hi": 0.5393,
+      "hasbrouck_a_mid": 0.3242,
+      "cointegrated": true,
+      "adf_p": 0.0003,
+      "n": 8715
+    }
+  ]
+}

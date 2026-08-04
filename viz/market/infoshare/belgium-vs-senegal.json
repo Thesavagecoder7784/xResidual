@@ -1,0 +1,48 @@
+{
+  "match": "Belgium vs Senegal",
+  "capture": "20260701T193422Z-belgium-vs-senegal",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9424,
+  "match_poly_gg": 0.9706,
+  "contracts": [
+    {
+      "label": "Senegal",
+      "kalshi": "KXWCGAME-26JUL01BELSEN-SEN",
+      "poly": "101186338300259647808521159297117949746868383615820554531962956488824987030486",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9629,
+      "gg_b": 0.0371,
+      "alpha_a": -0.00326,
+      "alpha_b": 0.08456,
+      "hasbrouck_a_lo": 0.9395,
+      "hasbrouck_a_hi": 0.9995,
+      "hasbrouck_a_mid": 0.9695,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8802
+    },
+    {
+      "label": "Belgium",
+      "kalshi": "KXWCGAME-26JUL01BELSEN-BEL",
+      "poly": "51550519425443949709378847779649788844021865732808641475643382400046061806350",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9783,
+      "gg_b": 0.0217,
+      "alpha_a": -0.0014,
+      "alpha_b": 0.06337,
+      "hasbrouck_a_lo": 0.8309,
+      "hasbrouck_a_hi": 0.9996,
+      "hasbrouck_a_mid": 0.9152,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8730
+    }
+  ]
+}

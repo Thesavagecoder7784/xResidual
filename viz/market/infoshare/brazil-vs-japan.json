@@ -1,0 +1,48 @@
+{
+  "match": "Brazil vs Japan",
+  "capture": "20260629T162753Z-brazil-vs-japan",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9667,
+  "match_poly_gg": 0.9778,
+  "contracts": [
+    {
+      "label": "Japan",
+      "kalshi": "KXWCGAME-26JUN29BRAJPN-JPN",
+      "poly": "62752037506734227724693430695336334041746689568397072632264782484262688795846",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9715,
+      "gg_b": 0.0285,
+      "alpha_a": -0.00387,
+      "alpha_b": 0.13168,
+      "hasbrouck_a_lo": 0.9513,
+      "hasbrouck_a_hi": 0.9982,
+      "hasbrouck_a_mid": 0.9747,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8953
+    },
+    {
+      "label": "Brazil",
+      "kalshi": "KXWCGAME-26JUN29BRAJPN-BRA",
+      "poly": "57092323451811073429818608596571079688057106582430141952397837549265655050698",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.984,
+      "gg_b": 0.016,
+      "alpha_a": -0.00245,
+      "alpha_b": 0.15097,
+      "hasbrouck_a_lo": 0.9181,
+      "hasbrouck_a_hi": 0.9995,
+      "hasbrouck_a_mid": 0.9588,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9275
+    }
+  ]
+}

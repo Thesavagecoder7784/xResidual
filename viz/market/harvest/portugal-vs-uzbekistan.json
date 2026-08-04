@@ -1,0 +1,25 @@
+{
+  "match": "Portugal vs Uzbekistan",
+  "capture": "20260623T163005Z-portugal-vs-uzbekistan",
+  "follower_kalshi": null,
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 6.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 6.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.31,
+    "pct_harvestable": 100.0,
+    "lead_ms_med": 15
+  },
+  "all": {
+    "n": 1,
+    "gross_med_c": 6.5,
+    "cost_med_c": 0.5,
+    "net_med_c": 6.0,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.31,
+    "pct_harvestable": 100.0,
+    "lead_ms_med": 15
+  }
+}

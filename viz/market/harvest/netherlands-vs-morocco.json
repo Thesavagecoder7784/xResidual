@@ -1,0 +1,25 @@
+{
+  "match": "Netherlands vs Morocco",
+  "capture": "20260630T002931Z-netherlands-vs-morocco",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 46.5,
+    "cost_med_c": 1.3,
+    "net_med_c": 44.49,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 707
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 4,
+    "gross_med_c": 46.5,
+    "cost_med_c": 1.3,
+    "net_med_c": 44.49,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 707
+  }
+}

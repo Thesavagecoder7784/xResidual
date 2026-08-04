@@ -1,0 +1,48 @@
+{
+  "match": "England vs Ghana",
+  "capture": "20260623T192521Z-england-vs-ghana",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.111,
+  "match_poly_gg": 0.5272,
+  "contracts": [
+    {
+      "label": "Ghana",
+      "kalshi": "KXWCGAME-26JUN23ENGGHA-GHA",
+      "poly": "111239697803361919523803068759725643725914563280609261384832780529311817077235",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5487,
+      "gg_b": 0.4513,
+      "alpha_a": -0.02238,
+      "alpha_b": 0.02721,
+      "hasbrouck_a_lo": 0.0729,
+      "hasbrouck_a_hi": 0.0774,
+      "hasbrouck_a_mid": 0.0751,
+      "cointegrated": true,
+      "adf_p": 0.0393,
+      "n": 9274
+    },
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUN23ENGGHA-ENG",
+      "poly": "63611572432092712507452794046269856873324193737948513078896856667745770559698",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.5056,
+      "gg_b": 0.4944,
+      "alpha_a": -0.02056,
+      "alpha_b": 0.02103,
+      "hasbrouck_a_lo": 0.126,
+      "hasbrouck_a_hi": 0.1676,
+      "hasbrouck_a_mid": 0.1468,
+      "cointegrated": true,
+      "adf_p": 0.0768,
+      "n": 9257
+    }
+  ]
+}

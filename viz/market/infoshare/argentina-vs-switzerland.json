@@ -1,0 +1,48 @@
+{
+  "match": "Argentina vs Switzerland",
+  "capture": "20260712T003434Z-argentina-vs-switzerland",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.8799,
+  "match_poly_gg": 0.8658,
+  "contracts": [
+    {
+      "label": "Argentina",
+      "kalshi": "KXWCGAME-26JUL11ARGSUI-ARG",
+      "poly": "14635675870982897917581198649476127837975251193150495566552970565909631535281",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8658,
+      "gg_b": 0.1342,
+      "alpha_a": -0.02721,
+      "alpha_b": 0.17557,
+      "hasbrouck_a_lo": 0.7878,
+      "hasbrouck_a_hi": 0.972,
+      "hasbrouck_a_mid": 0.8799,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8766
+    },
+    {
+      "label": "Switzerland",
+      "kalshi": "KXWCGAME-26JUL11ARGSUI-SUI",
+      "poly": "35737328415897350073008705151276154836361818348951962282389981878817300121168",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.02956,
+      "alpha_b": 0.04694,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.1124,
+      "n": 8774
+    }
+  ]
+}

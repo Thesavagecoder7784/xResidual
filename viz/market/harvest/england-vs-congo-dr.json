@@ -1,0 +1,25 @@
+{
+  "match": "England vs Congo Dr",
+  "capture": "20260701T162435Z-england-vs-congo-dr",
+  "follower_kalshi": {
+    "n": 8,
+    "gross_med_c": 10.0,
+    "cost_med_c": 1.76,
+    "net_med_c": 7.77,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.358,
+    "pct_harvestable": 50.0,
+    "lead_ms_med": 343
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 8,
+    "gross_med_c": 10.0,
+    "cost_med_c": 1.76,
+    "net_med_c": 7.77,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.358,
+    "pct_harvestable": 50.0,
+    "lead_ms_med": 343
+  }
+}

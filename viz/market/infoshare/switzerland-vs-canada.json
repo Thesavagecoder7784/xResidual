@@ -1,0 +1,48 @@
+{
+  "match": "Switzerland vs Canada",
+  "capture": "20260624T183243Z-switzerland-vs-canada",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.6343,
+  "match_poly_gg": 0.7627,
+  "contracts": [
+    {
+      "label": "Canada",
+      "kalshi": "KXWCGAME-26JUN24SUICAN-CAN",
+      "poly": "11943790724298456336310029997668350808838445628633810142424962411400618768716",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7092,
+      "gg_b": 0.2908,
+      "alpha_a": -0.00917,
+      "alpha_b": 0.02237,
+      "hasbrouck_a_lo": 0.3847,
+      "hasbrouck_a_hi": 0.4054,
+      "hasbrouck_a_mid": 0.395,
+      "cointegrated": true,
+      "adf_p": 0.0551,
+      "n": 8372
+    },
+    {
+      "label": "Switzerland",
+      "kalshi": "KXWCGAME-26JUN24SUICAN-SUI",
+      "poly": "47959944460657228985055674449790383802464381124119024576562949363346901336433",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8161,
+      "gg_b": 0.1839,
+      "alpha_a": -0.008,
+      "alpha_b": 0.03549,
+      "hasbrouck_a_lo": 0.8377,
+      "hasbrouck_a_hi": 0.9097,
+      "hasbrouck_a_mid": 0.8737,
+      "cointegrated": true,
+      "adf_p": 0.0016,
+      "n": 8538
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "match": "Paraguay vs France",
+  "capture": "20260704T202622Z-paraguay-vs-france",
+  "follower_kalshi": {
+    "n": 2,
+    "gross_med_c": 7.63,
+    "cost_med_c": 2.07,
+    "net_med_c": 5.56,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.009,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 209
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 2,
+    "gross_med_c": 7.63,
+    "cost_med_c": 2.07,
+    "net_med_c": 5.56,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.009,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 209
+  }
+}

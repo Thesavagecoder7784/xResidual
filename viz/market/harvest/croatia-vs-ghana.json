@@ -1,0 +1,34 @@
+{
+  "match": "Croatia vs Ghana",
+  "capture": "20260627T202735Z-croatia-vs-ghana",
+  "follower_kalshi": {
+    "n": 9,
+    "gross_med_c": 12.75,
+    "cost_med_c": 1.67,
+    "net_med_c": 10.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 592
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 4.75,
+    "cost_med_c": 0.5,
+    "net_med_c": 4.25,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1450
+  },
+  "all": {
+    "n": 10,
+    "gross_med_c": 12.75,
+    "cost_med_c": 1.67,
+    "net_med_c": 10.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.007,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 624
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "match": "Colombia vs Portugal",
+  "capture": "20260627T230032Z-colombia-vs-portugal",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 1,
+  "match_poly_hasbrouck_mid": 0.9459,
+  "match_poly_gg": 0.9065,
+  "contracts": [
+    {
+      "label": "Colombia",
+      "kalshi": "KXWCGAME-26JUN27COLPOR-COL",
+      "poly": "66645018399244327793816970436640892806720466803924622381310200425167561934656",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9065,
+      "gg_b": 0.0935,
+      "alpha_a": -0.00225,
+      "alpha_b": 0.02177,
+      "hasbrouck_a_lo": 0.9089,
+      "hasbrouck_a_hi": 0.9828,
+      "hasbrouck_a_mid": 0.9459,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8969
+    },
+    {
+      "label": "Portugal",
+      "kalshi": "KXWCGAME-26JUN27COLPOR-POR",
+      "poly": "68238163315667435120694805573568977252273759352712823951184501420027891362809",
+      "leader": null,
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": null,
+      "gg_b": null,
+      "alpha_a": -0.0315,
+      "alpha_b": 0.01522,
+      "hasbrouck_a_lo": null,
+      "hasbrouck_a_hi": null,
+      "hasbrouck_a_mid": null,
+      "cointegrated": false,
+      "adf_p": 0.9324,
+      "n": 8966
+    }
+  ]
+}

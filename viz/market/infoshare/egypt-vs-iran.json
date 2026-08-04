@@ -1,0 +1,48 @@
+{
+  "match": "Egypt vs Iran",
+  "capture": "20260627T022522Z-egypt-vs-iran",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8915,
+  "match_poly_gg": 1.3746,
+  "contracts": [
+    {
+      "label": "Iran",
+      "kalshi": "KXWCGAME-26JUN26EGYIRI-IRI",
+      "poly": "34787355244902293604560127433609469815330269379035336530397136777594424715528",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 2.0252,
+      "gg_b": -1.0252,
+      "alpha_a": 0.10303,
+      "alpha_b": 0.20353,
+      "hasbrouck_a_lo": 0.8841,
+      "hasbrouck_a_hi": 0.9906,
+      "hasbrouck_a_mid": 0.9373,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9467
+    },
+    {
+      "label": "Egypt",
+      "kalshi": "KXWCGAME-26JUN26EGYIRI-EGY",
+      "poly": "75595072506593093609125758283657089382220899252356081539276899905086401333602",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7241,
+      "gg_b": 0.2759,
+      "alpha_a": -0.04842,
+      "alpha_b": 0.12707,
+      "hasbrouck_a_lo": 0.843,
+      "hasbrouck_a_hi": 0.8484,
+      "hasbrouck_a_mid": 0.8457,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9467
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "match": "Argentina vs Switzerland",
+  "capture": "20260712T003434Z-argentina-vs-switzerland",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 10.88,
+    "cost_med_c": 1.83,
+    "net_med_c": 9.51,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.011,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 661
+  },
+  "follower_poly": {
+    "n": 3,
+    "gross_med_c": 9.38,
+    "cost_med_c": 0.88,
+    "net_med_c": 8.5,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1369
+  },
+  "all": {
+    "n": 6,
+    "gross_med_c": 10.88,
+    "cost_med_c": 1.83,
+    "net_med_c": 9.51,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.008,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1369
+  }
+}

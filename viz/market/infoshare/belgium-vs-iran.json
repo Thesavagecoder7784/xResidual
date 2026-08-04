@@ -1,0 +1,48 @@
+{
+  "match": "Belgium vs Iran",
+  "capture": "20260621T183221Z-belgium-vs-iran",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8031,
+  "match_poly_gg": 0.8795,
+  "contracts": [
+    {
+      "label": "Belgium",
+      "kalshi": "KXWCGAME-26JUN21BELIRI-BEL",
+      "poly": "73247571006255574285385183553023235681702880602976519365262465179094676130340",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.0276,
+      "gg_b": -0.0276,
+      "alpha_a": 0.00065,
+      "alpha_b": 0.02406,
+      "hasbrouck_a_lo": 0.9625,
+      "hasbrouck_a_hi": 0.998,
+      "hasbrouck_a_mid": 0.9803,
+      "cointegrated": true,
+      "adf_p": 0.0631,
+      "n": 8908
+    },
+    {
+      "label": "Iran",
+      "kalshi": "KXWCGAME-26JUN21BELIRI-IRI",
+      "poly": "107259278816298402654822103861927486042412499982187590917424237525323082866574",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7314,
+      "gg_b": 0.2686,
+      "alpha_a": -0.0144,
+      "alpha_b": 0.03921,
+      "hasbrouck_a_lo": 0.5985,
+      "hasbrouck_a_hi": 0.6534,
+      "hasbrouck_a_mid": 0.6259,
+      "cointegrated": true,
+      "adf_p": 0.0002,
+      "n": 8916
+    }
+  ]
+}

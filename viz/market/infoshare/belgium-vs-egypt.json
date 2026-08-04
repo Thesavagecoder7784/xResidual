@@ -1,0 +1,48 @@
+{
+  "match": "Belgium vs Egypt",
+  "capture": "20260615T182907Z-belgium-vs-egypt",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9079,
+  "match_poly_gg": 0.91,
+  "contracts": [
+    {
+      "label": "Belgium",
+      "kalshi": "KXWCGAME-26JUN15BELEGY-BEL",
+      "poly": "5699266164849713169703648234886411053444418385408086203990916861286572010447",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8249,
+      "gg_b": 0.1751,
+      "alpha_a": -0.01037,
+      "alpha_b": 0.04885,
+      "hasbrouck_a_lo": 0.7748,
+      "hasbrouck_a_hi": 0.9166,
+      "hasbrouck_a_mid": 0.8457,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8896
+    },
+    {
+      "label": "Egypt",
+      "kalshi": "KXWCGAME-26JUN15BELEGY-EGY",
+      "poly": "71175597030142754954710752283935666239163672397586595724135510152247112429550",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.995,
+      "gg_b": 0.005,
+      "alpha_a": -0.0005,
+      "alpha_b": 0.09813,
+      "hasbrouck_a_lo": 0.9403,
+      "hasbrouck_a_hi": 0.9999,
+      "hasbrouck_a_mid": 0.9701,
+      "cointegrated": true,
+      "adf_p": 0.0001,
+      "n": 8894
+    }
+  ]
+}

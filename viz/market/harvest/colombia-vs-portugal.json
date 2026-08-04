@@ -1,0 +1,25 @@
+{
+  "match": "Colombia vs Portugal",
+  "capture": "20260627T230032Z-colombia-vs-portugal",
+  "follower_kalshi": {
+    "n": 3,
+    "gross_med_c": 28.25,
+    "cost_med_c": 2.96,
+    "net_med_c": 13.29,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.018,
+    "pct_harvestable": 33.3,
+    "lead_ms_med": 791
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 3,
+    "gross_med_c": 28.25,
+    "cost_med_c": 2.96,
+    "net_med_c": 13.29,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.018,
+    "pct_harvestable": 33.3,
+    "lead_ms_med": 791
+  }
+}

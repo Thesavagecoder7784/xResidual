@@ -1,0 +1,34 @@
+{
+  "match": "Colombia vs Dr Congo",
+  "capture": "20260624T013522Z-colombia-vs-dr-congo",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 11.5,
+    "cost_med_c": 1.9,
+    "net_med_c": 9.42,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.065,
+    "pct_harvestable": 25.0,
+    "lead_ms_med": 866
+  },
+  "follower_poly": {
+    "n": 1,
+    "gross_med_c": 6.75,
+    "cost_med_c": 1.5,
+    "net_med_c": 5.25,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.0,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 66
+  },
+  "all": {
+    "n": 5,
+    "gross_med_c": 6.75,
+    "cost_med_c": 1.78,
+    "net_med_c": 5.25,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.024,
+    "pct_harvestable": 20.0,
+    "lead_ms_med": 707
+  }
+}

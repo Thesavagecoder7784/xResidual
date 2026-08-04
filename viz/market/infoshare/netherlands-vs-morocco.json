@@ -1,0 +1,48 @@
+{
+  "match": "Netherlands vs Morocco",
+  "capture": "20260630T002931Z-netherlands-vs-morocco",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9111,
+  "match_poly_gg": 0.966,
+  "contracts": [
+    {
+      "label": "Netherlands",
+      "kalshi": "KXWCGAME-26JUN29NEDMAR-NED",
+      "poly": "7274552498925682773418691853971449969741694357120018415935498544583333363785",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8737,
+      "gg_b": 0.1263,
+      "alpha_a": -0.01755,
+      "alpha_b": 0.12143,
+      "hasbrouck_a_lo": 0.6717,
+      "hasbrouck_a_hi": 0.9878,
+      "hasbrouck_a_mid": 0.8298,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8975
+    },
+    {
+      "label": "Morocco",
+      "kalshi": "KXWCGAME-26JUN29NEDMAR-MAR",
+      "poly": "84597496489313264837847684053401517117472634121930855082913192700166797262773",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 1.0582,
+      "gg_b": -0.0582,
+      "alpha_a": 0.00213,
+      "alpha_b": 0.03878,
+      "hasbrouck_a_lo": 0.9855,
+      "hasbrouck_a_hi": 0.9993,
+      "hasbrouck_a_mid": 0.9924,
+      "cointegrated": true,
+      "adf_p": 0.0042,
+      "n": 8975
+    }
+  ]
+}

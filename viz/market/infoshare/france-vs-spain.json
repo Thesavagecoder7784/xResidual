@@ -1,0 +1,11 @@
+{
+  "match": "France vs Spain",
+  "capture": "20260714T183122Z-france-vs-spain",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 0,
+  "n_cointegrated": 0,
+  "match_poly_hasbrouck_mid": null,
+  "match_poly_gg": null,
+  "contracts": []
+}

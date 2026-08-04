@@ -1,0 +1,25 @@
+{
+  "match": "Algeria vs Austria",
+  "capture": "20260628T013349Z-algeria-vs-austria",
+  "follower_kalshi": {
+    "n": 12,
+    "gross_med_c": 24.25,
+    "cost_med_c": 1.96,
+    "net_med_c": 22.18,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1133
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 12,
+    "gross_med_c": 24.25,
+    "cost_med_c": 1.96,
+    "net_med_c": 22.18,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.001,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1133
+  }
+}

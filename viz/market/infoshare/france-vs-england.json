@@ -1,0 +1,48 @@
+{
+  "match": "France vs England",
+  "capture": "20260718T202817Z-france-vs-england",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.9137,
+  "match_poly_gg": 0.8554,
+  "contracts": [
+    {
+      "label": "England",
+      "kalshi": "KXWCGAME-26JUL18FRAENG-ENG",
+      "poly": "104204269101315799616235020335758894730330540969530162829399554926283403684718",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.935,
+      "gg_b": 0.065,
+      "alpha_a": -0.00616,
+      "alpha_b": 0.08862,
+      "hasbrouck_a_lo": 0.9868,
+      "hasbrouck_a_hi": 0.9941,
+      "hasbrouck_a_mid": 0.9904,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9160
+    },
+    {
+      "label": "France",
+      "kalshi": "KXWCGAME-26JUL18FRAENG-FRA",
+      "poly": "27017352779469567119021515174282416893555366624071034758236558815968401338728",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.7757,
+      "gg_b": 0.2243,
+      "alpha_a": -0.01141,
+      "alpha_b": 0.03946,
+      "hasbrouck_a_lo": 0.8081,
+      "hasbrouck_a_hi": 0.8661,
+      "hasbrouck_a_mid": 0.8371,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 9128
+    }
+  ]
+}

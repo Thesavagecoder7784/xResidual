@@ -1,0 +1,25 @@
+{
+  "match": "Scotland vs Brazil",
+  "capture": "20260624T212715Z-scotland-vs-brazil",
+  "follower_kalshi": {
+    "n": 4,
+    "gross_med_c": 7.25,
+    "cost_med_c": 0.77,
+    "net_med_c": 6.48,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.023,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1267
+  },
+  "follower_poly": null,
+  "all": {
+    "n": 4,
+    "gross_med_c": 7.25,
+    "cost_med_c": 0.77,
+    "net_med_c": 6.48,
+    "pct_net_positive": 100.0,
+    "depth_frac_med": 0.023,
+    "pct_harvestable": 0.0,
+    "lead_ms_med": 1267
+  }
+}

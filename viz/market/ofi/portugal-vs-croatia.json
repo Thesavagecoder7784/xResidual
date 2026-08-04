@@ -1,0 +1,43 @@
+{
+  "match": "Portugal vs Croatia",
+  "capture": "20260702T222647Z-portugal-vs-croatia",
+  "n_pairs": 0,
+  "bin_ms": 1000,
+  "lags_s": [
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3
+  ],
+  "impact": {
+    "kalshi": null,
+    "poly": null
+  },
+  "impact_suff": {
+    "kalshi": null,
+    "poly": null
+  },
+  "cross_suff": {
+    "poly_to_kalshi@-3": null,
+    "poly_to_kalshi@-2": null,
+    "poly_to_kalshi@-1": null,
+    "poly_to_kalshi@0": null,
+    "poly_to_kalshi@1": null,
+    "poly_to_kalshi@2": null,
+    "poly_to_kalshi@3": null,
+    "kalshi_to_poly@-3": null,
+    "kalshi_to_poly@-2": null,
+    "kalshi_to_poly@-1": null,
+    "kalshi_to_poly@0": null,
+    "kalshi_to_poly@1": null,
+    "kalshi_to_poly@2": null,
+    "kalshi_to_poly@3": null
+  },
+  "microprice_leadlag": {
+    "mid": null,
+    "micro": null
+  }
+}

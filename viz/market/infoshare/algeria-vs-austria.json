@@ -1,0 +1,48 @@
+{
+  "match": "Algeria vs Austria",
+  "capture": "20260628T013349Z-algeria-vs-austria",
+  "bin_ms": 1000,
+  "n_lags": 2,
+  "n_contracts": 2,
+  "n_cointegrated": 2,
+  "match_poly_hasbrouck_mid": 0.8528,
+  "match_poly_gg": 0.9191,
+  "contracts": [
+    {
+      "label": "Austria",
+      "kalshi": "KXWCGAME-26JUN27DZAAUT-AUT",
+      "poly": "101870693068643777907933185168096005823100471428921617507976765091257562327892",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.8809,
+      "gg_b": 0.1191,
+      "alpha_a": -0.01201,
+      "alpha_b": 0.08883,
+      "hasbrouck_a_lo": 0.7609,
+      "hasbrouck_a_hi": 0.9842,
+      "hasbrouck_a_mid": 0.8726,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8710
+    },
+    {
+      "label": "Algeria",
+      "kalshi": "KXWCGAME-26JUN27DZAAUT-DZA",
+      "poly": "82930050367767323602185033959522193504232064039705778455362784267890724471276",
+      "leader": "polymarket",
+      "label_a": "polymarket",
+      "label_b": "kalshi",
+      "gg_a": 0.9573,
+      "gg_b": 0.0427,
+      "alpha_a": -0.00878,
+      "alpha_b": 0.1967,
+      "hasbrouck_a_lo": 0.6675,
+      "hasbrouck_a_hi": 0.9986,
+      "hasbrouck_a_mid": 0.8331,
+      "cointegrated": true,
+      "adf_p": 0.0,
+      "n": 8706
+    }
+  ]
+}
