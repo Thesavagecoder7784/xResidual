@@ -36,8 +36,24 @@ which runs:
 python scripts/emit_macros.py          # writeups/_*_results.json -> paper/arxiv/macros.tex
 cd paper/arxiv && latexmk -pdf main.tex
 ```
-`make check` (also run in CI) asserts the macros match the JSONs and runs the test suite,
-so a stale paper number cannot be committed.
+`make check` regenerates the macros, asserts they match the JSONs, asserts that **every macro
+came from a shipped artifact rather than a hard-coded fallback** (`--strict`), and runs the test
+suite.
+
+Be precise about what CI does and does not guarantee, because this document previously
+overstated it. CI runs `emit_macros.py`, then `--strict`, then the suite. It **cannot** verify
+that a committed `macros.tex` matches the JSONs, because `paper/arxiv` is gitignored and no
+`macros.tex` ships — so the in-sync check there only ever compares the file against the run that
+just wrote it. The guarantee CI does enforce is the one that actually failed in practice: no
+paper number may come from a stale constant instead of an artifact. The stale-`macros.tex` check
+is real but **local only**, and it is the reason to run `make check` before you submit.
+
+*Corrected 2026-08-03:* this section used to read "`make check` (also run in CI) … so a stale
+paper number cannot be committed." `make check` was not run in CI (the workflow was `pytest`
+only), and on a clean checkout the macro-staleness test **skips** for want of a `macros.tex`, so
+the stated guarantee held in neither half. `make check` also crashed outright on a fresh clone —
+`emit_macros.py` wrote to `paper/arxiv/` without creating it — meaning the one command this file
+tells a reviewer to run failed before reaching a single assertion.
 
 ## Claim → script → artifact map
 

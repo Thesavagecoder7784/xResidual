@@ -45,7 +45,7 @@ disclosed forward-tests: the cross-venue gap is **not a harvestable edge**. The 
 convergence trade is a clean null (a cost illusion); and although a stale-quote ledger over 405
 goal-shock observations in 66 matches (one row per contract per shock, so ~2x the distinct goals) shows a median **+10.8-cent** net gap **on paper** (100% of goals net-positive), best-price depth at the
 goal collapses to ~0.5% of normal (spread ~8x on Polymarket, ~2x on Kalshi, refill ~3-4s), so **the
-median match yields zero harvestable goals** (goal-weighted, on the archive subset that survives: ~11%,
+median match yields zero harvestable goals** (goal-weighted, across the full 66-match ledger: ~9%,
 clustered in a minority of matches a follower cannot identify in advance). The lead
 is a **liquidity-withdrawal result, not slow pricing**: real, but un-harvestable after the cost
 of immediacy. The one corner where a mechanical view plausibly beats the human-driven price is
@@ -342,9 +342,9 @@ size to hit at the stale price: by the time depth returns, the quote has caught 
 gap, **the median match yields zero harvestable goals**.
 
 Be exact about that statistic, because it is a median across matches and it is easy to over-read. It
-says the typical match offers a follower nothing — not that no goal anywhere was capturable. On the
-portion of the per-game ledger still reconstructible from the archive (**21 matches, 117 goals**) the
-goal-weighted rate is **11.1%**, and those goals cluster in **6 of the 21** matches. The honest claim is
+says the typical match offers a follower nothing — not that no goal anywhere was capturable. Across
+the full ledger (**66 matches, 405 goal-shock observations**) the
+goal-weighted rate is **9.1%**, and those goals cluster in **21 of the 66** matches. The honest claim is
 therefore distributional: harvestable goals exist, they are a minority, they concentrate in a minority of
 matches, and a follower has no way to know in advance which goal will leave depth behind — the book is
 gone at the instant the signal fires. The result is a **liquidity-withdrawal story, not slow pricing**: the

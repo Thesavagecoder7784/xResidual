@@ -2,8 +2,14 @@
 .PHONY: check macros paper test figures
 
 # Verify paper numbers match the JSONs, and run the suite (also the CI gate).
+#
+# --strict is the half that survives in CI. `macros` regenerates macros.tex immediately above,
+# so --check can only ever compare a file against what just wrote it; the real question there is
+# whether every macro came from a shipped artifact rather than a hard-coded fallback. --check
+# still earns its place locally, where macros.tex persists between runs and can go stale.
 check: macros
 	python scripts/emit_macros.py --check
+	python scripts/emit_macros.py --strict
 	python -m pytest tests/ -q
 
 # Regenerate the canonical LaTeX macros from writeups/_*_results.json.

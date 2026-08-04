@@ -19,7 +19,14 @@ Three independent checks, none of which the rest of the pipeline performs:
      change shows up as a number that moved.
 
 Exit code 1 if any hard defect is found (impossible scoreline disagreement, or over-detection),
-0 otherwise. Read-only: touches nothing, emits nothing, safe to run any time.
+0 otherwise.
+
+NOT read-only, despite what this docstring claimed for months: it writes
+`writeups/_detection_scoreline_results.json`. It used to write `_detection_results.json` — the
+artifact `scripts/detection_check.py` owns — so running it after that script silently replaced
+86-match, clock-verified figures with this file's narrower 29-match scoreline reconciliation.
+The two now write separate files. Anything reading a `writeups/_*.json` should know which script
+owns it before running the other.
 
     python scripts/verify_goals.py          # summary
     python scripts/verify_goals.py -v       # per-match detail
@@ -34,7 +41,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_LAST: dict = {"rows": 0, "over": 0, "stale": 0}
+_LAST: dict = {"rows": 0, "over": 0, "stale": 0, "skipped": False}
 
 
 def _load_ledger() -> dict:
@@ -52,8 +59,20 @@ def _load_ledger() -> dict:
     return out
 
 
+class MissingInput(Exception):
+    """A required input is absent. Raised rather than allowed to surface as a traceback: `data/`
+    is gitignored, so this script cannot run from a clone at all, and a stack trace reads like a
+    bug in the checker instead of the expected absence of private input data."""
+
+
 def _fixtures() -> list[dict]:
-    with open(os.path.join(ROOT, "data", "wc2026_fixtures.csv")) as fh:
+    path = os.path.join(ROOT, "data", "wc2026_fixtures.csv")
+    if not os.path.exists(path):
+        raise MissingInput(
+            "data/wc2026_fixtures.csv is missing. It is the scoreline ground truth for checks "
+            "[1]-[3] and lives under data/, which is gitignored — so this script cannot run "
+            "from a fresh clone. Run it on the analysis machine.")
+    with open(path) as fh:
         return [r for r in csv.DictReader(fh) if (r.get("score1") or "").strip() != ""]
 
 
@@ -107,6 +126,7 @@ def check_detection(verbose: bool) -> tuple[int, list[str]]:
     files = sorted(glob.glob(os.path.join(ROOT, "viz", "model", "overreaction", "*.json")))
     if not files:
         print("\n[2] DETECTION VALIDITY: no per-game overreaction archives on this machine, skipped.")
+        _LAST["skipped"] = True   # so the summary cannot report "no over-detection" off zero files
         return 0, []
     fx_by_pair = {}
     for r in _fixtures():
@@ -215,26 +235,51 @@ def main() -> int:
     print("=" * 78)
     print("  GOAL VERIFICATION — every goal against every source that records one")
     print("=" * 78)
-    d1, _ = check_scorelines(args.verbose)
+    try:
+        d1, _ = check_scorelines(args.verbose)
+    except MissingInput as e:
+        print(f"\n  CANNOT RUN: {e}")
+        print("=" * 78)
+        return 2
+
     d2, _ = check_detection(args.verbose)
     check_totals(args.verbose)
     check_clock(args.verbose)
 
-    # emit the counts so the manuscript can cite them as macros rather than literals
+    # Emit the counts so the manuscript can cite them as macros rather than literals.
+    #
+    # NOT to _detection_results.json. That artifact is owned by scripts/detection_check.py, which
+    # measures the same thing against a strictly better ground truth (the exogenous goal clock in
+    # data/wc_goals_espn.json, 86 matches) than this file's scoreline reconciliation (29 matches,
+    # limited to archives carrying an n_goals field). Both used to write that one path, so running
+    # this script AFTER detection_check.py silently reverted the pooled figures to the narrower
+    # sample — and because this write is wrapped in a bare `except: pass`, it did so without a
+    # word. Two writers, one filename, last-one-wins. This now writes its own artifact.
     try:
         import glob as _g
         n_arch = len(_g.glob(os.path.join(ROOT, "viz", "model", "overreaction", "*.json")))
-        with open(os.path.join(ROOT, "writeups", "_detection_results.json"), "w") as fh:
+        out = os.path.join(ROOT, "writeups", "_detection_scoreline_results.json")
+        with open(out, "w") as fh:
             json.dump({"n_matches_checked": _LAST["rows"], "n_over_detect": _LAST["over"],
                        "n_bad_n_goals": _LAST["stale"], "n_archives": n_arch,
-                       "note": "detection validity vs scoreline ground truth; see check [2]"}, fh, indent=1)
-    except Exception:  # noqa: BLE001
-        pass
+                       "note": "detection validity vs SCORELINE ground truth (check [2]), on the "
+                               "archives carrying an n_goals field. The manuscript's detection "
+                               "figures come from _detection_results.json, written by "
+                               "scripts/detection_check.py against the exogenous goal clock over "
+                               "every surviving archive. This file is the narrower cross-check, "
+                               "kept separate so neither can overwrite the other."}, fh, indent=1)
+    except Exception as e:  # noqa: BLE001 — reporting must not depend on the artifact write
+        print(f"  ! could not write _detection_scoreline_results.json: {type(e).__name__}: {e}")
 
     total = d1 + d2
     print("\n" + "=" * 78)
     if total:
         print(f"  {total} DEFECT(S) FOUND — see the !! lines above")
+    elif _LAST.get("skipped"):
+        # A check that did not run is not a check that passed. This banner used to read
+        # "no over-detection" on a machine holding zero overreaction archives.
+        print("  PARTIAL — scorelines reconcile, but DETECTION VALIDITY [2] was SKIPPED")
+        print("  (no viz/model/overreaction archives here). Not a clean bill of health.")
     else:
         print("  VERIFIED — no unexplained scoreline disagreements, no over-detection")
     print("=" * 78)
