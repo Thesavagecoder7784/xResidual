@@ -74,6 +74,22 @@ python scripts/harden_leadlag_stats.py # -> _hardened_stats.json (canonical)
 The Kalshi WebSocket needs a Kalshi API key; the Polymarket on-chain fills need a Polygon
 archive RPC. See `RUNBOOK.md`.
 
+**Which scripts are Tier B, and how they behave without their inputs.** The robustness scripts
+divide by what they read, and the division follows the withholding policy exactly:
+
+| Reads | Scripts | From a fresh clone |
+|---|---|---|
+| `viz/market/{harvest,infoshare,ofi}` — aggregate, published | `harvest_ci.py`, `harvest_predict.py`, `identification_check.py`, `ofi_ci.py` | Reproduce their artifacts **bit-identically** |
+| `writeups/_*.json` — published | `clock_verified_leadlag.py`, `depth_instant.py` | Reproduce from the shipped artifacts |
+| `viz/market/leadlag/` — **per-event, withheld** | `detection_check.py`, `leadgate.py` | **Exit 1 and change nothing** |
+
+That last row is Tier B and cannot be otherwise: the input is the per-event venue data this
+document commits to withholding. Both scripts fail loudly rather than quietly. `detection_check.py`
+did not always — it wrote `n_archives: 0` over a good artifact and exited 0, so anyone who cloned
+the repository and ran it destroyed the shipped numbers without seeing an error. It now refuses,
+matching `leadgate.py`. A script that silently produces a null result from missing inputs is worse
+than one that crashes.
+
 ## Data availability
 
 Code, the capture pipeline, the **derived** result artifacts (`writeups/_*_results.json`,
