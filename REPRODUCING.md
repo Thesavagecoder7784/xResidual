@@ -182,6 +182,19 @@ anything; from a fresh clone, once the rewrite has been pushed, it must report `
 **Until that reports zero, treat the bulleted withholding statement above as a statement of
 policy, not of fact.**
 
+*Third correction, 2026-08-04:* the paragraph above stating that the aggregate per-game archives
+"do ship" was, until this date, false in the other direction. A blanket `.gitignore` rule covered
+`viz/market/{ofi,liquidity,infoshare,harvest,eventis,livewp}`, but files already tracked when the
+rule landed kept shipping — so an arbitrary subset reached a clone (20 of 74 harvest, 17 of 80
+infoshare, 22 of 83 ofi) while this document claimed the directories were public. The robustness
+scripts that read them (`harvest_ci.py`, `harvest_predict.py`, `identification_check.py`,
+`ofi_ci.py`) therefore ran on a quarter of the data from a fresh clone and produced numbers
+differing from the committed artifacts, with no error raised. All 359 files are now tracked; they
+carry counts, medians and regression statistics only, so nothing about the withholding position
+changes. Verified by cloning and regenerating: the three scripts reproduce their artifacts
+bit-identically. Note that this is the *same* defect as the correction below, with its sign
+flipped — an ignore rule added after tracking neither withholds nor ships what you think.
+
 *Second correction, 2026-08-04:* the audit behind that first correction swept `viz/` and
 stopped there, and so missed `paper/positions.json` and `paper/book.md`. Three of the paper
 book's 46 rows are Kalshi positions, and each carried a market ticker, entry and exit quote
