@@ -107,11 +107,26 @@ distinction is a design choice rather than a shortfall.
 
 Kalshi's Developer Agreement limits API data to facilitating the member's own trading and
 forbids sharing it with third parties absent written authorization (§3, §3.1); its Data Terms
-restrict republication of Kalshi Data; Polymarket's terms govern its off-chain order-book
-feed. A study of two live venues therefore cannot ship its inputs, no matter how much its
-author would prefer to. Given that constraint, there are two honest options: publish nothing,
-or publish everything that *can* be published and be exact about the boundary. This repository
-takes the second.
+of Use restrict republication of Kalshi Data; Polymarket's terms govern its off-chain
+order-book feed. A study of two live venues therefore cannot ship its inputs, no matter how
+much its author would prefer to. Given that constraint, there are two honest options: publish
+nothing, or publish the least that still lets a reader check the work, and be exact about the
+boundary. This repository takes the second.
+
+**Stated precisely, because the distinction matters.** What follows is a description of what
+is withheld and why — it is not a claim that everything which *does* ship is affirmatively
+licensed. It is not. Kalshi's Data Terms of Use §II enumerate "creating derivative works",
+"compiling ... to create collections, compilations, databases" and "conducting 'text and data
+mining'" among prohibited uses, and the Developer Agreement bars collecting or storing API
+data except to facilitate one's own trading (§3.1), accessing the API for "benchmarking"
+purposes (§3.5), and public statements about Kalshi's services without prior written approval
+(§6.4). A cross-venue price-discovery study is not obviously outside any of those. Derived
+aggregates are a mitigation — they are the minimum that supports the inferences, and they
+carry no quote levels and no timestamps — but a mitigation is not a permission, and this
+section should not be read as asserting one. The honest description of this repository's
+position is that it withholds everything whose redistribution would be plainly improper and
+publishes the remainder under a reading of the terms that the venue has not confirmed.
+Written authorization is the fix, and asking for it is the open item.
 
 What that means in practice:
 
@@ -119,7 +134,7 @@ What that means in practice:
 |---|---|---|
 | Capture pipeline (`logger/`) | **Yes** | Our code, not their data. Re-point it at either venue's public feed with your own credentials. |
 | Analysis code (`scripts/`, `xresidual/`) | **Yes** | Every estimator, gate and statistic, including the ones that produced null results. |
-| Derived per-match statistics | **Yes** | Counts, medians, shares, regression sufficient statistics. Measurement, not market data. |
+| Derived per-match statistics | **Yes** | Counts, medians, shares, regression sufficient statistics — measurement rather than market data, though see the caveat above on derivative works. |
 | Pooled artifacts (`writeups/_*_results.json`) | **Yes** | Every published number regenerates from these — see Tier A. |
 | Pre-registration | **Yes** | Tagged pre-kickoff commit; predictions cannot be edited after the fact. |
 | Raw tapes, per-event quote levels, wall-clock timestamps | **No** | Third-party market data under the terms above. |
@@ -134,6 +149,18 @@ This is the same posture as most credible empirical work on proprietary or licen
 (CRSP, TAQ, exchange feeds): the code and the derived statistics are the scientific object;
 the vendor's raw feed is not the author's to hand out. Treating the boundary as something to
 state precisely, rather than to blur, is the point.
+
+It is a stricter posture than the surrounding literature takes. Bürgi, Deng and Whelan's study
+of Kalshi ("Makers and Takers", University College Dublin WP2025/19 and GWU FORCPGM 2026-001,
+January 2026) obtains transaction-level data on 300,000+ contracts by registering for the API
+and pulling it with Python scripts, and neither discusses the terms nor restricts what it
+publishes. Becker's `prediction-market-analysis` releases 72.1
+million Kalshi and Polymarket trades — execution price, taker side and timestamp per trade —
+publicly on GitHub under MIT. Marriott (SSRN 6583921) reconstructs tick-level limit order
+books for every Kalshi market from the WebSocket stream and publishes the method and aggregate
+dataset characteristics while withholding the ticks, which is the closest analogue to the
+position taken here. The field norm is to state the collection method and move on; this
+repository states the constraint as well, which is a choice rather than a requirement.
 
 *Correction, 2026-07-28:* the first two bullets above were accurate as policy but not as
 practice until this date — `viz/market/leadlag/` and `viz/model/overreaction/` had been
@@ -153,6 +180,17 @@ Excising those paths from history is what actually makes the statement above tru
 anything; it must report `TOTAL: 0` from a fresh clone once the rewrite has been pushed).
 **Until that reports zero, treat the bulleted withholding statement above as a statement of
 policy, not of fact.**
+
+*Second correction, 2026-08-04:* the audit behind that first correction swept `viz/` and
+stopped there, and so missed `paper/positions.json` and `paper/book.md`. Three of the paper
+book's 46 rows are Kalshi positions, and each carried a market ticker, entry and exit quote
+levels, and a share count that divides straight back into the entry price — the same category
+of per-event venue data the correction above is about, sitting in a directory nobody thought
+of as data. Those rows are now redacted in place (stake, timing and realized P&L are ours and
+are unchanged), the three `.bak` copies are dropped, and all of it is included in the history
+rewrite. The general lesson is the one worth keeping: an audit scoped by directory finds
+exactly what that directory holds, and per-event venue data is wherever you happened to write
+it down.
 
 **A limitation to state plainly:** Tier B is not re-runnable by a third party, and is not
 fully re-runnable by us either. The tapes are transient by design (`scripts/cleanup_tapes.sh`
