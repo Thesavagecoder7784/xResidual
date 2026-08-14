@@ -1,0 +1,10 @@
+{
+ "n": 72,
+ "logscore_market": 0.8251367299257054,
+ "logscore_model": 0.84511844071888,
+ "advantage_nats": 0.019981710793174567,
+ "paired_t_p": 0.3359999739073515,
+ "market_better_in": 35,
+ "uniform_baseline": 1.0986122886681098,
+ "note": "mean negative log-likelihood on the 72 pre-committed group-stage forecasts, market de-vigged multiplicatively; same join as build_calibration.py"
+}

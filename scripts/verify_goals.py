@@ -220,11 +220,15 @@ def main() -> int:
     check_totals(args.verbose)
     check_clock(args.verbose)
 
-    # emit the counts so the manuscript can cite them as macros rather than literals
+    # Emit to _detection_scoreline.json, NOT _detection_results.json. That name is owned by
+    # scripts/detection_check.py, which runs the 86-match exogenous-clock analysis the paper
+    # cites. This script's 29-match scoreline check is a different, narrower measurement, and
+    # writing it to the shared name silently reverts the re-pool -- which is exactly what
+    # happened on 2026-08-14 and propagated into macros.tex before it was caught.
     try:
         import glob as _g
         n_arch = len(_g.glob(os.path.join(ROOT, "viz", "model", "overreaction", "*.json")))
-        with open(os.path.join(ROOT, "writeups", "_detection_results.json"), "w") as fh:
+        with open(os.path.join(ROOT, "writeups", "_detection_scoreline.json"), "w") as fh:
             json.dump({"n_matches_checked": _LAST["rows"], "n_over_detect": _LAST["over"],
                        "n_bad_n_goals": _LAST["stale"], "n_archives": n_arch,
                        "note": "detection validity vs scoreline ground truth; see check [2]"}, fh, indent=1)

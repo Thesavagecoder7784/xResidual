@@ -1,0 +1,39 @@
+{
+ "n_calls": 222,
+ "pct_positive": 0.5856,
+ "mean_clv_pp": -2.812,
+ "median_clv_pp": 0.675,
+ "by_market": {
+  "advance": {
+   "n": 46,
+   "pct_positive": 0.7391,
+   "mean_clv_pp": 4.029
+  },
+  "champion": {
+   "n": 13,
+   "pct_positive": 0.4615,
+   "mean_clv_pp": 2.546
+  },
+  "group_win": {
+   "n": 43,
+   "pct_positive": 0.5116,
+   "mean_clv_pp": -2.288
+  },
+  "reach_final": {
+   "n": 37,
+   "pct_positive": 0.7027,
+   "mean_clv_pp": -5.855
+  },
+  "reach_qf": {
+   "n": 42,
+   "pct_positive": 0.5,
+   "mean_clv_pp": -7.06
+  },
+  "reach_sf": {
+   "n": 41,
+   "pct_positive": 0.5122,
+   "mean_clv_pp": -5.639
+  }
+ },
+ "note": "CLV = market drift from the forecast price to the last logged observation, signed by the model's edge direction. Directional calls only (|edge| >= 0.5pp). Forecasts are correlated across markets and teams, so treat as a signal forming, not a verdict."
+}
