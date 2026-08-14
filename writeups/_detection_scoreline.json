@@ -1,0 +1,7 @@
+{
+ "n_matches_checked": 29,
+ "n_over_detect": 15,
+ "n_bad_n_goals": 14,
+ "n_archives": 31,
+ "note": "detection validity vs scoreline ground truth; see check [2]"
+}
