@@ -53,6 +53,8 @@ SOURCES = {
     "OC": "_ofi_ci_results.json",          # match-clustered interval on the cross-venue OFI null (§5.5)
     "DI": "_depth_instant_results.json",   # instantaneous vs trough depth, raw-tape reconstruction (§6.2)
     "HP": "_harvest_predict_results.json", # ex-ante predictability of harvestable matches (§6.2)
+    "PD": "_pricediscovery_results.json",  # P5 opening vs closing bookmaker lines (§7)
+    "SK": "_skill_results.json",           # P7(b) market vs raw-model log score (§7)
 }
 
 # The as-of date the venue-vs-sharp comparison is quoted at. Group stage, so all 48 teams are
@@ -160,6 +162,8 @@ def manual(name, val, note):         return ("manual", name, val, note)
 GROUPS = [
     ("Sample sizes (four distinct denominators — do not conflate)", [
         auto("nCaptured",    lambda D: intu(dig(D, "L", "n_matches")), "84", "marquee matches captured cross-venue"),
+        auto("nOpenClose",   lambda D: intu(dig(D, "PD", "n")), "89", "resolved matches with an opening AND closing bookmaker line (P5)"),
+        auto("nSkill",       lambda D: intu(dig(D, "SK", "n_matches")), "89", "matches scored market vs raw model on log score (P7b)"),
         auto("devigSpreadPM", lambda D: f"{dig(D, 'D', 'venues.polymarket.median_spread_pp'):.3f}\\,pp", "0.006\\,pp", "de-vig method spread, Polymarket"),
         auto("devigSpreadKA", lambda D: f"{dig(D, 'D', 'venues.kalshi.median_spread_pp'):.3f}\\,pp", "0.083\\,pp", "de-vig method spread, Kalshi"),
         auto("bookSumPM",     lambda D: num(dig(D, "D", "venues.polymarket.book_sum_median"), 2), "1.02", "Polymarket title book sum"),
@@ -216,6 +220,7 @@ GROUPS = [
         auto("cvShareVer",     lambda D: pct(dig(D, "CV", "poly_share_clock_verified")), "75\\%", "poly share on clock-verified events only"),
         auto("cvRangeLo",      lambda D: pct(dig(D, "CV", "poly_share_clock_verified_range.0")), "71\\%", "window-sensitivity floor"),
         auto("cvRangeHi",      lambda D: pct(dig(D, "CV", "poly_share_clock_verified_range.1")), "75\\%", "window-sensitivity ceiling"),
+        auto("cvLeanN",        lambda D: str(dig(D, "CV", "per_match_lean")).split(" of ")[1].strip(), "58", "matches leaning either way, clock-verified"),
         auto("cvLean",         lambda D: str(dig(D, "CV", "per_match_lean")), "44 of 53", "per-match lean, clock-verified"),
         auto("cvSignP",        lambda D: pval(dig(D, "CV", "per_match_sign_p")), "1.2\\times10^{-6}", "per-match sign test, clock-verified"),
         auto("leadCIlo",       lambda D: pct(dig(D, "H", "leadlag.cluster_boot_ci.0")), "66\\%", ""),
@@ -269,6 +274,7 @@ GROUPS = [
         auto("ilsLo",        lambda D: num(dig(D, "ID", "ils.lower.median_ils_poly"), 3), "0.249", "ILS at the Hasbrouck LOWER bound"),
         auto("ilsMid",       lambda D: num(dig(D, "ID", "ils.mid.median_ils_poly"), 3), "0.392", "ILS at the reported midpoint"),
         auto("ilsHi",        lambda D: num(dig(D, "ID", "ils.upper.median_ils_poly"), 3), "0.724", "ILS at the Hasbrouck UPPER bound"),
+        auto("ilsMidLead",   lambda D: f"{intu(dig(D,'ID','ils.mid.matches_poly_leads'))} of {intu(dig(D,'ID','ils.mid.n_matches'))}", "22 of 61", "matches where the midpoint ILS names POLYMARKET (so the rest name Kalshi)"),
     ]),
     # Every value here is a median-of-medians over \nMatchesHarvest matches (see the builder's
     # `estimator` field), NOT a mean and NOT a goal-level median. gross/cost/net are computed
@@ -365,6 +371,9 @@ GROUPS = [
     ("Goal under-reaction, clean-reconstruction subset (scripts/underreaction_clean.py)", [
         auto("urCleanMatches", lambda D: intu(dig(D, "R", "n_matches")), "8", "curated-minute matches that validate vs the final score"),
         auto("urCleanGoals",   lambda D: intu(dig(D, "R", "n_goals")), "29", ""),
+        auto("urGapCIlo",      lambda D: num(dig(D, "R", "outcome_test.logloss_gap_ci95.0"), 3), "0.009", "log-loss gap (market-model), match-bootstrap 95% lo"),
+        auto("urGapCIhi",      lambda D: num(dig(D, "R", "outcome_test.logloss_gap_ci95.1"), 3), "0.393", "log-loss gap, 95% hi"),
+        auto("urModelBetterM", lambda D: f"{intu(dig(D,'R','outcome_test.matches_model_better'))} of {intu(dig(D,'R','outcome_test.n_matches'))}", "5 of 8", "matches where the model's post-goal forecast scores better"),
         auto("urCleanGated",   lambda D: intu(dig(D, "R", "n_goals_gated")), "22", "goals where the market quote actually moved"),
         auto("urRatio",        lambda D: num(dig(D, "R", "median_ratio_logodds"), 2) + "\\ensuremath{\\times}", "0.35\\ensuremath{\\times}", "median market/model move, LOG-ODDS"),
         auto("urRatioProb",    lambda D: num(dig(D, "R", "median_ratio_prob"), 2) + "\\ensuremath{\\times}", "0.63\\ensuremath{\\times}", "same, probability space (for contrast only)"),
