@@ -79,7 +79,7 @@ def main() -> int:
                 "ratio_logodds": (mkt_lo / model_lo) if abs(model_lo) > EPS else None,
                 "ratio_prob": (g["mkt_jump"] / g["model_jump"]) if abs(g["model_jump"]) > EPS else None,
                 "model_post": g["model_home_after"], "mkt_post": g["mkt_home_settle"],
-                "home_won": home_won,
+                "home_won": home_won, "match": d["match"],
             })
         if rows:
             per_match[d["match"]] = rows
@@ -124,6 +124,27 @@ def main() -> int:
             "basis": "pooled over every goal in the subset, binary home-win indicator",
         }
         outcome["model_better"] = bool(outcome["model_logloss"] < outcome["market_logloss"])
+        # Uncertainty on that comparison. Every goal in a match is scored against the SAME final
+        # result, so the goals are not independent draws: the honest unit is the match. Resample
+        # matches (fixed seed) and recompute the pooled log-loss gap, market minus model.
+        import random
+        by_m = {}
+        for g in scored:
+            by_m.setdefault(g["match"], []).append(
+                ll(g["mkt_post"], g["home_won"]) - ll(g["model_post"], g["home_won"]))
+        keys = sorted(by_m)
+        rng, reps = random.Random(20260916), []
+        for _ in range(5000):
+            pick = [by_m[rng.choice(keys)] for _ in keys]
+            flat = [x for r in pick for x in r]
+            reps.append(st.mean(flat))
+        reps.sort()
+        outcome["logloss_gap_market_minus_model"] = round(st.mean(x for r in by_m.values() for x in r), 3)
+        outcome["logloss_gap_ci95"] = [round(reps[int(0.025 * len(reps))], 3),
+                                       round(reps[int(0.975 * len(reps)) - 1], 3)]
+        outcome["n_matches"] = len(keys)
+        outcome["matches_model_better"] = sum(1 for r in by_m.values() if st.mean(r) > 0)
+        outcome["ci_basis"] = "match-resampling bootstrap, 5000 reps, seed 20260916; goals share a final result"
 
     out = {
         "n_matches": len(per_match), "n_goals": len(goals),
