@@ -69,6 +69,42 @@ un-harvestable conclusion is conservative with respect to this defect. The goal-
 unchanged (7.31c on the ticker series, 7.31c on the full book), so the ledger's gross is not a
 stale-quote effect.
 
+## Can anything be salvaged? Yes — by inverting the measurement
+
+The naive salvage is to compare both venues one second apart, i.e. cut Polymarket to Kalshi's
+cadence so neither is favoured. That is fair but useless: at 1 Hz with 200 ms bins, a sub-second
+lead of either sign collapses to "synchronous", and every event lands in the same bucket. It
+cannot distinguish a real 600 ms lead from none.
+
+The version that works uses the fact that the estimator's response to a *known* input is
+measurable. Shift a real Polymarket path by a known lag, observe it at 1 Hz, record what the
+estimator reports, and repeat over a grid of lags and thousands of 1 Hz phases. That gives the
+response matrix; the published histogram of 427 leads is then inverted against it by non-negative
+least squares (`scripts/lead_deconvolution.py`). Nothing here needs the lost tapes.
+
+Validated first on known inputs: a true 600 ms Polymarket lead is recovered as 97% Polymarket,
+a true Kalshi lead as 100% Kalshi, a 20/60/20 mixture as 21/62/17. When the truth is zero, 13% leaks
+to "Polymarket", so the Polymarket mass below is if anything overstated.
+
+Recovered distribution of true leads across the 427 published events:
+
+| | share of events | bootstrap 95% |
+|---|---|---|
+| Kalshi genuinely first | 38% | 25-50% |
+| No detectable lead | 39% | 24-54% |
+| Polymarket genuinely first | 23% | 17-28% |
+
+Two supporting reads point the same way. The measured leads sit *below* the zero-lead null
+(published median +400 ms against a null median of +600 ms; Mann-Whitney for "published exceeds
+null" gives p = 0.999). And on the published events, 26% are Kalshi-first where the null produces
+only 4%, so genuine Kalshi-leading events are the clearest signal in the data.
+
+**What can be claimed.** Not "Polymarket leads". The defensible statements are that the venues are
+within a second of each other in-play with no systematic ordering; that roughly a fifth to a
+quarter of goal repricings do show a genuine Polymarket lead, against a larger share showing a
+genuine Kalshi one; and that the published ordering was an artifact of feed cadence. The
+distribution is real and interesting. Its headline was backwards.
+
 ## What could resurrect the lead claim
 
 Nothing in this repository. The raw tapes survive for three matches holding 15 of the 392 events, and
