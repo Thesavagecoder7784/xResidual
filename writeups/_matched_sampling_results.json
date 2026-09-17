@@ -1,0 +1,53 @@
+{
+ "note": "medians per contract; mirrors build_harvest definitions, varies only sampling",
+ "results": {
+  "20260718/England": {
+   "trusted_rebuild": false,
+   "n_shocks": 14,
+   "poly_depth_frac_full_res": 0.0035,
+   "poly_depth_frac_at_1hz": 0.0346,
+   "kalshi_depth_frac_ticker_1hz": 0.0009,
+   "kalshi_depth_frac_full_book": null,
+   "gross_cents_ticker": 7.65,
+   "gross_cents_full_book": null,
+   "follower_kalshi_share_ticker": 0.643,
+   "follower_kalshi_share_full_book": null
+  },
+  "20260718/France": {
+   "trusted_rebuild": false,
+   "n_shocks": 6,
+   "poly_depth_frac_full_res": 0.0162,
+   "poly_depth_frac_at_1hz": 0.0507,
+   "kalshi_depth_frac_ticker_1hz": 0.0014,
+   "kalshi_depth_frac_full_book": null,
+   "gross_cents_ticker": 9.37,
+   "gross_cents_full_book": null,
+   "follower_kalshi_share_ticker": 0.667,
+   "follower_kalshi_share_full_book": null
+  },
+  "20260719/Spain": {
+   "trusted_rebuild": true,
+   "n_shocks": 1,
+   "poly_depth_frac_full_res": 0.0361,
+   "poly_depth_frac_at_1hz": 0.2518,
+   "kalshi_depth_frac_ticker_1hz": 0.0155,
+   "kalshi_depth_frac_full_book": 0.003,
+   "gross_cents_ticker": 7.31,
+   "gross_cents_full_book": 7.31,
+   "follower_kalshi_share_ticker": 1.0,
+   "follower_kalshi_share_full_book": 1.0
+  },
+  "20260719/Argentina": {
+   "trusted_rebuild": true,
+   "n_shocks": 0,
+   "poly_depth_frac_full_res": null,
+   "poly_depth_frac_at_1hz": null,
+   "kalshi_depth_frac_ticker_1hz": null,
+   "kalshi_depth_frac_full_book": null,
+   "gross_cents_ticker": 0,
+   "gross_cents_full_book": null,
+   "follower_kalshi_share_ticker": null,
+   "follower_kalshi_share_full_book": null
+  }
+ }
+}
