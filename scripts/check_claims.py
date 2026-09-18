@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Do the prose surfaces still agree with the JSON artifacts they came from?
+"""Do the public surfaces still agree with the artifacts they came from -- and stay corrected?
 
-`emit_macros.py --check` already guarantees this for the LaTeX manuscript, and it has never
-let a number drift. Everything else -- the README, FINDINGS, the desk note, the site, the
-writeups, both submission packages -- carries the same headline figures as hand-typed prose
-with nothing keeping them honest. Four separate published claims were found stale or
-mislabelled on 2026-07-28 alone. This closes that gap.
+Two jobs.
 
-For each headline figure it holds the canonical value (read from the artifact, never
-hard-coded) and the surfaces that quote it, then flags any surface that states a DIFFERENT
-value for the same quantity. It is deliberately narrow: it checks the numbers that appear in
-an abstract or a headline paragraph, not every number in the repo.
+1. AGREEMENT. For each headline figure it holds the canonical value (read from an artifact or
+   computed by the grader, never hard-coded) and flags any live surface that states a DIFFERENT
+   value for the same quantity. A check whose pattern matches nothing fails too: a pattern that
+   matches nothing looks exactly like one that matches and agrees.
+2. THE CORRECTION HOLDS. On 2026-09-18 the cross-venue lead-lag finding was withdrawn
+   (CORRECTION.md). Its figures may still appear on a live surface, but only while being withdrawn;
+   stated as fact anywhere, they fail the check. So does "the market beats my model", which the
+   model-vs-market comparison does not support.
 
     python scripts/check_claims.py           # report
     python scripts/check_claims.py -v        # show every match, not just failures
@@ -27,14 +27,24 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Surfaces that carry headline claims in prose.
+# Surfaces that carry headline claims in prose: the live, public ones. The withdrawn cross-venue
+# material in archive/ is deliberately NOT scanned -- it is a frozen record of what was claimed, and
+# the guard below exists to keep its figures from reappearing here. The manuscript (paper/arxiv/) is
+# private and predates the 2026-09-18 correction; it is out of scope until it is rewritten.
 SURFACES = [
-    "README.md", "FINDINGS.md", "METHODOLOGY.md", "REPRODUCING.md",
-    "writeups/price_discovery_note.html", "writeups/cross-venue-price-discovery.md",
-    "writeups/ssrn_paper.md", "writeups/blog_post.md", "writeups/retrospective.md",
-    "paper/arxiv/SSRN_submission.md", "paper/arxiv/JPM_submission.md",
-    "docs/index.html", "docs/note.html", "docs/method.html",
+    "README.md", "FINDINGS.md", "METHODOLOGY.md", "REPRODUCING.md", "CORRECTION.md",
+    "PREREGISTRATION-ADDENDUM.md", "writeups/retrospective.md",
+    "docs/index.html", "docs/method.html", "docs/results.html",
 ]
+
+# A withdrawn figure may still be QUOTED on a live surface, but only in the act of withdrawing it.
+# A mention counts as correction context when one of these words sits within CONTEXT_CHARS of it.
+CONTEXT_CHARS = 300
+WITHDRAWN_CONTEXT = (r"withdrawn|artifact|no lead|placebo|previously|reproduces|reported that|"
+                     r"originally|correction|revised|regraded|did not survive|was the sampling|"
+                     r"once a second|one message a second|In July|until 2026-09-18|moved from|"
+                     r"PASS to INCONCLUSIVE|6 · 2 · 3|6 / 2 / 3|became inconclusive|lead of (?:exactly )?zero|"
+                     r"zero-lead|known-truth|true lead|one-per-second")
 
 
 def _j(path: str):
@@ -42,91 +52,111 @@ def _j(path: str):
         return json.load(fh)
 
 
+def _tally() -> str:
+    """The live pre-registration grade, computed by the grader itself -- never typed here."""
+    sys.path.insert(0, os.path.join(ROOT, "scripts"))
+    import grade_prereg as gp  # noqa: E402
+    import contextlib
+    import io
+    with contextlib.redirect_stdout(io.StringIO()):
+        rows = [g() for g in gp.GRADERS]
+    count = lambda v: sum(1 for r in rows if r["verdict"] == v)
+    return f"{count(gp.PASS)},{count(gp.FAIL)},{count(gp.INC)}"
+
+
+def _digits(x: str) -> str:
+    return ",".join(re.findall(r"\d+", x))
+
+
 def canonical() -> list[dict]:
     """Every headline figure, its true value from the artifact, and how it may be written."""
-    hard = _j("writeups/_hardened_stats.json")
-    ll, isr = hard["leadlag"], hard["infoshare"]
+    cal = _j("writeups/_calibration_results.json")["versions"]
+    mkt, v1 = cal["market"], cal["v1"]
     harv = _j("writeups/_harvest_results.json")["pooled"]
     unit = _j("writeups/_harvest_unit_check.json")
-    calall = _j("writeups/_calibration_results.json")
-    cal = calall["versions"]["v1"]
-    # Real location, verified: versions.market.brier (also mirrored as paired_market_vs_v1.brier_a).
-    # No literal fallback -- a silent fallback would defeat the point of reading from the artifact.
-    mkt_brier = calall["versions"]["market"]["brier"]
-
+    loop = _j("writeups/_loop_window_results.json")
+    dec = _j("writeups/_lead_deconvolution_results.json")["masses"]
+    sb = _j("writeups/_sampling_bias_results.json")
+    zero = next(r for r in sb["lead_lag_placebo"]
+                if r["grid"] == "kalshi_ticker_timestamps" and r["true_lag_ms"] == 0)
+    mb, vb = f"{mkt['brier']:.3f}", f"{v1['brier']:.3f}"
+    against = r"\s*(?:vs\.?|against)\s*(?:my\s*(?:own\s*)?(?:model'?s?\s*)?)?"
     return [
-        dict(name="lead-lag share of decisive events",
-             value=round(ll["poly_share_decisive"] * 100),
-             pattern=r"(\d{2})%\s*of\s*(?:the\s*)?(?:392|decisive)", unit="%"),
-        dict(name="decisive events",
-             value=ll["n_events"], pattern=r"(\d{3})\s*decisive", unit=""),
-        dict(name="median lead ms",
-             value=int(ll["median_lead_ms"]), pattern=r"median\s*\+?(\d{3})\s*ms", unit="ms",
-             # 400ms is the SIGNED pooled median (counts Kalshi-led events negative) and 500ms is
-             # the superseded n=8 read, both discussed explicitly in the writeups. Neither is a
-             # restatement of the headline, so neither is a drift.
-             allow={"400", "500"}),
-        dict(name="per-match lean",
-             value=f"{ll['per_match_poly_leaning']} of {ll['per_match_total']}",
-             pattern=r"(\d{2}\s*of\s*\d{2})\s*matches\s*lean", unit=""),
-        # TWO measures, two guards. The old single rule matched a bare "information share" and
-        # so accepted either number for either name -- which is precisely the conflation the
-        # manuscript was carrying (the GG COMPONENT share was called an information share in the
-        # abstract). Splitting the rule makes the checker enforce the distinction: "component
-        # share"/"Gonzalo-Granger" must be followed by the GG number, "Hasbrouck" by its own.
-        dict(name="Gonzalo-Granger component share",
-             value=round(isr["median_gg"] * 100, 1),
-             pattern=r"(?:component share|GG|Gonzalo.Granger)[^.]{0,60}?(\d{2}\.\d)%", unit="%"),
-        dict(name="Hasbrouck information share",
-             value=round(isr["median_hasbrouck"] * 100, 1),
-             pattern=r"Hasbrouck[^.]{0,60}?(\d{2}\.\d)%", unit="%"),
-        dict(name="info-share matches led",
-             value=f"{isr['matches_poly_gt_50']} of {isr['n_matches']}",
-             pattern=r"(\d{2}\s*of\s*\d{2})\s*cointegrated", unit=""),
-        dict(name="harvest ledger rows",
-             value=harv["n_goals"], pattern=r"(\d{3})\s*goal-shock", unit="obs"),
-        dict(name="harvest gross cents",
-             value=harv["gross_med_c"], pattern=r"median\s*(?:gross\s*)?(\d{2}\.\d)[\s-]*cent", unit="c"),
-        # 1-2 digits, not 2: the full-ledger re-pool moved this from 11% to 9%, and a \d{2}
-        # pattern then matched nothing at all -- caught only by the zero-mention guard below.
-        # BOTH word orders: "9% goal-weighted" and "goal-weighted rate is 9.1%". The second
-        # phrasing sat stale in three surfaces through a re-pool because only the first matched.
-        dict(name="goal-weighted harvestable",
-             value=round(unit["pct_harvestable_goal_weighted"]),
-             # The emphasis marker between "is" and the number may be markdown (**) or HTML
-             # (<b>): docs/note.html sat stale behind a <b> tag while the guard reported CLEAN.
+        # The pre-registration grade. Historical tallies (6/2/3) are legitimate only where the text is
+        # explaining the regrade, which the context rule allows.
+        dict(name="pre-registration tally", value=_tally(), norm=_digits, unit="",
+             pattern=r"(\d\s*(?:pass|PASS)[^0-9]{0,8}\d\s*(?:fail|FAIL)[^0-9]{0,8}\d\s*(?:inconclusive|INCONCL))",
+             historical_ok=True),
+        dict(name="market Brier", value=mb, unit="",
+             pattern=rf"(0\.\d{{3}}){against}{vb}"),
+        dict(name="model Brier (v1)", value=vb, unit="",
+             pattern=rf"{mb}{against}(0\.\d{{3}})"),
+        dict(name="market calibration slope", value=f"{mkt['slope']:.2f}", unit="",
+             pattern=r"slope\s*(?:of\s*)?\**(\d\.\d{2})\**\s*(?:against|vs)"),
+        dict(name="model calibration slope", value=f"{v1['slope']:.2f}", unit="",
+             pattern=r"slope\s*(?:of\s*)?\**\d\.\d{2}\**" + against + r"(\d\.\d{2})"),
+        dict(name="de-vigged gap while books normalize", value=f"{loop['raw_gap_pp_median']:.2f}", unit="pp",
+             pattern=r"(0\.\d{2})\s*(?:pp|points?)\b[^.]{0,80}?(?:both books|normali[sz])"),
+        dict(name="Kalshi overround", value=f"{loop['overround_kalshi_pct_median']:.1f}", unit="%",
+             pattern=r"overround[^.]{0,40}?(\d\.\d)%\s*(?:on Kalshi\s*)?(?:against|vs)"),
+        dict(name="Polymarket overround", value=f"{loop['overround_poly_pct_median']:.1f}", unit="%",
+             pattern=r"overround[^.]{0,40}?\d\.\d%\s*(?:on Kalshi\s*)?(?:against|vs\.?)\s*(\d\.\d)%"),
+        dict(name="harvest gross move", value=f"{harv['gross_med_c']:.1f}", unit="c",
+             pattern=r"median\s*(?:gross\s*)?\**(\d{2}\.\d)\**\s*(?:-?\s*cents?|¢)"),
+        # 1-2 digits, and both word orders, for the reasons recorded in git history of this file.
+        dict(name="goal-weighted harvestable", value=str(round(unit["pct_harvestable_goal_weighted"])), unit="%",
              pattern=r"(?:~?(\d{1,2})(?:\.\d)?%\s*goal-weighted"
-                     r"|goal-weighted[^.]{0,40}?(?:is|:)\s*(?:\*{1,2}|<b>)?\s*~?(\d{1,2})(?:\.\d)?%)",
-             unit="%"),
-        # The artifact carries 4 dp (0.5033) but the manuscript macro rounds to 3 (0.503), so the
-        # comparison is made at the precision the paper prints. Demanding 4 dp matched nothing and
-        # passed silently -- the failure mode the zero-mention guard below now catches.
-        # Anchored on the MARKET Brier (also artifact-derived) because the manuscript contains a
-        # second "Brier X vs. Y" pair for the under-reaction outcome test (0.073 vs 0.113). Both
-        # numbers in the anchor come from artifacts, so nothing is hard-coded.
-        dict(name="model Brier (v1)",
-             value=round(cal["brier"], 3),
-             pattern=rf"Brier\s+{round(mkt_brier, 3)}\s+vs\.?\\?\s+(0\.\d{{3}})", unit=""),
+                     r"|goal-weighted[^.]{0,40}?(?:is|:)\s*(?:\*{1,2}|<b>)?\s*~?(\d{1,2})(?:\.\d)?%)"),
+        dict(name="deconvolved Kalshi-first", value=str(round(dec["kalshi"] * 100)), unit="%",
+             pattern=r"(\d{2})%\s*(?:of goals\s*)?Kalshi[- ]first"),
+        dict(name="deconvolved no lead", value=str(round(dec["none"] * 100)), unit="%",
+             pattern=r"(\d{2})%\s*(?:no lead|neither)"),
+        dict(name="deconvolved Polymarket-first", value=str(round(dec["poly"] * 100)), unit="%",
+             pattern=r"(\d{2})%\s*Polymarket[- ]first"),
+        dict(name="zero-lead placebo", value=f"{zero['poly_first']} of {zero['n_gated']}", unit="",
+             pattern=r"(\d{2}\s*of\s*\d{2})\s*windows"),
     ]
 
 
+# Phrasings that must not appear on a live surface. Each may carry an `unless` context: the phrase is
+# then allowed only where that context sits within CONTEXT_CHARS -- i.e. while it is being withdrawn.
 BANNED = [
+    # The withdrawn cross-venue finding, stated as fact.
+    (r"\+?600\s?ms", "the withdrawn +600 ms cross-venue lead (CORRECTION.md)", WITHDRAWN_CONTEXT),
+    (r"81(?:\.0)?%\s*(?:Gonzalo|information|info|component|Polymarket)",
+     "the withdrawn 81% information share (CORRECTION.md)", WITHDRAWN_CONTEXT),
+    (r"Polymarket (?:leads|discovers|moves first|reprices (?:a )?goals? (?:first|before))",
+     "the withdrawn claim that Polymarket leads (CORRECTION.md)", WITHDRAWN_CONTEXT),
+    (r"(?:leads?|leading)\s*(?:in\s*)?61 of 63", "the withdrawn 61-of-63 lead (CORRECTION.md)", WITHDRAWN_CONTEXT),
+    (r"57 of 66", "the withdrawn per-match lean (CORRECTION.md)", WITHDRAWN_CONTEXT),
+    (r"(?:price leader|leading venue)[^.]{0,80}(?:withdraws|empties|vanishes) hardest",
+     "the withdrawn depth asymmetry (FINDINGS #38)", WITHDRAWN_CONTEXT),
+    # The model-vs-market guardrail: the Brier gap is a point result (paired p = 0.25).
+    (r"(?:market|it)\s+(?:beat|beats|out-?predict(?:s|ed)?)\s+(?:my|the)\s+(?:own\s+)?(?:pre-?\w+\s+)?model",
+     "'the market beats my model' -- a point result (p = 0.25); claim 'better calibrated' (FINDINGS guardrail)",
+     r"\bnot\b|never"),
     (r"405\s+goals",
-     "'405 goals' — build_harvest.py appends one row per CONTRACT per shock, so these are "
-     "goal-shock observations (~2 per goal). 405 goals in 66 matches is also arithmetically "
-     "impossible: the whole 104-match tournament produced 308."),
-    # Exempt the corrective sentences that QUOTE the bad phrasing in order to forbid it.
+     "'405 goals' -- build_harvest.py appends one row per CONTRACT per shock, so these are "
+     "goal-shock observations (~2 per goal). The whole 104-match tournament produced 308 goals.", None),
     (r"(?<![\d.])(?<!not \")(?<!never as \')0%\s*of\s*goals",
-     "'0% of goals' — the published estimator is a median ACROSS MATCHES. Correct phrasing: "
-     "'the median match yields no harvestable goal'."),
-    (r"5\s*(?:to|-|–)\s*8\s*cent",
-     "the uncited '5 to 8 cent' press figure — we measure the raw gap at 3.98pp."),
-    # Legitimate when explicitly scoped to the 33-game window it was measured on.
-    (r"highest scoring rate of the modern era(?![^.]{0,200}33 group games)"
-     r"(?<!through the first \*\*33 group games\*\*, 2026 is running \*\*3\.09 goals/game\*\* — the highest scoring rate of the modern era)",
-     "unqualified scoring superlative — 2.99 g/g group / 2.88 full is scope-dependent and "
-     "not backed by a shipped historical series."),
+     "'0% of goals' -- the estimator is a median ACROSS MATCHES. Say 'the median match yields no "
+     "harvestable goal'.", None),
+    (r"5\s*(?:to|-|–)\s*8\s*cent", "the uncited '5 to 8 cent' press figure", None),
+    (r"highest scoring rate of the modern era",
+     "unqualified scoring superlative -- scope it to the 33-game window it was measured on", r"33 group games"),
 ]
+
+
+def banned_hits(body: str) -> list[tuple[int, str]]:
+    """(line, reason) for every banned phrasing in `body` that is not being withdrawn in context."""
+    hits = []
+    for pat, why, unless in BANNED:
+        for m in re.finditer(pat, body, re.I):
+            near = body[max(0, m.start() - CONTEXT_CHARS): m.end() + CONTEXT_CHARS]
+            if unless and re.search(unless, near, re.I):
+                continue      # quoted in the act of withdrawing it
+            hits.append((body.count("\n", 0, m.start()) + 1, why))
+    return hits
 
 
 def main() -> int:
@@ -156,25 +186,7 @@ def main() -> int:
     print("=" * 78)
     print("  CLAIM CONSISTENCY — prose surfaces vs the artifacts they came from")
     print("=" * 78)
-    # The rendered PDF is scanned too. Source-only scanning has a real blind spot: the abstract
-    # wrote "\\nGoalsHarvest{} goals", which renders as "405 goals" but contains no such literal
-    # string, so every source-level check passed while the built paper carried the mislabel. Caught
-    # only by compiling. If main.pdf is absent this degrades quietly to source-only.
-    pdf = os.path.join(ROOT, "paper", "arxiv", "main.pdf")
-    if os.path.exists(pdf):
-        try:
-            import pypdf
-            rendered = "\n".join(pg.extract_text() or "" for pg in pypdf.PdfReader(pdf).pages)
-            text["paper/arxiv/main.pdf (rendered)"] = rendered
-            print(f"  + scanning the rendered PDF ({len(pypdf.PdfReader(pdf).pages)} pages) "
-                  f"— macros hide banned phrasings from a source-only scan")
-        except Exception as e:  # noqa: BLE001
-            print(f"  ! could not read main.pdf ({type(e).__name__}); source-only scan")
-            missing.append("paper/arxiv/main.pdf (rendered)")
-    else:
-        missing.append("paper/arxiv/main.pdf (rendered)")
-
-    expected = len(SURFACES) + 1  # +1 for the rendered PDF
+    expected = len(SURFACES)
     print(f"  {len(claims)} headline figures · {len(text)} of {expected} surfaces\n")
 
     if missing:
@@ -196,8 +208,14 @@ def main() -> int:
                     continue
                 got = re.sub(r"\s+", " ", grp).strip()
                 hits += 1
-                if got.replace(" ", "") != want.replace(" ", "") and got not in c.get("allow", set()):
-                    bad.append(f"{s}: says {got}, artifact says {want}")
+                norm = c.get("norm", lambda x: x.replace(" ", ""))
+                if norm(got) == norm(want) or got in c.get("allow", set()):
+                    continue
+                if c.get("historical_ok"):
+                    near = body[max(0, m.start() - CONTEXT_CHARS): m.end() + CONTEXT_CHARS]
+                    if re.search(WITHDRAWN_CONTEXT, near, re.I):
+                        continue      # an old figure quoted while explaining that it changed
+                bad.append(f"{s}: says {got}, artifact says {want}")
         if hits == 0:
             # Silent-pass guard. A pattern that matches nothing looks identical to a pattern that
             # matches and agrees, so an unmaintained check would quietly certify a drifting number
@@ -214,11 +232,10 @@ def main() -> int:
             failures += 1
 
     print("\n  BANNED PHRASINGS")
-    for pat, why in BANNED:
-        for s, body in text.items():
-            if re.search(pat, body, re.I):
-                print(f"    !! {s}: {why}")
-                failures += 1
+    for s, body in text.items():
+        for line, why in banned_hits(body):
+            print(f"    !! {s}:{line}: {why}")
+            failures += 1
 
     incomplete = bool(missing) and not args.allow_missing
 
