@@ -113,9 +113,14 @@ one of the three carries no Polymarket. A future capture can settle it cheaply â
 from `orderbook_snapshot` + `orderbook_delta`, which the existing logger already records â€” but this
 tournament cannot be re-estimated.
 
-## Public surfaces still carrying the withdrawn numbers
+## Public surfaces
 
-`README.md`, `FINDINGS.md`, `METHODOLOGY.md`, `PREREGISTRATION.md` (P6 discussion),
-`docs/method.html`, `docs/index.html`, `docs/lab.html`, `writeups/price_discovery_note.html`,
-`writeups/ssrn_paper.md`, `writeups/blog_post.md`, `writeups/cross-venue-price-discovery.md`,
-`writeups/lead-lag.md`, `writeups/retrospective.md`, `paper/theses.md`.
+Corrected on 2026-09-18: `README.md`, `FINDINGS.md`, `METHODOLOGY.md`, `REPRODUCING.md`,
+`writeups/retrospective.md`, the pre-registration scorecard (P6 regraded, entry A-P6), and the site
+(`docs/index.html`, `docs/method.html`, `docs/results.html`, the social preview). The desk note, the
+price-discovery writeup, the blog post, the SSRN draft and the June 14 microstructure pre-registration
+moved unchanged to `archive/cross-venue/`; `docs/note.html` and `docs/lab.html` stay at their URLs
+behind a correction banner. `scripts/check_claims.py` now fails if a withdrawn figure is stated as fact
+on any live surface, and `tests/test_correction_guard.py` pins that rule.
+
+Outside this repository and still to correct: the portfolio site at thesavagecoder7784.github.io.

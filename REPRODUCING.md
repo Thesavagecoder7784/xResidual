@@ -1,5 +1,10 @@
 # Reproducing the paper
 
+> **2026-09-18.** The cross-venue lead-lag and information-share results mapped below are withdrawn
+> ([CORRECTION.md](CORRECTION.md)). Their scripts still run and are kept, because the tests that
+> overturned them run on the same code; the rows are marked, and the correction's own checks are
+> added to the map. The manuscript in `paper/arxiv/` predates the correction and is being rewritten.
+
 Every number, table, and figure in the manuscript (`paper/arxiv/`) maps to a script and
 a committed derived artifact. This document is the map. It has two tiers:
 
@@ -43,9 +48,9 @@ so a stale paper number cannot be committed.
 
 | Paper location | Claim | Script | Artifact |
 |---|---|---|---|
-| Abstract, §5.2 (Fig. leadlag) | Cross-venue lead-lag, cluster-robust | `scripts/build_leadlag.py` → `scripts/harden_leadlag_stats.py` | `_leadlag_results.json`, `_hardened_stats.json` |
-| §5.2 (Fig. infoshare) | Hasbrouck / Gonzalo–Granger info share | `scripts/build_infoshare.py` → `scripts/harden_leadlag_stats.py` | `_infoshare_results.json`, `_hardened_stats.json` |
-| §5.1 | Law of one price; depth asymmetry | `scripts/build_liquidity.py` | `_liquidity_results.json` |
+| Abstract, §5.2 (Fig. leadlag) | **Withdrawn** — Cross-venue lead-lag, cluster-robust | `scripts/build_leadlag.py` → `scripts/harden_leadlag_stats.py` | `_leadlag_results.json`, `_hardened_stats.json` |
+| §5.2 (Fig. infoshare) | **Withdrawn** — Hasbrouck / Gonzalo–Granger info share | `scripts/build_infoshare.py` → `scripts/harden_leadlag_stats.py` | `_infoshare_results.json`, `_hardened_stats.json` |
+| §5.1 | Law of one price (the depth *asymmetry* between venues is withdrawn) | `scripts/build_liquidity.py` | `_liquidity_results.json` |
 | §5.3 | Goal-shock under-reaction | `scripts/build_livewp.py` | `_livewp_results.json` |
 | §5.4 (Fig. reliability) | Calibration; favorite–longshot bias | `scripts/build_calibration.py` | `_calibration_results.json` |
 | §5.5 | Order-flow imbalance | `scripts/build_ofi_leadlag.py` | `_ofi_results.json` |
@@ -54,6 +59,9 @@ so a stale paper number cannot be committed.
 | §5.4 | Market-vs-model paired Brier test | `scripts/build_calibration.py` | `_calibration_results.json` (`paired_market_vs_v1`) |
 | §7 (Table) | Pre-registration scorecard | `scripts/grade_prereg.py` | graded from the above |
 | All numeric macros | Single source of truth | `scripts/emit_macros.py` | `paper/arxiv/macros.tex` |
+| Correction | Known-truth placebo: the lead a zero-lead market produces under the capture's sampling | `scripts/sampling_bias_check.py` | `_sampling_bias_results.json` |
+| Correction | Depth claims with both venues sampled alike | `scripts/matched_sampling_depth.py` | `_matched_sampling_results.json` |
+| Correction | True-lead distribution, deconvolved from the published leads | `scripts/lead_deconvolution.py` | `_lead_deconvolution_results.json` |
 
 Seeds are fixed (`_hardened_stats.json` records `seed` and `n_bootstrap`), so the
 hardened statistics are bit-reproducible.
@@ -134,8 +142,10 @@ Two limits, stated rather than glossed:
   them in June.
 
 The grading is its own evidence of good faith: `scripts/grade_prereg.py` reproduces from a
-clone and returns **6 PASS · 2 FAIL · 3 INCONCLUSIVE**. A pre-registration edited after the
-fact would not report its own failures.
+clone and returns **5 PASS · 2 FAIL · 4 INCONCLUSIVE** (6 · 2 · 3 until 2026-09-18, when P6 was
+regraded; see [PREREGISTRATION-ADDENDUM.md](PREREGISTRATION-ADDENDUM.md), entry A-P6). A
+pre-registration edited after the fact would not report its own failures — or, in the one case
+where a grade moved later, would not move it toward caution.
 
 ## Data availability
 

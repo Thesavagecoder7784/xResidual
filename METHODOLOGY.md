@@ -13,8 +13,9 @@ built on the same variance model:
 
 - **Residuals**: the tournament's surprises, measured against the market's
   expectation (and how fast the market re-priced them).
-- **Microstructure**: how the venues converge, who incorporates information faster,
-  and how prediction markets compare to traditional bookmakers.
+- **Microstructure**: how the venues converge, what happens to their order books around
+  news, and how prediction markets compare to traditional bookmakers. (A fourth question,
+  *which venue incorporates information first*, was attempted and withdrawn; see §16.)
 - **Calibration / sharpness**: over the match population, how good are the markets'
   probabilities?
 
@@ -210,7 +211,7 @@ be re-applied to the full logged series after the fact. (Implementation:
 Each recovered `q_m` is tagged with its venue, timestamp, and a liquidity measure
 (see §6). The **closing quote (last before kickoff)** is the calibration forecast:
 it is the most efficient price the market reaches, aggregating all late information
-(injuries, lineups, sharp money); the full time series feeds trajectory and lead–lag
+(injuries, lineups, sharp money); the full time series feeds the trajectory
 analysis.
 
 ## 6. Data, liquidity, and the usable n
@@ -416,7 +417,16 @@ Efron–Morris; arXiv:1807.09236), with Glicko's rating deviation as the deploye
 
 The microstructure layer extends to live matches via `logger/ws_capture.py`: a single-clock,
 **millisecond-stamped** websocket capture of the Kalshi and Polymarket order books for a named
-fixture, written to per-capture files so each match is self-contained. From the reconstructed
+fixture, written to per-capture files so each match is self-contained.
+
+> **What the capture recorded is not what the analysis read.** The capture subscribes to Kalshi's
+> `ticker`, `trade` and `orderbook_delta` channels. The analysis (`ws_events.kalshi_mid_series`,
+> `stream_micro.stream_all`) builds Kalshi's mid from `ticker` alone, which Kalshi caps at one
+> message per second per market; Polymarket's mid is rebuilt from its full book at ~10 ms. Anything
+> that depends on Kalshi's timing below a few seconds is therefore unreliable in this repository
+> (§16). Slower quantities — levels, spreads, depth over a window, the ~30 s under-reaction read
+> below — are unaffected. Future captures should build Kalshi's mid from `orderbook_snapshot` +
+> `orderbook_delta`; a working rebuild is in `scripts/sampling_bias_check.py`. From the reconstructed
 mids, `xresidual/ws_events.py` auto-detects price shocks (goals, red cards) without a
 hand-typed goal time, and `overreaction_backtest` fades them — the documented ~2–3%/trade
 reversion after a *surprising* goal (Choi & Hui; "Role of Surprise"), entered ~2 min after and
@@ -447,44 +457,27 @@ changed without the build surfacing which cards now need regenerating. The simul
 format invariants (§12) are checked the same way — exact-by-construction, so a violation is a
 code bug, not a silent modelling drift.
 
-## 16. Price discovery across venues: lead–lag and information share (flagship)
+## 16. Price discovery across venues — withdrawn
 
-This is the project's flagship microstructure result, and it matured over the tournament from
-an early "which venue reads a goal first — does Kalshi or Polymarket move first?" framing into a
-pooled, population-grade statement of price discovery. A standalone desk research note writes it
-up in full (`writeups/price_discovery_note.pdf`).
+*Withdrawn 2026-09-18; the full account is [CORRECTION.md](CORRECTION.md).* This section
+previously reported that Polymarket leads Kalshi in price discovery: first on 72% of 392 goal
+repricings by a median +600 ms, with an 81.0% Gonzalo–Granger component share. Both estimators ran
+on a Kalshi mid observed at most once per second against a Polymarket mid observed about every
+10 ms (§14), and a market with no lead, observed the same way, reproduces the published result.
+The method record is kept, unchanged, in [`archive/cross-venue/`](archive/cross-venue/).
 
-**Pooled lead–lag (the headline).** Across the **86 captured matches** of the full tournament,
-**Polymarket leads 72% of goal repricings (281 vs 111 of 392 decisive events, median +600ms
-among Polymarket-led events)** — the venue that moves first when a goal hits the book, pooled over
-every detected shock. A naive event-level binomial makes that look overwhelming (p ≈ 4×10⁻¹⁸), and
-it is not the number to quote: the 392 events are nested in **79 lead-bearing matches**, so the
-honest unit is the **match**, not the repricing. Cluster-corrected, the effect survives easily —
-intra-match correlation is low (ICC 0.032, design effect 1.13, effective N ≈ 348), a match-resampling
-bootstrap holds the 95% CI at **[67%, 76%]**, and the cluster-immune per-match statement is
-**57 of 66 matches lean Polymarket** (sign test p = 1.2×10⁻⁹, Wilcoxon p = 7.2×10⁻⁸). Quote the
-per-match result; the event-level count is descriptive scale, not inferential weight.
+What a valid measurement needs, for anyone extending this:
 
-**Information share (the mechanism).** The lead–lag count is corroborated by a structural
-price-discovery decomposition. For each pair of matched contracts across the two venues, I fit a
-**VECM on the two order-book MID series** and compute both the **Hasbrouck (1995) information
-share** and the **Gonzalo–Granger (1995) permanent-component share**. The decomposition is
-**gated by a cointegration test** (ADF / Engle–Granger): only matched contracts that pass are
-pooled, since the shares are only defined when the two mids share a common stochastic trend.
-Computing on **mids** is what makes this robust to the trade-direction-classification problem —
-Lee–Ready-style signing matches on-chain ground truth only ≈59% of the time (arXiv:2604.24366), so any
-flow- or trade-signed discovery measure would inherit that error; the MID series carries no
-direction to misclassify. Result: **Polymarket's Gonzalo–Granger permanent-component share is
-≈81.0%** (per-match median, bootstrap CI [77%, 87%]), and it **leads in 61 of 63 cointegrated
-matches (104 contracts)**, sign test p = 4.4×10⁻¹⁶ — the same venue, the same direction as the raw
-lead–lag count, which is the cross-check that makes the flagship robust. On the same per-match unit
-the Hasbrouck share is ≈75.2% (CI [68%, 87%]); the per-*contract* Cholesky identification width
-(≈77–92%) is an ordering-sensitivity diagnostic on a different denominator and is not a confidence
-interval on that figure. Gonzalo–Granger is a coefficient ratio and is unbounded when both venues
-adjust with the same sign, so 5 of the 63 matches return a share above 1 (max 1.42) — which is why
-the headline is a median, not a mean (over the 58 in-support matches it is 80.2%). The 72% lead and
-the ≈81% information share are two independent reads of one fact: Polymarket is where this World
-Cup's price is discovered.
+- **Both venues at the same resolution.** Build each mid from the venue's full incremental book
+  feed. A summary or ticker channel is not a price series for timing work.
+- **A known-truth test before any real estimate.** Feed the estimator a synthetic pair with a known
+  lead — zero first — sampled exactly as the capture samples the real venues, and confirm it returns
+  that lead. `scripts/sampling_bias_check.py` implements this; on this repository's inputs it
+  returns +600 ms for a true lead of zero.
+- **Inversion where the bias cannot be removed at source.** If the response to known leads is
+  measurable, published measurements can be deconvolved against it (`scripts/lead_deconvolution.py`,
+  validated on known inputs). On this data that recovers 38% Kalshi-first, 39% no lead and 23%
+  Polymarket-first: no systematic ordering.
 
 ## 17. In-play win-probability model
 
@@ -503,14 +496,16 @@ where the price moves and where the WP model says it should move.
 
 ## 18. Order-flow imbalance: the within-venue mechanism
 
-Lead–lag and information share (§16) describe *which venue* moves first; order-flow imbalance
-explains *how* flow becomes price **inside** a venue. I compute **OFI à la Cont, Kukanov &
+Order-flow imbalance asks how flow becomes price **inside** a venue. I compute **OFI à la Cont, Kukanov &
 Stoikov (2014)** from **order-book level changes** — the signed change in depth at the best
 quotes as the book updates. It is **book-derived, not trade-signed**, so like the §16 mids it is
 **immune to the ≈59% trade-direction-classification problem** (arXiv:2604.24366): nothing is
 inferred about whether a trade was buyer- or seller-initiated. Regressing contemporaneous mid
-changes on OFI gives the within-venue impact channel, **strongly significant, both venues** (bin-level t overstates significance; judged across matches) — the
-mechanism linking flow to price impact that sits underneath the cross-venue lead. Where the book
+changes on OFI gives the within-venue impact channel with the sign Cont et al. predict, but the
+effect is economically slight: correlations of **0.10 on Polymarket and 0.07 on Kalshi** (R² ≈ 1.0%
+and 0.5%). Bin-level t-statistics run into the hundreds and should be ignored; the honest unit is the
+match. Kalshi's order flow comes from the same once-per-second feed (§14), which attenuates its
+figure, and the cross-venue version of this test is a null that cannot be read as evidence either way. Where the book
 detail supports it, the **microprice (Stoikov 2017)** — the size-weighted fair value between bid
 and ask — is the natural companion estimate of where the next mid is headed, refining the plain
 bid/ask mid the rest of the pipeline uses.
