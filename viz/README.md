@@ -136,7 +136,7 @@ Tape-derived, from the captured `ws_capture` websocket feeds. Processed by `buil
 
 > The rigorous information-share version (Hasbrouck 1995 + Gonzalo-Granger permanent-component,
 > `build_infoshare.py` → `_infoshare.js`, Polymarket GG ~78%) feeds `leadlag_lead` and the desk
-> research note (`writeups/price_discovery_note.pdf`), the flagship's release vehicle.
+> research note, now withdrawn and archived at `archive/cross-venue/price_discovery_note.pdf` (see `CORRECTION.md`).
 
 ### Cross cards (model × market) — the "two ideas crossed" scatter set
 
