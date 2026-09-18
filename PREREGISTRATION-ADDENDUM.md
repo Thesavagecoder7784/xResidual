@@ -155,3 +155,45 @@ such, not stretched into a PASS or FAIL off an underpowered half-metric. P9 was 
 deliberately-flagged genuine unknown; the primaries (P1, P6) and the scored FAIL/PASS results are
 unaffected. All three inconclusives (P2, P8, P9) are now documented data-forced or underpowered
 limitations, so the July-19 scorecard carries no undocumented gap.
+
+---
+
+## 2026-09-18 — P6 regraded PASS → INCONCLUSIVE: the instrument cannot see the lead (entry A-P6)
+
+**This entry is different from the ones above, and the difference should be stated first.** Every
+earlier entry was either a method fix made before kickoff or a data-forced verdict recorded at grading
+time. This one revises a published grade two months after the final, and it revises a *named primary*.
+It moves the verdict toward caution, not toward a better score, which is the only direction a
+post-hoc change to a frozen scorecard can be defended in.
+
+**What was wrong.** P6 asks whether the deeper venue leads price discovery, graded on the information
+share from a VECM on synchronized mids. The capture recorded both venues at full resolution — Kalshi's
+`orderbook_delta` stream arrives about every 10 ms — but the analysis built Kalshi's mid only from its
+`ticker` channel (`xresidual/ws_events.py:111`, `scripts/stream_micro.py:63`). Kalshi documents that
+channel as event-driven, and in practice it is capped at one message per second per market: in the
+busiest seconds of a match the book changes 200–380 times while the ticker sends at most one message.
+Polymarket's mid was rebuilt from its full book. One venue was therefore observed about a hundred times
+more often than the other, and a price observed once a second is observed late by construction.
+
+**How it was established.** A known-truth placebo (`scripts/sampling_bias_check.py`,
+`writeups/_sampling_bias_results.json`) feeds the published pipeline a market in which neither venue
+leads — the same price path on both sides — observed the way the capture observed Kalshi. It reports
+Polymarket first in 26 of 29 windows at a median +600 ms, which is the published headline. The same
+placebo on the information share hands whichever series is sampled faster the larger share, and
+relabelling the venues moves the "leader" with the sampling. On the one match whose Kalshi book could be
+rebuilt at full resolution and verified against Kalshi's own quotes, Polymarket's component share falls
+from 88% to 53%. The metric P6 is graded on is not identified on this capture.
+
+**What the data does say.** The estimator's response to a known lead is measurable, so the 427 published
+lead measurements can be inverted against it (`scripts/lead_deconvolution.py`, validated on known inputs
+first). The recovered distribution of true leads is 38% Kalshi first, 39% no lead, 23% Polymarket first:
+no systematic Polymarket lead. That analysis is exploratory and is not the pre-registered metric, so it
+does not grade P6 either way.
+
+**Effect on the grade.** **P6 → INCONCLUSIVE (data-forced)**, the same class of verdict as P8, whose
+metric was likewise mis-specified for this data. The tally moves from 6 pass / 2 fail / 3 inconclusive to
+**5 pass / 2 fail / 4 inconclusive**. P1, the other primary, is unaffected: calibration is scored on
+closing prices and outcomes and never touched the tape. The grader applies this rule from the placebo
+artifact rather than a hard-coded verdict, so the grade will follow the evidence if it is ever re-run.
+The full account, including what else the finding does and does not affect, is in
+[CORRECTION.md](CORRECTION.md).
