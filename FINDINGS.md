@@ -1,16 +1,79 @@
 # Findings: a trader's read of the 2026 World Cup markets
 
-A living log. Each entry states what the data shows, then *what it would mean to someone trading or making markets on it*. The point isn't the chart, it's the decision the chart implies. Methodology in [METHODOLOGY.md](METHODOLOGY.md); numbers regenerate from `scripts/run_analysis.py`.
+What the data showed across the 2026 World Cup, each entry followed by *what it would mean to someone
+trading or making markets on it*. Methodology is in [METHODOLOGY.md](METHODOLOGY.md); the model, the
+data and the pre-registered tests are summarised in the [README](README.md).
 
-Final snapshot, updated 2026-07-25: the 2026 World Cup is **complete** (final: Spain–Argentina, Jul 19) and the pre-registered scorecard has been graded in public — **6 pass, 2 fail, 3 inconclusive**. Data accumulated from June 5, 2026 through the final. Claims sharpen as the sample grows; small-sample reads are flagged, and the pre-tournament reads below now have full contact with results to test them against.
+> **Correction, 2026-09-18.** The cross-venue lead-lag findings are withdrawn: #29 and #39 in full,
+> and the parts of #33, #38 and #40 that leaned on them. Kalshi's price was read from a feed capped at
+> one message a second, Polymarket's from its full order book, and a market with no lead at all,
+> observed the same way, reproduces the published result. See [CORRECTION.md](CORRECTION.md). Entries
+> keep their numbers so existing links still resolve.
 
-> **Model limitations & claim guardrail (audited 2026-06-26).** The core methods are sound (Elo, Skellam, CORP+consistency bands, info-share VECM/Hasbrouck-GG, OFI, the sims); these are the edges where the model *misleads*, so check any public claim against them.
-> - **CAN claim:** BTTS (calibrated, esp. BTTS-YES); the cross-venue flagship (Polymarket leads ~72% of decisive events / ~81.0% info share, 57 of 66 and 61 of 63 matches respectively, lead un-harvestable — significance is the **match**, never the event); and the headline — **the market is well-calibrated** (P1 PASS, every decile in-band, slope 1.07, +23.6% skill vs base rate over 72 group-stage games). Its Brier edge over the pre-committed model (0.487 vs 0.503) is a **point** result only: paired on the same 72 matches, p = 0.25, bootstrap CI [-0.011, +0.044], market better in just 34 of 72. Claim "well-calibrated", never "beats the model".
-> - **Do NOT claim:** a **totals/Over edge** (the model is flat — one global total-goals constant gives ~52% Over for every game); a **BTTS-NO / "won't score"** on an attacking side (the model under-rates in-form attacks, e.g. Norway λ≈1.0 vs 3.5 scored); an **advancement** call against the market (the model over-rates bubble third-place teams); or **"model beats the market"** off one game (the 58-game result is the opposite — a lone rested-USA upset where pre-committed v1 had Turkey 39% to the market's 24% is a real timestamped win but n=1 and reason-adjacent). Harvest "0%" is a conservative **bound**, significance is **match-level only**, and the results feed lags 1-2 days (verify standings against current data).
+## The findings that matter
 
-**On multiplicity.** These are the survivors of a wider exploratory sweep, and the angles that didn't hold are logged as nulls — or retracted out of sample — rather than buried: altitude as a goals edge (#7), heat on the pre-match goal line and on cards (#13, #17), the group-winner watch-list "drama" (#14), the cross-venue convergence paper-trade (#20), and the now-**retracted** mismatch-draw read (#31). Read the numbered list as the reported set — nulls and retractions included — not a cherry-picked highlight reel. The binding, pre-committed tests (with significance and power thresholds set before outcomes) live in [PREREGISTRATION.md](PREREGISTRATION.md); the descriptive reads here are kept honest by grading against those.
+The tournament is complete (final: Spain–Argentina, July 19). The pre-registered scorecard stands at
+**5 pass, 2 fail, 4 inconclusive** ([PREREGISTRATION.md](PREREGISTRATION.md)). What the rest of the log
+adds up to:
 
-> **Data coverage (final).** The background price loggers (30-min cross-venue snapshots + bookmaker odds) ran **continuously from June 5**, so the snapshot- and odds-based findings have complete coverage. The per-match in-play capture is **near-complete: 86 of 102 completed matches captured cross-venue** (the flagship sample; **63** pass the cointegration gate used for the information-share estimates), the full quarter- and semi-finals included. **Four of the earliest knockout ties were not captured cross-venue** — Germany–Paraguay (Jun 29), Ivory Coast–Norway (Jun 30), France–Sweden (Jun 30), USA–Bosnia & Herzegovina (Jul 2) — and a further handful of group games were captured on a **single venue only**. The in-play samples below are that captured set; the gap changes which matches populate them, not the direction of the result.
+**The model against the market**
+- **The market out-calibrated my pre-registered model** — Brier 0.487 vs 0.503 on the 72 group
+  games scored, calibration slope 1.07 vs 0.87. The Brier gap is a point result (paired p = 0.25),
+  so the claim is "better calibrated", not "beat the model".
+- **Where the model argued with the market, the market won** ([#34](#34-where-the-model-argued-with-the-market-the-market-won)),
+  and across 238 contracts the disagreements that looked like edges were usually model error
+  ([#21](#21-the-market-is-sharp-where-its-liquid--and-where-we-disagree-its-usually-us)).
+- **Elo over-rates weak, isolated confederations**, a bug in the model rather than the market, fixed
+  with an out-of-sample-validated shrinkage ([#22](#22-elo-inflates-weak-confederations--the-market-wasnt-fooled-the-edge-was-ours-to-fix)).
+- **Dry-run on 2018 and 2022 first:** the model was well-calibrated, real shocks ran 2–3σ, and 2022
+  was the chaotic one ([#24](#24-two-world-cups-dry-run-the-model-is-well-calibrated-real-shocks-are-23σ-and-2022-was-the-chaotic-one)).
+
+**What the 48-team format did**
+- **High scoring and high drawing at once**, a corner no modern World Cup occupied
+  ([#26](#26-the-goals-and-draws-paradox-2026-is-scoring-like-no-modern-world-cup-while-drawing-like-a-defensive-one)).
+- **The jeopardy moved to goal difference** rather than disappearing
+  ([#27](#27-the-48-team-group-stage-didnt-kill-the-jeopardy--it-moved-it-to-goal-difference)),
+  and about one win was enough for a third-placed team ([#8](#8-the-third-place-lottery-is-wide-open-about-one-win-is-enough)).
+
+**How the markets work**
+- **The two venues agree on the event and differ on the price**: 0.17 pp apart de-vigged on every
+  day both books normalized, with overround at 5.6% on Kalshi against 2.1% on Polymarket
+  ([#3](#3-the-two-prediction-markets-agree-to-015pp-law-of-one-price-holds),
+  [#12](#12-two-venues-one-price-the-cross-venue-gap-is-mostly-vig-and-the-residual-is-structured)).
+- **The in-play market under-reacts to goals** by about 3 pp, measured on Polymarket alone
+  ([#28](#28-the-in-play-market-under-reacts-to-goals-by-about-3pp)).
+- **Order books empty at a goal on both venues**, so the dislocation a follower would chase has
+  nothing resting behind it ([#38](#38-the-order-book-vanishes-at-a-goal), [#40](#40-the-dislocation-at-a-goal-is-untradeable)).
+- **The probability ladder never breaks** ([#35](#35-the-markets-probability-staircase-never-breaks-the-nested-ladder-is-arbitrage-free)),
+  and **the cost of a bet scales with attention**: the obscure markets cost 20× the title's spread
+  ([#36](#36-the-cost-of-a-bet-isnt-fixed-the-obscure-markets-cost-20-the-title)).
+
+**Nulls, retractions and withdrawals** — kept in rather than buried: altitude as a goals edge (#7),
+heat on the goal line (#13, #17), the convergence trade (#20), the mismatch-draw read (#31, retracted),
+the macro-calibration extension (#29b, withdrawn), and the cross-venue lead (#29, #39, withdrawn).
+
+> **Claim guardrail (updated 2026-09-18).** Check any public claim against this.
+> - **Can claim:** the market is well-calibrated (P1 PASS, every decile in-band, slope 1.07, +23.6%
+>   skill over base rate on 72 group games) — "better calibrated than my model", never "beats the
+>   model"; BTTS (calibrated, especially BTTS-YES); the cross-venue gap is margin, not disagreement;
+>   the in-play under-reaction (small sample, flagged as such); the order book empties at a goal and
+>   the dislocation is not harvestable at size.
+> - **Do not claim:** **any ordering between the venues** — who moves first, by how much, or which
+>   carries more of the information share (withdrawn; see [CORRECTION.md](CORRECTION.md)); that the
+>   leading venue's book empties hardest; a **totals/Over edge** (one global total-goals constant gives
+>   ~52% Over for every game); a **BTTS-NO** on an attacking side (the model under-rates in-form
+>   attacks); an **advancement** call against the market (the model over-rates bubble third-placed
+>   teams); or **"model beats the market"** off one game. Harvest "0%" is a conservative bound, and
+>   significance is match-level only.
+
+**On multiplicity.** These are the survivors of a wider exploratory sweep, and the angles that didn't
+hold are logged rather than buried. Read the numbered list as the reported set, nulls and retractions
+included. The binding, pre-committed tests live in [PREREGISTRATION.md](PREREGISTRATION.md).
+
+> **Data coverage.** The background price loggers (30-minute cross-venue snapshots and bookmaker odds)
+> ran **continuously from June 5**, so the snapshot- and odds-based findings have complete coverage.
+> The per-match in-play capture covered **86 of 102 completed matches** on both venues; four early
+> knockout ties and a handful of group games were missed or captured on one venue only.
 
 ---
 
@@ -32,9 +95,8 @@ Order-book imbalance (bid share of top-of-book depth) sits at ~0.16–0.27 for *
 Median cross-venue divergence (Kalshi vs Polymarket, de-vigged) on the title race is ~0.15pp; the most persistent standing gap is England — the only team quoted apart at every as-of cutoff in `scripts/basis_asof_sweep.py` (mean ~0.8pp, peaking ~1.0pp pre-kickoff).
 
 **The trader's read.** This is what an efficient, well-integrated market looks like: the same outcome is priced within a fraction of a cent across two independent venues, so there's no free lunch sitting on the screen. The standing England gap is the one worth watching. It's the most-traded contract, so a persistent gap there is more likely a real audience/fee difference than a stale quote. The open question this
-sets up, *when news breaks, which venue moves first?*, is the price-discovery
-question, and the lead–lag machinery is in place to answer it once matches start
-generating shocks.
+sets up, *when news breaks, which venue moves first?*, turned out not to be answerable
+from this capture: see #29 and [CORRECTION.md](CORRECTION.md).
 
 ## 4. The books agree Argentina is a favorite; they disagree on *how much*
 
@@ -157,9 +219,9 @@ hook; stated as "most open ever," it's the kind of line that invites a correctio
 
 Following up on #3: stripping each venue's overround, the de-vigged title prices on
 Polymarket and Kalshi agree to **~0.15pp on average** across the field. The "5–8¢ gap"
-the press quotes is mostly the house margin, not disagreement. Kalshi's overround
-runs ~5.4% vs Polymarket's ~3.0% (~1.8×), so the durable venue difference is *cost,
-not price*. The small belief-gap that does survive is structured by audience: the
+the press quotes is mostly the house margin, not disagreement. Over the 20 days both books
+normalized, Kalshi's overround ran a median 5.6% against Polymarket's 2.1% (~2.8×), so the durable
+venue difference is *cost, not price*. The small belief-gap that does survive is structured by audience: the
 American book (Kalshi) is richer on USA, Netherlands, Mexico; the global book
 (Polymarket) is richer on England, France, Japan, Brazil — the teams whose sign holds
 at every as-of cutoff in `scripts/basis_asof_sweep.py`. (An earlier version of this entry
@@ -321,11 +383,19 @@ An independent in-play win-probability model — independent-Poisson on remainin
 
 **The trader's read.** This is the live, real-surprise counterpart to the dry-run in #23 (where a heavy favourite extending a lead was *non*-news and nothing moved). A ~3pp under-reaction to genuine goal information is the in-play repricing edge the pipeline was built to catch — small, but directionally the documented under-reaction-to-news pattern, observed on this tournament's tape rather than imported. Caveats stay loud: it's an early, modest-sample read, the magnitude is sensitive to exactly when you mark "post-goal," and it's the *descriptive* sibling of the pre-registered goal-reaction test (P10), which graded FAIL on Jul 19 (the documented edge is arbed away on these venues). Treated carefully, it says the market does fully price the goal, just not instantly, and the lag is where a fast in-play book lives.
 
-## 29. Cross-venue price discovery, matured: Polymarket leads, and it survives the trade-classification problem
+## 29. WITHDRAWN — cross-venue price discovery ("Polymarket leads")
 
-The flagship is now mature across the captured set (**86 matches cross-venue, 63 cointegrated** as of Jul 17 — near-complete coverage; four early knockout ties lack cross-venue capture, see the **Data coverage & capture** note up top). Two layers agree. (1) **Lead–lag:** an event study over **392 decisive events** finds Polymarket moves first **281 vs Kalshi 111 = 72% of the time** (66% counting the 35 synchronous same-second ties), and — hardened against the clustering of events within matches (`scripts/harden_leadlag_stats.py`) — **57 of 66 matches lean Polymarket** (sign-test p≈1.2×10⁻⁹; cluster-robust CI [67%, 76%], design effect just 1.13), at a **median +600ms**. (2) **Information share, done rigorously:** a VECM with an ADF cointegration gate, decomposed via **Hasbrouck (1995)** information share and the **Gonzalo–Granger (1995)** permanent-component share, computed on order-book **mids**, puts **Polymarket's Gonzalo–Granger share near 81.0%** across **63 cointegrated matches / 104 contracts** — a per-match median, with individual matches scattering widely (between-match SD ~19%; the honest unit is the match, not the contract or the bin) — leading in **61 of 63** (sign-test p≈4.4×10⁻¹⁶). Within-venue mechanism: **order-flow imbalance → price impact** (Cont–Kukanov–Stoikov 2014, book-derived; strongly significant within-venue, both venues — bin-level t overstates significance, judged across matches). A 4-page desk research note is at `writeups/price_discovery_note.pdf`. (`leadlag`, `infoshare`, `ofi`.)
+*Withdrawn 2026-09-18.* This entry reported that Polymarket moved first on 72% of 392 goal repricings
+by a median +600 ms, with an 81.0% Gonzalo–Granger information share and a lead in 61 of 63 cointegrated
+matches. Kalshi's price in that analysis came from its `ticker` channel, capped at one message a second,
+while Polymarket's came from its full order book. A market with no lead at all, observed the same way,
+reproduces the result — 26 of 29 windows Polymarket-first at +600 ms — so none of those figures measures
+the markets. Inverting the measurement recovers 38% Kalshi-first, 39% no lead and 23% Polymarket-first:
+no systematic ordering. The full account is [CORRECTION.md](CORRECTION.md); the original writeup is in
+[`archive/cross-venue/`](archive/cross-venue/).
 
-**The trader's read.** This is the payoff of the price-discovery question #3 set up before kickoff — and the methodological point is the contribution. Because the information share is computed on **mids, not signed trades**, it sidesteps the **~59% trade-direction-classification accuracy** problem that is the open question in the 2026 Polymarket paper (arXiv 2604.24366): you don't have to guess who initiated a trade to know where the permanent price component is formed. The convergent answer — lead–lag and information share both naming Polymarket the price leader, robust across 86 matches and 61 of 63 cointegrated ones — is exactly what #1's depth finding predicted: size goes where the discovery happens. For a maker, the so-what is concrete: on World Cup goal news, Polymarket is the reference price and Kalshi the follower. But the lead, while real, is **un-harvestable after the cost of immediacy**: across **405 goal-shock observations in 66 ledger matches** (the ledger records one row per contract per shock, and a goal moves both of a match's contracts, so this is roughly 2x the number of distinct goals) the median gross stale-quote gap is **12.0¢** against a median cost of **1.4¢**, and the median net is **+10.8¢ on paper** — each a median across matches of that match's median goal, so the three don't subtract — yet depth at the goal collapses to **~0.5% of normal**, so once gated on what is actually resting in the book **the median match yields no harvestable goal at all**. (The precise unit matters: that is the *typical match* offering a follower nothing, not "0% of goals." Harvestable goals do exist — **~9% goal-weighted** across the full 66-match ledger, clustered in 21 of those 66 — but they are a minority you cannot identify in advance.) This refines the "economically meaningful arbitrage" claim of Ng, Peng, Tao & Zhou (2026, SSRN 5331995): the price lead is genuine, but you cannot trade it at size. The markets are working; this just measures *which one works first* — and that you can't get paid for knowing.
+**The trader's read.** Before reading a cross-venue lead, check that both venues were observed at the
+same resolution. Here they were not, and the lead was the sampling.
 
 ## 29b. WITHDRAWN — the macro-calibration extension
 
@@ -356,11 +426,20 @@ Crossing the goal-difference jeopardy of #27 with the match-leverage idea of #9 
 
 **The trader's read.** Because the cut is a points decision with a GD tiebreak (#27), the highest-leverage *action* in the group stage isn't winning a marquee match — it's the goal margin in games whose *result* is already settled but whose team sits level on points with the bubble pack. A bubble team level on points and 3–0 up should keep scoring, because that fourth goal swings its qualification at the tiebreak. For an advancement trader the so-what is concrete: in dead-rubber-looking blowouts involving a bubble team, the live variable is the *scoreline running up*, not the result — but only when points are level, which happens about 39% of the time. Caveat: it's the model's conditional curve (large n, but one model on one field), and the goal-difference leverage exists *only* at the level-on-points hinge — ahead on points a goal is worthless, behind on points nearly so.
 
-## 33. The patriotic premium: the US exchange pays up for the hosts, and the price leader proves it's sentiment
+## 33. The patriotic premium: the US exchange pays up for the hosts
 
-Crossing the cross-venue basis (the home-crowd tilt in the Kalshi–Polymarket gap) with the price-discovery result of #29 produces a clean, explainable bias. Benchmarked against the Betfair sharp line across 48 teams, **Kalshi (US-regulated) prices the USA +2.36pp above the sharp line versus +0.53pp on Polymarket** — a **+1.83pp** home premium — and across the three North American hosts Kalshi runs **+0.82pp richer than Polymarket** against a ~0.00pp all-field baseline. The tilt reverses for the global giants: Polymarket pays up for Argentina, Spain, and Germany. (`patriotic_premium`.)
+Benchmarked against the Betfair sharp line across 48 teams, **Kalshi (US-regulated) prices the USA
++2.36pp above the sharp line versus +0.53pp on Polymarket** — a **+1.83pp** home premium — and across the
+three North American hosts Kalshi runs **+0.82pp richer than Polymarket** against a ~0.00pp all-field
+baseline. The tilt reverses for the global giants: Polymarket pays up for Argentina, Spain, and Germany.
+(`patriotic_premium`.)
 
-**The trader's read.** What lifts this above a basis curiosity is the cross with #29: the venue that *leads* price discovery (Polymarket) and the sharp line both disagree with Kalshi's host pricing, so the gap reads as **sentiment, not information** — US traders pay a patriotic premium for US teams on the US book. It's a directionally tradeable lean (treat the Polymarket/sharp number as fair, fade the host premium on Kalshi), though magnitudes are small (~1–2pp) and inside realistic costs for everyone but the USA. The clean, benchmarked version is the contribution: a measurable national-sentiment bias with a built-in proof of which side is mispriced.
+**The trader's read.** The sharp line is the referee. It sits with Polymarket against Kalshi's host
+pricing, so the gap reads as **sentiment, not information** — US traders paying a patriotic premium for
+US teams on the US book. It's a directionally tradeable lean (treat the sharp number as fair, fade the
+host premium on Kalshi), though magnitudes are small (~1–2pp) and inside realistic costs for everyone but
+the USA. *Revised 2026-09-18: an earlier version also leaned on Polymarket being the price leader (#29),
+which is withdrawn. The sharp-line benchmark carries the conclusion on its own.*
 
 ## 34. Where the model argued with the market, the market won
 
@@ -394,57 +473,50 @@ Over the buildup, **Argentina (±1.46pp), Spain (±1.35pp) and Portugal (±1.32p
 
 ### The anatomy of a goal (tape-based microstructure, #38–#40)
 
-Three measurements on the captured order-book tapes (~20 matches), all sign-free (mids + book changes, robust to the ~59% trade-direction problem), that together describe what happens to both venues in the seconds around a goal — and complete the price-discovery flagship (#29).
+Measurements on the captured order-book tapes, describing what happens to both venues in the seconds around a goal. *Revised 2026-09-18: #39 is withdrawn and #38 and #40 are reworded — see [CORRECTION.md](CORRECTION.md).*
 
-## 38. The order book vanishes at a goal — and the price leader withdraws hardest
+## 38. The order book vanishes at a goal
 
-Around each detected goal shock (~370 across ~20 matches), the top of book collapses. On **Polymarket the spread blows out ~8× and best-price depth falls to under 1% of its pre-goal level**; on **Kalshi the spread roughly doubles and depth falls to ~1%**. Both books refill (spread back within 1.5× baseline) in **~3–4 seconds**. The striking cross: the venue that prices the goal *first* (Polymarket, #29) also **withdraws liquidity the hardest**. (`book_vanishes`.)
+Around each detected goal shock, the top of book collapses on **both** venues: spreads blow out, and
+best-price depth falls to a few percent of its pre-goal level. Both books refill in **~3–4 seconds**.
+(`book_vanishes`.) *Revised 2026-09-18:* an earlier version said the venue that prices the goal first
+also withdraws hardest. That compared a venue observed ~500 times per window with one observed ~5 times,
+and more samples catch more momentary gaps; with both sampled alike the comparison reverses, and which
+venue prices the goal first is itself withdrawn (#29). The collapse on both venues holds at every sampling.
 
-**The trader's read.** This is informational adverse selection in the open: at a goal, makers face being picked off by anyone who saw the goal, so they pull quotes until the new level is clear. The novelty for prediction markets is the contrast with betting exchanges — Betfair *suspends* the market and cancels resting orders on a goal, so its depth collapse is mechanical; Kalshi and Polymarket **never suspend**, so this withdrawal is genuine information-driven liquidity provision, not a halt. The so-what feeds #40: the goal is priced into a book with almost nothing resting in it.
+**The trader's read.** This is informational adverse selection in the open: at a goal, makers face being
+picked off by anyone who saw it, so they pull quotes until the new level is clear. The contrast with
+betting exchanges is the interesting part — Betfair *suspends* and cancels resting orders on a goal, so its
+collapse is mechanical; Kalshi and Polymarket never suspend, so this withdrawal is genuine, information-driven
+liquidity provision rather than a halt. It feeds #40: the goal is priced into a book with almost nothing
+resting in it.
 
-## 39. Price discovery isn't a steady hum — it concentrates at goals
+## 39. WITHDRAWN — "price discovery concentrates at goals"
 
-Conditioning the flagship's information share on the news (the same VECM / Gonzalo–Granger estimator, run in ±180s goal windows vs 360s calm windows), Polymarket's share of price discovery is **~86% at goals (136 windows) versus ~53% in calm play (217 windows)** — Hasbrouck tells the same story (~82% vs ~56%). In quiet periods the two venues are roughly coequal; the instant a goal lands, Polymarket does the overwhelming majority of the discovery. (`goal_discovery`.)
+*Withdrawn 2026-09-18.* This entry reported Polymarket's information share at ~86% in goal windows against
+~53% in calm play. It used the same price series as #29, and the contrast is also what once-a-second
+sampling produces on its own: the slower feed only falls visibly behind when prices move fast. See
+[CORRECTION.md](CORRECTION.md).
 
-**The trader's read.** This sharpens #29's static ~81% into something more useful: the lead is **a news-event phenomenon, not a background constant** — Polymarket leads *because* it incorporates the goal first, and away from goals there is little to lead. For anyone aggregating prediction-market signals, the prescription is conditional: weight Polymarket's mid as the leading indicator *especially on the goals*, where the gap is widest. Caveat: it is windowed VECM on ~20 matches, a couple of low-liquidity matches (Brazil–Haiti, Ecuador) invert in the noise, and this reports conditional IS/GG rather than the noise-robust Putniņš ILS (the natural refinement). The pooled direction is unambiguous.
+## 40. The dislocation at a goal is untradeable
 
-## 40. The cross-venue lead is real — and untradeable. The edge is a mirage
+A first pass at a harvestability ledger said a reactor could net **+10.2c on 100% of goals** — a
+too-good-to-be-true result that was a *bug*: it credited the full goal move while ignoring that the quote
+you'd lift had withdrawn. Gating on available depth gives the real answer: across **405 goal-shock
+observations in 66 ledger matches** (one row per contract, ~2 per goal) the median gross move a follower
+would chase is **12.0c**, net-positive on paper after the spread — but the book behind it has emptied
+(#38), so once gated on depth **the median match yields no harvestable goal at all**. About **9% of goals
+are harvestable goal-weighted**, clustered in 21 of the 66 matches, and they cannot be picked out in
+advance from pre-match information (a permutation test on that prediction finds nothing). (`edge_mirage`.)
 
-The honest capstone, and a caught error worth recording. A first pass at a harvestability ledger said a reactor on the lagging venue could net **+10.2c on 100% of goals** — a too-good-to-be-true result that was a *bug*: it credited the full goal move while ignoring that the quote you'd lift has withdrawn. Gating on available depth gives the real answer: across **405 goal-shock observations in 66 ledger matches** (one row per contract, ~2 per goal) the lagging venue is stale by a median gross **12.0c** for ~**660ms**, **net-positive on paper on 100% of goals after the spread — but the depth at the goal is 0.5% of normal, so once gated on it the median match yields no harvestable goal at all.** The unit is the match, not the goal: the typical match offers a follower nothing, while **~9% of goals are harvestable goal-weighted** across the full 66-match ledger — clustered in 21 of those 66, and unidentifiable in advance, which is why "a real lead you can't systematically trade" survives the sharper accounting. (`edge_mirage`.)
+*Revised 2026-09-18.* The ledger labels one venue "the follower" using the same reaction-time comparison
+that is withdrawn in #29, so it does not establish who follows whom. The conclusion does not need it:
+depth collapses on both venues, and once-a-second sampling made Kalshi's book look *deeper* than it was,
+so the zero is, if anything, conservative.
 
-**The trader's read.** This is the pro-market punchline of the whole microstructure program, and it lands *because* it nearly went the other way. The cross-venue lead (#29) is genuinely there, and on a naive spread-only calculation it looks like free money on every goal — exactly the kind of "edge" the discipline exists to kill. The thing that kills it isn't the spread; it's the **liquidity withdrawal (#38)**: by the time the lead is observable, the resting quote that would carry the edge is gone. So "the news is in the price before you can trade it" (Croxson-Reade 2014) holds here for a specific, measured reason — not slow pricing, but a book that empties in the same instant it reprices. The lead is a property of *price discovery*, not a tradable opportunity. The honest version, recorded with its correction, is worth more than the headline it replaced.
+**The trader's read.** A dislocation you can see is not an opportunity you can take. What kills it isn't
+the spread; it's the liquidity withdrawal — by the time the move is observable, the resting size that
+would carry it is gone. "The news is in the price before you can trade it" (Croxson–Reade 2014) holds
+here for a specific, measured reason: a book that empties in the same instant it reprices.
 
 ---
-
-## Thread drafts (the public voice)
-
-**Thread A, depth (microstructure):**
-> Same World Cup, same ~0.1¢ spread, but Polymarket is quoting ~27× the depth Kalshi
-> is on the title race. A quick look at what "liquidity" actually means on a
-> prediction market, and why same-spread ≠ same-market. 🧵
-
-**Thread B, order-book imbalance:**
-> Pulled the order books for every 2026 World Cup title contract. Every single
-> favorite is *sell-heavy*: ~80% of resting size is on the offer. Here's what that
-> says about who's holding favorites and why. 🧵
-
-**Thread C, cross-venue:**
-> Kalshi and Polymarket price the World Cup winner within ~0.15pp of each other. The
-> law of one price, holding in real time across two independent venues. The one
-> contract they disagree on most? England. 🧵
-
-**Thread D, the gap is vig, not disagreement:**
-> The "Kalshi vs Polymarket World Cup gap" is real, but strip each venue's margin and
-> the two crowds agree on every title price to ~0.15pp. The durable difference is *cost*
-> (Kalshi's vig ~1.8× Polymarket's). What little belief-gap is left? A home-crowd tilt:
-> the US book pays up for USA & Mexico, the global book for England, Portugal, Japan. 🧵
-
-**Thread E, the bug was ours, not the market's:**
-> I thought I'd found World Cup market mispricings: Canada, Mexico, Japan all looked
-> cheap to advance. Then I checked against an independent bookmaker — and it sided with
-> the market every time. The culprit wasn't the market. It was my Elo. A thread on why
-> ratings quietly *inflate* weak confederations, and the empirical-Bayes fix. 🧵
-
-*(Tone: curious, pro-market, specific, humble on sample size. Lead with the number,
-explain the mechanism, link the repo. No "markets are wrong" framing; these are
-markets working, observed closely.)*
