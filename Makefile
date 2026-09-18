@@ -1,9 +1,16 @@
 # Reproduce the paper. See REPRODUCING.md for the full claim -> script map.
 .PHONY: check macros paper test figures
 
-# Verify paper numbers match the JSONs, and run the suite (also the CI gate).
-check: macros
-	python scripts/emit_macros.py --check
+# Verify every public claim against its artifact, run the suite, and -- where the private manuscript
+# is present -- check the paper's numbers against the JSONs. paper/arxiv/ is not in public clones, so
+# the macro sync is skipped there rather than crashing.
+check:
+	@if [ -d paper/arxiv ]; then \
+		python scripts/emit_macros.py && python scripts/emit_macros.py --check; \
+	else \
+		echo "paper/arxiv/ is private and absent here: skipping the manuscript macro sync"; \
+	fi
+	python scripts/check_claims.py
 	python -m pytest tests/ -q
 
 # Regenerate the canonical LaTeX macros from writeups/_*_results.json.
