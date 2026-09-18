@@ -28,7 +28,7 @@ study of Polymarket ([*Anatomy of a Decentralized Prediction Market*,
 2026](https://arxiv.org/html/2604.24366v1)) explicitly does not resolve whether
 Polymarket leads or follows Kalshi. Price *discovery* (who moves first) needs in-play
 shocks and is treated separately in this project (the cross-venue lead-lag study,
-now delivered — see writeups/cross-venue-price-discovery.md); price
+since withdrawn — see CORRECTION.md); price
 *levels* (who is richer, and by how much, once margin is removed) can be measured today,
 pre-tournament, and is the subject of this note.
 
@@ -150,4 +150,4 @@ python scripts/build_basis.py     # reads logged JSONL -> viz/market/_basis.js
 ```
 
 See also [FINDINGS.md](../FINDINGS.md) #12; the companion price-*discovery* (lead-lag)
-study is delivered in writeups/cross-venue-price-discovery.md. Code + methodology: the xResidual repo.
+study was withdrawn on 2026-09-18 (CORRECTION.md). Code + methodology: the xResidual repo.
