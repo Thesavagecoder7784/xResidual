@@ -76,6 +76,24 @@ def grade_p6():
         return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
                  INC, val, "n>=20 goal shocks", n=n, note="below pre-registered min n")
     verdict = PASS if poly > kal and (gg or 0) > 0.5 else FAIL
+    # Instrument check, added 2026-09-18 (PREREGISTRATION-ADDENDUM.md, A-P6). The capture read
+    # Kalshi's mid from its `ticker` channel, capped at one message per second, and Polymarket's
+    # from its full book (~10 ms). A known-truth placebo (scripts/sampling_bias_check.py) feeds
+    # this pipeline a market with NO lead; if it still reports a Polymarket majority, the metric
+    # cannot tell a lead from the sampling asymmetry on this data, and the grade is data-forced
+    # INCONCLUSIVE -- the same class of verdict as P8. Read from the artifact, never hard-coded.
+    sb = _load_json(os.path.join(WRITEUPS, "_sampling_bias_results.json"))
+    if sb:
+        zero = [r for r in sb.get("lead_lag_placebo", [])
+                if r.get("grid") == "kalshi_ticker_timestamps" and r.get("true_lag_ms") == 0]
+        if zero and zero[0]["n_gated"] and zero[0]["poly_first"] / zero[0]["n_gated"] > 0.5:
+            z = zero[0]
+            return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
+                     INC, val, "Poly IS>50% in majority of n>=20", n=n,
+                     note=(f"DATA-FORCED INCONCLUSIVE (A-P6): a zero-lead placebo sampled like the "
+                           f"capture reads Polymarket-first in {z['poly_first']}/{z['n_gated']} "
+                           f"windows, so the metric is not identified here. Deconvolved: see "
+                           f"_lead_deconvolution_results.json"))
     return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
              verdict, val, "Poly IS>50% in majority of n>=20", n=n,
              note="cross-check: per-match leader majority")
@@ -308,16 +326,16 @@ _ICON = {PASS: "PASS  ", FAIL: "FAIL  ", PARTIAL: "PART  ", INC: "INCONC", PEND:
 SCORECARD_HTML_OUT = os.path.join(VIZ, "model", "prereg_scorecard.html")
 _G = {PASS: "pass", FAIL: "fail", INC: "inc"}
 _BADGE = {"pass": "PASS", "fail": "FAIL", "inc": "INCONCL"}
-DISPLAY_ORDER = ["P1", "P6", "P5", "P4", "P11", "P3", "P7", "P10", "P2", "P8", "P9"]
+DISPLAY_ORDER = ["P1", "P5", "P4", "P11", "P7", "P3", "P10", "P6", "P2", "P8", "P9"]
 CARD = {
- "P1":  (PASS, "Markets are well-calibrated", "market Brier <b>0.487</b> beats my model 0.503, slope 1.07"),
- "P6":  (PASS, "The deeper venue leads discovery", "Polymarket leads <b>61 of 63</b> matches, info share 81.0%"),
+ "P1":  (PASS, "Markets are well-calibrated", "every decile in-band; market Brier <b>0.487</b> vs my model 0.503, slope <b>1.07</b> vs 0.87"),
+ "P6":  (INC,  "The deeper venue leads discovery", "data-forced: Kalshi was read at one message a second against Polymarket's full book, and a market with <span class=\"r\">no lead</span> reproduces the result (addendum)"),
  "P5":  (PASS, "Closing prices beat opening", "Brier <b>0.491 &rarr; 0.477</b> as markets sharpen"),
- "P4":  (PASS, "The cross-venue gap is mostly vig", "de-vigged gap <b>3.9pp</b> vs raw margin 22.9pp"),
+ "P4":  (PASS, "The cross-venue gap is mostly vig", "graded at the close: de-vigged <b>3.98pp</b> vs raw 25.0pp; while books normalize, overround runs 5.6% vs 2.1%"),
  "P11": (PASS, "New market converges to coherence", "overround <b>27% &rarr; 0%</b>, 4.00 semifinalists for 4 slots"),
- "P3":  (FAIL, "Law of one price holds (gap under 1pp)", "gap is <span class=\"r\">3.9pp and persistent</span> &mdash; matches the 2&ndash;4% LOOP violations in the literature"),
+ "P3":  (FAIL, "Law of one price holds (gap under 1pp)", "graded at the close: <span class=\"r\">3.98pp</span> as the field resolved &mdash; but <b>0.17pp</b> on every day both books still normalized"),
  "P7":  (PASS, "Model top-heavy AND market sharper", "both hold: my raw Elo over-rates <b>Spain +12pp</b> pre-tournament (frozen at registration), and the market&rsquo;s log-score <b>0.65</b> beats my model&rsquo;s 0.80"),
- "P10": (FAIL, "The goal-overreaction edge reverts", "<span class=\"r\">no edge</span>, PnL negative &mdash; the documented edge is arbed away here"),
+ "P10": (FAIL, "The goal-overreaction edge reverts", "<span class=\"r\">no edge</span>, PnL negative &mdash; the market <b>under</b>-reacts to goals, so there is nothing to fade"),
  "P2":  (INC,  "Favourite-longshot bias stronger in books", "data-forced: prediction markets quote no draw, so no like-for-like 1X2 (addendum)"),
  "P8":  (INC,  "No 12-sigma shocks (sanity check)", "data-forced: PM mids are step functions, the 1s-return denominator degenerates (addendum)"),
  "P9":  (INC,  "Heat slows the second half, in-play", "underpowered: ~9 qualifying games, tapes pruned at 48h (addendum, pre-flagged)"),
@@ -363,7 +381,7 @@ _CARD_TEMPLATE = """<!doctype html>
 <body><div class="card">
   <div class="head"><div class="kicker"><span class="no">CAPSTONE</span> The pre-registration, graded &middot; xResidual</div>
     <h1>Eleven calls, committed before kickoff, graded in <em>public.</em></h1>
-    <div class="dek">I logged eleven falsifiable predictions in a timestamped commit before a ball was kicked, each with its decision rule fixed in advance. Here is the honest scorecard, hits and misses. <b>Both failures independently reproduce what 2026 microstructure papers found.</b></div>
+    <div class="dek">I logged eleven falsifiable predictions in a timestamped commit before a ball was kicked, each with its decision rule fixed in advance. Here is the honest scorecard, hits and misses. <b>One grade was revised after the fact, toward caution, and the reason is on the record.</b></div>
   </div>
   <div class="tally">
     <div class="t pass"><div class="n">%%TPASS%%</div><div class="l">Pass</div></div>
@@ -372,7 +390,7 @@ _CARD_TEMPLATE = """<!doctype html>
   </div>
   <div class="rows">%%ROWS%%</div>
   <div class="foot">
-    <div>Predictions + decision rules committed to an append-only ledger before kickoff (Jun 10) &middot; final grade on the full tournament, Jul 19 &middot; scripts/grade_prereg.py --html</div>
+    <div>Committed before kickoff (Jun 10) &middot; graded on the full tournament, Jul 19 &middot; P6 revised Sep 18 (addendum A-P6) &middot; scripts/grade_prereg.py --html</div>
     <div class="brand">@PrabhatM27 &nbsp;<b>/</b>&nbsp; xResidual</div>
   </div>
 </div>
