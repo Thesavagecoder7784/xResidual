@@ -2,7 +2,10 @@
 """Does the cross-venue lead survive the difference in how the two venues' prices are SAMPLED?
 
 The published Kalshi mid (ws_events.kalshi_mid_series, stream_micro.stream_all) is read from Kalshi's
-`ticker` channel, which publishes on a fixed 1 Hz cadence. The Polymarket mid is reconstructed from
+`ticker` channel. Kalshi documents it as event-driven ("sent whenever any ticker field changes"),
+but it is capped at one message per second per market: in the busiest seconds of a match the book
+changes 200-380 times while the ticker sends at most one message, and Kalshi's own ts_ms stamps show
+the same spacing, so the cap is the publisher's, not the logger's. The Polymarket mid is reconstructed from
 that venue's full book stream (~10 ms). Kalshi's `orderbook_delta` stream (~10 ms) was captured but
 never used. A price observed only once a second is seen late by construction, so this script measures
 how much of the published lead that asymmetry alone produces.

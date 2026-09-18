@@ -6,8 +6,9 @@ hold the numbers quoted here.*
 
 ## The defect, in one paragraph
 
-Every Kalshi price in this repository is read from Kalshi's `ticker` channel, which publishes on a
-fixed 1 Hz cadence (`xresidual/ws_events.py:107`, `scripts/stream_micro.py:63`). Every Polymarket
+Every Kalshi price in this repository is read from Kalshi's `ticker` channel. Kalshi documents it as
+event-driven, but in practice it is capped at one message per second per market — in the busiest
+seconds of a match the book changes 200-380 times and the ticker still sends at most one message (`xresidual/ws_events.py:107`, `scripts/stream_micro.py:63`). Every Polymarket
 price is rebuilt from that venue's full book stream, which updates about every 10 ms. Kalshi's own
 `orderbook_delta` stream, also ~10 ms, was subscribed to and recorded on every capture and never
 used. A price observed once a second is observed late by construction, and the cross-venue estimator
