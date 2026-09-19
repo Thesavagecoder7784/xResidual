@@ -20,7 +20,7 @@ rebuilt from its full order book, updating roughly every 10 ms. Kalshi's own ful
 `orderbook_delta` stream was subscribed to and recorded on every capture, and never read.
 
 A price you only look at once a second always looks late — by up to a second, about half a second on
-average. The published lead was 600 ms.
+average. The published lead, now withdrawn, was 600 ms.
 
 ## How it was established
 
@@ -29,13 +29,18 @@ Not by argument. By a test where the right answer is known in advance
 
 - Take real Polymarket price paths around real goals. Build a "Kalshi" that is **the same price at the
   same instant** — a lead of exactly zero — and observe it at Kalshi's real one-per-second timestamps.
-  The published estimator reports **Polymarket first in 26 of 29 windows, at a median +600 ms.**
-- Give the same estimator both prices at full resolution and it recovers the true lead exactly. The
-  fault is the sampling, not the estimator.
+  Given that zero-lead market, the published estimator reports **Polymarket first in 26 of 29 windows,
+  at a median +600 ms.**
+- Give the same estimator both prices at full resolution and it recovers the true lead to within one
+  200 ms bin. The fault is the sampling, not the estimator.
 - A true 300 ms *Kalshi* lead still reads as Polymarket-first.
-- The information share fails the same way: whichever venue is sampled faster gets the larger share,
-  and swapping which one that is swaps the "leader". On the one match whose Kalshi book could be rebuilt
-  and verified, Polymarket's share falls from 88% to 53%.
+- The information share is not identified either. With no lead at all, sampling alone hands the
+  always-fresh series 95–100% of the Hasbrouck share on all four contracts tested, and relabelling which
+  venue is sampled faster moves the "leader" with it. With both venues rebuilt at full resolution and
+  checked against Kalshi's own quotes (three contracts, two matches), Polymarket's component share goes
+  from 94% to 51%, from 88% to 85%, and from 85% to 71%. So the published 81%, now withdrawn, measured
+  the sampling as much as the markets; at full resolution Polymarket still carries the larger share on
+  two of the three contracts, and three contracts cannot say how large a real lead, if any, would be.
 
 The calm-play placebo and the exogenous goal clock, which the original analysis relied on, could not
 catch this: both check things downstream of the price series, and both inherit the problem.
@@ -46,32 +51,39 @@ catch this: both check things downstream of the price series, and both inherit t
   clock-verified 75%, the 81.0% component and 75.2% Hasbrouck information shares, and the
   goal-vs-calm contrast (86% vs 53%).
 - **Withdrawn:** that the leading venue's order book empties hardest at a goal. With both venues
-  sampled the same way, the comparison reverses.
+  sampled the same way (21 goal shocks across 2 matches), it does not hold: Kalshi's book collapses at
+  least as hard.
 - **Regraded:** pre-registered prediction P6 ("the deeper venue leads price discovery") moves from
   PASS to INCONCLUSIVE, so the scorecard is now **5 pass / 2 fail / 4 inconclusive**, not 6 / 2 / 3.
   The reasoning is logged in [PREREGISTRATION-ADDENDUM.md](PREREGISTRATION-ADDENDUM.md) (entry A-P6).
 
-## What does not change
+## What survives, and its limits
 
-Everything that did not depend on Kalshi's timing at second resolution:
+The results that do not rest on Kalshi's timing at second resolution:
 
 - The market out-calibrated my pre-registered model (market Brier 0.487 vs 0.503; calibration slope
   1.07 vs 0.87). P1, the other named primary, still passes.
-- The cross-venue gap is margin, not disagreement: 0.17 pp de-vigged on every day both books
-  normalized, against overround of 5.6% on Kalshi and 2.1% on Polymarket.
-- The market under-reacts to goals, booking about a third of the model's fair move. This was measured
-  on Polymarket alone, 30 seconds after each goal.
-- Order books empty at a goal on both venues, so the dislocation a follower would chase has nothing
-  resting behind it. Once-a-second sampling made Kalshi's book look *deeper* than it was, so the
-  un-harvestable conclusion is, if anything, understated.
+- The cross-venue gap is mostly margin, not disagreement: a median 0.17 pp de-vigged across the 20
+  days both books normalized, against overround of 5.6% on Kalshi and 2.1% on Polymarket. Pre-registered
+  P3 still fails as graded: its de-vigged gap reached 3.98 pp at the close, as the field resolved.
+- The market under-reacts to goals: on the 8 matches whose goal timeline validates against the final
+  score, it books about a third of the model's fair move, undershooting on all 22 goals where the
+  quote moved. This was measured on Polymarket alone, 30 seconds after each goal. It is a small sample.
+- Order books empty at a goal on both venues, so most of the move a follower would chase has little
+  resting behind it. Two limits: "the median match yields nothing" uses the harshest depth measure, the
+  low point across the goal, and where the raw book survives (21 events, 2 matches), depth read at the
+  moment a follower could act leaves 11–33% of those events harvestable. And the harvest ledger picks
+  which venue is "the follower" by the same timing comparison withdrawn above. The defensible claim is
+  that most of the dislocation is not harvestable, not that none of it is.
 
 ## What the data does say
 
 The estimator's response to a known lead is measurable, so the 427 published lead measurements can be
 inverted against it ([`scripts/lead_deconvolution.py`](scripts/lead_deconvolution.py), validated on
-known inputs before use). The recovered distribution of true leads: **38% Kalshi first, 39% no lead,
-23% Polymarket first.** There is real cross-venue structure, in both directions, and no systematic
-Polymarket lead. This is exploratory, not a pre-registered result.
+known inputs held out from the fit). The recovered distribution of true leads is about **58% Kalshi-first, 8% no lead and 35% Polymarket-first** (bootstrap 95% intervals 44–67%, 0–35% and 19–44%, resampling matches). Treat the split as rough: it moves with how the model is specified (an
+earlier, narrower specification gave 38/39/23), and the Kalshi and Polymarket intervals touch. What held
+in every specification is that Kalshi-first events outnumber Polymarket-first ones and that there is no
+systematic Polymarket lead. This is exploratory, not a pre-registered result.
 
 ## Where the old material is
 

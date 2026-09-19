@@ -26,29 +26,36 @@ significant (paired p = 0.25), so the claim is "better calibrated", not "beat th
 
 **My errors were draws, and the market had already priced them.** Seven of my eight worst calls were
 draws, mostly a strong side failing to score against a deep block. On those calls the market had the
-realised outcome 2.7 points higher than I did, and on realised draws generally it carried 25.8% against
-my 21.1%. Where the model and a liquid price disagreed, the prior should have been that the model was
-wrong — and it was ([retrospective](writeups/retrospective.md)).
+realised outcome 2.7 points higher than I did, and on the realised draws among the 39 games with both a
+frozen forecast and a closing price (13 draws) it carried 25.8% against my 21.1%. Where the model and a
+liquid price disagreed, the prior should have been that the model was wrong — and it was
+([retrospective](writeups/retrospective.md)).
 
 **The 48-team format changed the game.** The group stage ran 2.99 goals per game *and* 27.8% draws,
 high scoring and high drawing at once. The expansion didn't remove the jeopardy; it moved it to goal
 difference: in simulation, the last third-placed team through and the first one out finish level on
 points 72% of the time.
 
-**The two venues agree on the event and differ on the price.** De-vigged, Kalshi and Polymarket sat
-0.17 points apart on the title race on every day both books normalized. What separates them is cost:
-overround ran 5.6% on Kalshi against 2.1% on Polymarket.
+**The two venues mostly agree on the event and differ on the price.** De-vigged, Kalshi and Polymarket
+sat a median 0.17 points apart on the title race across the 20 days both books normalized. What
+separates them is cost: overround ran 5.6% on Kalshi against 2.1% on Polymarket. The pre-registered
+test of this (P3) still failed as graded, because it was scored at the close, when the resolving field
+pushed the de-vigged gap to 3.98 points.
 
-**The in-play market under-reacts to goals.** Immediately after a goal the price moves about 3 points
-less than an independent in-play model says it should (54 matches, 185 goals), and on a curated subset
-it books about a third of the fair move in log-odds. Measured on Polymarket alone, 30 seconds after
-each goal. The subset is small (8 matches), so this is a lead, not a settled result.
+**The in-play market under-reacts to goals.** On the 8 matches whose goal timeline validates against
+the final score, the market books about a third of an independent in-play model's fair move in
+log-odds, and undershoots on all 22 goals where the quote moved. Measured on Polymarket alone, 30
+seconds after each goal. A broader read of about 3 points across 54 matches points the same way, but
+17 of those matches have a reconstructed goal sequence that doesn't match the final score, so it is
+indicative only. This is a lead, not a settled result.
 
-**A visible dislocation is not a tradeable one.** When a goal lands, a follower chasing the move sees
-a median 12.0¢ gap, comfortably positive after the spread on paper. But both venues' order books empty
-at the goal and refill in 3–4 seconds, so once you gate on what is actually resting there, the median
-match offers nothing to take. About 9% of goals were harvestable, clustered in a minority of matches
-that could not be picked out in advance.
+**A visible dislocation is mostly not a tradeable one.** When a goal lands, the price moves a median
+12.0¢, comfortably more than the spread a follower would pay. But both venues' order books empty at the
+goal and refill in 3–4 seconds, so once you gate on what is resting there, the median match offers
+nothing to take. About 9% of goals were harvestable, clustered in a minority of matches that could not
+be picked out in advance. That zero uses the harshest depth measure (the low point across the goal);
+where the raw book survives, reading depth at the moment a follower could act leaves 11–33% of those
+events harvestable (21 events, 2 matches). The defensible claim is "mostly not", not "never".
 
 The full log — 40 findings including the nulls, one retraction and the withdrawn cross-venue results —
 is [FINDINGS.md](FINDINGS.md).
@@ -115,7 +122,7 @@ republishing market data, and the tapes were pruned during the tournament. The c
 
 ```bash
 pip install -r requirements.txt
-make check                            # regenerate macros, run the 140-test suite
+make check                            # check every public claim, run the test suite
 python scripts/grade_prereg.py        # the pre-registration scorecard, from committed artifacts
 python scripts/run_analysis.py        # the model's report
 python scripts/build_all.py           # rebuild every card's data

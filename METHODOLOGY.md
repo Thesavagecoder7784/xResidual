@@ -424,8 +424,9 @@ fixture, written to per-capture files so each match is self-contained.
 > `stream_micro.stream_all`) builds Kalshi's mid from `ticker` alone, which Kalshi caps at one
 > message per second per market; Polymarket's mid is rebuilt from its full book at ~10 ms. Anything
 > that depends on Kalshi's timing below a few seconds is therefore unreliable in this repository
-> (§16). Slower quantities — levels, spreads, depth over a window, the ~30 s under-reaction read
-> below — are unaffected. Future captures should build Kalshi's mid from `orderbook_snapshot` +
+> (§16). Levels and daily quantities are unaffected, and the ~30 s under-reaction read below uses
+> Polymarket alone. Kalshi's spread, depth and book-refill figures come from the same capped feed, so
+> they are coarse at the one-second scale, and any comparison of them with Polymarket's is unreliable. Future captures should build Kalshi's mid from `orderbook_snapshot` +
 > `orderbook_delta`; a working rebuild is in `scripts/sampling_bias_check.py`. From the reconstructed
 mids, `xresidual/ws_events.py` auto-detects price shocks (goals, red cards) without a
 hand-typed goal time, and `overreaction_backtest` fades them — the documented ~2–3%/trade
@@ -433,7 +434,10 @@ reversion after a *surprising* goal (Choi & Hui; "Role of Surprise"), entered ~2
 held ~6 min, net of modeled cost. This is the P10 edge test, paper-only and disclosed. The
 benchmark the live price is measured against is the in-play win-probability model (§17), which
 re-prices each surprising goal to a fair value: the test reads the market as **under-reacting
-to goals by ~3.1pp** (mean under-shoot in P(home win), 54 matches / 185 goals) relative to that benchmark before the fair value is reached.
+to goals by ~3.1pp** (mean under-shoot in P(home win), 54 matches / 185 goals) relative to that benchmark,
+with no catch-up over the following ~90 s. That pooled figure includes 17 matches whose goal sequence,
+reconstructed from the price, does not match the final score; on the 8 matches whose goal timeline
+validates, the market books a median 0.34× the fair move in log-odds (22 of 22 goals undershoot).
 
 Shock detection is tuned to reject thin-market noise (learned on the Argentina–Iceland friendly,
 where the naive detector turned 3 goals into 11 "shocks"): a candidate fires only if the mid
@@ -476,8 +480,10 @@ What a valid measurement needs, for anyone extending this:
   returns +600 ms for a true lead of zero.
 - **Inversion where the bias cannot be removed at source.** If the response to known leads is
   measurable, published measurements can be deconvolved against it (`scripts/lead_deconvolution.py`,
-  validated on known inputs). On this data that recovers 38% Kalshi-first, 39% no lead and 23%
-  Polymarket-first: no systematic ordering.
+  validated on held-out known inputs). On this data that recovers roughly 58% Kalshi-first, 8% no lead and 35% Polymarket-first
+  (bootstrap 95% intervals 44–67%, 0–35% and 19–44%, resampling matches). The split is sensitive to the specification (a narrower lag grid gave 38/39/23)
+  and the model is nearly saturated, so read it as rough; no specification shows a systematic
+  Polymarket lead.
 
 ## 17. In-play win-probability model
 
@@ -498,14 +504,15 @@ where the price moves and where the WP model says it should move.
 
 Order-flow imbalance asks how flow becomes price **inside** a venue. I compute **OFI à la Cont, Kukanov &
 Stoikov (2014)** from **order-book level changes** — the signed change in depth at the best
-quotes as the book updates. It is **book-derived, not trade-signed**, so like the §16 mids it is
+quotes as the book updates. It is **book-derived, not trade-signed**, so like the mid-price it is
 **immune to the ≈59% trade-direction-classification problem** (arXiv:2604.24366): nothing is
 inferred about whether a trade was buyer- or seller-initiated. Regressing contemporaneous mid
 changes on OFI gives the within-venue impact channel with the sign Cont et al. predict, but the
 effect is economically slight: correlations of **0.10 on Polymarket and 0.07 on Kalshi** (R² ≈ 1.0%
-and 0.5%). Bin-level t-statistics run into the hundreds and should be ignored; the honest unit is the
-match. Kalshi's order flow comes from the same once-per-second feed (§14), which attenuates its
-figure, and the cross-venue version of this test is a null that cannot be read as evidence either way. Where the book
+and 0.5%). Bin-level t-statistics (72 and 116) overstate this and should be ignored; the honest unit
+is the match. Kalshi's order flow comes from the same once-per-second feed (§14), which attenuates its
+figure. The cross-venue version finds per-match correlations no larger than 0.025 in absolute value at
+any lag — not zero, but far too small to carry a lead, and measured on the same capped Kalshi feed. Where the book
 detail supports it, the **microprice (Stoikov 2017)** — the size-weighted fair value between bid
 and ask — is the natural companion estimate of where the next mid is headed, refining the plain
 bid/ask mid the rest of the pipeline uses.
