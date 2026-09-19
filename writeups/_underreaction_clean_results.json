@@ -25,6 +25,13 @@
    0.009,
    0.393
   ],
+  "largest_single_goal": {
+   "match": "Ghana vs Panama",
+   "contribution": 2.442,
+   "mkt_post": 0.085,
+   "model_post": 0.9767
+  },
+  "logloss_gap_without_largest_goal": 0.043,
   "n_matches": 8,
   "matches_model_better": 5,
   "ci_basis": "match-resampling bootstrap, 5000 reps, seed 20260916; goals share a final result"
