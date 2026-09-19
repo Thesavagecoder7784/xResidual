@@ -2,16 +2,16 @@
  "note": "medians per contract; mirrors build_harvest definitions, varies only sampling",
  "results": {
   "20260718/England": {
-   "trusted_rebuild": false,
+   "trusted_rebuild": true,
    "n_shocks": 14,
    "poly_depth_frac_full_res": 0.0035,
    "poly_depth_frac_at_1hz": 0.0346,
    "kalshi_depth_frac_ticker_1hz": 0.0009,
-   "kalshi_depth_frac_full_book": null,
+   "kalshi_depth_frac_full_book": 0.0,
    "gross_cents_ticker": 7.65,
-   "gross_cents_full_book": null,
+   "gross_cents_full_book": 7.75,
    "follower_kalshi_share_ticker": 0.643,
-   "follower_kalshi_share_full_book": null
+   "follower_kalshi_share_full_book": 0.0
   },
   "20260718/France": {
    "trusted_rebuild": false,

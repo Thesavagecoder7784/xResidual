@@ -31,7 +31,7 @@ OUT=os.path.join(ROOT,"writeups","_matched_sampling_results.json")
 def rebuild_tob(path, tickers):
     f=we._f; yes={t:{} for t in tickers}; no={t:{} for t in tickers}; have={t:False for t in tickers}; out={t:[] for t in tickers}
     def best(bk, hi):
-        live=[(p,s) for p,s in bk.items() if s>1e-9]
+        live=[(p,s) for p,s in bk.items() if s>0]
         return (max(live,key=lambda x:x[0]) if hi else min(live,key=lambda x:x[0])) if live else None
     for line in open(path,encoding="utf-8"):
         if '"kalshi"' not in line or 'orderbook_' not in line: continue
@@ -40,12 +40,12 @@ def rebuild_tob(path, tickers):
         ty,m,d=e.get("type"),e.get("market"),e.get("data",{})
         if m not in tickers: continue
         if ty=="orderbook_snapshot":
-            yes[m]={f(p):f(s) for p,s in d.get("yes_dollars_fp",[]) or []}
-            no[m]={f(p):f(s) for p,s in d.get("no_dollars_fp",[]) or []}; have[m]=True
+            yes[m]={f(p):round(f(s),2) for p,s in d.get("yes_dollars_fp",[]) or []}
+            no[m]={f(p):round(f(s),2) for p,s in d.get("no_dollars_fp",[]) or []}; have[m]=True
         elif ty=="orderbook_delta" and have[m]:
             p,dl=f(d.get("price_dollars")),f(d.get("delta_fp"))
             if p is None or dl is None: continue
-            bk=yes[m] if d.get("side")=="yes" else no[m]; bk[p]=bk.get(p,0.0)+dl
+            bk=yes[m] if d.get("side")=="yes" else no[m]; bk[p]=round(bk.get(p,0.0)+dl,2)  # 2-dp fixed point: no float residue on emptied levels
         else: continue
         b=best(yes[m],True); n=best(no[m],True)
         if not b or not n: continue
