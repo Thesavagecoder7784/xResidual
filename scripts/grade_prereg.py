@@ -77,23 +77,27 @@ def grade_p6():
                  INC, val, "n>=20 goal shocks", n=n, note="below pre-registered min n")
     verdict = PASS if poly > kal and (gg or 0) > 0.5 else FAIL
     # Instrument check, added 2026-09-18 (PREREGISTRATION-ADDENDUM.md, A-P6). The capture read
-    # Kalshi's mid from its `ticker` channel, capped at one message per second, and Polymarket's
-    # from its full book (~10 ms). A known-truth placebo (scripts/sampling_bias_check.py) feeds
-    # this pipeline a market with NO lead; if it still reports a Polymarket majority, the metric
-    # cannot tell a lead from the sampling asymmetry on this data, and the grade is data-forced
-    # INCONCLUSIVE -- the same class of verdict as P8. Read from the artifact, never hard-coded.
+    # Kalshi's mid from its `ticker` channel, capped at one message per second, and Polymarket's from
+    # its full book (~10 ms). P6 is graded on the information share, so the check is on the information
+    # share: scripts/sampling_bias_check.py feeds the same estimator a pair with NO lead (Polymarket's
+    # own path against a copy sampled at Kalshi's ticker times). If that alone hands the fresh series
+    # most of the Hasbrouck share, the metric cannot separate a lead from the sampling on this capture,
+    # and the grade is data-forced INCONCLUSIVE -- the same class of verdict as P8.
+    # FAILS CLOSED: if the evidence is missing, the grade is INCONCLUSIVE, never a silent PASS.
     sb = _load_json(os.path.join(WRITEUPS, "_sampling_bias_results.json"))
-    if sb:
-        zero = [r for r in sb.get("lead_lag_placebo", [])
-                if r.get("grid") == "kalshi_ticker_timestamps" and r.get("true_lag_ms") == 0]
-        if zero and zero[0]["n_gated"] and zero[0]["poly_first"] / zero[0]["n_gated"] > 0.5:
-            z = zero[0]
-            return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
-                     INC, val, "Poly IS>50% in majority of n>=20", n=n,
-                     note=(f"DATA-FORCED INCONCLUSIVE (A-P6): a zero-lead placebo sampled like the "
-                           f"capture reads Polymarket-first in {z['poly_first']}/{z['n_gated']} "
-                           f"windows, so the metric is not identified here. Deconvolved: see "
-                           f"_lead_deconvolution_results.json"))
+    placebo = [t["G2_zero_lead_placebo"]["hasbrouck_a_mid"]
+               for t in (sb or {}).get("infoshare_tapes", [])
+               if t.get("G2_zero_lead_placebo") and t["G2_zero_lead_placebo"].get("hasbrouck_a_mid") is not None]
+    if not placebo:
+        return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
+                 INC, val, "Poly IS>50% in majority of n>=20", n=n,
+                 note="INCONCLUSIVE (A-P6): the instrument check artifact is missing, so the grade fails closed")
+    if min(placebo) > 0.5:
+        return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
+                 INC, val, "Poly IS>50% in majority of n>=20", n=n,
+                 note=(f"DATA-FORCED INCONCLUSIVE (A-P6): with NO lead, sampling alone gives the "
+                       f"full-resolution series a Hasbrouck share of {min(placebo):.0%}-{max(placebo):.0%} "
+                       f"on all {len(placebo)} contracts tested, so the metric is not identified on this capture"))
     return V("P6", "Deeper venue leads (info share)", "genuine unknown", True,
              verdict, val, "Poly IS>50% in majority of n>=20", n=n,
              note="cross-check: per-match leader majority")
@@ -139,8 +143,7 @@ def grade_p2():
     diagram; the book (oddsapi) side is computable but the comparator isn't. Deviations clause."""
     return V("P2", "Favourite-longshot: books>PMs", "genuine unknown", False,
              INC, "PM venues quote no draw -> no PM-side 1X2", "book longshot gap > PM gap",
-             note="DECISION: data-forced INCONCLUSIVE (PMs price 2-way only). Needs a "
-                  "PREREGISTRATION-ADDENDUM entry recording the limitation before Jul 19 (your call).")
+             note="DATA-FORCED INCONCLUSIVE (PMs price 2-way only); PREREGISTRATION-ADDENDUM, 2026-06-24.")
 
 
 def grade_p3():
@@ -248,7 +251,7 @@ def grade_p8():
                  note="DATA-FORCED INCONCLUSIVE: prediction-market mids are step functions ~98% flat "
                       "at 1s, so the committed 1s-return-std denominator collapses to the noise floor "
                       "and z is uninterpretable. The metric assumes a continuously-priced series; these "
-                      "aren't one. Needs a PREREGISTRATION-ADDENDUM entry (your call).")
+                      "aren't one. PREREGISTRATION-ADDENDUM, 2026-06-25.")
     return V("P8", "Sigma-sanity (no 12-sigma)", "genuine unknown", False,
              PASS if p.get("max_z_le_4") else FAIL, val, "max z <= 4sigma", n=p.get("n_matches"),
              note=f"nonzero-frac at the max {nz}")
@@ -331,9 +334,9 @@ CARD = {
  "P1":  (PASS, "Markets are well-calibrated", "every decile in-band; market Brier <b>0.487</b> vs my model 0.503, slope <b>1.07</b> vs 0.87"),
  "P6":  (INC,  "The deeper venue leads discovery", "data-forced: Kalshi was read at one message a second against Polymarket's full book, and a market with <span class=\"r\">no lead</span> reproduces the result (addendum)"),
  "P5":  (PASS, "Closing prices beat opening", "Brier <b>0.491 &rarr; 0.477</b> as markets sharpen"),
- "P4":  (PASS, "The cross-venue gap is mostly vig", "graded at the close: de-vigged <b>3.98pp</b> vs raw 25.0pp; while books normalize, overround runs 5.6% vs 2.1%"),
+ "P4":  (PASS, "The cross-venue gap is mostly vig", "graded at the close: de-vigged gap <b>3.98pp</b> against a raw gap of 49.95pp (rule: under half); Kalshi carries the larger overround"),
  "P11": (PASS, "New market converges to coherence", "overround <b>27% &rarr; 0%</b>, 4.00 semifinalists for 4 slots"),
- "P3":  (FAIL, "Law of one price holds (gap under 1pp)", "graded at the close: <span class=\"r\">3.98pp</span> as the field resolved &mdash; but <b>0.17pp</b> on every day both books still normalized"),
+ "P3":  (FAIL, "Law of one price holds (gap under 1pp)", "the de-vigged gap read ~0.15pp through the buildup, then <span class=\"r\">3.98pp</span> at the close as the field resolved"),
  "P7":  (PASS, "Model top-heavy AND market sharper", "both hold: my raw Elo over-rates <b>Spain +12pp</b> pre-tournament (frozen at registration), and the market&rsquo;s log-score <b>0.65</b> beats my model&rsquo;s 0.80"),
  "P10": (FAIL, "The goal-overreaction edge reverts", "<span class=\"r\">no edge</span>, PnL negative &mdash; the market <b>under</b>-reacts to goals, so there is nothing to fade"),
  "P2":  (INC,  "Favourite-longshot bias stronger in books", "data-forced: prediction markets quote no draw, so no like-for-like 1X2 (addendum)"),
@@ -446,7 +449,7 @@ def main():
               f"FAIL {tally['fail']} · INCONCL {tally['inc']}")
         return 0
 
-    print("\n  PRE-REGISTRATION SCORECARD  (provisional — final grade runs after the final, 2026-07-19)")
+    print("\n  PRE-REGISTRATION SCORECARD  (graded on the full tournament 2026-07-19; P6 revised 2026-09-18, addendum A-P6)")
     print("  " + "-" * 96)
     for r in rows:
         star = "*" if r["primary"] else " "
