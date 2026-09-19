@@ -95,7 +95,7 @@ def rebuild_kalshi_book(path, tickers):
     have = {t: False for t in tickers}; out = {t: [] for t in tickers}
 
     def best(bk):
-        live = [p for p, s in bk.items() if s > 1e-9]
+        live = [p for p, s in bk.items() if s > 0]
         return max(live) if live else None
     with open(path, encoding="utf-8") as fh:
         for line in fh:
@@ -109,15 +109,17 @@ def rebuild_kalshi_book(path, tickers):
             if m not in tickers:
                 continue
             if ty == "orderbook_snapshot":
-                yes[m] = {f(p): f(s) for p, s in d.get("yes_dollars_fp", []) or []}
-                no[m] = {f(p): f(s) for p, s in d.get("no_dollars_fp", []) or []}
+                yes[m] = {f(p): round(f(s), 2) for p, s in d.get("yes_dollars_fp", []) or []}
+                no[m] = {f(p): round(f(s), 2) for p, s in d.get("no_dollars_fp", []) or []}
                 have[m] = True
             elif ty == "orderbook_delta" and have[m]:
                 p, dl = f(d.get("price_dollars")), f(d.get("delta_fp"))
                 if p is None or dl is None:
                     continue
                 bk = yes[m] if d.get("side") == "yes" else no[m]
-                bk[p] = bk.get(p, 0.0) + dl
+                # Kalshi sizes are fixed-point to 2 dp. Round after every update: summing floats leaves
+                # residue (e.g. 1.3e-9) on emptied levels, which would otherwise count as live quotes.
+                bk[p] = round(bk.get(p, 0.0) + dl, 2)
             else:
                 continue
             bb, nb = best(yes[m]), best(no[m])       # a NO bid at q is a YES ask at 1-q
@@ -133,7 +135,15 @@ def tape_checks(tape_dir):
     import stream_micro as sm
     from build_infoshare import pair_infoshare
     keep = ("gg_a", "hasbrouck_a_lo", "hasbrouck_a_mid", "hasbrouck_a_hi", "cointegrated")
-    trim = lambda r: None if r is None else {k: (round(r[k], 4) if isinstance(r.get(k), float) else r.get(k)) for k in keep}
+
+    def trim(r):
+        if r is None:
+            return None
+        out = {k: (round(r[k], 4) if isinstance(r.get(k), float) else r.get(k)) for k in keep}
+        # Gonzalo-Granger is a ratio of error-correction loadings: outside [0, 1] when both adjust with
+        # the same sign, and then it is not a share at all. Flag it rather than read it as one.
+        out["gg_in_support"] = out["gg_a"] is not None and 0.0 <= out["gg_a"] <= 1.0
+        return out
     out = []
     for cap in TAPE_CAPS:
         path = os.path.join(tape_dir, f"ws-events-{cap}.jsonl")
@@ -167,7 +177,8 @@ def tape_checks(tape_dir):
                 "G1_published": g1,
                 "G1_reproduces_committed": bool(c and g1 and abs(c["gg_a"] - g1["gg_a"]) < 1e-3),
                 "G2_zero_lead_placebo": trim(pair_infoshare(hold(p, stamps), p)),
-                "G3_label_flip_kalshi_book_as_truth": trim(pair_infoshare(hold(kb, stamps), kb)),
+                # G3 and G4 use the rebuilt Kalshi book, so both are gated on the rebuild being trusted.
+                "G3_label_flip_kalshi_book_as_truth": trim(pair_infoshare(hold(kb, stamps), kb)) if recon and recon >= 0.95 else None,
                 "G4_both_full_resolution": trim(pair_infoshare(kb, p)) if recon and recon >= 0.95 else None,
             })
             print(json.dumps(out[-1]), flush=True)
