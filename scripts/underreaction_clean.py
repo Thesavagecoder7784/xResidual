@@ -139,9 +139,17 @@ def main() -> int:
             flat = [x for r in pick for x in r]
             reps.append(st.mean(flat))
         reps.sort()
-        outcome["logloss_gap_market_minus_model"] = round(st.mean(x for r in by_m.values() for x in r), 3)
-        outcome["logloss_gap_ci95"] = [round(reps[int(0.025 * len(reps))], 3),
-                                       round(reps[int(0.975 * len(reps)) - 1], 3)]
+        q = lambda f: reps[min(len(reps) - 1, int(round(f * (len(reps) - 1))))]   # same rule both tails
+        flat_all = [(ll(g["mkt_post"], g["home_won"]) - ll(g["model_post"], g["home_won"]), g) for g in scored]
+        outcome["logloss_gap_market_minus_model"] = round(st.mean(x for x, _ in flat_all), 3)
+        outcome["logloss_gap_ci95"] = [round(q(0.025), 3), round(q(0.975), 3)]
+        # Leave-one-goal-out sensitivity. With 8 clusters one goal can carry the result: flag the goal
+        # contributing most to the gap and report the gap without it.
+        top_x, top_g = max(flat_all, key=lambda t: t[0])
+        rest = [x for x, g in flat_all if g is not top_g]
+        outcome["largest_single_goal"] = {"match": top_g["match"], "contribution": round(top_x, 3),
+                                          "mkt_post": top_g["mkt_post"], "model_post": top_g["model_post"]}
+        outcome["logloss_gap_without_largest_goal"] = round(st.mean(rest), 3)
         outcome["n_matches"] = len(keys)
         outcome["matches_model_better"] = sum(1 for r in by_m.values() if st.mean(r) > 0)
         outcome["ci_basis"] = "match-resampling bootstrap, 5000 reps, seed 20260916; goals share a final result"
