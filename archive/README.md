@@ -8,3 +8,5 @@ moved; what it says is what it said when it was written.
 - [`NOTES-2026-tournament.md`](NOTES-2026-tournament.md) — the running notes kept during the
   tournament. Superseded by the README, FINDINGS.md and the correction; its lead-lag figures are
   among those withdrawn.
+- [`thread-drafts-2026.md`](thread-drafts-2026.md) — tweet drafts that used to sit at the end of
+  FINDINGS.md.

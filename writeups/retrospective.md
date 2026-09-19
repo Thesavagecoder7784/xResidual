@@ -147,19 +147,22 @@ Kalshi's price from a channel Kalshi caps at one message a second, and Polymarke
 updating roughly every 10 ms. A price you only look at once a second always looks late. When I fed my
 own estimator a market in which neither venue leads — the same price on both sides — observed the way I
 had observed Kalshi, it reported Polymarket first in 26 of 29 windows at a median +600 ms. My headline,
-produced by a market with no lead in it. Inverting the measurement recovers roughly 38% of goals
-Kalshi-first, 39% neither and 23% Polymarket-first: no systematic ordering at all.
+produced by a market with no lead in it. Inverting the measurement across the 427 lead measurements
+recovers roughly 58% Kalshi-first, 8% neither and 35% Polymarket-first, each with a wide interval and
+sensitive to how the model is set up: no systematic Polymarket lead in any version.
 
 Every check I had run asked whether my numbers were consistent with each other. None asked whether the
 input was right. The cluster bootstrap made a biased number look more certain, not less.
 
-What survives is the part that never depended on who moved first. When a goal lands, a follower chasing
-the move sees a median **12.0-cent** gap, comfortably positive on paper after costs. But **at the instant
-of the goal both books empty** — spreads blow out, best-price depth falls to a few percent of normal, and
-they refill in 3–4 seconds. Gate the ledger on what is actually resting and **the median match yields
-no harvestable goal at all.** Harvestable goals exist (~9% goal-weighted across the full 66-match
-ledger, clustered in 21 of those 66), but they are a minority you cannot identify in advance. Once-a-second
-sampling made Kalshi's book look *deeper* than it was, so if anything that zero is understated.
+What survives is the part that did not need to know who moved first. When a goal lands, the price moves
+a median **12.0 cents**, comfortably more than the spread a follower would pay. But **at the instant of the
+goal both books empty** — spreads blow out, best-price depth falls to about half a percent of normal at
+its low point, and they refill in 3–4 seconds. Gate the ledger on what is actually resting and **the
+median match yields no harvestable goal at all.** Harvestable goals exist (~9% goal-weighted across the
+full 66-match ledger, clustered in 21 of those 66), but they are a minority you cannot identify in advance.
+That zero uses the harshest way of measuring depth, the low point across the goal; on the 21 events where
+the raw book survives, depth read at the moment a follower could act leaves 11–33% of them harvestable.
+So the honest version is "mostly not tradeable", not "never".
 
 That collapse is market makers pulling quotes against flow they correctly suspect is informed:
 adverse selection, observed live, on an event whose timing nobody controls.
@@ -177,10 +180,13 @@ Eleven predictions, locked before kickoff with their grading rules, graded in pu
 leads price discovery", whose measurement turned out unable to see a lead (section 5) — so the grade now
 stands at **5 pass, 2 fail, 4 inconclusive.** The two failures are the ones worth stating plainly.
 
-**P3, law of one price, FAILED.** I predicted the raw cross-venue title gap would average ≤ 1pp. It
-averaged **3.98pp**. I was wrong about the level — but the reason is instructive rather than
-embarrassing: de-vigged, the two venues agree to **0.15pp**. The gap is house margin, not
-disagreement. Price-level parity fails while belief-level parity holds.
+**P3, law of one price, FAILED.** I predicted the de-vigged cross-venue gap on the top twelve title
+contracts would stay at or under 1pp through the final. It read about **0.15pp** through the buildup and
+**3.98pp** at the close. The failure is mostly about when it was measured: as teams were eliminated,
+Kalshi's winner field stopped behaving like a probability distribution (its overround ran past 2000%),
+and de-vigging a field that no longer sums sensibly produces a gap that isn't a disagreement about who
+will win. While both books still normalized, the full-field gap held at a median 0.17pp. I grade it as
+written, and it fails.
 
 **P10, goal overreaction, FAILED.** I predicted the documented "fade the overreaction after a
 surprising goal" edge would show positive paper P&L. It came in at **−0.285pp mean, −0.821pp on the
@@ -188,12 +194,16 @@ surprising-goal subset.** There is nothing to fade: these markets *under*-react 
 over-reacting. This was pre-registered as a
 publishable result either way, and the negative is more useful than the positive would have been.
 
-Three came back inconclusive for reasons I could not fix by trying harder. P2 because prediction
+Four are now inconclusive: P6, for the reason in section 5, and three that I could not fix by trying
+harder. P2 because prediction
 markets quote two-way and simply do not price the draw, so there is no like-for-like favourite-
 longshot comparison. P8 because my sigma metric assumed a continuously-priced series, and prediction
 market mids are step functions — about 98% flat at one-second resolution — so the denominator
 collapses into the noise floor and the z-score stops meaning anything. That is a design error in the
-pre-registration, and the honest grade is inconclusive rather than a number I would have to disown.
+pre-registration, and the honest grade is inconclusive rather than a number I would have to disown. And P9,
+the in-play heat test, because only about nine games met its extreme-heat, afternoon-kickoff condition,
+and the raw tapes it needed had been pruned before grading — underpowered by construction, which the
+pre-registration had flagged in advance.
 
 ## 7. The paper book: one lane worked
 

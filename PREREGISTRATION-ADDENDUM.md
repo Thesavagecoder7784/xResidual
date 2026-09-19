@@ -127,7 +127,8 @@ one. Found on 2026-06-25 in a check of the σ pool, not reverse-fit.
 shows. The grader (`scripts/grade_prereg.py`) now returns INCONCLUSIVE when the denominator is
 degenerate (nonzero fraction < 0.10) rather than a bogus FAIL. Note in passing: Kalshi mids are sparser
 than Polymarket's (the largest-z artifacts are mostly Kalshi), which is consistent with Polymarket
-leading price discovery (P6) — Kalshi is the thinner follower. P8 was a secondary; the two primaries
+leading price discovery (P6) — Kalshi is the thinner follower [annotation 2026-09-18: that inference is withdrawn; Kalshi's mids are
+sparser because they were read from a feed capped at one message a second — see entry A-P6]. P8 was a secondary; the two primaries
 (P1, P6) are unaffected, and no other prediction's metric is touched.
 
 ## 2026-07-06 — P9 graded INCONCLUSIVE: underpowered by construction, and the in-play half is not retro-computable
@@ -177,17 +178,20 @@ more often than the other, and a price observed once a second is observed late b
 
 **How it was established.** A known-truth placebo (`scripts/sampling_bias_check.py`,
 `writeups/_sampling_bias_results.json`) feeds the published pipeline a market in which neither venue
-leads — the same price path on both sides — observed the way the capture observed Kalshi. It reports
+leads — the same price path on both sides — observed the way the capture observed Kalshi. Given that zero-lead market, it reports
 Polymarket first in 26 of 29 windows at a median +600 ms, which is the published headline. The same
 placebo on the information share hands whichever series is sampled faster the larger share, and
-relabelling the venues moves the "leader" with the sampling. On the one match whose Kalshi book could be
-rebuilt at full resolution and verified against Kalshi's own quotes, Polymarket's component share falls
-from 88% to 53%. The metric P6 is graded on is not identified on this capture.
+relabelling the venues moves the "leader" with the sampling. The grade rests on the information-share
+version of the same test, because that is P6's metric: with no lead at all, sampling alone hands the
+always-fresh series 95–100% of the Hasbrouck share on all four contracts tested. With both venues rebuilt
+at full resolution and checked against Kalshi's own quotes (three contracts, two matches), Polymarket's
+component share goes from 94% to 51%, from 88% to 85% and from 85% to 71% — lower, and still above half on
+two of three, which is too little to grade P6 either way. The metric P6 is graded on is not identified on
+this capture.
 
 **What the data does say.** The estimator's response to a known lead is measurable, so the 427 published
 lead measurements can be inverted against it (`scripts/lead_deconvolution.py`, validated on known inputs
-first). The recovered distribution of true leads is 38% Kalshi first, 39% no lead, 23% Polymarket first:
-no systematic Polymarket lead. That analysis is exploratory and is not the pre-registered metric, so it
+first). The recovered distribution of true leads is roughly 58% Kalshi-first, 8% no lead and 35% Polymarket-first (bootstrap 95% intervals 44–67%, 0–35% and 19–44%, resampling matches), and the split moves with the model's specification: no systematic Polymarket lead in any of them. That analysis is exploratory and is not the pre-registered metric, so it
 does not grade P6 either way.
 
 **Effect on the grade.** **P6 → INCONCLUSIVE (data-forced)**, the same class of verdict as P8, whose

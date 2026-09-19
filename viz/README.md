@@ -96,7 +96,7 @@ the microstructure/tape cards read `docs/data/leadlag.js`, `_ofi.js`, `_livewp.j
 | Card | What it shows |
 |---|---|
 | `cross_venue_basis` | Kalshi vs Polymarket, two venues one price — the gap is mostly house margin; the residual belief gap is a structured home-crowd tilt (+ a Betfair sharp anchor). The most "prediction-market quant" card |
-| `patriotic_premium` | **NEW (cross: home-crowd tilt × price leadership)** — the US exchange (Kalshi) prices the USA +2.4pp above the sharp line vs +0.5pp on the price-leading global venue; it pays up for the North American hosts, Polymarket for the European/South American giants. Sentiment, priced |
+| `patriotic_premium` | **NEW (home-crowd tilt vs the sharp line)** — the US exchange (Kalshi) prices the USA +2.4pp above the Betfair sharp line vs +0.5pp on Polymarket; it pays up for the North American hosts, Polymarket for the European/South American giants. Sentiment, priced |
 | `money_map` | where $ turnover concentrates — the favourites are the *least*-traded |
 | `liquidity_tax` | **NEW** — the cost of a bet by market type: the title market trades at a 0.1c spread, the obscure derived markets (finish-third, stage-of-elimination) at 2.0c — 20× wider. Plus the vig term structure (Polymarket ~2% vs Kalshi ~5–9%, widening at kickoff) |
 | `coherence_ladder` | **NEW** — the probability staircase: each team's nested ladder (reach R32 ≥ R16 ≥ QF ≥ SF ≥ Final ≥ win) descends monotonically; 0 arbitrage violations across 282 checks. The nested markets are internally consistent |
@@ -117,26 +117,26 @@ the microstructure/tape cards read `docs/data/leadlag.js`, `_ofi.js`, `_livewp.j
 | `chaos_mirage` | the favourites stumbled but the title market only moved ±3pp — it re-sorted the contenders, it didn't panic |
 | `contested_title` | **NEW** — belief volatility as small-multiple sparklines: the title prices that moved most over the buildup were the *contenders* (Argentina ±1.46pp, Spain, Portugal), not the longshots. A volatile price is one the crowd is still arguing over |
 
-### Microstructure & in-play (the cross-venue price-discovery flagship)
+### Microstructure & in-play
 
 Tape-derived, from the captured `ws_capture` websocket feeds. Processed by `build_micro_all.py`
 (tapes are ~1.3 GB each, so they're parsed once on the VM and fed to every pipeline).
 
 | Card | What it shows |
 |---|---|
-| `leadlag_lead` | the pooled flagship — Polymarket prices a goal first across the match pool (34 matches, ~62% of repricing events: 103 vs 45 of 165, median +400ms) |
-| `leadlag_tape` | a single match's tape: who priced the goal first, to the millisecond |
-| `ofi_mechanism` | order-flow imbalance → price impact, the within-venue mechanism (Cont-Kukanov-Stoikov; strong within-venue, no cross-venue lead) |
+| `leadlag_lead` | **WITHDRAWN 2026-09-18** — the pooled cross-venue lead. Kalshi was read at one message a second against Polymarket's full book, and a market with no lead reproduces the chart ([CORRECTION.md](../CORRECTION.md)) |
+| `leadlag_tape` | **WITHDRAWN 2026-09-18** — a single match's tape of who priced the goal first; same sampling problem as `leadlag_lead` |
+| `ofi_mechanism` | order-flow imbalance → price impact, the within-venue mechanism (Cont-Kukanov-Stoikov): the predicted sign, but slight (correlation ~0.10 Polymarket, ~0.07 Kalshi); no cross-venue lead |
 | `live_match` | a match's in-play win-probability tape with auto-detected goal shocks |
-| `livewp_underreaction` | our in-play win-probability model vs the live market — the market under-reacts to goals (~5pp) |
-| `book_vanishes` | **NEW (anatomy of a goal)** — at a goal the order book evaporates: Polymarket spread ~8×, best-price depth →<1%; Kalshi 2×, →~1%; refill ~3–4s. The price leader withdraws hardest |
-| `goal_discovery` | **NEW (anatomy of a goal)** — price discovery concentrates at the news: Polymarket's information share is ~86% in goal windows vs ~53% in calm play. The lead is a news-event phenomenon, not a steady hum |
-| `edge_mirage` | **NEW (anatomy of a goal)** — the lead is real but untradeable: the stale follower nets a median +10.8c on paper, but depth at the goal is ~0.5% of normal → **the median match yields no harvestable goal** (~9% goal-weighted on the reconstructible subset; the unit is the match, never the goal). The honest capstone |
+| `livewp_underreaction` | our in-play win-probability model vs the live market — the market under-reacts to goals (~3pp over 54 matches, measured on Polymarket; 17 of those have a reconstructed goal sequence that doesn't match the final score, so read it as indicative — the validated 8-match subset books ~0.34× the fair move) |
+| `book_vanishes` | **(anatomy of a goal)** — at a goal both venues' order books evaporate, spreads blow out and best-price depth falls to ~0.5% of normal at the low point; both refill in ~3–4s. *Revised 2026-09-18:* the venue-by-venue comparison and "the price leader withdraws hardest" are withdrawn (FINDINGS #38) |
+| `goal_discovery` | **WITHDRAWN 2026-09-18** — the goal-vs-calm information-share contrast (86% vs 53%) used the same mis-sampled series ([CORRECTION.md](../CORRECTION.md)) |
+| `edge_mirage` | **(anatomy of a goal)** — a visible dislocation is untradeable: a follower chasing the move nets a median +10.8c on paper, but depth at the goal is ~0.5% of normal → **the median match yields no harvestable goal** (~9% goal-weighted across the full 66-match ledger; the unit is the match, never the goal) |
 | `adverse_selection` | **NEW (the maker's view)** — the same ~11c reframed from the quoter's side: a maker who holds a resting quote through a goal is picked off for ~11c, so the book-pull (8× spread, depth→0) *is* the adverse-selection defence. The "what a quoter loses" chart for a market-making audience |
 
-> The rigorous information-share version (Hasbrouck 1995 + Gonzalo-Granger permanent-component,
-> `build_infoshare.py` → `_infoshare.js`, Polymarket GG ~78%) feeds `leadlag_lead` and the desk
-> research note, now withdrawn and archived at `archive/cross-venue/price_discovery_note.pdf` (see `CORRECTION.md`).
+> The information-share version (Hasbrouck 1995 + Gonzalo-Granger permanent-component,
+> `build_infoshare.py` → `_infoshare.js`) fed `leadlag_lead` and the desk research note. Both are
+> withdrawn; the note is archived at `archive/cross-venue/price_discovery_note.pdf` (see `CORRECTION.md`).
 
 ### Cross cards (model × market) — the "two ideas crossed" scatter set
 

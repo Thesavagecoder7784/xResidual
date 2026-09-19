@@ -11,7 +11,7 @@ The files are kept unchanged, as a record of what was claimed and how:
 
 | File | What it is |
 |---|---|
-| `price_discovery_note.pdf` / `.html` | The four-page desk note |
+| `price_discovery_note.pdf` / `.html` | The four-page desk note. The PDF is complete; the HTML's image links were relative to its old location in `writeups/` and no longer resolve here |
 | `cross-venue-price-discovery.md` | The full price-discovery writeup |
 | `blog_post.md` | The blog version |
 | `ssrn_paper.md` | The SSRN draft |

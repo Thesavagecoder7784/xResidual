@@ -79,7 +79,7 @@
   <header class="hero lphero">
     <div class="kicker">2026 World Cup · a model against the markets</div>
     <h1>An independent model against the markets, <em>graded in public.</em></h1>
-    <div class="lplede">xResidual ran a forecasting model against <b>Kalshi, Polymarket and the bookmaker consensus</b> through all 104 matches of the 2026 World Cup, with every forecast committed before kickoff and eleven predictions about the markets locked in a timestamped commit. The headline result is the one I would least like: <b>the market was better calibrated than my model</b>, and where the two disagreed, the market was usually right.</div>
+    <div class="lplede">xResidual ran a forecasting model against <b>Kalshi, Polymarket and the bookmaker consensus</b> through all 104 matches of the 2026 World Cup, with every forecast committed before kickoff and eleven predictions about the markets locked in a timestamped commit. The headline result is the one I would least like: <b>the market was better calibrated than my model</b>, and the draws my model missed were ones the market had already priced.</div>
     <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative research.</div>
     <div class="ctarow">
       <a class="cta solid" href="results.html">See the scorecard →</a>
@@ -92,7 +92,7 @@
 
   <section>
     <div class="h2">Correction, 18 September 2026</div>
-    <div class="built">This site previously led with a cross-venue finding: that Polymarket prices a goal about <b>600 ms before Kalshi</b>, with an 81% information share. <b>That finding is withdrawn.</b> Kalshi's price was read from a feed capped at one message a second, Polymarket's from its full order book, and a market with no lead at all, measured the same way, reproduces the result. Inverting the measurement recovers no systematic ordering between the venues. One pre-registered prediction, P6, moved from pass to inconclusive as a result. Everything else below never depended on it. <a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/CORRECTION.md">Read the correction →</a></div>
+    <div class="built">This site previously led with a cross-venue finding: that Polymarket prices a goal about <b>600 ms before Kalshi</b>, with an 81% information share. <b>That finding is withdrawn.</b> Kalshi's price was read from a feed capped at one message a second, Polymarket's from its full order book, and a market with no lead at all, measured the same way, reproduces the result. Inverting the measurement recovers no systematic ordering between the venues. One pre-registered prediction, P6, moved from pass to inconclusive as a result. The results below do not rest on it, with one limit: the harvest ledger uses the same timing to decide which venue to treat as the follower, and its conclusion holds because both venues' books empty at a goal. <a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/CORRECTION.md">Read the correction →</a></div>
   </section>
 
   <section>
@@ -125,23 +125,23 @@
         <div class="fmini"><div class="bar" title="calibration slope: 1.0 is perfect"><span class="seg" style="width:53.5%;background:var(--accent)"></span><span class="seg" style="width:43.5%;background:var(--rule-2)"></span></div>
           <div class="lbl"><span><b>Market</b> slope 1.07</span><span>my model 0.87</span></div></div></div></div>
       <div class="finding"><div class="fstat">25.8%<small>market, on realised draws</small></div>
-        <div class="ftext"><b>My errors were draws, and the market had already priced them.</b> Seven of my eight worst calls were draws. On realised draws the market carried 25.8% against my 21.1%, and on my worst calls it had the outcome 2.7 points higher than I did.
+        <div class="ftext"><b>My errors were draws, and the market had already priced them.</b> Seven of my eight worst calls were draws. On those calls the market had the outcome 2.7 points higher than I did, and on the realised draws in the 39 games with both a frozen forecast and a closing price (13 draws), it carried 25.8% against my 21.1%.
         <div class="fmini"><div class="bar"><span class="seg" style="width:51.8%;background:var(--accent)"></span><span class="seg" style="width:42.4%;background:var(--rule-2)"></span></div>
           <div class="lbl"><span><b>Market</b> 25.8%</span><span>my model 21.1%</span></div></div></div></div>
       <div class="finding"><div class="fstat">0.17pp<small>venues agree</small></div>
-        <div class="ftext"><b>The two venues agree on the event and differ on the price.</b> De-vigged, Kalshi and Polymarket sat 0.17 points apart on the title race on every day both books normalized. What separates them is cost: overround of 5.6% on Kalshi against 2.1% on Polymarket.
+        <div class="ftext"><b>The two venues mostly agree on the event and differ on the price.</b> De-vigged, Kalshi and Polymarket sat a median 0.17 points apart on the title race across the 20 days both books normalized. What separates them is cost: overround of 5.6% on Kalshi against 2.1% on Polymarket. The pre-registered version of this test (P3) still failed, because it was scored at the close as the field resolved.
         <div class="fmini"><div class="bar"><span class="seg" style="width:72.7%;background:var(--accent)"></span><span class="seg" style="width:27.3%;background:var(--rule-2)"></span></div>
           <div class="lbl"><span><b>Kalshi</b> overround 5.6%</span><span>Polymarket 2.1%</span></div></div></div></div>
       <div class="finding"><div class="fstat">0<small>harvestable, median match</small></div>
-        <div class="ftext"><b>A visible dislocation is not a tradeable one.</b> When a goal lands, a follower chasing the move sees a median 12.0¢ gap. But both order books empty at the goal and refill in 3–4 seconds, so once you gate on what is actually resting there, the median match offers nothing to take.
+        <div class="ftext"><b>A visible dislocation is mostly not a tradeable one.</b> When a goal lands, the price moves a median 12.0¢. But both order books empty at the goal and refill in 3–4 seconds, so once you gate on what is actually resting there, the median match offers nothing to take. That uses the harshest measure of depth; read at the moment a follower could act, a minority of goals would have been takeable.
         <div class="fmini"><div class="bar" title="best-price depth at the goal, as a share of normal"><span class="seg" style="width:3%;background:var(--accent)"></span></div>
-          <div class="lbl"><span><b>Book depth at the goal</b></span><span>a few % of normal, on both venues</span></div></div></div></div>
+          <div class="lbl"><span><b>Book depth at the goal</b></span><span>~0.5% of normal at the low point</span></div></div></div></div>
     </div>
   </section>
 
   <section>
     <div class="h2">How it's built</div>
-    <div class="built">An Elo-plus-squad-value goal model (Skellam goal difference, Dixon–Coles correction, a format-aware Monte Carlo from the group stage to the final) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who turns out to be right. Two of its biases were found that way — squad-value blindness and inflated weak confederations — and corrected with fixes that validate out of sample. Model versions fork forward only, so no committed forecast was ever revised. The model rebuilds from public data on a clean clone and is covered by 140 tests; the market layer came from a live capture whose raw data can't be redistributed. The stance throughout: the market is the subject, not the opponent.</div>
+    <div class="built">An Elo-plus-squad-value goal model (Skellam goal difference, Dixon–Coles correction, a format-aware Monte Carlo from the group stage to the final) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who turns out to be right. Two of its biases were found that way — squad-value blindness and inflated weak confederations — and corrected with fixes that validate out of sample. Model versions fork forward only, so no committed forecast was ever revised. The model rebuilds from public data on a clean clone and is covered by a test suite; the market layer came from a live capture whose raw data can't be redistributed. The stance throughout: the market is the subject, not the opponent.</div>
   </section>
 
   <footer><div>A complete, pre-registered project: committed before kickoff, graded in public after the final on 2026-07-19, corrected in the open on 2026-09-18.</div>
