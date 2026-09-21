@@ -1,0 +1,212 @@
+{
+ "n_published": 427,
+ "n_matches": 80,
+ "n_windows": 33,
+ "lags_ms": [
+  -7000,
+  -5000,
+  -3000,
+  -2000,
+  -1500,
+  -1000,
+  -600,
+  -300,
+  0,
+  300,
+  600,
+  1000,
+  1500,
+  2000,
+  3000,
+  5000,
+  7000
+ ],
+ "bin_edges_ms": [
+  -8100,
+  -5100,
+  -3100,
+  -2100,
+  -1300,
+  -700,
+  -300,
+  -100,
+  100,
+  300,
+  700,
+  1300,
+  2100,
+  3100,
+  5100,
+  8100
+ ],
+ "phases_per_window": 40,
+ "weights": [
+  0.048548426965046736,
+  0.03179466383266476,
+  0.017031995372234727,
+  0.021912420113341793,
+  0.0,
+  0.06445658465642545,
+  0.00990807298486564,
+  0.38515120428645633,
+  0.07606689288155556,
+  0.20311686160590345,
+  0.0,
+  0.008967176550386126,
+  0.03748430225143023,
+  0.0,
+  0.024484835130405235,
+  0.07107656336928385,
+  0.0,
+  0.0
+ ],
+ "weight_names": [
+  "-7000",
+  "-5000",
+  "-3000",
+  "-2000",
+  "-1500",
+  "-1000",
+  "-600",
+  "-300",
+  "0",
+  "300",
+  "600",
+  "1000",
+  "1500",
+  "2000",
+  "3000",
+  "5000",
+  "7000",
+  "noise"
+ ],
+ "masses": {
+  "kalshi": 0.5788033682110355,
+  "none": 0.07606689288155558,
+  "poly": 0.34512973890740895,
+  "noise_mass": 0.0
+ },
+ "bootstrap95": {
+  "kalshi": [
+   0.4439383562769939,
+   0.668591115638227
+  ],
+  "none": [
+   0.0,
+   0.34600967075276157
+  ],
+  "poly": [
+   0.18965875375237437,
+   0.43716605079507337
+  ],
+  "noise_mass": [
+   0.0,
+   0.04419071984034159
+  ]
+ },
+ "bootstrap": "resamples matches AND response windows, 300 replicates",
+ "fit_chi2": 0.5585363074049648,
+ "fit_bins": 15,
+ "self_test_held_out": [
+  {
+   "truth": "all 0 (no lead)",
+   "truth_kzp": [
+    0,
+    1.0,
+    0
+   ],
+   "recovered_kzp": [
+    0.065,
+    0.763,
+    0.172
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "all +600 (Poly first)",
+   "truth_kzp": [
+    0,
+    0,
+    1.0
+   ],
+   "recovered_kzp": [
+    0.028,
+    0.0,
+    0.972
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "all -600 (Kalshi first)",
+   "truth_kzp": [
+    1.0,
+    0,
+    0
+   ],
+   "recovered_kzp": [
+    0.995,
+    0.0,
+    0.005
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "all +300",
+   "truth_kzp": [
+    0,
+    0,
+    1.0
+   ],
+   "recovered_kzp": [
+    0.047,
+    0.008,
+    0.945
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "all -300",
+   "truth_kzp": [
+    1.0,
+    0,
+    0
+   ],
+   "recovered_kzp": [
+    0.889,
+    0.089,
+    0.022
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "all -1000",
+   "truth_kzp": [
+    1.0,
+    0,
+    0
+   ],
+   "recovered_kzp": [
+    0.978,
+    0.0,
+    0.022
+   ],
+   "recovered_noise": 0.0
+  },
+  {
+   "truth": "20% -600 / 60% 0 / 20% +600",
+   "truth_kzp": [
+    0.2,
+    0.6,
+    0.2
+   ],
+   "recovered_kzp": [
+    0.252,
+    0.513,
+    0.235
+   ],
+   "recovered_noise": 0.0
+  }
+ ],
+ "note": "Masses kalshi/none/poly are shares of the NON-noise mass. The response windows are each match's largest gated event, so the fit should be read with its chi-square: a poor fit means the split is indicative only.",
+ "seed": 20260919
+}

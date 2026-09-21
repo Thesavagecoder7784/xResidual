@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Event-driven cross-venue lead-lag forward-test (the in-play sibling of the convergence
-null in writeups/cross-venue-price-discovery.md §6).
+null in archive/cross-venue/cross-venue-price-discovery.md §6).
+
+WITHDRAWN 2026-09-18: the lead this tests for is a sampling artifact. See CORRECTION.md.
 
 Pre-registered strategy: Polymarket leads Kalshi on in-play shocks (build_leadlag.py).
 So when Polymarket's mid jumps >= MIN_JUMP inside a short window (a goal/red-card reprice),
