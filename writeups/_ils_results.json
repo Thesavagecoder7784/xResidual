@@ -1,0 +1,653 @@
+{
+ "metric": "Putnins (2013) Information Leadership Share",
+ "n_matches": 63,
+ "gg_leader_count": {
+  "polymarket": 61,
+  "kalshi": 2
+ },
+ "poly_leads_by_ils": 44,
+ "of": 63,
+ "poly_leads_frac": 0.6984,
+ "median_ils_linear": 0.6415,
+ "median_ils_squared": 0.762,
+ "pooled": {
+  "poly_is": 0.7522,
+  "poly_cs": 0.8096,
+  "ils_lin": 0.5835,
+  "ils_sq": 0.6624
+ },
+ "direction": "leader <=> CS > IS (noise inflates IS; Yan-Zivot 2010)",
+ "formula_status": "normalization pending verification vs Putnins (2013) Eq.; linear+squared both reported",
+ "per_match": [
+  {
+   "match": "England vs Congo Dr",
+   "n_coint": 2,
+   "poly_is": 0.983,
+   "poly_cs": 0.9501,
+   "is_minus_cs": 0.0329,
+   "ils_lin": 0.2477,
+   "ils_sq": 0.0978,
+   "poly_leads": false
+  },
+  {
+   "match": "England vs Argentina",
+   "n_coint": 2,
+   "poly_is": 0.978,
+   "poly_cs": 0.9429,
+   "is_minus_cs": 0.0351,
+   "ils_lin": 0.2709,
+   "ils_sq": 0.1213,
+   "poly_leads": false
+  },
+  {
+   "match": "Brazil vs Japan",
+   "n_coint": 2,
+   "poly_is": 0.9667,
+   "poly_cs": 0.9778,
+   "is_minus_cs": -0.0111,
+   "ils_lin": 0.6027,
+   "ils_sq": 0.6972,
+   "poly_leads": true
+  },
+  {
+   "match": "Norway vs Senegal",
+   "n_coint": 1,
+   "poly_is": 0.9655,
+   "poly_cs": 0.8857,
+   "is_minus_cs": 0.0798,
+   "ils_lin": 0.2168,
+   "ils_sq": 0.0712,
+   "poly_leads": false
+  },
+  {
+   "match": "Ecuador vs Germany",
+   "n_coint": 2,
+   "poly_is": 0.9635,
+   "poly_cs": 0.9482,
+   "is_minus_cs": 0.0153,
+   "ils_lin": 0.4095,
+   "ils_sq": 0.3247,
+   "poly_leads": false
+  },
+  {
+   "match": "Norway vs England",
+   "n_coint": 2,
+   "poly_is": 0.9621,
+   "poly_cs": 0.9395,
+   "is_minus_cs": 0.0226,
+   "ils_lin": 0.3795,
+   "ils_sq": 0.2723,
+   "poly_leads": false
+  },
+  {
+   "match": "Bosnia Herzegovina vs Qatar",
+   "n_coint": 1,
+   "poly_is": 0.9499,
+   "poly_cs": 1.0,
+   "is_minus_cs": -0.0501,
+   "ils_lin": 1.0,
+   "ils_sq": 1.0,
+   "poly_leads": true
+  },
+  {
+   "match": "Argentina vs Cape Verde",
+   "n_coint": 1,
+   "poly_is": 0.949,
+   "poly_cs": 0.883,
+   "is_minus_cs": 0.066,
+   "ils_lin": 0.2886,
+   "ils_sq": 0.1413,
+   "poly_leads": false
+  },
+  {
+   "match": "Colombia vs Portugal",
+   "n_coint": 1,
+   "poly_is": 0.9459,
+   "poly_cs": 0.9065,
+   "is_minus_cs": 0.0394,
+   "ils_lin": 0.3567,
+   "ils_sq": 0.2352,
+   "poly_leads": false
+  },
+  {
+   "match": "Belgium vs Senegal",
+   "n_coint": 2,
+   "poly_is": 0.9424,
+   "poly_cs": 0.9706,
+   "is_minus_cs": -0.0282,
+   "ils_lin": 0.6686,
+   "ils_sq": 0.8028,
+   "poly_leads": true
+  },
+  {
+   "match": "Germany vs Ivory Coast",
+   "n_coint": 2,
+   "poly_is": 0.9308,
+   "poly_cs": 1.0,
+   "is_minus_cs": -0.0692,
+   "ils_lin": 1.0,
+   "ils_sq": 1.0,
+   "poly_leads": true
+  },
+  {
+   "match": "Morocco vs Haiti",
+   "n_coint": 2,
+   "poly_is": 0.9305,
+   "poly_cs": 0.8718,
+   "is_minus_cs": 0.0587,
+   "ils_lin": 0.3368,
+   "ils_sq": 0.2051,
+   "poly_leads": false
+  },
+  {
+   "match": "Spain vs Belgium",
+   "n_coint": 2,
+   "poly_is": 0.9263,
+   "poly_cs": 1.0,
+   "is_minus_cs": -0.0737,
+   "ils_lin": 1.0,
+   "ils_sq": 1.0,
+   "poly_leads": true
+  },
+  {
+   "match": "South Africa vs South Korea",
+   "n_coint": 2,
+   "poly_is": 0.9254,
+   "poly_cs": 0.8978,
+   "is_minus_cs": 0.0276,
+   "ils_lin": 0.4146,
+   "ils_sq": 0.334,
+   "poly_leads": false
+  },
+  {
+   "match": "France vs Senegal",
+   "n_coint": 1,
+   "poly_is": 0.9208,
+   "poly_cs": 1.0,
+   "is_minus_cs": -0.0792,
+   "ils_lin": 1.0,
+   "ils_sq": 1.0,
+   "poly_leads": true
+  },
+  {
+   "match": "Dr Congo vs Uzbekistan",
+   "n_coint": 2,
+   "poly_is": 0.9204,
+   "poly_cs": 0.8838,
+   "is_minus_cs": 0.0366,
+   "ils_lin": 0.3968,
+   "ils_sq": 0.302,
+   "poly_leads": false
+  },
+  {
+   "match": "France vs England",
+   "n_coint": 2,
+   "poly_is": 0.9137,
+   "poly_cs": 0.8554,
+   "is_minus_cs": 0.0583,
+   "ils_lin": 0.3585,
+   "ils_sq": 0.2379,
+   "poly_leads": false
+  },
+  {
+   "match": "Netherlands vs Morocco",
+   "n_coint": 2,
+   "poly_is": 0.9111,
+   "poly_cs": 0.966,
+   "is_minus_cs": -0.0549,
+   "ils_lin": 0.7349,
+   "ils_sq": 0.8849,
+   "poly_leads": true
+  },
+  {
+   "match": "Belgium vs Egypt",
+   "n_coint": 2,
+   "poly_is": 0.9079,
+   "poly_cs": 0.91,
+   "is_minus_cs": -0.0021,
+   "ils_lin": 0.5063,
+   "ils_sq": 0.5127,
+   "poly_leads": true
+  },
+  {
+   "match": "Uruguay vs Cape Verde",
+   "n_coint": 2,
+   "poly_is": 0.9035,
+   "poly_cs": 0.7857,
+   "is_minus_cs": 0.1178,
+   "ils_lin": 0.2814,
+   "ils_sq": 0.133,
+   "poly_leads": false
+  },
+  {
+   "match": "Egypt vs Iran",
+   "n_coint": 2,
+   "poly_is": 0.8915,
+   "poly_cs": 1.0,
+   "is_minus_cs": -0.1085,
+   "ils_lin": 1.0,
+   "ils_sq": 1.0,
+   "poly_leads": true
+  },
+  {
+   "match": "Argentina vs Switzerland",
+   "n_coint": 1,
+   "poly_is": 0.8799,
+   "poly_cs": 0.8658,
+   "is_minus_cs": 0.0141,
+   "ils_lin": 0.4683,
+   "ils_sq": 0.4368,
+   "poly_leads": false
+  },
+  {
+   "match": "Saudi Arabia vs Uruguay",
+   "n_coint": 2,
+   "poly_is": 0.8742,
+   "poly_cs": 0.99,
+   "is_minus_cs": -0.1158,
+   "ils_lin": 0.9344,
+   "ils_sq": 0.9951,
+   "poly_leads": true
+  },
+  {
+   "match": "Argentina vs Egypt",
+   "n_coint": 2,
+   "poly_is": 0.8715,
+   "poly_cs": 0.806,
+   "is_minus_cs": 0.0655,
+   "ils_lin": 0.3799,
+   "ils_sq": 0.2729,
+   "poly_leads": false
+  },
+  {
+   "match": "Uzbekistan vs Colombia",
+   "n_coint": 1,
+   "poly_is": 0.8637,
+   "poly_cs": 0.8473,
+   "is_minus_cs": 0.0164,
+   "ils_lin": 0.4669,
+   "ils_sq": 0.434,
+   "poly_leads": false
+  },
+  {
+   "match": "Argentina vs Austria",
+   "n_coint": 1,
+   "poly_is": 0.854,
+   "poly_cs": 0.8359,
+   "is_minus_cs": 0.0181,
+   "ils_lin": 0.4655,
+   "ils_sq": 0.4313,
+   "poly_leads": false
+  },
+  {
+   "match": "Algeria vs Austria",
+   "n_coint": 2,
+   "poly_is": 0.8528,
+   "poly_cs": 0.9191,
+   "is_minus_cs": -0.0663,
+   "ils_lin": 0.6623,
+   "ils_sq": 0.7936,
+   "poly_leads": true
+  },
+  {
+   "match": "Canada vs Morocco",
+   "n_coint": 2,
+   "poly_is": 0.8452,
+   "poly_cs": 0.7903,
+   "is_minus_cs": 0.0549,
+   "ils_lin": 0.4084,
+   "ils_sq": 0.3227,
+   "poly_leads": false
+  },
+  {
+   "match": "Mexico vs England",
+   "n_coint": 2,
+   "poly_is": 0.8213,
+   "poly_cs": 0.8517,
+   "is_minus_cs": -0.0304,
+   "ils_lin": 0.5555,
+   "ils_sq": 0.6096,
+   "poly_leads": true
+  },
+  {
+   "match": "Belgium vs Iran",
+   "n_coint": 2,
+   "poly_is": 0.8031,
+   "poly_cs": 0.8795,
+   "is_minus_cs": -0.0764,
+   "ils_lin": 0.6415,
+   "ils_sq": 0.762,
+   "poly_leads": true
+  },
+  {
+   "match": "Paraguay vs France",
+   "n_coint": 1,
+   "poly_is": 0.7593,
+   "poly_cs": 0.8038,
+   "is_minus_cs": -0.0445,
+   "ils_lin": 0.565,
+   "ils_sq": 0.6278,
+   "poly_leads": true
+  },
+  {
+   "match": "Spain vs Argentina",
+   "n_coint": 2,
+   "poly_is": 0.7522,
+   "poly_cs": 0.8611,
+   "is_minus_cs": -0.1089,
+   "ils_lin": 0.6713,
+   "ils_sq": 0.8066,
+   "poly_leads": true
+  },
+  {
+   "match": "Spain vs Austria",
+   "n_coint": 1,
+   "poly_is": 0.7497,
+   "poly_cs": 0.6122,
+   "is_minus_cs": 0.1375,
+   "ils_lin": 0.3451,
+   "ils_sq": 0.2174,
+   "poly_leads": false
+  },
+  {
+   "match": "Switzerland vs Colombia",
+   "n_coint": 2,
+   "poly_is": 0.7398,
+   "poly_cs": 0.8951,
+   "is_minus_cs": -0.1553,
+   "ils_lin": 0.7501,
+   "ils_sq": 0.9001,
+   "poly_leads": true
+  },
+  {
+   "match": "New Zealand vs Egypt",
+   "n_coint": 2,
+   "poly_is": 0.7321,
+   "poly_cs": 0.7495,
+   "is_minus_cs": -0.0174,
+   "ils_lin": 0.5226,
+   "ils_sq": 0.5452,
+   "poly_leads": true
+  },
+  {
+   "match": "England vs Croatia",
+   "n_coint": 2,
+   "poly_is": 0.7293,
+   "poly_cs": 0.7992,
+   "is_minus_cs": -0.0699,
+   "ils_lin": 0.5963,
+   "ils_sq": 0.6858,
+   "poly_leads": true
+  },
+  {
+   "match": "Panama vs England",
+   "n_coint": 1,
+   "poly_is": 0.7207,
+   "poly_cs": 0.7785,
+   "is_minus_cs": -0.0578,
+   "ils_lin": 0.5766,
+   "ils_sq": 0.6498,
+   "poly_leads": true
+  },
+  {
+   "match": "France vs Iraq",
+   "n_coint": 2,
+   "poly_is": 0.6958,
+   "poly_cs": 0.6377,
+   "is_minus_cs": 0.0581,
+   "ils_lin": 0.4349,
+   "ils_sq": 0.3719,
+   "poly_leads": false
+  },
+  {
+   "match": "Brazil vs Norway",
+   "n_coint": 2,
+   "poly_is": 0.6956,
+   "poly_cs": 0.7049,
+   "is_minus_cs": -0.0093,
+   "ils_lin": 0.5111,
+   "ils_sq": 0.5221,
+   "poly_leads": true
+  },
+  {
+   "match": "Ghana vs Panama",
+   "n_coint": 2,
+   "poly_is": 0.6835,
+   "poly_cs": 0.8096,
+   "is_minus_cs": -0.1261,
+   "ils_lin": 0.6632,
+   "ils_sq": 0.7949,
+   "poly_leads": true
+  },
+  {
+   "match": "Jordan vs Algeria",
+   "n_coint": 2,
+   "poly_is": 0.6475,
+   "poly_cs": 0.694,
+   "is_minus_cs": -0.0465,
+   "ils_lin": 0.5525,
+   "ils_sq": 0.6039,
+   "poly_leads": true
+  },
+  {
+   "match": "Australia vs Egypt",
+   "n_coint": 2,
+   "poly_is": 0.6405,
+   "poly_cs": 0.8831,
+   "is_minus_cs": -0.2426,
+   "ils_lin": 0.8092,
+   "ils_sq": 0.9473,
+   "poly_leads": true
+  },
+  {
+   "match": "Colombia vs Dr Congo",
+   "n_coint": 2,
+   "poly_is": 0.637,
+   "poly_cs": 0.8407,
+   "is_minus_cs": -0.2037,
+   "ils_lin": 0.7505,
+   "ils_sq": 0.9004,
+   "poly_leads": true
+  },
+  {
+   "match": "Switzerland vs Canada",
+   "n_coint": 2,
+   "poly_is": 0.6343,
+   "poly_cs": 0.7627,
+   "is_minus_cs": -0.1284,
+   "ils_lin": 0.6495,
+   "ils_sq": 0.7745,
+   "poly_leads": true
+  },
+  {
+   "match": "Austria vs Jordan",
+   "n_coint": 2,
+   "poly_is": 0.6265,
+   "poly_cs": 0.7697,
+   "is_minus_cs": -0.1432,
+   "ils_lin": 0.6658,
+   "ils_sq": 0.7988,
+   "poly_leads": true
+  },
+  {
+   "match": "Switzerland vs Bosnia Herzegovina",
+   "n_coint": 1,
+   "poly_is": 0.6213,
+   "poly_cs": 0.6715,
+   "is_minus_cs": -0.0502,
+   "ils_lin": 0.5548,
+   "ils_sq": 0.6082,
+   "poly_leads": true
+  },
+  {
+   "match": "Mexico vs South Korea",
+   "n_coint": 2,
+   "poly_is": 0.5886,
+   "poly_cs": 0.7826,
+   "is_minus_cs": -0.194,
+   "ils_lin": 0.7156,
+   "ils_sq": 0.8636,
+   "poly_leads": true
+  },
+  {
+   "match": "Uruguay vs Spain",
+   "n_coint": 1,
+   "poly_is": 0.5795,
+   "poly_cs": 0.7074,
+   "is_minus_cs": -0.1279,
+   "ils_lin": 0.6369,
+   "ils_sq": 0.7548,
+   "poly_leads": true
+  },
+  {
+   "match": "Cape Verde vs Saudi Arabia",
+   "n_coint": 1,
+   "poly_is": 0.5574,
+   "poly_cs": 0.7115,
+   "is_minus_cs": -0.1541,
+   "ils_lin": 0.662,
+   "ils_sq": 0.7932,
+   "poly_leads": true
+  },
+  {
+   "match": "Panama vs Croatia",
+   "n_coint": 2,
+   "poly_is": 0.5259,
+   "poly_cs": 0.7127,
+   "is_minus_cs": -0.1868,
+   "ils_lin": 0.691,
+   "ils_sq": 0.8334,
+   "poly_leads": true
+  },
+  {
+   "match": "Japan vs Sweden",
+   "n_coint": 2,
+   "poly_is": 0.5186,
+   "poly_cs": 0.5889,
+   "is_minus_cs": -0.0703,
+   "ils_lin": 0.5708,
+   "ils_sq": 0.6388,
+   "poly_leads": true
+  },
+  {
+   "match": "Jordan vs Argentina",
+   "n_coint": 1,
+   "poly_is": 0.4847,
+   "poly_cs": 0.7402,
+   "is_minus_cs": -0.2555,
+   "ils_lin": 0.7518,
+   "ils_sq": 0.9017,
+   "poly_leads": true
+  },
+  {
+   "match": "Colombia vs Ghana",
+   "n_coint": 1,
+   "poly_is": 0.4748,
+   "poly_cs": 0.7011,
+   "is_minus_cs": -0.2263,
+   "ils_lin": 0.7218,
+   "ils_sq": 0.8707,
+   "poly_leads": true
+  },
+  {
+   "match": "Croatia vs Ghana",
+   "n_coint": 2,
+   "poly_is": 0.4748,
+   "poly_cs": 0.6259,
+   "is_minus_cs": -0.1511,
+   "ils_lin": 0.6492,
+   "ils_sq": 0.774,
+   "poly_leads": true
+  },
+  {
+   "match": "Portugal vs Dr Congo",
+   "n_coint": 1,
+   "poly_is": 0.4344,
+   "poly_cs": 0.5911,
+   "is_minus_cs": -0.1567,
+   "ils_lin": 0.653,
+   "ils_sq": 0.7799,
+   "poly_leads": true
+  },
+  {
+   "match": "Iraq vs Norway",
+   "n_coint": 2,
+   "poly_is": 0.4024,
+   "poly_cs": 0.634,
+   "is_minus_cs": -0.2316,
+   "ils_lin": 0.7201,
+   "ils_sq": 0.8687,
+   "poly_leads": true
+  },
+  {
+   "match": "Argentina vs Algeria",
+   "n_coint": 1,
+   "poly_is": 0.3541,
+   "poly_cs": 0.565,
+   "is_minus_cs": -0.2109,
+   "ils_lin": 0.7032,
+   "ils_sq": 0.8488,
+   "poly_leads": true
+  },
+  {
+   "match": "France vs Morocco",
+   "n_coint": 1,
+   "poly_is": 0.3242,
+   "poly_cs": 0.4751,
+   "is_minus_cs": -0.1509,
+   "ils_lin": 0.6536,
+   "ils_sq": 0.7807,
+   "poly_leads": true
+  },
+  {
+   "match": "Ecuador vs Cura\u00e7ao",
+   "n_coint": 1,
+   "poly_is": 0.282,
+   "poly_cs": 0.4379,
+   "is_minus_cs": -0.1559,
+   "ils_lin": 0.6648,
+   "ils_sq": 0.7973,
+   "poly_leads": true
+  },
+  {
+   "match": "Paraguay vs Australia",
+   "n_coint": 2,
+   "poly_is": 0.2206,
+   "poly_cs": 0.6623,
+   "is_minus_cs": -0.4417,
+   "ils_lin": 0.8739,
+   "ils_sq": 0.9796,
+   "poly_leads": true
+  },
+  {
+   "match": "New Zealand vs Belgium",
+   "n_coint": 1,
+   "poly_is": 0.1193,
+   "poly_cs": 0.5619,
+   "is_minus_cs": -0.4426,
+   "ils_lin": 0.9045,
+   "ils_sq": 0.989,
+   "poly_leads": true
+  },
+  {
+   "match": "England vs Ghana",
+   "n_coint": 2,
+   "poly_is": 0.111,
+   "poly_cs": 0.5272,
+   "is_minus_cs": -0.4162,
+   "ils_lin": 0.8993,
+   "ils_sq": 0.9876,
+   "poly_leads": true
+  },
+  {
+   "match": "Senegal vs Iraq",
+   "n_coint": 1,
+   "poly_is": 0.0846,
+   "poly_cs": 0.5106,
+   "is_minus_cs": -0.426,
+   "ils_lin": 0.9186,
+   "ils_sq": 0.9922,
+   "poly_leads": true
+  }
+ ]
+}
