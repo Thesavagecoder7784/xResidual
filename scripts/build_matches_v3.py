@@ -9,7 +9,7 @@ cf. Slovenia at Euro 2024, P3 W0 D3). The lift `omega_eff = 0.04 + 0.10*(1 - |p1
 mass in EVEN matches (where both teams are content with a point) and barely touches mismatches (so a
 93%-favourite stays ~93%). Validated OUT-OF-SAMPLE: improves W/D/L log-loss on the expanded-format
 Euros (Wf=0.10 optimal, 1.026 -> 1.017) and is net-harmful on the old 32-team WCs (Wf=0 optimal) —
-i.e. genuinely format-specific, not a universal draw-bump. See NOTES.md / build_matches_v2.
+i.e. genuinely format-specific, not a universal draw-bump. See archive/NOTES-2026-tournament.md / build_matches_v2.
 
 Honesty rule (same as v2): v3 PRE-COMMITS only games whose kickoff is still in the FUTURE, in its OWN
 forward-only ledger. So this is a clean live A/B: v2 (omega=0.04, the control) vs v3 (format lift, the

@@ -20,3 +20,5 @@ jobs:
           pip install -r requirements.txt pytest
       - name: Run test suite
         run: python -m pytest tests/ -q
+      - name: Public claims agree with their artifacts, and the 2026-09-18 correction holds
+        run: python scripts/check_claims.py

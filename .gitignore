@@ -362,3 +362,7 @@ paper/arxiv/SUBMISSION_AUDIT.md
 paper/arxiv/
 # macOS Finder metadata
 .DS_Store
+
+# Skill/tool outputs (referee-style reviews of the private manuscript). Never ship: a review of an
+# unpublished paper leaked this way once (2026-07-30 review.md, untracked 2026-09-18).
+output/

@@ -1,18 +1,18 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>xResidual · cross-venue price discovery in World Cup prediction markets</title>
+<title>xResidual · a model against the 2026 World Cup markets</title>
 <meta name="description" content="A live study of how prediction markets price the 2026 World Cup: cross-venue price discovery between Kalshi and Polymarket, on a millisecond capture pipeline, against the sharp bookmaker line. Pre-registered and graded in the open." />
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="xResidual">
-<meta property="og:title" content="xResidual:Cross-Venue Price Discovery in World Cup Prediction Markets">
-<meta property="og:description" content="A live study of how Kalshi and Polymarket price the 2026 World Cup: which venue discovers price first. Pre-registered and graded in the open.">
+<meta property="og:title" content="xResidual: a model against the 2026 World Cup markets">
+<meta property="og:description" content="An independent model against Kalshi, Polymarket and the bookmakers through the 2026 World Cup. Pre-registered, graded in public, corrected in the open.">
 <meta property="og:url" content="https://thesavagecoder7784.github.io/xResidual/">
 <meta property="og:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="xResidual:Cross-Venue Price Discovery">
-<meta name="twitter:description" content="When a goal hits, which market knows first? Cross-venue price discovery between Kalshi and Polymarket. Pre-registered, graded in the open.">
+<meta name="twitter:title" content="xResidual: a model against the World Cup markets">
+<meta name="twitter:description" content="An independent model against the prediction markets through the 2026 World Cup. Pre-registered, graded in public, corrected in the open.">
 <meta name="twitter:image" content="https://thesavagecoder7784.github.io/xResidual/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -64,28 +64,26 @@
 <body>
 <nav><div class="nav">
   <a class="brand" href="index.html">xResidual</a>
-  <span class="live"><span class="dot"></span>live</span>
+  <span class="live done">2026 · final</span>
   <div class="navlinks">
     <a href="board.html">Forecast board</a>
     <a href="games.html">Group stage</a>
     <a href="bracket.html">Bracket</a>
     <a href="results.html">Scorecard</a>
-    <a href="note.html">Research note</a>
     <a href="method.html">How it works</a>
-    <a href="lab.html">Market lab</a>
     <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
   </div>
 </div></nav>
 
 <div class="wrap">
   <header class="hero lphero">
-    <div class="kicker">2026 World Cup · prediction-market microstructure</div>
-    <h1>When a goal hits, <em>which market knows first?</em></h1>
-    <div class="lplede">xResidual is a study of how two large real-money prediction markets, <b>Kalshi and Polymarket</b>, priced the 2026 World Cup, benchmarked against the sharp bookmaker line. It answers a question the literature names but hadn't measured on live in-play sports: <b>which venue discovers price first.</b> The answer, across <b>86 captured matches</b>: Polymarket leads, but the lead is <b>un-harvestable</b>, because the book vanishes at the goal. Everything ran on a millisecond capture pipeline, and every prediction was pre-committed before kickoff and <b>graded in the open</b>.</div>
+    <div class="kicker">2026 World Cup · a model against the markets</div>
+    <h1>An independent model against the markets, <em>graded in public.</em></h1>
+    <div class="lplede">xResidual ran a forecasting model against <b>Kalshi, Polymarket and the bookmaker consensus</b> through all 104 matches of the 2026 World Cup, with every forecast committed before kickoff and eleven predictions about the markets locked in a timestamped commit. The headline result is the one I would least like: <b>the market was better calibrated than my model</b>, and the draws my model missed were ones the market had already priced.</div>
     <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative research.</div>
     <div class="ctarow">
-      <a class="cta solid" href="note.html">Read the research note →</a>
-      <a class="cta ghost" href="bracket.html">See the live knockout bracket</a>
+      <a class="cta solid" href="results.html">See the scorecard →</a>
+      <a class="cta ghost" href="method.html">How the model works</a>
     </div>
     <a class="phasechip" id="lpphase" href="bracket.html"></a>
     <div class="stats" id="lpscore" style="margin-top:26px"></div>
@@ -93,53 +91,60 @@
   </header>
 
   <section>
+    <div class="h2">Correction, 18 September 2026</div>
+    <div class="built">This site previously led with a cross-venue finding: that Polymarket prices a goal about <b>600 ms before Kalshi</b>, with an 81% information share. <b>That finding is withdrawn.</b> Kalshi's price was read from a feed capped at one message a second, Polymarket's from its full order book, and a market with no lead at all, measured the same way, reproduces the result. Inverting the measurement recovers no systematic ordering between the venues. One pre-registered prediction, P6, moved from pass to inconclusive as a result. The results below do not rest on it, with one limit: the harvest ledger uses the same timing to decide which venue to treat as the follower, and its conclusion holds because both venues' books empty at a goal. <a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/CORRECTION.md">Read the correction →</a></div>
+  </section>
+
+  <section>
     <div class="h2">What's inside</div>
-    <div class="sub">The research note is the headline; the rest is the live apparatus behind it.</div>
+    <div class="sub">The model, its forecasts, and how they were graded.</div>
     <div class="cards">
-      <a class="card" href="note.html"><i class="fa-solid fa-file-lines cic"></i><div class="ct">Research note</div><div class="cd">Cross-venue price discovery, the law-of-one-price decomposition, and the methods. The headline artifact.</div><span class="ar">read →</span></a>
-      <a class="card" href="board.html"><i class="fa-solid fa-chart-column cic"></i><div class="ct">Forecast board</div><div class="cd">A model's probabilities for every market, pre-committed and scored against the price on CLV and calibration.</div><span class="ar">open →</span></a>
-      <a class="card" href="games.html"><i class="fa-solid fa-table-cells cic"></i><div class="ct">Group stage</div><div class="cd">All 72 group games, called up front, then conditioned and graded as each one resolves.</div><span class="ar">open →</span></a>
-      <a class="card" href="bracket.html"><i class="fa-solid fa-sitemap cic"></i><div class="ct">Bracket</div><div class="cd">The model's projected knockout path, filling in with real teams as groups settle.</div><span class="ar">open →</span></a>
-      <a class="card" href="results.html"><i class="fa-solid fa-clipboard-check cic"></i><div class="ct">Scorecard</div><div class="cd">How the model is actually doing: running accuracy and log-loss vs the baseline, the v1→v2→v3 ladder, and the biggest surprises.</div><span class="ar">open →</span></a>
-      <a class="card" href="lab.html"><i class="fa-solid fa-wave-square cic"></i><div class="ct">Market lab</div><div class="cd">Cross-venue microstructure: lead-lag price discovery, order-flow imbalance, and the goal-overreaction tests.</div><span class="ar">open →</span></a>
-      <a class="card" href="method.html"><i class="fa-solid fa-flask cic"></i><div class="ct">How it works</div><div class="cd">The full methodology: de-vigging, the goal model, calibration, and the price-discovery estimation.</div><span class="ar">read →</span></a>
-      <a class="card" href="https://github.com/Thesavagecoder7784/xResidual"><i class="fa-brands fa-github cic"></i><div class="ct">Repository</div><div class="cd">All code, the pre-registration committed before kickoff, and the findings log. Public and reproducible.</div><span class="ar">github ↗</span></a>
+      <a class="card" href="results.html"><i class="fa-solid fa-clipboard-check cic"></i><div class="ct">Scorecard</div><div class="cd">Every pre-committed forecast, graded: accuracy and log-loss against the baseline, the v1→v2→v3 ladder, and the biggest surprises.</div><span class="ar">open →</span></a>
+      <a class="card" href="board.html"><i class="fa-solid fa-chart-column cic"></i><div class="ct">Forecast board</div><div class="cd">The model's probability for every market, pre-committed and timestamped against the price, scored on closing-line value and calibration.</div><span class="ar">open →</span></a>
+      <a class="card" href="games.html"><i class="fa-solid fa-table-cells cic"></i><div class="ct">Group stage</div><div class="cd">All 72 group games, called up front, then conditioned and graded as each resolved. Three model versions, forward only.</div><span class="ar">open →</span></a>
+      <a class="card" href="bracket.html"><i class="fa-solid fa-sitemap cic"></i><div class="ct">Bracket</div><div class="cd">The simulated knockout path, format-aware from the group stage to the final.</div><span class="ar">open →</span></a>
+      <a class="card" href="method.html"><i class="fa-solid fa-flask cic"></i><div class="ct">How it works</div><div class="cd">The model, de-vigging, calibration, and what the capture could and could not measure.</div><span class="ar">read →</span></a>
+      <a class="card" href="https://github.com/Thesavagecoder7784/xResidual"><i class="fa-brands fa-github cic"></i><div class="ct">Repository</div><div class="cd">All code, the forecast ledgers, the pre-registration committed before kickoff, and the findings log.</div><span class="ar">open →</span></a>
     </div>
   </section>
 
   <section>
     <div class="h2">The results</div>
-    <div class="sub">Six weeks of tick capture across <span style="color:var(--accent);font-weight:600" id="f-nmatches">86</span> matches. Eleven predictions committed before kickoff, graded in public after the final.</div>
+    <div class="sub">Eleven predictions committed before kickoff and graded in public after the final, and what the model learned from the market.</div>
     <figure class="resultfig">
-      <img src="img/prereg_scorecard.png" alt="The pre-registration scorecard: 6 pass, 2 fail, 3 inconclusive across eleven predictions committed before kickoff." loading="lazy">
-      <figcaption><b>The pre-registration, graded.</b> Eleven falsifiable predictions, each with its decision rule fixed in a timestamped commit before a ball was kicked. 6 pass, 2 fail, 3 inconclusive, hits and misses, in public.</figcaption>
+      <img src="img/prereg_scorecard.png" alt="The pre-registration scorecard: 5 pass, 2 fail, 4 inconclusive across eleven predictions committed before kickoff." loading="lazy">
+      <figcaption><b>The pre-registration, graded.</b> Eleven falsifiable predictions, each with its decision rule fixed in a timestamped commit before a ball was kicked. 5 pass, 2 fail, 4 inconclusive. One grade was revised afterwards, toward caution, with the reason on the record.</figcaption>
     </figure>
     <div class="findings">
-      <div class="finding"><div class="fstat">6 / 2 / 3<small>pre-reg graded</small></div>
-        <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Six passed, two failed, three inconclusive for documented data reasons. The headline pass is the one I'd least like: <b>the market is better calibrated than my own pre-committed model</b> (Brier 0.487 vs 0.503, slope 1.07). Both failures independently reproduce what 2026 microstructure papers found.
-        <div class="fmini"><div class="bar"><span class="seg" style="width:54.5%;background:var(--good)"></span><span class="seg" style="width:18.2%;background:var(--accent)"></span><span class="seg" style="width:27.3%;background:var(--rule-2)"></span></div>
-          <div class="lbl"><span><b>6</b> pass · <b>2</b> fail · <b>3</b> inconclusive</span><span>11 pre-registered</span></div></div></div></div>
-      <div class="finding"><div class="fstat">81.0%<small>Polymarket info share</small></div>
-        <div class="ftext"><b>Polymarket discovers price first.</b> It leads <b>72% of decisive events</b> (median +600ms) and carries an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, leading 61 of 63. Computed on de-vigged mids, so it's robust to the ~59% trade-direction-classification problem that limits other work.
-        <div class="fmini"><div class="bar"><span class="seg" style="width:81%;background:var(--accent)"></span><span class="seg" style="width:19%;background:var(--rule-2)"></span></div>
-          <div class="lbl"><span><b>Polymarket</b> 81%</span><span>Kalshi 19%</span></div></div></div></div>
-      <div class="finding"><div class="fstat">0%<small>harvestable at size</small></div>
-        <div class="ftext"><b>And the lead is un-harvestable, which is the point.</b> At each goal the book collapses to ~0.5% depth, so the median 12.0¢ stale-quote gap can't be traded at size in the typical match. A genuine price-discovery lead, not alpha; the collapse-and-refill is a market-maker's defence against toxic flow, adverse selection, observed in real time.
-        <div class="fmini"><div class="bar" title="the book's best-price depth at the goal, as a share of its normal resting depth"><span class="seg" style="width:0.5%;background:var(--accent)"></span></div>
-          <div class="lbl"><span><b>Book depth at the goal</b></span><span>~0.5% of normal → median match yields nothing</span></div></div></div></div>
-      <div class="finding"><div class="fstat">0.15pp<small>venues agree</small></div>
-        <div class="ftext"><b>The visible cross-venue gap is mostly margin, not disagreement.</b> De-vigged, Kalshi and Polymarket title prices agree to ~0.15pp; the visible gap on raw prices (3.98pp) is the house overround (Kalshi ~5.4% vs Polymarket ~3.0%). A relative-value convergence trade on it returned a clean null (8 trades, −1.66pp, 25% hit rate over the buildup), reported as the negative result it is.
-        <div class="fmini"><div class="bar" title="the visible ~6-cent cross-venue gap, split into house margin vs true belief disagreement"><span class="seg" style="width:97.5%;background:var(--rule-2)"></span><span class="seg" style="width:2.5%;background:var(--accent)"></span></div>
-          <div class="lbl"><span><b>House margin</b> (the vig)</span><span>true belief gap 0.15pp</span></div></div></div></div>
+      <div class="finding"><div class="fstat">5 / 2 / 4<small>pre-reg graded</small></div>
+        <div class="ftext"><b>Eleven calls, committed before kickoff, graded in the open.</b> Five passed, two failed, and four are inconclusive for documented reasons, including the cross-venue prediction whose measurement could not see a lead.
+        <div class="fmini"><div class="bar"><span class="seg" style="width:45.5%;background:var(--good)"></span><span class="seg" style="width:18.2%;background:var(--accent)"></span><span class="seg" style="width:36.4%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>5</b> pass · <b>2</b> fail · <b>4</b> inconclusive</span><span>11 pre-registered</span></div></div></div></div>
+      <div class="finding"><div class="fstat">0.487<small>market Brier</small></div>
+        <div class="ftext"><b>The market out-calibrated my model.</b> On the 72 group games my model forecast before kickoff, the de-vigged market scored 0.487 against my 0.503, with a calibration slope of 1.07 against my 0.87: my probabilities ran too extreme. The Brier gap alone is not significant, so the claim is <i>better calibrated</i>, not <i>beat the model</i>.
+        <div class="fmini"><div class="bar" title="calibration slope: 1.0 is perfect"><span class="seg" style="width:53.5%;background:var(--accent)"></span><span class="seg" style="width:43.5%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>Market</b> slope 1.07</span><span>my model 0.87</span></div></div></div></div>
+      <div class="finding"><div class="fstat">25.8%<small>market, on realised draws</small></div>
+        <div class="ftext"><b>My errors were draws, and the market had already priced them.</b> Seven of my eight worst calls were draws. On those calls the market had the outcome 2.7 points higher than I did, and on the realised draws in the 39 games with both a frozen forecast and a closing price (13 draws), it carried 25.8% against my 21.1%.
+        <div class="fmini"><div class="bar"><span class="seg" style="width:51.8%;background:var(--accent)"></span><span class="seg" style="width:42.4%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>Market</b> 25.8%</span><span>my model 21.1%</span></div></div></div></div>
+      <div class="finding"><div class="fstat">0.17pp<small>venues agree</small></div>
+        <div class="ftext"><b>The two venues mostly agree on the event and differ on the price.</b> De-vigged, Kalshi and Polymarket sat a median 0.17 points apart on the title race across the 20 days both books normalized. What separates them is cost: overround of 5.6% on Kalshi against 2.1% on Polymarket. The pre-registered version of this test (P3) still failed, because it was scored at the close as the field resolved.
+        <div class="fmini"><div class="bar"><span class="seg" style="width:72.7%;background:var(--accent)"></span><span class="seg" style="width:27.3%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>Kalshi</b> overround 5.6%</span><span>Polymarket 2.1%</span></div></div></div></div>
+      <div class="finding"><div class="fstat">0<small>harvestable, median match</small></div>
+        <div class="ftext"><b>A visible dislocation is mostly not a tradeable one.</b> When a goal lands, the price moves a median 12.0¢. But both order books empty at the goal and refill in 3–4 seconds, so once you gate on what is actually resting there, the median match offers nothing to take. That uses the harshest measure of depth; read at the moment a follower could act, a minority of goals would have been takeable.
+        <div class="fmini"><div class="bar" title="best-price depth at the goal, as a share of normal"><span class="seg" style="width:3%;background:var(--accent)"></span></div>
+          <div class="lbl"><span><b>Book depth at the goal</b></span><span>~0.5% of normal at the low point</span></div></div></div></div>
     </div>
   </section>
 
   <section>
     <div class="h2">How it's built</div>
-    <div class="built">An Elo-plus-squad-value goal model (Skellam goal-difference, Dixon-Coles correction, a format-aware Monte-Carlo sim) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who is right, checked against a third source before any "edge" is believed. Price discovery is estimated with <b>Hasbrouck information share</b> and <b>Gonzalo-Granger component share</b> on de-vigged mid-prices, separately for the pre-match and in-play windows. Everything is <b>reproducible from public data</b> and covered by <b>115 unit tests</b>; collection ran 24/7 on an always-on pipeline, so every figure regenerates from a clean clone. The stance is consistent throughout: the market is the subject, not the opponent. Analysis travels because it's analysis; predictions only travel when they're right.</div>
+    <div class="built">An Elo-plus-squad-value goal model (Skellam goal difference, Dixon–Coles correction, a format-aware Monte Carlo from the group stage to the final) serves as an <b>independent reference, not a competitor to the market</b>: it exists to ask where model and market disagree and who turns out to be right. Two of its biases were found that way — squad-value blindness and inflated weak confederations — and corrected with fixes that validate out of sample. Model versions fork forward only, so no committed forecast was ever revised. The model rebuilds from public data on a clean clone and is covered by a test suite; the market layer came from a live capture whose raw data can't be redistributed. The stance throughout: the market is the subject, not the opponent.</div>
   </section>
 
-  <footer><div>A complete, pre-registered project, committed before kickoff, graded in public after the final on 2026-07-19.</div>
+  <footer><div>A complete, pre-registered project: committed before kickoff, graded in public after the final on 2026-07-19, corrected in the open on 2026-09-18.</div>
     <div><b>@PrabhatM27</b> · <a href="https://thesavagecoder7784.github.io/">portfolio</a> · <a href="https://github.com/Thesavagecoder7784/xResidual">repo</a></div></footer>
 </div>
 <script>
@@ -151,9 +156,10 @@ function paintPhase(){
   const pe=document.getElementById('lpphase'); if(!pe)return;
   const active=B.rounds.find(r=>r.matches.some(m=>!m.final))||B.rounds[B.rounds.length-1];
   const settled=active.matches.filter(m=>m.final).length, tot=active.matches.length;
-  const ch=B.champion, iso=ch&&_ISO[ch.team];
+  const ch=B.champion, iso=ch&&_ISO[ch.team], done=ch&&ch.final;
   const fl=iso?`<img src="flags/${iso}.svg" alt="" style="width:15px;height:15px;border-radius:50%;vertical-align:-3px;box-shadow:0 0 0 1px rgba(0,0,0,.1)" onerror="this.style.display='none'">`:'';
-  pe.innerHTML=`<span class="dot"></span><b>${active.round}</b> · live · ${settled}/${tot} settled<span class="sep">·</span>`+
+  pe.innerHTML=done?`champion ${fl} <b>${ch.team}</b><span class="arr">see the bracket →</span>`:
+    `<span class="dot"></span><b>${active.round}</b> · live · ${settled}/${tot} settled<span class="sep">·</span>`+
     (ch?`projected champion ${fl} <b>${ch.team}</b> ${Math.round(ch.p)}%`:'')+`<span class="arr">see the bracket →</span>`;
   pe.style.display='inline-flex';
 }
@@ -163,16 +169,14 @@ function paint(){
   if(G)t.push([`${G.played}/${G.n}`,'games graded','']);
   if(G&&G.logloss!=null)t.push([(+G.logloss).toFixed(2),'log-loss · 1.10 base','t']);
   if(D&&D.clv&&D.clv.positive_pct!=null)t.push([D.clv.positive_pct+'%','positive CLV','a']);
-  t.push(['+600ms','cross-venue lead · 72% Poly','']);
-  t.push(['86','matches captured','']);
+  t.push(['104','matches, all of them','']);
   const el=document.getElementById('lpscore'); if(el)el.innerHTML=t.map(([v,k,c])=>`<div class="stat"><div class="v ${c}">${v}</div><div class="k">${k}</div></div>`).join('');
   const asof=(G&&G.asof)||(D&&D.asof); const fr=document.getElementById('lpfresh');
-  if(fr&&asof)fr.innerHTML=`live · updated ${fmtAge(asof)} · numbers read from the same feeds as the <a href="board.html" style="color:var(--dim)">board</a> and <a href="results.html" style="color:var(--dim)">scorecard</a>`;
+  if(fr&&asof)fr.innerHTML=`final numbers · read from the same data as the <a href="board.html" style="color:var(--dim)">board</a> and <a href="results.html" style="color:var(--dim)">scorecard</a>`;
 }
 function load(src,cb){const s=document.createElement('script');s.src=src+'?'+Date.now();s.onload=cb;s.onerror=()=>cb&&cb();document.body.appendChild(s);}
 load('data/matches.js',()=>{G=window.GAMES;paint();});
 load('data/dashboard.js',()=>{D=window.DASH;paint();});
-load('data/leadlag.js',()=>{L=window.LEADLAG_POOLED;paint();});
 load('data/bracket.js',()=>{B=window.BRACKET;paintPhase();});
 </script>
 </body></html>

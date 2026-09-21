@@ -1,0 +1,274 @@
+{
+ "n_windows": 33,
+ "lead_lag_placebo": [
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": -1000,
+   "n_gated": 33,
+   "poly_first": 0,
+   "kalshi_first": 33,
+   "synchronous": 0,
+   "median_measured_ms": -1000,
+   "bias_ms": 0
+  },
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": -600,
+   "n_gated": 32,
+   "poly_first": 0,
+   "kalshi_first": 32,
+   "synchronous": 0,
+   "median_measured_ms": -600.0,
+   "bias_ms": 0.0
+  },
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": -300,
+   "n_gated": 30,
+   "poly_first": 0,
+   "kalshi_first": 30,
+   "synchronous": 0,
+   "median_measured_ms": -200.0,
+   "bias_ms": 100.0
+  },
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": 0,
+   "n_gated": 33,
+   "poly_first": 0,
+   "kalshi_first": 0,
+   "synchronous": 33,
+   "median_measured_ms": 0,
+   "bias_ms": 0
+  },
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": 300,
+   "n_gated": 28,
+   "poly_first": 28,
+   "kalshi_first": 0,
+   "synchronous": 0,
+   "median_measured_ms": 400.0,
+   "bias_ms": 100.0
+  },
+  {
+   "grid": "full_resolution",
+   "true_lag_ms": 600,
+   "n_gated": 32,
+   "poly_first": 32,
+   "kalshi_first": 0,
+   "synchronous": 0,
+   "median_measured_ms": 600.0,
+   "bias_ms": 0.0
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": -1000,
+   "n_gated": 26,
+   "poly_first": 3,
+   "kalshi_first": 19,
+   "synchronous": 4,
+   "median_measured_ms": -400.0,
+   "bias_ms": 600.0
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": -600,
+   "n_gated": 26,
+   "poly_first": 11,
+   "kalshi_first": 10,
+   "synchronous": 5,
+   "median_measured_ms": 0.0,
+   "bias_ms": 600.0
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": -300,
+   "n_gated": 26,
+   "poly_first": 16,
+   "kalshi_first": 5,
+   "synchronous": 5,
+   "median_measured_ms": 400.0,
+   "bias_ms": 700.0
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": 0,
+   "n_gated": 29,
+   "poly_first": 26,
+   "kalshi_first": 1,
+   "synchronous": 2,
+   "median_measured_ms": 600,
+   "bias_ms": 600
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": 300,
+   "n_gated": 28,
+   "poly_first": 26,
+   "kalshi_first": 2,
+   "synchronous": 0,
+   "median_measured_ms": 800.0,
+   "bias_ms": 500.0
+  },
+  {
+   "grid": "kalshi_ticker_timestamps",
+   "true_lag_ms": 600,
+   "n_gated": 26,
+   "poly_first": 26,
+   "kalshi_first": 0,
+   "synchronous": 0,
+   "median_measured_ms": 1100.0,
+   "bias_ms": 500.0
+  }
+ ],
+ "estimator": "ws_events.lead_lag_ms, 200 ms bins, published gate (corr>=0.5, |lag|<=8000 ms)",
+ "infoshare_tapes": [
+  {
+   "capture": "20260718T202817Z-france-vs-england",
+   "contract": "England",
+   "kalshi_ticker_median_gap_ms": 1000.0,
+   "recon_within_half_cent": 0.9694,
+   "rebuild_trusted": true,
+   "G1_published": {
+    "gg_a": 0.935,
+    "hasbrouck_a_lo": 0.9868,
+    "hasbrouck_a_mid": 0.9904,
+    "hasbrouck_a_hi": 0.9941,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G1_reproduces_committed": true,
+   "G2_zero_lead_placebo": {
+    "gg_a": 2.5023,
+    "hasbrouck_a_lo": 0.9689,
+    "hasbrouck_a_mid": 0.9775,
+    "hasbrouck_a_hi": 0.9861,
+    "cointegrated": true,
+    "gg_in_support": false
+   },
+   "G3_label_flip_kalshi_book_as_truth": {
+    "gg_a": 0.9438,
+    "hasbrouck_a_lo": 0.8732,
+    "hasbrouck_a_mid": 0.9365,
+    "hasbrouck_a_hi": 0.9998,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G4_both_full_resolution": {
+    "gg_a": 0.5134,
+    "hasbrouck_a_lo": 0.1694,
+    "hasbrouck_a_mid": 0.4656,
+    "hasbrouck_a_hi": 0.7618,
+    "cointegrated": true,
+    "gg_in_support": true
+   }
+  },
+  {
+   "capture": "20260718T202817Z-france-vs-england",
+   "contract": "France",
+   "kalshi_ticker_median_gap_ms": 1000.0,
+   "recon_within_half_cent": 0.816,
+   "rebuild_trusted": false,
+   "G1_published": {
+    "gg_a": 0.7757,
+    "hasbrouck_a_lo": 0.8081,
+    "hasbrouck_a_mid": 0.8371,
+    "hasbrouck_a_hi": 0.8661,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G1_reproduces_committed": true,
+   "G2_zero_lead_placebo": {
+    "gg_a": 1.6872,
+    "hasbrouck_a_lo": 0.9996,
+    "hasbrouck_a_mid": 0.9997,
+    "hasbrouck_a_hi": 0.9998,
+    "cointegrated": true,
+    "gg_in_support": false
+   },
+   "G3_label_flip_kalshi_book_as_truth": null,
+   "G4_both_full_resolution": null
+  },
+  {
+   "capture": "20260719T183322Z-spain-vs-argentina",
+   "contract": "Spain",
+   "kalshi_ticker_median_gap_ms": 1000,
+   "recon_within_half_cent": 0.9771,
+   "rebuild_trusted": true,
+   "G1_published": {
+    "gg_a": 0.8772,
+    "hasbrouck_a_lo": 0.9189,
+    "hasbrouck_a_mid": 0.9433,
+    "hasbrouck_a_hi": 0.9677,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G1_reproduces_committed": true,
+   "G2_zero_lead_placebo": {
+    "gg_a": 0.7379,
+    "hasbrouck_a_lo": 0.9057,
+    "hasbrouck_a_mid": 0.9499,
+    "hasbrouck_a_hi": 0.9941,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G3_label_flip_kalshi_book_as_truth": {
+    "gg_a": 0.671,
+    "hasbrouck_a_lo": 0.8654,
+    "hasbrouck_a_mid": 0.9281,
+    "hasbrouck_a_hi": 0.9908,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G4_both_full_resolution": {
+    "gg_a": 0.8498,
+    "hasbrouck_a_lo": 0.633,
+    "hasbrouck_a_mid": 0.7953,
+    "hasbrouck_a_hi": 0.9577,
+    "cointegrated": true,
+    "gg_in_support": true
+   }
+  },
+  {
+   "capture": "20260719T183322Z-spain-vs-argentina",
+   "contract": "Argentina",
+   "kalshi_ticker_median_gap_ms": 1000.0,
+   "recon_within_half_cent": 0.9649,
+   "rebuild_trusted": true,
+   "G1_published": {
+    "gg_a": 0.845,
+    "hasbrouck_a_lo": 0.5523,
+    "hasbrouck_a_mid": 0.5611,
+    "hasbrouck_a_hi": 0.57,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G1_reproduces_committed": true,
+   "G2_zero_lead_placebo": {
+    "gg_a": 1.1334,
+    "hasbrouck_a_lo": 0.9913,
+    "hasbrouck_a_mid": 0.9953,
+    "hasbrouck_a_hi": 0.9993,
+    "cointegrated": true,
+    "gg_in_support": false
+   },
+   "G3_label_flip_kalshi_book_as_truth": {
+    "gg_a": 0.5843,
+    "hasbrouck_a_lo": 0.9186,
+    "hasbrouck_a_mid": 0.957,
+    "hasbrouck_a_hi": 0.9953,
+    "cointegrated": true,
+    "gg_in_support": true
+   },
+   "G4_both_full_resolution": {
+    "gg_a": 0.7095,
+    "hasbrouck_a_lo": 0.5568,
+    "hasbrouck_a_mid": 0.6955,
+    "hasbrouck_a_hi": 0.8342,
+    "cointegrated": true,
+    "gg_in_support": true
+   }
+  }
+ ]
+}

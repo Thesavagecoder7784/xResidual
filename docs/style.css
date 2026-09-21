@@ -34,6 +34,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(243,239,230,.9);backdrop-fi
 .nav{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:18px}
 .brand{font-family:var(--fd);font-weight:600;font-size:20px;letter-spacing:-.01em;color:var(--ink)}.brand:hover{text-decoration:none}
 .live{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--good)}
+.live.done{color:var(--dim)}
 .live .dot{width:6px;height:6px;border-radius:50%;background:var(--good);animation:pulse 2.4s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,85,.45)}70%{box-shadow:0 0 0 5px rgba(31,157,85,0)}100%{box-shadow:0 0 0 0 rgba(31,157,85,0)}}
 .navlinks{margin-left:auto;display:flex;gap:4px;align-items:center}
@@ -89,6 +90,7 @@ section{padding:34px 0;border-top:1px solid var(--rule)}
 
 /* controls + table */
 .grid2{display:grid;grid-template-columns:1.7fr 1fr;gap:34px;align-items:start}
+.grid2>*{min-width:0}  /* let wide tables scroll inside .tablewrap instead of widening the page */
 @media(max-width:820px){.grid2{grid-template-columns:1fr}.rrow{grid-template-columns:94px 1fr 82px}}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .tabs{display:flex;flex-wrap:wrap;gap:6px}

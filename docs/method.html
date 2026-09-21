@@ -12,16 +12,14 @@
 <body>
 <nav><div class="nav">
   <a class="brand" href="index.html">xResidual</a>
-  <span class="live"><span class="dot"></span>live</span>
+  <span class="live done">2026 · final</span>
   <div class="navlinks">
     <a href="index.html">Home</a>
     <a href="board.html">Forecast board</a>
     <a href="games.html">Group stage</a>
     <a href="bracket.html">Bracket</a>
     <a href="results.html">Scorecard</a>
-    <a href="note.html">Research note</a>
     <a href="method.html" class="on">How it works</a>
-    <a href="lab.html">Market lab</a>
     <a class="ext" href="https://github.com/Thesavagecoder7784/xResidual">repo ↗</a>
   </div>
 </div></nav>
@@ -95,7 +93,7 @@
       <div class="eng-row"><span class="eng-tag lap">Laptop · 2h</span>
         <div class="eng-box hot"><b>Parse once, three ways</b><span>Load the tape a single time (about 7 GB in memory) and feed all three analyses from the one pass.</span></div></div>
       <div class="eng-fan">
-        <div class="eng-leaf"><b>Lead-lag</b><span>Which venue's price moves first on a goal.</span></div>
+        <div class="eng-leaf"><b>Lead-lag</b><span>Which venue's price moves first on a goal. <i>Withdrawn: see below.</i></span></div>
         <div class="eng-leaf"><b>Overreaction</b><span>Does the price overshoot a goal, then revert?</span></div>
         <div class="eng-leaf"><b>Order flow</b><span>Does flow on one venue predict the other's next move?</span></div>
       </div>
@@ -103,7 +101,8 @@
       <div class="eng-row"><span class="eng-tag lap">Laptop</span>
         <div class="eng-box"><b>Pool, render, discard</b><span>Rebuild the pooled result from the per-match summaries, render the graphic, and delete the raw tape once all three summaries exist.</span></div></div>
     </div>
-    <p style="margin-top:16px">Each analysis outputs a <b>pooled statistic with its sample size and significance</b>, not a headline. The final result, reported straight: Polymarket's price leads Kalshi's by a median <b>+600ms</b> on goals, first in <b>72% of decisive events</b> and carrying an <b>81.0% Gonzalo-Granger information share</b> across 63 cointegrated matches, a lead that survives a cluster-robust bootstrap. Order-flow imbalance moves price on both venues exactly as the microstructure literature predicts. Whether that price lead is <i>tradeable</i> once you cross the spread is a separate, disclosed forward-test, and the answer is no: the book collapses to ~0.5% depth at the goal. The detail lives in the <a href="note.html">research note</a>.</p>
+    <p style="margin-top:16px">Each analysis outputs a <b>pooled statistic with its sample size and significance</b>, not a headline. <b>One of them turned out to be an artifact, and it is withdrawn.</b> The lead-lag analysis reported that Polymarket prices a goal about 600 ms before Kalshi, with an 81% information share. But the capture recorded both order books at full resolution while the analysis read Kalshi's price from its <code>ticker</code> channel, which Kalshi caps at one message a second, against Polymarket's full book at about ten milliseconds. A price observed once a second always looks late, and a market with <b>no lead at all</b>, observed the same way, reproduces the published number. Inverting the measurement recovers no systematic ordering between the venues (<a href="https://github.com/Thesavagecoder7784/xResidual/blob/main/CORRECTION.md">the correction</a>).</p>
+    <p style="margin-top:12px">What survives does not rest on who moved first. On the eight matches whose goal timeline validates against the final score, the in-play market <b>under-reacts to goals</b>, booking about a third of an independent model's fair move — measured on Polymarket alone, thirty seconds after each goal, and a small sample. And both venues' <b>order books empty at a goal</b> and refill in three to four seconds, so most of the move a follower would chase has little resting behind it: by the harshest measure of depth the median match offers nothing to take, and read at the moment a follower could act, a minority of goals would have been takeable. The lesson for anyone building on this capture: build every venue's price from its full incremental book feed, and test the estimator on a case with a known answer before trusting any result.</p>
   </section>
 
   <section class="prose">

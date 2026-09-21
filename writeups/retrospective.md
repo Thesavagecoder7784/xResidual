@@ -5,6 +5,12 @@
 > Written after the final, 2026-07-19. Every number here comes from an artifact committed in this
 > repo, most of them frozen before the matches they describe. Where a claim rests on a small sample
 > I say so and give the n.
+>
+> **Revised 2026-09-18.** Section 5 originally presented a cross-venue lead — Polymarket pricing goals
+> about 600 ms before Kalshi — as the finding I would defend. It did not survive: I had read Kalshi at
+> one message a second against Polymarket's full order book, and a market with no lead at all, measured
+> the same way, reproduces it. Section 5 is rewritten below, the scorecard in section 6 is updated, and
+> the full account is [CORRECTION.md](../CORRECTION.md). The rest is as written in July.
 
 A residual is what's left when you subtract expectation from reality. For thirty-nine days I ran two
 expectations side by side — my own Elo-and-Skellam model, pre-committed match by match to an
@@ -13,8 +19,9 @@ supply the reality. This is what the leftovers say.
 
 The short version: **the tournament's chalk held at the top, my model's errors were almost entirely
 draws, and the market had already priced most of what surprised me.** The most interesting finding
-of the whole project isn't a prediction at all. It's a measurement of how quickly one venue prices a
-goal before the other, and how completely that head start fails to be worth money.
+isn't a prediction at all. It's that a visible dislocation at a goal is worth nothing to anyone
+chasing it, because the book behind it has already emptied — and, as it turned out, a lesson in what
+measuring the markets requires in the first place.
 
 ---
 
@@ -125,60 +132,78 @@ which is a worse place for it to live, because goal difference rewards running u
 whose result is already settled. It also manufactured dead rubbers among the giants: 18 of the
 biggest teams had clinched before their final group game.
 
-## 5. The finding I would actually defend: a real lead nobody can trade
+## 5. The finding I thought I would defend, and the one that survived
 
-The model was the yardstick. The microstructure work is the contribution.
+*Rewritten 2026-09-18.*
 
-Across **86 matches** captured tick-by-tick on both venues, Polymarket reprices a goal before Kalshi
-**72% of the time** (281 of 392 decisive events), at a **median 600 ms**. Hardened against the fact
-that events cluster inside matches, **57 of 66 matches lean Polymarket** (sign test p ≈ 1.2×10⁻⁹).
-The formal decomposition agrees: a **Gonzalo-Granger information share of 81.0%**, leading **61 of 63**
-cointegrated matches. And it concentrates exactly where it should — about **86% of price discovery
-inside goal windows versus 53% in calm play.** The lead is a news-event phenomenon, not a background
-hum.
+The model was the yardstick. The microstructure work was supposed to be the contribution.
 
-Then the part I care about most. A real 600 ms head start on a repeated, exogenous shock sounds like
-free money, and on a spread-only calculation it prices like it: across **405 goal-shock observations in 66 matches** — the ledger books one row per contract, and a goal moves both of a match's contracts, so that is roughly 200 distinct goals — the
-lagging venue is stale by a median **12.0 cents**, netting **+10.8 cents on paper** after costs, on
-100% of goals.
+In July this section reported that Polymarket reprices a goal before Kalshi 72% of the time, by a
+median 600 ms, with an 81% information share across 61 of 63 matches — hardened against clustering,
+significant at p ≈ 10⁻⁹. It was the result I would have led an interview with.
 
-It is not free money, because **at the instant of the goal the book is gone** — spread roughly 8×
-wider, best-price depth under 1% of normal. Gate the ledger on what is actually resting and **the
+It was the sampling. My capture recorded both order books at full resolution, but the analysis built
+Kalshi's price from a channel Kalshi caps at one message a second, and Polymarket's from its full book,
+updating roughly every 10 ms. A price you only look at once a second always looks late. When I fed my
+own estimator a market in which neither venue leads — the same price on both sides — observed the way I
+had observed Kalshi, it reported Polymarket first in 26 of 29 windows at a median +600 ms. My headline,
+produced by a market with no lead in it. Inverting the measurement across the 427 lead measurements
+recovers roughly 58% Kalshi-first, 8% neither and 35% Polymarket-first, each with a wide interval and
+sensitive to how the model is set up: no systematic Polymarket lead in any version.
+
+Every check I had run asked whether my numbers were consistent with each other. None asked whether the
+input was right. The cluster bootstrap made a biased number look more certain, not less.
+
+What survives is the part that did not need to know who moved first. When a goal lands, the price moves
+a median **12.0 cents**, comfortably more than the spread a follower would pay. But **at the instant of the
+goal both books empty** — spreads blow out, best-price depth falls to about half a percent of normal at
+its low point, and they refill in 3–4 seconds. Gate the ledger on what is actually resting and **the
 median match yields no harvestable goal at all.** Harvestable goals exist (~9% goal-weighted across the
-full 66-match ledger, clustered in 21 of those 66) but they are a
-minority you cannot identify in advance, because the depth vanishes in the same instant the signal
-fires.
+full 66-match ledger, clustered in 21 of those 66), but they are a minority you cannot identify in advance.
+That zero uses the harshest way of measuring depth, the low point across the goal; on the 21 events where
+the raw book survives, depth read at the moment a follower could act leaves 11–33% of them harvestable.
+So the honest version is "mostly not tradeable", not "never".
 
-That collapse is a market maker pulling quotes against flow it correctly suspects is informed. It is
-adverse selection, observed live, at millisecond resolution, on an event whose timing nobody
-controls. The lead is real *and* un-harvestable, and those two facts have the same cause.
+That collapse is market makers pulling quotes against flow they correctly suspect is informed:
+adverse selection, observed live, on an event whose timing nobody controls.
 
-I nearly published the opposite. My first harvest ledger said +10.2 cents on 100% of goals and I
-believed it for about a day. It was a bug: it credited the full move while ignoring that the quote
-being lifted had withdrawn. Finding an edge and then correctly measuring how little of it survives
-contact with the book is the actual skill being demonstrated here.
+I nearly published the wrong answer twice. The first harvest ledger said +10.2 cents on 100% of goals
+and I believed it for about a day: it credited the full move while ignoring that the quote being lifted
+had withdrawn. The second time was the lead itself, and it lasted two months. Finding an edge and then
+measuring how little of it survives is the skill I thought I was demonstrating. Testing the instrument
+before trusting the edge is the one I learned.
 
 ## 6. The scorecard, including the parts I lost
 
 Eleven predictions, locked before kickoff with their grading rules, graded in public on 19 July:
-**6 pass, 2 fail, 3 inconclusive.** The two failures are the ones worth stating plainly.
+6 pass, 2 fail, 3 inconclusive. On 18 September one pass became inconclusive — P6, "the deeper venue
+leads price discovery", whose measurement turned out unable to see a lead (section 5) — so the grade now
+stands at **5 pass, 2 fail, 4 inconclusive.** The two failures are the ones worth stating plainly.
 
-**P3, law of one price, FAILED.** I predicted the raw cross-venue title gap would average ≤ 1pp. It
-averaged **3.98pp**. I was wrong about the level — but the reason is instructive rather than
-embarrassing: de-vigged, the two venues agree to **0.15pp**. The gap is house margin, not
-disagreement. Price-level parity fails while belief-level parity holds.
+**P3, law of one price, FAILED.** I predicted the de-vigged cross-venue gap on the top twelve title
+contracts would stay at or under 1pp through the final. It read about **0.15pp** through the buildup and
+**3.98pp** at the close. The failure is mostly about when it was measured: as teams were eliminated,
+Kalshi's winner field stopped behaving like a probability distribution (its overround ran past 2000%),
+and de-vigging a field that no longer sums sensibly produces a gap that isn't a disagreement about who
+will win. While both books still normalized, the full-field gap held at a median 0.17pp. I grade it as
+written, and it fails.
 
 **P10, goal overreaction, FAILED.** I predicted the documented "fade the overreaction after a
 surprising goal" edge would show positive paper P&L. It came in at **−0.285pp mean, −0.821pp on the
-surprising-goal subset.** The edge is arbed away on these venues. This was pre-registered as a
+surprising-goal subset.** There is nothing to fade: these markets *under*-react to goals rather than
+over-reacting. This was pre-registered as a
 publishable result either way, and the negative is more useful than the positive would have been.
 
-Three came back inconclusive for reasons I could not fix by trying harder. P2 because prediction
+Four are now inconclusive: P6, for the reason in section 5, and three that I could not fix by trying
+harder. P2 because prediction
 markets quote two-way and simply do not price the draw, so there is no like-for-like favourite-
 longshot comparison. P8 because my sigma metric assumed a continuously-priced series, and prediction
 market mids are step functions — about 98% flat at one-second resolution — so the denominator
 collapses into the noise floor and the z-score stops meaning anything. That is a design error in the
-pre-registration, and the honest grade is inconclusive rather than a number I would have to disown.
+pre-registration, and the honest grade is inconclusive rather than a number I would have to disown. And P9,
+the in-play heat test, because only about nine games met its extreme-heat, afternoon-kickoff condition,
+and the raw tapes it needed had been pruned before grading — underpowered by construction, which the
+pre-registration had flagged in advance.
 
 ## 7. The paper book: one lane worked
 
@@ -230,11 +255,11 @@ surprised. On calibration it was at least as sharp. On the one structural bias I
 draws in mismatches — it was already carrying the risk I was missing.
 
 What it could not do was hide its own mechanics. The most durable thing here is not a forecast; it is
-that on a repeated, precisely-timed, genuinely exogenous shock, you can watch one venue lead the other
-by 600 milliseconds, watch the liquidity disappear in exactly that window, and demonstrate with a
-depth-gated ledger that the two facts are the same fact. A lead you cannot trade is not a failure to
-find alpha. It is a measurement of why the alpha isn't there — which is the more useful thing to
-know, and the harder one to be honest about.
+that on a repeated, precisely-timed, genuinely exogenous shock, you can watch the liquidity disappear
+in exactly the window a follower would need it, and show with a depth-gated ledger that a visible gap
+is not a tradeable one. That is a measurement of why the alpha isn't there — the more useful thing to
+know. The other thing the residuals said, in September, was about me: a result can be consistent,
+significant and reproducible, and still be an artifact of how you looked.
 
 ---
 
