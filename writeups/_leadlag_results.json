@@ -1,0 +1,4945 @@
+{
+  "pairs": [
+    {
+      "label": "Austria",
+      "match": "Algeria vs Austria",
+      "kalshi": "KXWCGAME-26JUN27DZAAUT-AUT",
+      "poly": "101870693068643777907933185168096005823100471428921617507976765091257562327892",
+      "n_events": 32,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5903139137341807,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.5962504091546585,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.6126428053467209,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.9999999999999999,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.5614390219960579,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6724071572585972,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Algeria",
+      "match": "Algeria vs Austria",
+      "kalshi": "KXWCGAME-26JUN27DZAAUT-DZA",
+      "poly": "82930050367767323602185033959522193504232064039705778455362784267890724471276",
+      "n_events": 29,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5197877870078897,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4000,
+            "best_corr": 0.7072355584518463,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1000,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6014370856574743,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5360079754568702,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Algeria",
+      "match": "Argentina vs Algeria",
+      "kalshi": "KXWCGAME-26JUN16ARGDZA-DZA",
+      "poly": "83723975923165835008525905491690092591784814181150430498971361513206559812229",
+      "n_events": 10,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5853068287728466,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.7046125696007953,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.653438186413387,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -7600,
+            "best_corr": 0.540164038352158,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Argentina",
+      "match": "Argentina vs Algeria",
+      "kalshi": "KXWCGAME-26JUN16ARGDZA-ARG",
+      "poly": "7496871387824498705150337097986995704782987980926026827618928384721521953608",
+      "n_events": 13,
+      "events": []
+    },
+    {
+      "label": "Argentina",
+      "match": "Argentina vs Austria",
+      "kalshi": "KXWCGAME-26JUN22ARGAUT-ARG",
+      "poly": "43065377931595109421738195806896155428299627622642742017785976384593510801128",
+      "n_events": 17,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 2600,
+            "best_corr": 0.5700438647079051,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Austria",
+      "match": "Argentina vs Austria",
+      "kalshi": "KXWCGAME-26JUN22ARGAUT-AUT",
+      "poly": "89153404871462295225932923711930844386489455338217882638440216779894680412312",
+      "n_events": 9,
+      "events": []
+    },
+    {
+      "label": "Argentina",
+      "match": "Argentina vs Cape Verde",
+      "kalshi": "KXWCGAME-26JUL03ARGCPV-ARG",
+      "poly": "43456878767945280970650160648663035360756131789534577706790459269909777535061",
+      "n_events": 36,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8309261183913131,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8474750519727373,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6830095795145453,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5200,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7045768740375814,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 8000,
+            "best_corr": 0.7037634679833301,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2200,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.5353348451954798,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5920767136091163,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Cape Verde",
+      "match": "Argentina vs Cape Verde",
+      "kalshi": "KXWCGAME-26JUL03ARGCPV-CPV",
+      "poly": "27797173830695790192472564926188861680026963949667326881806426254251568869114",
+      "n_events": 4,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6741951803505158,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Egypt",
+      "match": "Argentina vs Egypt",
+      "kalshi": "KXWCGAME-26JUL07ARGEGY-EGY",
+      "poly": "115321303982678629228305623888886288749804075736763407098365012911341798952806",
+      "n_events": 31,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.6334595599882427,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5400,
+            "best_corr": 0.7041787902195289,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6924264356854009,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6400,
+            "best_corr": 0.7039429765866801,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6998974994626561,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5822196667278976,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.6687067865840818,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7410935172277351,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Argentina",
+      "match": "Argentina vs Egypt",
+      "kalshi": "KXWCGAME-26JUL07ARGEGY-ARG",
+      "poly": "87390712702935875353084647255226721799646621048501318482801979643152933271064",
+      "n_events": 39,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5379956542767553,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5574019137726532,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -7000,
+            "best_corr": 0.6101531867199259,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.8677535408776523,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Argentina",
+      "match": "Argentina vs Switzerland",
+      "kalshi": "KXWCGAME-26JUL11ARGSUI-ARG",
+      "poly": "14635675870982897917581198649476127837975251193150495566552970565909631535281",
+      "n_events": 35,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5836959713752191,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -3200,
+            "best_corr": 0.7098005310600504,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7721655758900782,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Switzerland",
+      "match": "Argentina vs Switzerland",
+      "kalshi": "KXWCGAME-26JUL11ARGSUI-SUI",
+      "poly": "35737328415897350073008705151276154836361818348951962282389981878817300121168",
+      "n_events": 13,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.8036053261960917,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.8155262935012733,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6570215509261359,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5185826507206494,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Australia",
+      "match": "Australia vs Egypt",
+      "kalshi": "KXWCGAME-26JUL03AUSEGY-AUS",
+      "poly": "53970838488584180633352427972739785822858048152217079560347483794342661373892",
+      "n_events": 17,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7977628411667285,
+            "leader": "polymarket",
+            "n_bins": 143
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -600,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5600,
+            "best_corr": 0.70405230996881,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Egypt",
+      "match": "Australia vs Egypt",
+      "kalshi": "KXWCGAME-26JUL03AUSEGY-EGY",
+      "poly": "86532936246759869909563954733130420453288003695560964566482181231108253829977",
+      "n_events": 23,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.6492970314647286,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.742035787744023,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Jordan",
+      "match": "Austria vs Jordan",
+      "kalshi": "KXWCGAME-26JUN17AUTJOR-JOR",
+      "poly": "10127485596146788190022715162162490005929142831190335412854285290235849822876",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.890689872468112,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7247185892571886,
+            "leader": "synchronous",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7492344960457777,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Austria",
+      "match": "Austria vs Jordan",
+      "kalshi": "KXWCGAME-26JUN17AUTJOR-AUT",
+      "poly": "20499437472769847560241881624039508074540415562884114297532631910880371793587",
+      "n_events": 24,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7005244531987173,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.9072431510997638,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.971279292209377,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7494575621926249,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6871054062258819,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.636678446796309,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Belgium",
+      "match": "Belgium vs Egypt",
+      "kalshi": "KXWCGAME-26JUN15BELEGY-BEL",
+      "poly": "5699266164849713169703648234886411053444418385408086203990916861286572010447",
+      "n_events": 26,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6038886699124246,
+            "leader": "synchronous",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1800,
+            "best_corr": 0.7045401419324551,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7372303337810565,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1600,
+            "best_corr": 0.5844100877343039,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6800,
+            "best_corr": 0.5752293727752877,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Egypt",
+      "match": "Belgium vs Egypt",
+      "kalshi": "KXWCGAME-26JUN15BELEGY-EGY",
+      "poly": "71175597030142754954710752283935666239163672397586595724135510152247112429550",
+      "n_events": 24,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7681638373830465,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8193267335418123,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6400,
+            "best_corr": 0.6352234031660267,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.9204170857098537,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6093074715272793,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Belgium",
+      "match": "Belgium vs Iran",
+      "kalshi": "KXWCGAME-26JUN21BELIRI-BEL",
+      "poly": "73247571006255574285385183553023235681702880602976519365262465179094676130340",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7857905311046811,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Iran",
+      "match": "Belgium vs Iran",
+      "kalshi": "KXWCGAME-26JUN21BELIRI-IRI",
+      "poly": "107259278816298402654822103861927486042412499982187590917424237525323082866574",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7850247879140498,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1600,
+            "best_corr": 0.7960188895280985,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -3000,
+            "best_corr": 0.9970511614876661,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5015633779306102,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Senegal",
+      "match": "Belgium vs Senegal",
+      "kalshi": "KXWCGAME-26JUL01BELSEN-SEN",
+      "poly": "101186338300259647808521159297117949746868383615820554531962956488824987030486",
+      "n_events": 23,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5691236650722474,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4000,
+            "best_corr": 0.7752170911825521,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5206129938637142,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5318538576492723,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5374003210326425,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.589116015299612,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Belgium",
+      "match": "Belgium vs Senegal",
+      "kalshi": "KXWCGAME-26JUL01BELSEN-BEL",
+      "poly": "51550519425443949709378847779649788844021865732808641475643382400046061806350",
+      "n_events": 18,
+      "events": []
+    },
+    {
+      "label": "Bosnia & Herzegovina",
+      "match": "Bosnia Herzegovina vs Qatar",
+      "kalshi": "KXWCGAME-26JUN24BIHQAT-BIH",
+      "poly": "4925888325464503545476254709875431093074337031801188092359865362530954679246",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5840652238232883,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5800,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 144
+          }
+        }
+      ]
+    },
+    {
+      "label": "Qatar",
+      "match": "Bosnia Herzegovina vs Qatar",
+      "kalshi": "KXWCGAME-26JUN24BIHQAT-QAT",
+      "poly": "89402197250849053016718398593367058168289729633872183585442421218420206745943",
+      "n_events": 5,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5397476368599339,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3600,
+            "best_corr": 0.7099072150416946,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Haiti",
+      "match": "Brazil vs Haiti",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-HTI",
+      "poly": "103635844992876723144379951385842243916752648056505794536281053774467895997557",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Brazil",
+      "match": "Brazil vs Haiti",
+      "kalshi": "KXWCGAME-26JUN19BRAHTI-BRA",
+      "poly": "103041090730063233481678246468943921262520375914356653176409396265510672924686",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5552901675434498,
+            "leader": "synchronous",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 4800,
+            "best_corr": 0.7056739392254966,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Japan",
+      "match": "Brazil vs Japan",
+      "kalshi": "KXWCGAME-26JUN29BRAJPN-JPN",
+      "poly": "62752037506734227724693430695336334041746689568397072632264782484262688795846",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7507785245800274,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4200,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5333786828984136,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Brazil",
+      "match": "Brazil vs Japan",
+      "kalshi": "KXWCGAME-26JUN29BRAJPN-BRA",
+      "poly": "57092323451811073429818608596571079688057106582430141952397837549265655050698",
+      "n_events": 36,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7405325181306494,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -3000,
+            "best_corr": 0.8154437157819334,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.8155193255435024,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7400,
+            "best_corr": 0.5013423112871359,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Morocco",
+      "match": "Brazil vs Morocco",
+      "kalshi": "KXWCGAME-26JUN13BRAMAR-MAR",
+      "poly": "75153795433255397954364392370254909445351765396945509274877503457182682318715",
+      "n_events": 17,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8532311873114384,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Brazil",
+      "match": "Brazil vs Morocco",
+      "kalshi": "KXWCGAME-26JUN13BRAMAR-BRA",
+      "poly": "105492577477219588134242978490999229511934661984574714868659540712157271273221",
+      "n_events": 21,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6094851833141423,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Norway",
+      "match": "Brazil vs Norway",
+      "kalshi": "KXWCGAME-26JUL05BRANOR-NOR",
+      "poly": "19270630777558640544547501118520831346147002509997851493750997099589698621398",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8076177406403136,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6732746876809562,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Brazil",
+      "match": "Brazil vs Norway",
+      "kalshi": "KXWCGAME-26JUL05BRANOR-BRA",
+      "poly": "105654713241167797590254709131417748215287316658191010694033065067279349239377",
+      "n_events": 20,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 3400,
+            "best_corr": 0.817553534873051,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.5788764304389282,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7800,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3200,
+            "best_corr": 0.7044232543095958,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7725677871129215,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Morocco",
+      "match": "Canada vs Morocco",
+      "kalshi": "KXWCGAME-26JUL04CANMAR-MAR",
+      "poly": "102051736436656560797672629859737891705962543111476656351708851920203673046762",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7462778252070733,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5788046803329456,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Canada",
+      "match": "Canada vs Morocco",
+      "kalshi": "KXWCGAME-26JUL04CANMAR-CAN",
+      "poly": "39829420117533150550184846325805706216027544339731400040170885335796384867455",
+      "n_events": 9,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7284899527339814,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Qatar",
+      "match": "Canada vs Qatar",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-QAT",
+      "poly": "12449312449220028732329011560175624873500857403580896927070982513454645477597",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Canada",
+      "match": "Canada vs Qatar",
+      "kalshi": "KXWCGAME-26JUN18CANQAT-CAN",
+      "poly": "72434460309427898004674696764153066565237298072408402131497058701161364650505",
+      "n_events": 5,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -8000,
+            "best_corr": 0.8152394645841088,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Cape Verde",
+      "match": "Cape Verde vs Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN26CPVKSA-CPV",
+      "poly": "102982370594795926465551165513338503688720151395360838811850524398055739613847",
+      "n_events": 12,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -2800,
+            "best_corr": 0.6291209010579872,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Saudi Arabia",
+      "match": "Cape Verde vs Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN26CPVKSA-KSA",
+      "poly": "13230917211575471424029299482277772949555090343730463577580317503550035691955",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5363752536223242,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "DR Congo",
+      "match": "Colombia vs Dr Congo",
+      "kalshi": "KXWCGAME-26JUN23COLCOD-COD",
+      "poly": "27087363386694674049005402437888440764538397638814511740652870655708130928058",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6472349914354518,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Colombia",
+      "match": "Colombia vs Dr Congo",
+      "kalshi": "KXWCGAME-26JUN23COLCOD-COL",
+      "poly": "34999267410182663441586115553518943962188580583548745660828050477474485422496",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -5800,
+            "best_corr": 0.7101745039685364,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ghana",
+      "match": "Colombia vs Ghana",
+      "kalshi": "KXWCGAME-26JUL03COLGHA-GHA",
+      "poly": "105539798766547200092323662417726863479637721229836283901511466011186180591923",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Colombia",
+      "match": "Colombia vs Ghana",
+      "kalshi": "KXWCGAME-26JUL03COLGHA-COL",
+      "poly": "76150025241705071715660741383746313361341926806422361774139695469030476859782",
+      "n_events": 8,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8422020812753046,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Colombia",
+      "match": "Colombia vs Portugal",
+      "kalshi": "KXWCGAME-26JUN27COLPOR-COL",
+      "poly": "66645018399244327793816970436640892806720466803924622381310200425167561934656",
+      "n_events": 31,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5885670224971454,
+            "leader": "polymarket",
+            "n_bins": 129
+          }
+        }
+      ]
+    },
+    {
+      "label": "Portugal",
+      "match": "Colombia vs Portugal",
+      "kalshi": "KXWCGAME-26JUN27COLPOR-POR",
+      "poly": "68238163315667435120694805573568977252273759352712823951184501420027891362809",
+      "n_events": 28,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.5103138974693247,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5303545980608997,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.815559877071409,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2400,
+            "best_corr": 0.797256097560976,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Croatia",
+      "match": "Croatia vs Ghana",
+      "kalshi": "KXWCGAME-26JUN27CROGHA-CRO",
+      "poly": "23522010053796928314095406008924900761833610419543982088160250459540934114445",
+      "n_events": 23,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5182597334919921,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.7530897599046488,
+            "leader": "kalshi",
+            "n_bins": 144
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 1.0,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8419182325737533,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7600,
+            "best_corr": 0.7038556983051978,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ghana",
+      "match": "Croatia vs Ghana",
+      "kalshi": "KXWCGAME-26JUN27CROGHA-GHA",
+      "poly": "90597327262250836004646033934453860417100833449408628755662053427096482500586",
+      "n_events": 14,
+      "events": []
+    },
+    {
+      "label": "Cura\u00e7ao",
+      "match": "Cura\u00e7ao vs Ivory Coast",
+      "kalshi": "KXWCGAME-26JUN25CUWCIV-CUW",
+      "poly": "19148172802481517881692352905829372357755800754194043495831127988905408662349",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Ivory Coast",
+      "match": "Cura\u00e7ao vs Ivory Coast",
+      "kalshi": "KXWCGAME-26JUN25CUWCIV-CIV",
+      "poly": "112165227742342790816614520312092947420861337398279265432656445292580690894446",
+      "n_events": 6,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8390526026337695,
+            "leader": "synchronous",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6743565779385642,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Uzbekistan",
+      "match": "Dr Congo vs Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN27CODUZB-UZB",
+      "poly": "18008867159313570769262912171658897336337384293159822028565187451480762621316",
+      "n_events": 36,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6973527552412891,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5589649025775251,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6800,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7200,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7282962517183966,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7047138579747279,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5400,
+            "best_corr": 0.5724780279075986,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7574931658558357,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5629803316132052,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "DR Congo",
+      "match": "Dr Congo vs Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN27CODUZB-COD",
+      "poly": "32203747233944015438487799675613943430837031417969455986362970409671575279826",
+      "n_events": 36,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8145117452826084,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -600,
+            "best_corr": 0.6576312179058886,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6883025547502604,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.9435697394922787,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ecuador",
+      "match": "Ecuador vs Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN20ECUCUW-ECU",
+      "poly": "7079595983448256774998692261246256964535880004732387005017898482275441988994",
+      "n_events": 29,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5960869311987681,
+            "leader": "synchronous",
+            "n_bins": 144
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2600,
+            "best_corr": 0.6291703896312276,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Cura\u00e7ao",
+      "match": "Ecuador vs Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN20ECUCUW-CUW",
+      "poly": "22922754856620040574706795332414925251832240378503831196222537952159137725220",
+      "n_events": 2,
+      "events": []
+    },
+    {
+      "label": "Germany",
+      "match": "Ecuador vs Germany",
+      "kalshi": "KXWCGAME-26JUN25ECUGER-GER",
+      "poly": "101279272797775203956659007084828831261331275405585994446661991301016814257223",
+      "n_events": 29,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.612373666410866,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.7974070702204341,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2800,
+            "best_corr": 0.5230946178295633,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5400,
+            "best_corr": 0.532779798427878,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5149741623817244,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ecuador",
+      "match": "Ecuador vs Germany",
+      "kalshi": "KXWCGAME-26JUN25ECUGER-ECU",
+      "poly": "14621976022388339155866443939403907158807725281606484508612016632018100973573",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7235883277822339,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.758185009650494,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7191179499126248,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.6521152839498611,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2000,
+            "best_corr": 0.6448364476341011,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Iran",
+      "match": "Egypt vs Iran",
+      "kalshi": "KXWCGAME-26JUN26EGYIRI-IRI",
+      "poly": "34787355244902293604560127433609469815330269379035336530397136777594424715528",
+      "n_events": 30,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6603718351623601,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.879464228430112,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.6817591794518992,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1600,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6800,
+            "best_corr": 0.7039144092114454,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5133094456883648,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Egypt",
+      "match": "Egypt vs Iran",
+      "kalshi": "KXWCGAME-26JUN26EGYIRI-EGY",
+      "poly": "75595072506593093609125758283657089382220899252356081539276899905086401333602",
+      "n_events": 25,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6138795626624973,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5511541390935273,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7592329119966565,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6476480619725627,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6800,
+            "best_corr": 0.5418882569609299,
+            "leader": "polymarket",
+            "n_bins": 107
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "England vs Argentina",
+      "kalshi": "KXWCGAME-26JUL15ENGARG-ENG",
+      "poly": "62975583795498792086117213116943744194566684233762863056174017776352240969485",
+      "n_events": 21,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5286101867802613,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5461522534155292,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4000,
+            "best_corr": 0.6320739418971172,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5886841038160876,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Argentina",
+      "match": "England vs Argentina",
+      "kalshi": "KXWCGAME-26JUL15ENGARG-ARG",
+      "poly": "85633756210324151397822274959403676422451634259093065838612463900396751402106",
+      "n_events": 20,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.735771005910865,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5406072739385743,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "England vs Congo Dr",
+      "kalshi": "KXWCGAME-26JUL01ENGCOD-ENG",
+      "poly": "47128076194656719884583796201362709805790165917758295559618985609098741011893",
+      "n_events": 22,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 6600,
+            "best_corr": 0.7497308056946402,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6175952245962447,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Congo DR",
+      "match": "England vs Congo Dr",
+      "kalshi": "KXWCGAME-26JUL01ENGCOD-COD",
+      "poly": "40095690165100403740959014720632641918616938378417968277635915917247868465688",
+      "n_events": 21,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6438719805517693,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3600,
+            "best_corr": 0.7098422141520245,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6058483946378067,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Croatia",
+      "match": "England vs Croatia",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-CRO",
+      "poly": "55443738818158231803517291185008080654932985451404315852703585757411667902597",
+      "n_events": 20,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6575926182171278,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.9037508279032525,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7089510141207532,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5892273477183727,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1400,
+            "best_corr": 0.6902198141702527,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -3800,
+            "best_corr": 0.5727128425310515,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "England vs Croatia",
+      "kalshi": "KXWCGAME-26JUN17ENGCRO-ENG",
+      "poly": "45513813860398961340723481590130352932611791552209098368268600222240572304551",
+      "n_events": 28,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7378831834303786,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6866450106326847,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8951054075130217,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8339031333748951,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5000,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7084093988873462,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8929261652205255,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6762509173534228,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6768796954572243,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ghana",
+      "match": "England vs Ghana",
+      "kalshi": "KXWCGAME-26JUN23ENGGHA-GHA",
+      "poly": "111239697803361919523803068759725643725914563280609261384832780529311817077235",
+      "n_events": 2,
+      "events": []
+    },
+    {
+      "label": "England",
+      "match": "England vs Ghana",
+      "kalshi": "KXWCGAME-26JUN23ENGGHA-ENG",
+      "poly": "63611572432092712507452794046269856873324193737948513078896856667745770559698",
+      "n_events": 28,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 2400,
+            "best_corr": 0.7079685813615751,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "France vs England",
+      "kalshi": "KXWCGAME-26JUL18FRAENG-ENG",
+      "poly": "104204269101315799616235020335758894730330540969530162829399554926283403684718",
+      "n_events": 52,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7663980284211637,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6800,
+            "best_corr": 0.7039144092114463,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.9004006098913245,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5200,
+            "best_corr": 0.815401640672585,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.56843987800888,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2600,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6534192064682651,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7200,
+            "best_corr": 0.9382682431239566,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.747129966523029,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 7200,
+            "best_corr": 0.544637248803308,
+            "leader": "polymarket",
+            "n_bins": 144
+          }
+        }
+      ]
+    },
+    {
+      "label": "France",
+      "match": "France vs England",
+      "kalshi": "KXWCGAME-26JUL18FRAENG-FRA",
+      "poly": "27017352779469567119021515174282416893555366624071034758236558815968401338728",
+      "n_events": 33,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6991237073652566,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3800,
+            "best_corr": 0.7057079533454466,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.746132313706876,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Iraq",
+      "match": "France vs Iraq",
+      "kalshi": "KXWCGAME-26JUN22FRAIRQ-IRQ",
+      "poly": "76510222428165877597575721449543571541796482738486080354541430902498097062984",
+      "n_events": 0,
+      "events": []
+    },
+    {
+      "label": "France",
+      "match": "France vs Iraq",
+      "kalshi": "KXWCGAME-26JUN22FRAIRQ-FRA",
+      "poly": "33487993003158194673584478096137518804695909934938955095498705571367038286718",
+      "n_events": 2,
+      "events": []
+    },
+    {
+      "label": "Morocco",
+      "match": "France vs Morocco",
+      "kalshi": "KXWCGAME-26JUL09FRAMAR-MAR",
+      "poly": "14226508065870426054190705878267947981688371809768362929061594780236487316843",
+      "n_events": 9,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.632094285332567,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.5124989801928046,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7419625796770661,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "France",
+      "match": "France vs Morocco",
+      "kalshi": "KXWCGAME-26JUL09FRAMAR-FRA",
+      "poly": "59376244379747988336832016917908236721650516433890704080422157946407884434153",
+      "n_events": 21,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6210082725806397,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2400,
+            "best_corr": 0.7045023274707906,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.5456225753846053,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3200,
+            "best_corr": 0.5909973497060786,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6494209812621119,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "France",
+      "match": "France vs Senegal",
+      "kalshi": "KXWCGAME-26JUN16FRASEN-FRA",
+      "poly": "10541943766977992250149902475024620982770128161688998706490955791758263657916",
+      "n_events": 22,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7198431099960738,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7420419124600665,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5879773623195312,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.8007012243272553,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Senegal",
+      "match": "France vs Senegal",
+      "kalshi": "KXWCGAME-26JUN16FRASEN-SEN",
+      "poly": "68110647781535190797837703927589470479832774174814667833732459898847586979826",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -600,
+            "best_corr": 0.5552835340564101,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5759901959949931,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "France vs Spain",
+      "kalshi": "KXWCGAME-26JUL14FRAESP-ESP",
+      "poly": "54457493657200702823489498072340426495621186977268604965936887877885935998935",
+      "n_events": 14,
+      "events": []
+    },
+    {
+      "label": "France",
+      "match": "France vs Spain",
+      "kalshi": "KXWCGAME-26JUL14FRAESP-FRA",
+      "poly": "89332398641172244413294265916522576135496977594019115745392602739911788405657",
+      "n_events": 13,
+      "events": []
+    },
+    {
+      "label": "Germany",
+      "match": "Germany vs Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN14GERCUW-GER",
+      "poly": "80258038883060787104700033663206548991173635281684057844048254140005841868705",
+      "n_events": 8,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8967953296155465,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7841472124277179,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Cura\u00e7ao",
+      "match": "Germany vs Cura\u00e7ao",
+      "kalshi": "KXWCGAME-26JUN14GERCUW-CUW",
+      "poly": "84520506461080918199836241264297202134105253634264892405638380867421157597093",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Germany",
+      "match": "Germany vs Ivory Coast",
+      "kalshi": "KXWCGAME-26JUN20GERCIV-GER",
+      "poly": "110881534500357968934646596900153818247967390745149544995654778360419076918150",
+      "n_events": 42,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -2200,
+            "best_corr": 0.5153948772268249,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.608943557940955,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6880033681878109,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.824553371748854,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5400,
+            "best_corr": 0.8153461161168001,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ivory Coast",
+      "match": "Germany vs Ivory Coast",
+      "kalshi": "KXWCGAME-26JUN20GERCIV-CIV",
+      "poly": "34949477535476026489714414939200175816336848313521000211837354783838790884040",
+      "n_events": 26,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.59849814095418,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6200,
+            "best_corr": 0.7102286806100283,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.8135193448575357,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Panama",
+      "match": "Ghana vs Panama",
+      "kalshi": "KXWCGAME-26JUN17GHAPAN-PAN",
+      "poly": "98450368978745606301240607141388168410536324949220985931158206007509106995457",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.7822789206303637,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5800,
+            "best_corr": 0.7040523099688107,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6442682004948437,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7071067811865479,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ghana",
+      "match": "Ghana vs Panama",
+      "kalshi": "KXWCGAME-26JUN17GHAPAN-GHA",
+      "poly": "4583065636155233526779653080435458405485537158452842777526478181105245518840",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.796609187201033,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6000,
+            "best_corr": 0.633010409456237,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Haiti",
+      "match": "Haiti vs Scotland",
+      "kalshi": "KXWCGAME-26JUN13HTISCO-HTI",
+      "poly": "56618826743104010959172273659413209775316700999254592964223431451553591299446",
+      "n_events": 4,
+      "events": []
+    },
+    {
+      "label": "Scotland",
+      "match": "Haiti vs Scotland",
+      "kalshi": "KXWCGAME-26JUN13HTISCO-SCO",
+      "poly": "38620007602877950561785055194486422431765048561026651240000808038396318703092",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Norway",
+      "match": "Iraq vs Norway",
+      "kalshi": "KXWCGAME-26JUN16IRQNOR-NOR",
+      "poly": "60561627760165737508115128719081450929284195423420376549887420810076954490283",
+      "n_events": 18,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 1.0,
+            "leader": "synchronous",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5841124127944675,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.8680191970802021,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Iraq",
+      "match": "Iraq vs Norway",
+      "kalshi": "KXWCGAME-26JUN16IRQNOR-IRQ",
+      "poly": "73942127055672070093762091576846712862472894975200730653926386031270714825841",
+      "n_events": 8,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.5035501613148544,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Sweden",
+      "match": "Japan vs Sweden",
+      "kalshi": "KXWCGAME-26JUN25JPNSWE-SWE",
+      "poly": "12789581828610654936852030631608949195058761081844775016106587060501098784149",
+      "n_events": 28,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.5700423733444286,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6947815954704382,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Japan",
+      "match": "Japan vs Sweden",
+      "kalshi": "KXWCGAME-26JUN25JPNSWE-JPN",
+      "poly": "101491499269793539765890729500440478078979559571972876836355209033272846559170",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5864399133313783,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5436031511727215,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5347480732462453,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8361001683837548,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        }
+      ]
+    },
+    {
+      "label": "Jordan",
+      "match": "Jordan vs Algeria",
+      "kalshi": "KXWCGAME-26JUN22JORDZA-JOR",
+      "poly": "79556419900577322611626767862690562089176805129072624901443226554922952966745",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.692257636314908,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8056134320522775,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5429734085867945,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7013587116612773,
+            "leader": "polymarket",
+            "n_bins": 137
+          }
+        }
+      ]
+    },
+    {
+      "label": "Algeria",
+      "match": "Jordan vs Algeria",
+      "kalshi": "KXWCGAME-26JUN22JORDZA-DZA",
+      "poly": "115548088586633825662425519500723984422794579404944891967166045543435931523785",
+      "n_events": 30,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 6400,
+            "best_corr": 0.6418643431219502,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2400,
+            "best_corr": 0.7044633820976202,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -7000,
+            "best_corr": 0.7046036204128046,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Jordan",
+      "match": "Jordan vs Argentina",
+      "kalshi": "KXWCGAME-26JUN27JORARG-JOR",
+      "poly": "45668841020533558878058431264255444612420443086293898941905939792694888997711",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Argentina",
+      "match": "Jordan vs Argentina",
+      "kalshi": "KXWCGAME-26JUN27JORARG-ARG",
+      "poly": "89969054941820905260983372139923320038115693660830083208242956669285748681379",
+      "n_events": 9,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 1.0,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Ecuador",
+      "match": "Mexico vs Ecuador",
+      "kalshi": "KXWCGAME-26JUN30MEXECU-ECU",
+      "poly": "95900004446820028523281487282586307546683508186408363039386301983885387392092",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Mexico",
+      "match": "Mexico vs Ecuador",
+      "kalshi": "KXWCGAME-26JUN30MEXECU-MEX",
+      "poly": "114468314836265493179349149555121147219378704003010144698095755324094165081893",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Mexico",
+      "match": "Mexico vs England",
+      "kalshi": "KXWCGAME-26JUL05MEXENG-MEX",
+      "poly": "51911548599887870208512834589104874988746646324647658251485676564237334602135",
+      "n_events": 29,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.5303300858899107,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2000,
+            "best_corr": 0.704540141932455,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8616850457724924,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "Mexico vs England",
+      "kalshi": "KXWCGAME-26JUL05MEXENG-ENG",
+      "poly": "53791259745705726030589240827060759250615158391415011769641887216926825684479",
+      "n_events": 62,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6452757680325274,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8178607474235197,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5400,
+            "best_corr": 0.6639118457300229,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6200,
+            "best_corr": 0.8152949664709965,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.7045768740375792,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5076233036039015,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -3800,
+            "best_corr": 0.5758755534498975,
+            "leader": "kalshi",
+            "n_bins": 150
+          }
+        }
+      ]
+    },
+    {
+      "label": "Mexico",
+      "match": "Mexico vs South Africa",
+      "kalshi": "KXWCGAME-26JUN11MEXRSA-MEX",
+      "poly": "20779063998268474490699884714808310289659170477959115489741275295270359962039",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7774419704822486,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4000,
+            "best_corr": 0.8154013469257667,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "South Africa",
+      "match": "Mexico vs South Africa",
+      "kalshi": "KXWCGAME-26JUN11MEXRSA-RSA",
+      "poly": "115307860962719805060784163204351769077176612029040401546976102705811910754396",
+      "n_events": 3,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8311660406106809,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "South Korea",
+      "match": "Mexico vs South Korea",
+      "kalshi": "KXWCGAME-26JUN18MEXKOR-KOR",
+      "poly": "40559900670015709472472801511880289852513956415696043408438494025364180866146",
+      "n_events": 4,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.9298996288705108,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Mexico",
+      "match": "Mexico vs South Korea",
+      "kalshi": "KXWCGAME-26JUN18MEXKOR-MEX",
+      "poly": "84622337225923971667543390025202237459542894380445135038857655043890030217262",
+      "n_events": 14,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5953262842504666,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Haiti",
+      "match": "Morocco vs Haiti",
+      "kalshi": "KXWCGAME-26JUN24MARHTI-HTI",
+      "poly": "16734149502738704359673067089022355535903790350570508474097898646900570148376",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5733347065781617,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8901835485829608,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7950896724967841,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Morocco",
+      "match": "Morocco vs Haiti",
+      "kalshi": "KXWCGAME-26JUN24MARHTI-MAR",
+      "poly": "42374815657442465500075937904016131801776204492796944288908751005433960581826",
+      "n_events": 33,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7958621535902864,
+            "leader": "synchronous",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6426067944501569,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2800,
+            "best_corr": 0.9489247609419726,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.809991614679439,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1600,
+            "best_corr": 0.5107142857142826,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8451041601674105,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.574636855956301,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Netherlands",
+      "match": "Netherlands vs Japan",
+      "kalshi": "KXWCGAME-26JUN14NEDJPN-NED",
+      "poly": "46118045327286643463479614908512136607324773588723756546332480247027286666715",
+      "n_events": 22,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.786492513088248,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.898171170589652,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7540132302586386,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.5335677438880447,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3400,
+            "best_corr": 0.5163977794943224,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8518196045644886,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Japan",
+      "match": "Netherlands vs Japan",
+      "kalshi": "KXWCGAME-26JUN14NEDJPN-JPN",
+      "poly": "51849195089345361433940393336005306019563641384117823557920274041538875387918",
+      "n_events": 14,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7096146565149075,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.7274486023622474,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7761183497102844,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Netherlands",
+      "match": "Netherlands vs Morocco",
+      "kalshi": "KXWCGAME-26JUN29NEDMAR-NED",
+      "poly": "7274552498925682773418691853971449969741694357120018415935498544583333363785",
+      "n_events": 25,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.9682377282279067,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5400,
+            "best_corr": 0.7100966752038728,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7095408909020458,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7046472718869904,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5364676226503398,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Morocco",
+      "match": "Netherlands vs Morocco",
+      "kalshi": "KXWCGAME-26JUN29NEDMAR-MAR",
+      "poly": "84597496489313264837847684053401517117472634121930855082913192700166797262773",
+      "n_events": 9,
+      "events": []
+    },
+    {
+      "label": "Netherlands",
+      "match": "Netherlands vs Sweden",
+      "kalshi": "KXWCGAME-26JUN20NEDSWE-NED",
+      "poly": "81043398291360463170235957547610256181022662944963722274721633505163503937838",
+      "n_events": 13,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -5000,
+            "best_corr": 0.7042497724071227,
+            "leader": "kalshi",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5250020004686812,
+            "leader": "synchronous",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Sweden",
+      "match": "Netherlands vs Sweden",
+      "kalshi": "KXWCGAME-26JUN20NEDSWE-SWE",
+      "poly": "40679081595356904709519473256184794013741938720159613262750624703767617499056",
+      "n_events": 6,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8416106930086938,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.5093637654125001,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Belgium",
+      "match": "New Zealand vs Belgium",
+      "kalshi": "KXWCGAME-26JUN26NZLBEL-BEL",
+      "poly": "56919576321692543804120333477806892227587677219602902701553511079254437421526",
+      "n_events": 13,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6162044281084924,
+            "leader": "polymarket",
+            "n_bins": 142
+          }
+        }
+      ]
+    },
+    {
+      "label": "New Zealand",
+      "match": "New Zealand vs Belgium",
+      "kalshi": "KXWCGAME-26JUN26NZLBEL-NZL",
+      "poly": "51519876214140449660166550584440656906007152566889523395451234960389805633766",
+      "n_events": 2,
+      "events": []
+    },
+    {
+      "label": "New Zealand",
+      "match": "New Zealand vs Egypt",
+      "kalshi": "KXWCGAME-26JUN21NZLEGY-NZL",
+      "poly": "33714788520669769280954321212574588471029548850737990640617719122550413982550",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8286460836351774,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5835665038425447,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3400,
+            "best_corr": 0.6329576028672658,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -800,
+            "best_corr": 0.5215777656503653,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Egypt",
+      "match": "New Zealand vs Egypt",
+      "kalshi": "KXWCGAME-26JUN21NZLEGY-EGY",
+      "poly": "13689393741027779813840434297856122590360803048059505899834082936957632248186",
+      "n_events": 21,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.7080494664790044,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7163222885558599,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 4000,
+            "best_corr": 0.8154439763883035,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.648171410881099,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "England",
+      "match": "Norway vs England",
+      "kalshi": "KXWCGAME-26JUL11NORENG-ENG",
+      "poly": "866370305411260885620344443432925550941005016614412438009174244566837236043",
+      "n_events": 36,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7732187536049413,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.6660128936713519,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.597230219395535,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7417235697089507,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -600,
+            "best_corr": 0.5989251619998742,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Norway",
+      "match": "Norway vs England",
+      "kalshi": "KXWCGAME-26JUL11NORENG-NOR",
+      "poly": "101609312241167873882360947921080859853145865660281247946682387335776462114544",
+      "n_events": 30,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6842080467981144,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7956845376417783,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.5711910833418762,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6400,
+            "best_corr": 0.6218877851760142,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "France",
+      "match": "Norway vs France",
+      "kalshi": "KXWCGAME-26JUN26NORFRA-FRA",
+      "poly": "24577773509300358817327680170546846259151744300648018180120742538153285610470",
+      "n_events": 18,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8116782535701882,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6400,
+            "best_corr": 0.544652670520206,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.9568806186670019,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Norway",
+      "match": "Norway vs France",
+      "kalshi": "KXWCGAME-26JUN26NORFRA-NOR",
+      "poly": "13720141007204726132976932163658350553917819242912487119786312240512385978016",
+      "n_events": 12,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.6765057475027033,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4400,
+            "best_corr": 0.7797475003563236,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Norway",
+      "match": "Norway vs Senegal",
+      "kalshi": "KXWCGAME-26JUN22NORSEN-NOR",
+      "poly": "87342664839192211473271920800753463563092786516324349723605782526214890691197",
+      "n_events": 27,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6902135639048104,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.8041774951244142,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.897867906463987,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.9248964275803346,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5426765098843024,
+            "leader": "polymarket",
+            "n_bins": 143
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6887105075956482,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6667614741085542,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Senegal",
+      "match": "Norway vs Senegal",
+      "kalshi": "KXWCGAME-26JUN22NORSEN-SEN",
+      "poly": "41610575626461486529455331665861057346399083513953711754678027926024708412903",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8149283151322169,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.7139191485688385,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.6070947250383637,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.8787188158815876,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Croatia",
+      "match": "Panama vs Croatia",
+      "kalshi": "KXWCGAME-26JUN23PANCRO-CRO",
+      "poly": "109027609951989526893628757693490068717900103024949393927658066962316915180001",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6284868187168271,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6600,
+            "best_corr": 0.8517571227048414,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -7800,
+            "best_corr": 0.6260200821758553,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Panama",
+      "match": "Panama vs Croatia",
+      "kalshi": "KXWCGAME-26JUN23PANCRO-PAN",
+      "poly": "24996055382005658349790471423878721697831808533961896596758588230034679203014",
+      "n_events": 5,
+      "events": []
+    },
+    {
+      "label": "Panama",
+      "match": "Panama vs England",
+      "kalshi": "KXWCGAME-26JUN27PANENG-PAN",
+      "poly": "59058041199432950171496335927523101634207424833883434829808368909648870164143",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "England",
+      "match": "Panama vs England",
+      "kalshi": "KXWCGAME-26JUN27PANENG-ENG",
+      "poly": "93320332124999747203356838766183249400983580913731153318561555477528481141967",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -5800,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8476117866796998,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Australia",
+      "match": "Paraguay vs Australia",
+      "kalshi": "KXWCGAME-26JUN25PARAUS-AUS",
+      "poly": "21990437237634439641535931317392242133464382121486985420713435551817663743535",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6895334845249752,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 2200,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Paraguay",
+      "match": "Paraguay vs Australia",
+      "kalshi": "KXWCGAME-26JUN25PARAUS-PAR",
+      "poly": "49296719184627637111102906756410924588753297305614598618877406701338912319300",
+      "n_events": 5,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7046472718869916,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Paraguay",
+      "match": "Paraguay vs France",
+      "kalshi": "KXWCGAME-26JUL04PARFRA-PAR",
+      "poly": "5986488984275762288846227630442187818951318412322984320385279750603889532502",
+      "n_events": 4,
+      "events": []
+    },
+    {
+      "label": "France",
+      "match": "Paraguay vs France",
+      "kalshi": "KXWCGAME-26JUL04PARFRA-FRA",
+      "poly": "113891226639705983282066963484423345278150974279743795316461155085208879415201",
+      "n_events": 18,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 5000,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7046125696007952,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8042783896179281,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.704612569600791,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4400,
+            "best_corr": 0.7100966752038725,
+            "leader": "kalshi",
+            "n_bins": 141
+          }
+        }
+      ]
+    },
+    {
+      "label": "Portugal",
+      "match": "Portugal vs Croatia",
+      "kalshi": "KXWCGAME-26JUL02PORCRO-POR",
+      "poly": "17217842547479007285300876709131085344173713949401481162197107549037781716834",
+      "n_events": 43,
+      "events": []
+    },
+    {
+      "label": "Croatia",
+      "match": "Portugal vs Croatia",
+      "kalshi": "KXWCGAME-26JUL02PORCRO-CRO",
+      "poly": "107529966065331470320044003222915989591213727898139048157835236491377429642432",
+      "n_events": 30,
+      "events": []
+    },
+    {
+      "label": "Portugal",
+      "match": "Portugal vs Dr Congo",
+      "kalshi": "KXWCGAME-26JUN17PORCOD-POR",
+      "poly": "76071109489406808599878692125264766321676001700733380917373465772841855210643",
+      "n_events": 28,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.6817478824989132,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -800,
+            "best_corr": 0.7046472718869903,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -2800,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1200,
+            "best_corr": 0.7046125696007924,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "DR Congo",
+      "match": "Portugal vs Dr Congo",
+      "kalshi": "KXWCGAME-26JUN17PORCOD-COD",
+      "poly": "59454896622130760276442490722222126894150925046963444585060045915889624278803",
+      "n_events": 11,
+      "events": []
+    },
+    {
+      "label": "Spain",
+      "match": "Portugal vs Spain",
+      "kalshi": "KXWCGAME-26JUL06PORESP-ESP",
+      "poly": "54057528392073990095084487796130968532853187701368399507638046075360608559515",
+      "n_events": 22,
+      "events": []
+    },
+    {
+      "label": "Portugal",
+      "match": "Portugal vs Spain",
+      "kalshi": "KXWCGAME-26JUL06PORESP-POR",
+      "poly": "57900672163470961775461539047491867710926167565994450766344251826596735609384",
+      "n_events": 6,
+      "events": []
+    },
+    {
+      "label": "Portugal",
+      "match": "Portugal vs Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN23PORUZB-POR",
+      "poly": "46788745865873849751895851580006231458025441200398102606849707486161173481896",
+      "n_events": 3,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 7800,
+            "best_corr": 0.6425726197607968,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Uzbekistan",
+      "match": "Portugal vs Uzbekistan",
+      "kalshi": "KXWCGAME-26JUN23PORUZB-UZB",
+      "poly": "76563067682631227603609066044534706683559659816004868232381337856810074987695",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Switzerland",
+      "match": "Qatar vs Switzerland",
+      "kalshi": "KXWCGAME-26JUN13QATSUI-SUI",
+      "poly": "66066640081366099233010777058886646300763486736056057848435195209438713673265",
+      "n_events": 14,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 4200,
+            "best_corr": 0.5655979286291122,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7841020826053392,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Qatar",
+      "match": "Qatar vs Switzerland",
+      "kalshi": "KXWCGAME-26JUN13QATSUI-QAT",
+      "poly": "87801481723150143095656392688212600042782229576502495783917440071310994656016",
+      "n_events": 2,
+      "events": []
+    },
+    {
+      "label": "Uruguay",
+      "match": "Saudi Arabia vs Uruguay",
+      "kalshi": "KXWCGAME-26JUN15KSAURU-URU",
+      "poly": "67375566273017733280418349633635206252639538869301457434188127341791609355341",
+      "n_events": 25,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6272892772433519,
+            "leader": "synchronous",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5558129372069253,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5800,
+            "best_corr": 0.7497397704945359,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Saudi Arabia",
+      "match": "Saudi Arabia vs Uruguay",
+      "kalshi": "KXWCGAME-26JUN15KSAURU-KSA",
+      "poly": "108315368637387262892957153811435904912510274825529229627147648105187493645849",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.5008287913021162,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.8155533860543305,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.6346078938137676,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Brazil",
+      "match": "Scotland vs Brazil",
+      "kalshi": "KXWCGAME-26JUN24SCOBRA-BRA",
+      "poly": "52345319584298671384241333674201063268836142597903677481641810116870044724915",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7153542229894888,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4600,
+            "best_corr": 0.6827773296002629,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Scotland",
+      "match": "Scotland vs Brazil",
+      "kalshi": "KXWCGAME-26JUN24SCOBRA-SCO",
+      "poly": "47270884544902187710532732045488098581735089212206395717548237797985049565017",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Morocco",
+      "match": "Scotland vs Morocco",
+      "kalshi": "KXWCGAME-26JUN19SCOMAR-MAR",
+      "poly": "40791250908933508853723465614961035896557737979546129504169818299128524475478",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5963253011719984,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Scotland",
+      "match": "Scotland vs Morocco",
+      "kalshi": "KXWCGAME-26JUN19SCOMAR-SCO",
+      "poly": "101256141817216466245038151589296191044974050560393587426784474074655264282404",
+      "n_events": 4,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.5361722604049297,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Iraq",
+      "match": "Senegal vs Iraq",
+      "kalshi": "KXWCGAME-26JUN26SENIRQ-IRQ",
+      "poly": "42446028394641227058711863003994762636042573921212384468888917154482444605317",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Senegal",
+      "match": "Senegal vs Iraq",
+      "kalshi": "KXWCGAME-26JUN26SENIRQ-SEN",
+      "poly": "18743217884084451181326534803259386349719190738348996062011676818990905009388",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -1000,
+            "best_corr": 0.5280798991962593,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8791018930523199,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "South Africa",
+      "match": "South Africa vs South Korea",
+      "kalshi": "KXWCGAME-26JUN24RSAKOR-RSA",
+      "poly": "58830526078196302612867530222421263708170468828968028907746961007548153805793",
+      "n_events": 16,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 7400,
+            "best_corr": 0.5327954276661303,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5600,
+            "best_corr": 0.5368414642741147,
+            "leader": "kalshi",
+            "n_bins": 144
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5400,
+            "best_corr": 0.7254654234259483,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "South Korea",
+      "match": "South Africa vs South Korea",
+      "kalshi": "KXWCGAME-26JUN24RSAKOR-KOR",
+      "poly": "78041669573197271831143243516603089617333411410934465631182277350983388128942",
+      "n_events": 15,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -1400,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8533357233451154,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1800,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "Spain vs Argentina",
+      "kalshi": "KXWCGAME-26JUL19ESPARG-ESP",
+      "poly": "105042264974012349507628582341465372921413790307165600767293079103508862620927",
+      "n_events": 25,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -2400,
+            "best_corr": 0.6564381164770539,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6400,
+            "best_corr": 0.648087544046365,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Argentina",
+      "match": "Spain vs Argentina",
+      "kalshi": "KXWCGAME-26JUL19ESPARG-ARG",
+      "poly": "22596903656102431101396261359922941848858035376971300420659017295333613251025",
+      "n_events": 5,
+      "events": []
+    },
+    {
+      "label": "Austria",
+      "match": "Spain vs Austria",
+      "kalshi": "KXWCGAME-26JUL02ESPAUT-AUT",
+      "poly": "98527153031306952978660040867395139087621992676427333568334777278688370278755",
+      "n_events": 4,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.9656132244268364,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "Spain vs Austria",
+      "kalshi": "KXWCGAME-26JUL02ESPAUT-ESP",
+      "poly": "110474601866909537724044216141585040787927916157559633438159999666255694855775",
+      "n_events": 12,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7424520842192078,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.8993711188497229,
+            "leader": "kalshi",
+            "n_bins": 144
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.6663870630797575,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Belgium",
+      "match": "Spain vs Belgium",
+      "kalshi": "KXWCGAME-26JUL10ESPBEL-BEL",
+      "poly": "113258140039729603259288671364749723242703790462413008421390186262563698386140",
+      "n_events": 10,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8907745253930992,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6482562219814322,
+            "leader": "polymarket",
+            "n_bins": 138
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.6414420062600248,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7254236440779132,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -5000,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "Spain vs Belgium",
+      "kalshi": "KXWCGAME-26JUL10ESPBEL-ESP",
+      "poly": "114083367175349101587118456512209157494315102378898420654169806682644264287063",
+      "n_events": 22,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -7200,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.7331546692612102,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "Spain vs Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN21ESPKSA-ESP",
+      "poly": "73510205866448375978164321647457824822309414197359016110940718743916953674850",
+      "n_events": 3,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.5536513755227314,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Saudi Arabia",
+      "match": "Spain vs Saudi Arabia",
+      "kalshi": "KXWCGAME-26JUN21ESPKSA-KSA",
+      "poly": "34595222436901694034568466087145334098073564547697700427928775408006876228602",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Tunisia",
+      "match": "Sweden vs Tunisia",
+      "kalshi": "KXWCGAME-26JUN14SWETUN-TUN",
+      "poly": "83899205056028320634506792090435502639229370708908873019388029731945043477417",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.8970134498096396,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.858007463212964,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Sweden",
+      "match": "Sweden vs Tunisia",
+      "kalshi": "KXWCGAME-26JUN14SWETUN-SWE",
+      "poly": "77891685052397355147816140430897431230743681776824155461036740561521945442239",
+      "n_events": 14,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.617482660744171,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7254499920643268,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -6200,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Algeria",
+      "match": "Switzerland vs Algeria",
+      "kalshi": "KXWCGAME-26JUL02SUIDZA-DZA",
+      "poly": "75771817078472080882207303024349440209183684662422891257718386385240666521405",
+      "n_events": 6,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.7178040461097465,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.6512070743395328,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Switzerland",
+      "match": "Switzerland vs Algeria",
+      "kalshi": "KXWCGAME-26JUL02SUIDZA-SUI",
+      "poly": "87420881416753183950847701965163525629817652213917429006273635360524465160861",
+      "n_events": 8,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -400,
+            "best_corr": 0.5687164758197342,
+            "leader": "kalshi",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7349412459033055,
+            "leader": "synchronous",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Bosnia & Herzegovina",
+      "match": "Switzerland vs Bosnia Herzegovina",
+      "kalshi": "KXWCGAME-26JUN18SUIBIH-BIH",
+      "poly": "66489726367925595502503158446006075400401621519147621264189323965755835894613",
+      "n_events": 3,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.6653390979723399,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6702087709737715,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Switzerland",
+      "match": "Switzerland vs Bosnia Herzegovina",
+      "kalshi": "KXWCGAME-26JUN18SUIBIH-SUI",
+      "poly": "106591280142630626115724651117201657682325101150171422307265130569697670708657",
+      "n_events": 11,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1200,
+            "best_corr": 0.933261947477974,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -1800,
+            "best_corr": 0.6319695777120384,
+            "leader": "kalshi",
+            "n_bins": 120
+          }
+        }
+      ]
+    },
+    {
+      "label": "Canada",
+      "match": "Switzerland vs Canada",
+      "kalshi": "KXWCGAME-26JUN24SUICAN-CAN",
+      "poly": "11943790724298456336310029997668350808838445628633810142424962411400618768716",
+      "n_events": 5,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.9056967093823591,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Switzerland",
+      "match": "Switzerland vs Canada",
+      "kalshi": "KXWCGAME-26JUN24SUICAN-SUI",
+      "poly": "47959944460657228985055674449790383802464381124119024576562949363346901336433",
+      "n_events": 22,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.8215130950245702,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.6288905814310497,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 0,
+            "best_corr": 0.7310015712320533,
+            "leader": "synchronous",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 4600,
+            "best_corr": 0.6303245483627467,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        }
+      ]
+    },
+    {
+      "label": "Colombia",
+      "match": "Switzerland vs Colombia",
+      "kalshi": "KXWCGAME-26JUL07SUICOL-COL",
+      "poly": "72753295727566659208677964635039361717871718602259295378609650323504626128275",
+      "n_events": 12,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.6978398253781949,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 5400,
+            "best_corr": 0.5854161042952127,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Switzerland",
+      "match": "Switzerland vs Colombia",
+      "kalshi": "KXWCGAME-26JUL07SUICOL-SUI",
+      "poly": "66569899468789141604730928852200840975457837449855481155211476611890307710677",
+      "n_events": 13,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -600,
+            "best_corr": 1.0,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        }
+      ]
+    },
+    {
+      "label": "Tunisia",
+      "match": "Tunisia vs Japan",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-TUN",
+      "poly": "62516949205730668430138255140150438665483187962069999240136080804116109915287",
+      "n_events": 3,
+      "events": []
+    },
+    {
+      "label": "Japan",
+      "match": "Tunisia vs Japan",
+      "kalshi": "KXWCGAME-26JUN21TUNJPN-JPN",
+      "poly": "91234906493805354217250440222911012200186057450151286874925972448339630680686",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -200,
+            "best_corr": 0.7176717514701164,
+            "leader": "kalshi",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 4000,
+            "best_corr": 0.9999999999999999,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Tunisia",
+      "match": "Tunisia vs Netherlands",
+      "kalshi": "KXWCGAME-26JUN25TUNNED-TUN",
+      "poly": "98721981590572841910847700506915134910696602397328529619763154982886944471014",
+      "n_events": 1,
+      "events": []
+    },
+    {
+      "label": "Netherlands",
+      "match": "Tunisia vs Netherlands",
+      "kalshi": "KXWCGAME-26JUN25TUNNED-NED",
+      "poly": "28763246044322995220208532073700111687599343514604674596345286876678085708461",
+      "n_events": 10,
+      "events": []
+    },
+    {
+      "label": "Uruguay",
+      "match": "Uruguay vs Cape Verde",
+      "kalshi": "KXWCGAME-26JUN21URUCPV-URU",
+      "poly": "115744004241615826068373834065815885045802138463705964527622590795637356148787",
+      "n_events": 47,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8688828348042185,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 3000,
+            "best_corr": 0.8004983736958103,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8319166102516943,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8815750079874448,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1400,
+            "best_corr": 0.5320581171798774,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4200,
+            "best_corr": 0.8153924606377378,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.7088798471171885,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 6800,
+            "best_corr": 0.6263045736150841,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -7400,
+            "best_corr": 0.6919467322949511,
+            "leader": "kalshi",
+            "n_bins": 147
+          }
+        }
+      ]
+    },
+    {
+      "label": "Cape Verde",
+      "match": "Uruguay vs Cape Verde",
+      "kalshi": "KXWCGAME-26JUN21URUCPV-CPV",
+      "poly": "92373800853975207163715439849233105963580357686874848773967900936113195244769",
+      "n_events": 25,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.8001040841318967,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.5299970492128455,
+            "leader": "polymarket",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": -4400,
+            "best_corr": 0.5738852344285239,
+            "leader": "kalshi",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Uruguay",
+      "match": "Uruguay vs Spain",
+      "kalshi": "KXWCGAME-26JUN26URUESP-URU",
+      "poly": "19006898597508386281847912902191120242282582317334085817745325501448261696961",
+      "n_events": 4,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 600,
+            "best_corr": 0.8108596178549435,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.8192880303729148,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Spain",
+      "match": "Uruguay vs Spain",
+      "kalshi": "KXWCGAME-26JUN26URUESP-ESP",
+      "poly": "21212784061998732060753310583727616688784929823373352237868078199791664491531",
+      "n_events": 14,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": -3400,
+            "best_corr": 0.8016402898223692,
+            "leader": "kalshi",
+            "n_bins": 148
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 8000,
+            "best_corr": 1.0,
+            "leader": "polymarket",
+            "n_bins": 150
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 800,
+            "best_corr": 0.6558725544832058,
+            "leader": "polymarket",
+            "n_bins": 145
+          }
+        }
+      ]
+    },
+    {
+      "label": "Colombia",
+      "match": "Uzbekistan vs Colombia",
+      "kalshi": "KXWCGAME-26JUN17UZBCOL-COL",
+      "poly": "107303881689780116979934419713652545873528717512161697004408881489729317049047",
+      "n_events": 19,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.8091984841903882,
+            "leader": "polymarket",
+            "n_bins": 146
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 400,
+            "best_corr": 0.5693892111613177,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        },
+        {
+          "lead": {
+            "best_lag_ms": 1000,
+            "best_corr": 0.5130347132975317,
+            "leader": "polymarket",
+            "n_bins": 149
+          }
+        }
+      ]
+    },
+    {
+      "label": "Uzbekistan",
+      "match": "Uzbekistan vs Colombia",
+      "kalshi": "KXWCGAME-26JUN17UZBCOL-UZB",
+      "poly": "42349324891891531052261785579549036042703894030589864369388972549681820562082",
+      "n_events": 7,
+      "events": [
+        {
+          "lead": {
+            "best_lag_ms": 200,
+            "best_corr": 0.5342630880302545,
+            "leader": "polymarket",
+            "n_bins": 147
+          }
+        }
+      ]
+    }
+  ],
+  "pooled": {
+    "n": 427,
+    "median_lead_ms": 400.0,
+    "iqr_ms": [
+      -200.0,
+      800.0
+    ],
+    "leader": "polymarket",
+    "leader_share": 0.658,
+    "poly_leads": 281,
+    "kalshi_leads": 111
+  },
+  "n_matches": 86,
+  "min_jump": 0.04,
+  "redaction_note": "Per-event venue quote levels (kalshi_reaction / poly_reaction) and absolute wall-clock timestamps (t_ms) are stripped from this pooled artifact. What remains -- which venue led and by how many milliseconds -- is a derived MEASUREMENT, not redistributed venue market data, so this file can be committed under Kalshi's Data Terms and Polymarket's Terms of Use while still regenerating every published number. The unredacted per-event detail stays in the per-game archive under viz/market/leadlag/ (not redistributed). See REPRODUCING.md, Data availability."
+}
