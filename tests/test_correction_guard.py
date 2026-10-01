@@ -112,3 +112,50 @@ def test_archived_site_pages_keep_their_banner(page):
     assert "withdrawn" in s[: s.index("</head>")].lower()          # the title/description say so
     assert 'content="noindex"' in s
     assert "Archived · withdrawn" in s
+
+
+# --- the private application material ------------------------------------------------------------
+# These documents are gitignored but get sent to people. The scan that covers them deliberately stops
+# at an archive marker, which is a silent-failure risk in both directions: a broken marker regex would
+# quarantine the whole file (scanning nothing), and a loose one would let a live section call itself an
+# archive. Pin both.
+
+def test_live_region_scans_everything_when_there_is_no_archive():
+    body = "Live claim.\nAnother line.\n"
+    live, quarantined = cc.live_region(body)
+    assert live == body and quarantined == 0
+
+
+def test_live_region_cuts_at_the_archive_marker():
+    body = "Live claim.\n\n# ARCHIVE — pre-correction · DO NOT COPY\n\nPolymarket leads Kalshi by +600 ms.\n"
+    live, quarantined = cc.live_region(body)
+    assert "Live claim." in live
+    assert "600" not in live                      # the archive is not scanned
+    assert quarantined == 3
+
+
+@pytest.mark.parametrize("header", [
+    "# ARCHIVE — superseded",                     # no DO NOT COPY
+    "## Notes on the archive, do not copy",       # not a marker header
+    "Text mentioning an ARCHIVE and DO NOT COPY", # not a header at all
+])
+def test_a_section_cannot_quarantine_itself_without_the_marker(header):
+    body = f"Live.\n\n{header}\n\nPolymarket leads Kalshi by +600 ms.\n"
+    live, quarantined = cc.live_region(body)
+    assert quarantined == 0 and "600" in live
+    assert cc.banned_hits(live, "packaging.md")   # so the guard still catches it
+
+
+def test_private_surfaces_are_declared_and_separate_from_public_ones():
+    assert cc.PRIVATE_SURFACES and not set(cc.PRIVATE_SURFACES) & set(cc.SURFACES)
+
+
+@pytest.mark.parametrize("path", cc.PRIVATE_SURFACES)
+def test_private_surfaces_are_clean_above_their_archive_line(path):
+    """Skipped where absent: these are gitignored, so a public clone has none of them."""
+    full = os.path.join(cc.ROOT, path)
+    if not os.path.exists(full):
+        pytest.skip(f"{path} is private and absent here")
+    with open(full, encoding="utf-8", errors="replace") as fh:
+        live, _ = cc.live_region(fh.read())
+    assert not cc.banned_hits(live, path), path

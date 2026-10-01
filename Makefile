@@ -1,5 +1,5 @@
 # Reproduce the paper. See REPRODUCING.md for the full claim -> script map.
-.PHONY: check macros paper test figures
+.PHONY: check check-private macros paper test figures
 
 # Verify every public claim against its artifact, run the suite, and -- where the private manuscript
 # is present -- check the paper's numbers against the JSONs. paper/arxiv/ is not in public clones, so
@@ -12,6 +12,13 @@ check:
 	fi
 	python scripts/check_claims.py
 	python -m pytest tests/ -q
+
+# Scan the gitignored application material -- packaging, the recruiting tracker, the interview
+# defense -- for withdrawn figures. These documents get SENT, so they are the one surface where a
+# dead number can still reach a reader; nothing public covers them. Archive sections marked
+# "DO NOT COPY" are deliberately skipped. Run this before sending anything.
+check-private:
+	python scripts/check_claims.py --private --allow-missing
 
 # Regenerate the canonical LaTeX macros from writeups/_*_results.json.
 macros:

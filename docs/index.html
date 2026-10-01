@@ -80,7 +80,7 @@
     <div class="kicker">2026 World Cup · a model against the markets</div>
     <h1>An independent model against the markets, <em>graded in public.</em></h1>
     <div class="lplede">xResidual ran a forecasting model against <b>Kalshi, Polymarket and the bookmaker consensus</b> through all 104 matches of the 2026 World Cup, with every forecast committed before kickoff and eleven predictions about the markets locked in a timestamped commit. The headline result is the one I would least like: <b>the market was better calibrated than my model</b>, and the draws my model missed were ones the market had already priced.</div>
-    <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative research.</div>
+    <div class="lpbyline">Built by <a href="https://thesavagecoder7784.github.io/">Prabhat M</a>, Mathematics &amp; Statistics at Purdue (also <a href="https://thesavagecoder7784.github.io/">QuantF1</a>), building toward quantitative trading and research.</div>
     <div class="ctarow">
       <a class="cta solid" href="results.html">See the scorecard →</a>
       <a class="cta ghost" href="method.html">How the model works</a>
@@ -99,6 +99,7 @@
     <div class="h2">What's inside</div>
     <div class="sub">The model, its forecasts, and how they were graded.</div>
     <div class="cards">
+      <a class="card" href="https://github.com/Thesavagecoder7784/xResidual/blob/main/writeups/desk-memo.md"><i class="fa-solid fa-file-lines cic"></i><div class="ct">The one-page memo</div><div class="cd">The whole project on a single page: what the market priced better than my model, what the cross-venue gap is actually worth, and the headline I withdrew.</div><span class="ar">read →</span></a>
       <a class="card" href="results.html"><i class="fa-solid fa-clipboard-check cic"></i><div class="ct">Scorecard</div><div class="cd">Every pre-committed forecast, graded: accuracy and log-loss against the baseline, the v1→v2→v3 ladder, and the biggest surprises.</div><span class="ar">open →</span></a>
       <a class="card" href="board.html"><i class="fa-solid fa-chart-column cic"></i><div class="ct">Forecast board</div><div class="cd">The model's probability for every market, pre-committed and timestamped against the price, scored on closing-line value and calibration.</div><span class="ar">open →</span></a>
       <a class="card" href="games.html"><i class="fa-solid fa-table-cells cic"></i><div class="ct">Group stage</div><div class="cd">All 72 group games, called up front, then conditioned and graded as each resolved. Three model versions, forward only.</div><span class="ar">open →</span></a>
@@ -136,6 +137,14 @@
         <div class="ftext"><b>A visible dislocation is mostly not a tradeable one.</b> When a goal lands, the price moves a median 12.0¢. But both order books empty at the goal and refill in 3–4 seconds, so once you gate on what is actually resting there, the median match offers nothing to take. That uses the harshest measure of depth; read at the moment a follower could act, a minority of goals would have been takeable.
         <div class="fmini"><div class="bar" title="best-price depth at the goal, as a share of normal"><span class="seg" style="width:3%;background:var(--accent)"></span></div>
           <div class="lbl"><span><b>Book depth at the goal</b></span><span>~0.5% of normal at the low point</span></div></div></div></div>
+      <div class="finding"><div class="fstat">$38<small>the whole cross-venue arb</small></div>
+        <div class="ftext"><b>What the gap between the venues is actually worth.</b> Walking both order books level by level, net of Kalshi's fee and discarding sub-tick flicker, the entire World Cup cross-venue arbitrage held about $4,855 of capacity for about $38 of locked profit — and the deepest book, the winner market, netted zero. An unfiltered version of the same walk had reported $427–$1,200; that was phantom depth on longshot books. A pre-tournament snapshot, with tooling since retired.
+        <div class="fmini"><div class="bar" title="locked profit as a share of the capacity it needs"><span class="seg" style="width:0.8%;background:var(--accent)"></span></div>
+          <div class="lbl"><span><b>$38</b> locked</span><span>on $4,855 of capacity</span></div></div></div></div>
+      <div class="finding"><div class="fstat">49%<small>closing-line value</small></div>
+        <div class="ftext"><b>The paper book made money in the researched lane, and that still isn't proof.</b> The group stage closed +$77 on $1,225 deployed, with all of the profit in the favourite–longshot lane on advance markets and the losses confined to the two lanes the project had already called edgeless. But closing-line value — the skill signal that doesn't depend on who won — came in at 49%, a coin flip. Positive P&amp;L with neutral CLV is outcome realisation, not demonstrated edge.
+        <div class="fmini"><div class="bar" title="closing-line value: 50% is a coin flip"><span class="seg" style="width:49%;background:var(--accent)"></span><span class="seg" style="width:48%;background:var(--rule-2)"></span></div>
+          <div class="lbl"><span><b>CLV</b> 49% positive</span><span>+$77 realised</span></div></div></div></div>
     </div>
   </section>
 

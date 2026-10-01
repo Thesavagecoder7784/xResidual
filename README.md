@@ -2,13 +2,22 @@
 
 [![tests](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml/badge.svg)](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml)
 
-A forecasting model run live against the prediction markets through the 2026 World Cup, with its
-predictions committed before kickoff and graded in public.
+A forecasting model run live against Kalshi and Polymarket through the 2026 World Cup: eleven
+falsifiable predictions committed to a tagged commit before kickoff, graded in public, and one headline
+result withdrawn by its own test.
 
-The markets — Kalshi, Polymarket and the bookmaker consensus — supply the expectation. The tournament
-supplies the surprises. A *residual* is the gap between them, and this project is about both: how good
-the markets' probabilities were, where an independent model disagreed with them, and who turned out
-to be right.
+| Measured | Result |
+|---|---|
+| **Fair value** — market vs. a pre-committed model, 72 group games | a Brier of 0.487 against my model's 0.503, calibration slope of 1.07 against 0.87. Better calibrated; the gap itself is not significant (paired p = 0.25) |
+| **What the cross-venue gap is worth** — both books walked level by level, net of fees | ~$4,855 of capacity for ~$38 of locked profit. The deepest book nets $0 ([note](writeups/cross-venue-efficiency.md)) |
+| **The cost of crossing** — 20 days on which both books normalized | a median de-vigged gap of 0.17 points, against an overround of 5.6% on Kalshi and 2.1% on Polymarket |
+| **In-play reaction** — every goal, against an exogenous clock | the quote books about a third of an independent model's fair log-odds move, undershooting on all 22 goals where it moved |
+| **Is the dislocation tradeable?** | a median 12.0¢ move, but the book empties: about 9% of goals were harvestable, and which matches those would be could not be called in advance. Both pre-registered tradability tests came back null |
+| **Live book** — paper, group stage | +$77 on $1,225 deployed, all of it in the one researched lane — and 49% closing-line value, so variance, not demonstrated edge ([note](writeups/paper_groupstage_retro.md)) |
+| **The headline I withdrew** | a synthetic Kalshi with a lead of exactly zero reports Polymarket first in 26 of 29 windows — the published result ([CORRECTION.md](CORRECTION.md)) |
+| **Pre-registration** | graded in public on 19 July: **5 pass, 2 fail, 4 inconclusive** |
+
+**Start here:** [one-page desk memo](writeups/desk-memo.md) · [the retraction, and the test that overturned it](CORRECTION.md) · [the pre-registration](PREREGISTRATION.md) · [how to reproduce any number above](REPRODUCING.md)
 
 > **Correction, 2026-09-18.** This project previously claimed that Polymarket prices World Cup goals
 > about 600 ms before Kalshi. That finding is withdrawn: Kalshi's price was read at one message a
@@ -16,6 +25,15 @@ to be right.
 > way, reproduces it. What that changes, and what it doesn't, is in [CORRECTION.md](CORRECTION.md).
 
 ![The pre-registration scorecard: 5 pass, 2 fail, 4 inconclusive](docs/img/prereg_scorecard.png)
+
+## What this is
+
+The markets — Kalshi, Polymarket and the bookmaker consensus — supply the expectation. The tournament
+supplies the surprises. A *residual* is the gap between them, and this project is about both: how good
+the markets' probabilities were, where an independent model disagreed with them, and who turned out to
+be right. Underneath it is 86 matches of the project's own tick capture on both venues, a model whose
+forecasts were timestamped against the price before each kickoff, and a standing rule that a number
+which looks too good gets attacked until it breaks or holds.
 
 ## What it found
 
@@ -42,6 +60,17 @@ separates them is cost: overround ran 5.6% on Kalshi against 2.1% on Polymarket.
 test of this (P3) still failed as graded, because it was scored at the close, when the resolving field
 pushed the de-vigged gap to 3.98 points.
 
+**The whole cross-venue arbitrage was worth about $38.** Before the tournament I walked both order
+books level by level, net of Kalshi's fee, discarding sub-tick flicker and requiring at least half a
+cent per contract of net edge: the entire World Cup cross-venue arbitrage held about $4,855 of
+capacity for about $38 of locked profit, and the deepest book — the winner market — netted zero,
+efficient to the tick. An unfiltered version of the same walk had reported $427–$1,200; that was
+phantom depth on longshot books. This is a point-in-time snapshot and the scanner has since been
+retired, so unlike everything else here it does not rebuild from this repository — the record is
+[the writeup](writeups/cross-venue-efficiency.md). It is also why the project's centre of gravity
+moved from execution to fair value: cross-venue arb is a firm-dominated execution game, and the
+residual that survives sits below the cost-of-capture floor.
+
 **The in-play market under-reacts to goals.** On the 8 matches whose goal timeline validates against
 the final score, the market books about a third of an independent in-play model's fair move in
 log-odds, and undershoots on all 22 goals where the quote moved. Measured on Polymarket alone, 30
@@ -56,6 +85,15 @@ nothing to take. About 9% of goals were harvestable, clustered in a minority of 
 be picked out in advance. That zero uses the harshest depth measure (the low point across the goal);
 where the raw book survives, reading depth at the moment a follower could act leaves 11–33% of those
 events harvestable (21 events, 2 matches). The defensible claim is "mostly not", not "never".
+
+**The paper book made money in the lane the research pointed at, and that still isn't proof.** Across
+the group stage the book closed 10 positions for +$77 on $1,225 deployed. All of the profit sat in the
+favourite–longshot lane on advance markets (+$181 on $600, 21 positions); the losses sat in the two
+lanes the project's own guardrails had already flagged as edgeless, totals and group-winner. But the
+21 advance positions resolve on one event, so the 86% hit rate is nearer one correlated bet than 21
+independent edges, and closing-line value — the skill signal that doesn't depend on who won — came in
+at 49%, a coin flip. Positive P&L with neutral CLV is outcome realisation, not demonstrated edge, and
+the book is graded on CLV from here ([retrospective](writeups/paper_groupstage_retro.md)).
 
 The full log — 40 findings including the nulls, one retraction and the withdrawn cross-venue results —
 is [FINDINGS.md](FINDINGS.md).
@@ -145,7 +183,7 @@ script that produces it.
 - `deploy/` — how collection ran on an always-on Azure VM (decommissioned after the final).
 - `docs/` — the [project site](https://thesavagecoder7784.github.io/xResidual/).
 - `viz/` — the cards, and the per-match aggregates behind them.
-- `writeups/` — the retrospective, the audit behind the correction, and supporting notes.
+- `writeups/` — the [desk memo](writeups/desk-memo.md), the [retrospective](writeups/retrospective.md), the [audit behind the correction](writeups/recovery-audit.md), the [cross-venue efficiency note](writeups/cross-venue-efficiency.md) and the [paper book's group-stage retrospective](writeups/paper_groupstage_retro.md).
 - `archive/` — superseded material kept for the record, including the withdrawn cross-venue work.
 - `tests/` — the test suite.
 

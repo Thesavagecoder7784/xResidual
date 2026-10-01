@@ -40,8 +40,26 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SURFACES = [
     "README.md", "FINDINGS.md", "METHODOLOGY.md", "REPRODUCING.md", "CORRECTION.md",
     "PREREGISTRATION-ADDENDUM.md", "writeups/retrospective.md", "writeups/recovery-audit.md",
+    "writeups/desk-memo.md", "writeups/cross-venue-efficiency.md", "writeups/paper_groupstage_retro.md",
     "viz/README.md", "docs/index.html", "docs/method.html", "docs/results.html",
 ]
+
+# Documents that are gitignored but get SENT -- application material, interview prep. They are the
+# one place a withdrawn figure can still reach a reader, because no public check covers them. Scanned
+# only with --private, and only above the archive marker: a quarantined archive is allowed to quote
+# the withdrawn claims, which is what makes it an archive.
+PRIVATE_SURFACES = [
+    "writeups/packaging.md", "writeups/recruiting-ft2027.md", "prep/xresidual-defense.md",
+]
+ARCHIVE_MARKER = re.compile(r"^#+ .*\bARCHIVE\b.*DO NOT COPY", re.M)
+
+
+def live_region(body: str):
+    """(text above the archive marker, lines quarantined below it)."""
+    m = ARCHIVE_MARKER.search(body)
+    if not m:
+        return body, 0
+    return body[: m.start()], len(body[m.start():].splitlines())
 
 # A sentence may quote a withdrawn figure only if it is withdrawing it. These markers are deliberately
 # narrow: each one says, on its own, that the figure is being retracted or explained as an artifact.
@@ -229,6 +247,9 @@ def claim_hits(claim: dict, body: str, path: str = "x.md"):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument("--private", action="store_true",
+                    help="Also scan the gitignored application material (PRIVATE_SURFACES). These get "
+                         "sent to people, so a withdrawn figure in them is worse than one on a web page.")
     ap.add_argument("--allow-missing", action="store_true",
                     help="Do not fail when a surface file is absent. Coverage is still reported.")
     args = ap.parse_args()
@@ -274,6 +295,26 @@ def main() -> int:
         for line, why in banned_hits(body, s):
             print(f"    !! {s}:{line}: {why}")
             failures += 1
+
+    if args.private:
+        print("\n  PRIVATE SURFACES -- application material (gitignored, but it gets sent)")
+        seen = False
+        for s_ in PRIVATE_SURFACES:
+            path = os.path.join(ROOT, s_)
+            if not os.path.exists(path):
+                print(f"    -- {s_} absent")
+                continue
+            seen = True
+            with open(path, encoding="utf-8", errors="replace") as fh:
+                live, quarantined = live_region(fh.read())
+            hits = banned_hits(live, s_)
+            note = f" ({quarantined} archived lines not scanned)" if quarantined else ""
+            print(f"    {'!! ' if hits else 'ok '}{s_}{note}")
+            for line, why in hits:
+                print(f"       {s_}:{line}: {why}")
+                failures += 1
+        if not seen:
+            print("    (none present -- this is a public clone)")
 
     incomplete = bool(missing) and not args.allow_missing
     print("\n" + "=" * 78)
