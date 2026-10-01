@@ -3,8 +3,7 @@
 [![tests](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml/badge.svg)](https://github.com/Thesavagecoder7784/xResidual/actions/workflows/ci.yml)
 
 A forecasting model run live against Kalshi and Polymarket through the 2026 World Cup: eleven
-falsifiable predictions committed to a tagged commit before kickoff, graded in public, and one headline
-result withdrawn by its own test.
+falsifiable predictions committed to a tagged commit before kickoff and graded in public.
 
 | Measured | Result |
 |---|---|
@@ -17,12 +16,7 @@ result withdrawn by its own test.
 | **The headline I withdrew** | a synthetic Kalshi with a lead of exactly zero reports Polymarket first in 26 of 29 windows — the published result ([CORRECTION.md](CORRECTION.md)) |
 | **Pre-registration** | graded in public on 19 July, with one grade later revised toward caution: **5 pass, 2 fail, 4 inconclusive** |
 
-**Start here:** [one-page desk memo](writeups/desk-memo.md) · [the retraction, and the test that overturned it](CORRECTION.md) · [the pre-registration](PREREGISTRATION.md) · [how to reproduce any number above](REPRODUCING.md)
-
-> **Correction, 2026-09-18.** This project previously claimed that Polymarket prices World Cup goals
-> about 600 ms before Kalshi. That finding is withdrawn: Kalshi's price was read at one message a
-> second against Polymarket's full order book, and a market with no lead at all, measured the same
-> way, reproduces it. What that changes, and what it doesn't, is in [CORRECTION.md](CORRECTION.md).
+**Start here:** [one-page desk memo](writeups/desk-memo.md) · [the pre-registration](PREREGISTRATION.md) · [how to reproduce any number above](REPRODUCING.md) · [the correction](CORRECTION.md)
 
 ![The pre-registration scorecard: 5 pass, 2 fail, 4 inconclusive](docs/img/prereg_scorecard.png)
 
