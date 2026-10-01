@@ -60,6 +60,13 @@ forecasting record is the destination. The price-fetch helpers it left behind
 (`scripts/venue_prices.py`) stay, because comparing the model to the live market price is
 exactly what the forecasting work needs.
 
+> **Note added 2026-09-30.** The access paragraph above was already out of date when written.
+> Polymarket has run a separate CFTC-regulated US exchange since December 2025; only the international,
+> on-chain book — the one captured here — is close-only for US users. Kalshi has served about 140
+> countries since October 2025, with several dozen jurisdictions restricted. The venues' crowds still only
+> partly overlap, but "mirror-image" overstates it, and the capacity figure, not access, is what makes the
+> residual not worth closing.
+
 ## Honest caveats
 - All of this is pre/early-tournament and a point-in-time snapshot; the gaps breathe as
   order flow hits and bots re-close them.

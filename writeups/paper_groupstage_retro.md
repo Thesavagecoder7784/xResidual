@@ -1,5 +1,15 @@
 # Paper book — group-stage retrospective (settled 2026-06-28)
 
+> **The final book, added 2026-09-30.** All 46 positions are closed ([`paper/book.md`](../paper/book.md),
+> 2026-08-04): **+$148.1 on $1,452**. By lane: advance +$181.4 (21), reach-round +$87.5 (10),
+> group-winner −$72.4 (4), BTTS −$44.8 (5), champion/season −$3.1 (3), Kalshi draw/tie −$0.5 (3).
+> Two corrections to the text below. The group-stage snapshot covers 36 positions; "10" refers only to
+> those settled at their binary outcome that day. And the 49% CLV figure is not reproducible: the book
+> does not record closing prices, and no committed artifact holds it. The committed CLV is on the model's
+> forecast ledger ([`_clv_results.json`](_clv_results.json)), where advance-market calls drifted toward
+> the model 74% of the time (46 calls, mean +4.0pp) and reach-market calls drifted against it on average.
+> So the advance lane's profit has CLV support; the reach-round lane's does not.
+
 The 2026 World Cup group stage is closed out on the paper book. 10 resolved positions
 settled at their binary outcomes (`paper/paper.py close`), leaving 6 knockout/season
 positions open.

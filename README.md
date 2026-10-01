@@ -11,11 +11,11 @@ result withdrawn by its own test.
 | **Fair value** — market vs. a pre-committed model, 72 group games | a Brier of 0.487 against my model's 0.503, calibration slope of 1.07 against 0.87. Better calibrated; the gap itself is not significant (paired p = 0.25) |
 | **What the cross-venue gap is worth** — both books walked level by level, net of fees | ~$4,855 of capacity for ~$38 of locked profit. The deepest book nets $0 ([note](writeups/cross-venue-efficiency.md)) |
 | **The cost of crossing** — 20 days on which both books normalized | a median de-vigged gap of 0.17 points, against an overround of 5.6% on Kalshi and 2.1% on Polymarket |
-| **In-play reaction** — every goal, against an exogenous clock | the quote books about a third of an independent model's fair log-odds move, undershooting on all 22 goals where it moved |
+| **In-play reaction** — 8 matches whose goal timeline reconciles to the final score | the quote books about a third of an independent model's fair log-odds move, undershooting on all 22 goals where it moved |
 | **Is the dislocation tradeable?** | a median 12.0¢ move, but the book empties: about 9% of goals were harvestable, and which matches those would be could not be called in advance. Both pre-registered tradability tests came back null |
-| **Live book** — paper, group stage | +$77 on $1,225 deployed, all of it in the one researched lane — and 49% closing-line value, so variance, not demonstrated edge ([note](writeups/paper_groupstage_retro.md)) |
+| **Paper book** — 46 positions, all closed | +$148 on $1,452. The favourite–longshot lane on advance markets made +$181 and is where closing-line value also backs the model; the two lanes flagged edgeless in advance lost $117 ([book](paper/book.md)) |
 | **The headline I withdrew** | a synthetic Kalshi with a lead of exactly zero reports Polymarket first in 26 of 29 windows — the published result ([CORRECTION.md](CORRECTION.md)) |
-| **Pre-registration** | graded in public on 19 July: **5 pass, 2 fail, 4 inconclusive** |
+| **Pre-registration** | graded in public on 19 July, with one grade later revised toward caution: **5 pass, 2 fail, 4 inconclusive** |
 
 **Start here:** [one-page desk memo](writeups/desk-memo.md) · [the retraction, and the test that overturned it](CORRECTION.md) · [the pre-registration](PREREGISTRATION.md) · [how to reproduce any number above](REPRODUCING.md)
 
@@ -86,14 +86,17 @@ be picked out in advance. That zero uses the harshest depth measure (the low poi
 where the raw book survives, reading depth at the moment a follower could act leaves 11–33% of those
 events harvestable (21 events, 2 matches). The defensible claim is "mostly not", not "never".
 
-**The paper book made money in the lane the research pointed at, and that still isn't proof.** Across
-the group stage the book closed 10 positions for +$77 on $1,225 deployed. All of the profit sat in the
-favourite–longshot lane on advance markets (+$181 on $600, 21 positions); the losses sat in the two
-lanes the project's own guardrails had already flagged as edgeless, totals and group-winner. But the
-21 advance positions resolve on one event, so the 86% hit rate is nearer one correlated bet than 21
-independent edges, and closing-line value — the skill signal that doesn't depend on who won — came in
-at 49%, a coin flip. Positive P&L with neutral CLV is outcome realisation, not demonstrated edge, and
-the book is graded on CLV from here ([retrospective](writeups/paper_groupstage_retro.md)).
+**The paper book made money, and only part of it is skill.** Across 46 positions, all now closed, the
+book finished +$148 on $1,452 deployed ([book](paper/book.md)). Split by lane, it says more than the
+total does. The favourite–longshot lane on advance markets made +$181 on $600, and it is the one market
+where closing-line value — the skill signal that doesn't depend on who won — also backs the model: 74%
+of the model's 46 directional advance calls drifted its way by the close, a mean of +4.0 points
+([`_clv_results.json`](writeups/_clv_results.json)). The reach-round lane made +$88 with no such support,
+since the model's reach-market calls drifted against it on average, so that part is outcome rather than
+edge. The two lanes the project had flagged as edgeless before trading them, totals and group-winner,
+lost $117 between them. Two cautions: the 21 advance positions resolve on one group stage, so their 86%
+hit rate is nearer one correlated bet than 21 independent edges, and the CLV is measured on the model's
+forecasts rather than the fills, which the book does not record.
 
 The full log — 40 findings including the nulls, one retraction and the withdrawn cross-venue results —
 is [FINDINGS.md](FINDINGS.md).

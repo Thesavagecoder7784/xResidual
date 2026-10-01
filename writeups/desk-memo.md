@@ -7,7 +7,8 @@ traced to the script that made it: [REPRODUCING.md](../REPRODUCING.md).*
 **The setup.** Own tick capture on Kalshi and Polymarket across 86 matches, an independent forecasting
 model whose every forecast was timestamped against the live price before kickoff, and eleven
 falsifiable predictions committed to a tagged commit before the tournament started. They were graded
-in public on 19 July: **5 pass, 2 fail, 4 inconclusive**. Everything but the raw tapes, which the
+in public on 19 July; after one grade was revised toward caution in September, the tally is **5 pass, 2
+fail, 4 inconclusive**. Everything but the raw tapes, which the
 venues' terms restrict, rebuilds from a clean clone.
 
 **Fair value.** On the 72 group games the model forecast before kickoff, the de-vigged market scored
@@ -23,9 +24,9 @@ World Cup cross-venue arbitrage held about $4,855 of capacity for about $38 of l
 winner market — the deepest book — netted zero, efficient to the tick. An unfiltered version of the
 same walk had reported $427–$1,200, which was phantom depth on longshot books. What separates the two
 venues is cost, not opinion: de-vigged they sat a median 0.17 points apart over the 20 days on which
-both books normalized, while overround ran 5.6% on Kalshi against 2.1% on Polymarket. Access is
-mirror-image — Polymarket geofenced from US persons, Kalshi awkward for non-US entities — which is both
-why the gaps persist and why so few participants can close them.
+both books normalized, while overround ran 5.6% on Kalshi against 2.1% on Polymarket. The crowds only
+partly overlap: the international Polymarket book captured here is close-only for US users, who trade a
+separate CFTC-regulated exchange, and Kalshi restricts several dozen jurisdictions.
 
 **In-play.** A goal moves the price a median 12.0¢, comfortably more than a follower pays in spread,
 but the quote books only about a third of an independent model's fair move in log-odds and undershoots
@@ -43,13 +44,13 @@ reports Polymarket first in 26 of 29 windows, which is the published result. Inv
 published measurements against the estimator's measured response recovers no systematic lead in either
 direction. Two other numbers died the same way: the $1,200 arbitrage above, and an information-share
 figure broken by a floating-point residue in my own replacement rebuild, caught on review. A
-sentence-level claim checker and 38 guard tests now fail CI if any withdrawn figure is restated as
-fact on a public page.
+sentence-level claim checker, pinned by its own regression tests, now fails CI if any withdrawn
+figure is restated as fact on a public page.
 
-**Live book.** Paper, group stage: +$77 realised on $1,225 deployed, with all of the profit in the
-favourite–longshot lane the research had flagged and the losses confined to the lanes it had flagged as
-edgeless. Closing-line value came in at 49%, a coin flip, so the honest reading is outcome realisation
-rather than demonstrated edge; the book is graded on CLV from here.
+**Paper book.** 46 positions, all closed: +$148 on $1,452. The favourite–longshot lane on advance
+markets made +$181, and it is the one market where closing-line value also backs the model — 74% of 46
+directional calls drifted its way by the close. The reach-round lane's +$88 has no such support, so it
+counts as outcome rather than edge, and the two lanes flagged as edgeless before trading lost $117.
 
 **Next.** The November midterms settle the lead question cheaply and on macro contracts: build the
 Kalshi mid from `orderbook_delta`, which the logger already records, run the known-truth placebo before
