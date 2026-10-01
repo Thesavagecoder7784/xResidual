@@ -286,8 +286,8 @@ def grade_p10():
     verdict = PASS if (pnl is not None and pnl > 0 and monotone) else FAIL
     return V("P10", "Overreaction reverts (edge test)", "genuine unknown", False,
              verdict, val, "mean PnL>0 net AND surprise-monotone", n=n,
-             note="a FAIL here is the pre-registered publishable result: the documented edge is "
-                  "arbed away on these venues")
+             note="a FAIL here is the pre-registered publishable result. On this tape the market "
+                  "under-reacts to goals, so there is nothing to fade")
 
 
 def grade_p11():
